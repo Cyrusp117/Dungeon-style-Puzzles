@@ -1,7 +1,9 @@
 package entities;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 
 
@@ -9,35 +11,65 @@ public class Player{
 	private Coordinate position;
 	private int dx;
 	private int dy;
+	private int imageWidth;
+	private int imageHeight;
+	private Image image;
 	
 	public Player(int xPos, int yPos){
+		loadImage();
 		this.position = new Coordinate(xPos, yPos);
 	}
 
+	
+    /**
+	 * @return the image
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+
+	private void loadImage() {
+        
+        ImageIcon icon = new ImageIcon("src/resources/player.png");
+        image = icon.getImage(); 
+        System.out.println("Player created with dimesnions: " + image.getWidth(null) + " x " + image.getHeight(null));
+        imageWidth = image.getWidth(null);
+        imageHeight = image.getHeight(null);
+    }
+    
 	public void keyPressed(KeyEvent e) {
 		
 	    int key = e.getKeyCode();
 
 	    if (key == KeyEvent.VK_LEFT) {
-	        dx = -1;
+	        dx = -32;
 	        dy = 0;
 	        System.out.println("LEFT");
 	    }
 
 	    if (key == KeyEvent.VK_RIGHT) {
-	        dx = 1;
+	        dx = 32;
 	        dy = 0;
 	        System.out.println("RIGHT");
 	    }
 
 	    if (key == KeyEvent.VK_UP) {
-	        dy = 1;
+	        dy = -32;
 	        dx = 0;
 	        System.out.println("UP");
 	    }
 
 	    if (key == KeyEvent.VK_DOWN) {
-	        dy = -1;
+	        dy = 32;
 	        dx = 0;
 	        System.out.println("DOWN");
 	    }
