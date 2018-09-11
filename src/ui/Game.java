@@ -1,5 +1,6 @@
 package ui;
 
+import entities.Coordinate;
 import entities.Player;
 
 public class Game{ // implements Runnable{
@@ -25,7 +26,8 @@ public class Game{ // implements Runnable{
 	}
 	
 	public void init() {
-		playerOne = new Player(2,2);
+		Coordinate position = new Coordinate(0,0); // For test, this would be specified by user
+		createPlayer(position);
 		app = new Application(title, width, height);
 		app.getFrame().addKeyListener(playerInput); //refactor this
 	}
@@ -38,7 +40,11 @@ public class Game{ // implements Runnable{
 		System.out.println(playerOne.returnPosition());
 	}
 	
+	public void createPlayer(Coordinate position) {
+		playerOne = new Player(position);
+	}
 	
+
 //	public void run() {
 //		init();
 //		
@@ -70,4 +76,5 @@ public class Game{ // implements Runnable{
 //		active = false;
 //	}
 
+	
 }

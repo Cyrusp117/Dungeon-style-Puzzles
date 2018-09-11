@@ -8,8 +8,8 @@ public class Player{
 	private int dx;
 	private int dy;
 	
-	public Player(int xPos, int yPos){
-		this.position = new Coordinate(xPos, yPos);
+	public Player(Coordinate position){
+		this.position = position;
 	}
 
 	public void move() {
