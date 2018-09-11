@@ -1,5 +1,7 @@
 package entities;
 
+import week07.lab.Set;
+
 public class Coordinate {
 	private int xPosition;
 	private int yPosition;
@@ -35,6 +37,23 @@ public class Coordinate {
 	 */
 	public void setyPosition(int yPosition) {
 		this.yPosition = yPosition;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this) return true;
+		if(obj == null) return false;
+		
+		if(!(obj instanceof Coordinate)) return false;
+		
+		Coordinate other = (Coordinate) obj;
+		if(xPosition == other.getxPosition() && yPosition == other.getyPosition()) {
+			return true;
+		}
+		return false;
 	}
 	
 	
