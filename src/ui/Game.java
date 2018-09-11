@@ -21,7 +21,7 @@ public class Game{ // implements Runnable{
 		playerOne.setDx(playerInput.getDx());
 		//CheckValidMove
 		playerOne.setDy(playerInput.getDy());
-		playerOne.move();
+		playerOne.move(width, height);
 		printPlayerCoordinates();
 	}
 	
@@ -43,6 +43,7 @@ public class Game{ // implements Runnable{
 	public void createPlayer(Coordinate position) {
 		playerOne = new Player(position);
 	}
+
 	
 
 //	public void run() {

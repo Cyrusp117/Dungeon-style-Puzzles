@@ -12,17 +12,20 @@ public class Player{
 		this.position = position;
 	}
 
-	public void move() {
+	public void move(int xBoundary, int yBoundary) {
+		
 
-		//if(isValidMove()){;
+		
 		
 	    int newX = position.getxPosition() + dx;
 	    int newY = position.getyPosition() + dy;
-	    
-	    position.setxPosition(newX);
-	    position.setyPosition(newY);
+	    Coordinate newPos = new Coordinate(newX, newY);
+	    if(!isOutOfBounds( xBoundary, yBoundary, newPos )) {
+		    position.setxPosition(newX);
+		    position.setyPosition(newY);
+	    }
+
 	}
-	
 	/**
 	 * @return the dx
 	 */
@@ -69,6 +72,17 @@ public class Player{
 	
 	public String returnPosition() {
 		return "X Coordinate:" + position.getxPosition() + " Y Coordinate:" + position.getyPosition(); 
+	}
+	
+	public boolean isOutOfBounds(int xBoundary, int yBoundary, Coordinate newPos) {
+		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
+		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
+			return true;
+		}else if( newPos.getyPosition() < 0 || newPos.getyPosition() > yBoundary) {
+			return true;
+		}
+		
+		return false;
 	}
 }
 
