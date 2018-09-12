@@ -37,6 +37,10 @@ public class Player extends Entity{
 		
 	}
 	
+	public ArrayList<Entity> getInventory() {
+		return inventory;
+	}
+	
 	/**
 	 * @return the dx: The change in the x position
 	 */

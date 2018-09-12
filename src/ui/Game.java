@@ -220,6 +220,10 @@ public class Game{
 	public int getWidth() {
 		return this.width;
 	}
+	
+	public ArrayList<Entity> getPlayerInventory() {
+		return playerOne.getInventory();
+	}
 }
 	
 //	public void run() {

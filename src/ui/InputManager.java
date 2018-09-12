@@ -8,6 +8,8 @@ import java.util.Scanner;
 import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
 
 import entities.Coordinate;
+import entities.Entity;
+import entities.Player;
 import entities.Treasure;
 
 // to be refactored into the Game
@@ -71,6 +73,14 @@ public class InputManager implements KeyListener {
 			} else {
 				System.out.println("Couldn't add treasure");
 			}
+	    }
+	    
+	    if (key == KeyEvent.VK_B) {
+	    	System.out.println("Inventory contents: ");
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		System.out.print(curItem.getName() + " ");
+	    	}
+	    	System.out.println("\n");
 	    }
 	}
 
