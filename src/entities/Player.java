@@ -37,10 +37,6 @@ public class Player extends Entity{
 		
 	}
 	
-	public ArrayList<Entity> getInventory() {
-		return inventory;
-	}
-	
 	/**
 	 * @return the dx: The change in the x position
 	 */
@@ -104,6 +100,27 @@ public class Player extends Entity{
 	 */
 	public String returnPosition() {
 		return position.returnPosition();
+	}
+	
+	/**
+	 * @return the inventory
+	 */
+	public ArrayList<Entity> getInventory() {
+		return inventory;
+	}
+
+	public boolean hasItem(String item) {
+		int has = 0;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals(item)) {
+				has = 1;
+			}
+		}
+		if(has == 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public String getName() {
