@@ -2,8 +2,13 @@ package entities;
 
 public abstract class Entity {
 	protected Coordinate position;
+	
 	public Entity(Coordinate position) {
 		this.position = position;
+	}
+	
+	public boolean interact(Player player) {
+		return false;
 	}
 	
 	public Coordinate move() {

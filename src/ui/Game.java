@@ -43,11 +43,12 @@ public class Game{
 		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
-			Entity interactable = getEntity(newPos);
-			if (interactable!=NULL) {
-				System.out.println(interactable.getName());
-				if(((Treasure) interactable).interact(playerOne)) {
-					this.deleteEntity(interactable);
+			Entity entity = getEntity(newPos);
+			if (entity!=NULL) {
+				System.out.println("CurPos has a: " + entity.getName());
+				if(entity.interact(playerOne)) {
+					// The above returns true if the entity is to be deleted afterwards
+					this.deleteEntity(entity);
 				}
 			}
 
