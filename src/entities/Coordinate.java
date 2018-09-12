@@ -55,5 +55,8 @@ public class Coordinate {
 		return false;
 	}
 	
+	public String returnPosition() {
+		return "X Coordinate:" + getxPosition() + " Y Coordinate:" + getyPosition(); 
+	}
 	
 }

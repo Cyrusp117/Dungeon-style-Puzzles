@@ -26,15 +26,18 @@ public class Game{ // implements Runnable{
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
+		System.out.println("New position: " + newPos.returnPosition());
 		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
+			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
 		}
 		printPlayerCoordinates();
 	}
 	
 	public void init() {
-		Coordinate position = new Coordinate(0,0); // For test, this would be specified by user
+		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);
+		generatePerimeter();
 		app = new Application(title, width, height);
 		app.getFrame().addKeyListener(playerInput); //refactor this
 	}
@@ -53,6 +56,7 @@ public class Game{ // implements Runnable{
 
 	public void generatePerimeter() {
 		int i,j;
+		//System.out.print(width + " " + height);
 		for(i = 0; i <= width; i += 32) {
 			for(j = 0; j <= height; j+= 32) {
 				if(j == 0 || j == height || i == 0 || i == width) {
@@ -72,8 +76,10 @@ public class Game{ // implements Runnable{
 	public boolean isOutOfBounds(int xBoundary, int yBoundary, Coordinate newPos) {
 		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
 		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
+			System.out.println("Out of bounds");
 			return true;
 		}else if( newPos.getyPosition() < 0 || newPos.getyPosition() > yBoundary) {
+			System.out.println("Out of bounds");
 			return true;
 		}
 		return false;
@@ -83,6 +89,7 @@ public class Game{ // implements Runnable{
 		if(walls.isEmpty()) return false;
 		for (Wall wall: walls){
 			if(wall.willCollide(position)) {
+				System.out.println("Colliding with Wall");
 				return true;
 			}
 		}

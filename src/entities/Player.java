@@ -57,7 +57,7 @@ public class Player extends Entity{
 		return position;
 	}
 	
-	public void setPosition(Coordinate Position) {
+	public void setPosition(Coordinate position) {
 		this.position = position;
 	}
 	public int returnX() {
