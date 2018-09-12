@@ -40,7 +40,7 @@ public class Game{
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
 		//System.out.println("New position: " + newPos.returnPosition());
-		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
+		if(!isOutOfBounds(newPos) && !isSolid(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
 			Entity entity = getEntity(newPos);
@@ -146,10 +146,12 @@ public class Game{
 		return false;
 	}
 	
-	public void addEntity(Entity entity) {
-		if(isOccupied(entity.getPosition())) return;
+	public boolean addEntity(Entity entity) {
+		if(isOccupied(entity.getPosition())) return false;
+		if(isOutOfBounds(entity.getPosition())) return false;
 		System.out.println("adding entity: " + entity.getName());
 		entities.add(entity);
+		return true;
 	}
 	
 
@@ -181,7 +183,9 @@ public class Game{
 	 * @return true if the entity would leave the bounds, false otherwise
 	 */
 	// Safety net to make sure the character can't go outside of the game
-	public boolean isOutOfBounds(int xBoundary, int yBoundary, Coordinate newPos) {
+	public boolean isOutOfBounds(Coordinate newPos) {
+		int xBoundary = this.width;
+		int yBoundary = this.height;
 		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
 		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
 			System.out.println("Out of bounds");

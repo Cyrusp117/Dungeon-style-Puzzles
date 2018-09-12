@@ -62,11 +62,15 @@ public class InputManager implements KeyListener {
 	    if (key == KeyEvent.VK_F1) {
 	    	System.out.println("Please enter co-ordinates of Treasure: ");
 			Scanner sc = new Scanner(System.in);
-			dx = sc.nextInt()*32+32;
-			dy = sc.nextInt()*32+32;
-			System.out.println("adding treasure at " + dx + dy);
+			dx = sc.nextInt()*32;
+			dy = sc.nextInt()*32;
+			
 			Coordinate treasurePos = new Coordinate(dx, dy);
-			game.addEntity(new Treasure(treasurePos));
+			if (game.addEntity(new Treasure(treasurePos))) {
+				System.out.println("adding treasure at " + dx + dy);
+			} else {
+				System.out.println("Couldn't add treasure");
+			}
 	    }
 	}
 
