@@ -32,4 +32,8 @@ public abstract class Entity {
 		return position.getyPosition();
 	}
 
+	public boolean willCollide(Coordinate otherPos) {
+		return position.equals(otherPos);
+		
+	}
 }

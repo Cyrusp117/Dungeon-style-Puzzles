@@ -15,7 +15,7 @@ public class Game{ 								// implements Runnable{
 	private InputManager playerInput;			//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
-	
+	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -71,6 +71,7 @@ public class Game{ 								// implements Runnable{
 	 * @param position, the Coordinate to which the player should be placed
 	 */
 	public void createPlayer(Coordinate position) {
+		if(isOccupied(position)) return;
 		playerOne = new Player(position);
 	}
 
@@ -84,8 +85,7 @@ public class Game{ 								// implements Runnable{
 			for(j = 0; j <= height; j+= 32) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					Wall newWall = new Wall(currentPosition, true, true);
-					addWall(newWall);	
+					addWall(currentPosition, true, true);	
 				}
 			}
 		}
@@ -95,10 +95,40 @@ public class Game{ 								// implements Runnable{
 	 * 
 	 * @param wall, the wall to be added to the list of Walls
 	 */
-	private void addWall(Wall wall) {
-		walls.add(wall);
+	private void addWall(Coordinate position, boolean isBlockable, boolean isPermanent) {
+		if(isOccupied(position)) return;
+		Wall newWall = new Wall(position, isBlockable, isPermanent);
+		walls.add(newWall);
+	}
+
+	/**
+	 * @param position
+	 */
+	public boolean isOccupied(Coordinate position) {
+		if(!entities.isEmpty()) {
+			for(Entity entity: entities) {
+				if(entity.willCollide(position)) {
+					System.out.println("Cannot be placed here");
+					return true;
+				}
+			}
+		}
+		
+		if(!walls.isEmpty()) {
+			for(Wall wall: walls) {
+				if(wall.willCollide(position)) {
+					System.out.println("Cannot be placed here");
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
+	private void addEntity(Entity entity) {
+		if(isOccupied(entity.getPosition())) return;
+		entities.add(entity);
+	}
 	/**
 	 * 
 	 * @param wall the Wall to be deleted, will only delete non-permanent walls
