@@ -3,6 +3,7 @@ package ui;
 import java.util.ArrayList;
 
 import entities.Treasure;
+import entities.AI;
 import entities.Coordinate;
 import entities.Entity;
 import entities.Player;
@@ -29,6 +30,12 @@ public class Game{
 	}
 	
 	private void update() {						//Updates the state of the game
+		// Moves each entity that is supposed to move
+		for (Entity entity : entities) {
+			if (entity instanceof AI) {
+				System.out.println(entity.getName() + " would move if he was implemented");
+			}
+		}
 		movePlayer();
 	}
 

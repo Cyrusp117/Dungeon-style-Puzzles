@@ -11,10 +11,10 @@ public abstract class Entity {
 		return false;
 	}
 	
-	public Coordinate move() {
-		System.out.println("Cant Move");
-		return null;
-	}
+//	public Coordinate move() {
+//		System.out.println("Cant Move");
+//		return null;
+//	}
 
 	public abstract String getName();
 

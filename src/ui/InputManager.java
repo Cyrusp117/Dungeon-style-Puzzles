@@ -9,6 +9,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
 
 import entities.Coordinate;
 import entities.Entity;
+import entities.Hunter;
 import entities.Player;
 import entities.Treasure;
 
@@ -81,6 +82,19 @@ public class InputManager implements KeyListener {
 	    		System.out.print(curItem.getName() + " ");
 	    	}
 	    	System.out.println("\n");
+	    }
+	    
+	    if (key == KeyEvent.VK_H) {
+	    	System.out.println("Enter Hunter's Coordinates: ");
+			Scanner sc = new Scanner(System.in);
+			dx = sc.nextInt()*32;
+			dy = sc.nextInt()*32;
+			Coordinate hunterPos = new Coordinate(dx, dy);
+			if (game.addEntity(new Hunter(hunterPos))) {
+				System.out.println("adding hunter at " + dx + dy);
+			} else {
+				System.out.println("Couldn't add hunter");
+			}
 	    }
 	}
 
