@@ -31,7 +31,5 @@ public abstract class Entity {
 	public int returnY() {
 		return position.getyPosition();
 	}
-	
-	
 
 }

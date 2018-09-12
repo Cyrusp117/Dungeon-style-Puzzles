@@ -3,6 +3,7 @@ package ui;
 import java.util.ArrayList;
 
 import entities.Coordinate;
+import entities.Entity;
 import entities.Player;
 import entities.Wall;
 
@@ -13,6 +14,7 @@ public class Game{ 								// implements Runnable{
 	private Player playerOne;					//Tracking the player entity
 	private InputManager playerInput;			//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
+	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -20,6 +22,7 @@ public class Game{ 								// implements Runnable{
 		this.title = title;
 		this.playerInput = new InputManager(this);
 		this.walls = new ArrayList<>();
+		this.entities = new ArrayList<>();
 	}
 	
 	private void update() {						//Updates the state of the game
@@ -81,7 +84,7 @@ public class Game{ 								// implements Runnable{
 			for(j = 0; j <= height; j+= 32) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					Wall newWall = new Wall(currentPosition, true);
+					Wall newWall = new Wall(currentPosition, true, true);
 					addWall(newWall);	
 				}
 			}
@@ -96,6 +99,26 @@ public class Game{ 								// implements Runnable{
 		walls.add(wall);
 	}
 	
+	/**
+	 * 
+	 * @param wall the Wall to be deleted, will only delete non-permanent walls
+	 */
+	private void deleteWall(Wall wall) {
+		if(!wall.isPermanent()) {
+			walls.remove(wall);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
+	 */
+	private void deleteEntity(Entity entity) {
+		entities.remove(entity);
+		if(entity.equals(playerOne)) {
+			playerOne = null;
+		}
+	}
 	/**
 	 * 
 	 * @param xBoundary the largest size of the wall on the x axis

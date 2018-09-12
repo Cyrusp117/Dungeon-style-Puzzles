@@ -4,10 +4,12 @@ public class Wall {
 	//private BufferedImage sprite;
 	private Coordinate position;
 	private boolean isBlockable;
+	private boolean isPermanent;
 	
-	public Wall (Coordinate position, boolean isBlockable) {
+	public Wall (Coordinate position, boolean isBlockable, boolean isPermanent) {
 		this.position = position;
-		this.isBlockable = true;
+		this.isBlockable = isBlockable;
+		this.isPermanent = isPermanent;
 	}
 	
 	/**
@@ -40,7 +42,23 @@ public class Wall {
 	 * @return true if Collision will occur, false otherwise.
 	 */
 	public boolean willCollide(Coordinate position) {
-		if(position.equals(this.position)) return true;
+		if(position.equals(this.position) && isBlockable) return true;
 		return false;
 	}
+
+	/**
+	 * @return the isBlockable
+	 */
+	public boolean isBlockable() {
+		return isBlockable;
+	}
+
+	/**
+	 * @return the isPermanent
+	 */
+	public boolean isPermanent() {
+		return isPermanent;
+	}
+	
+	
 }
