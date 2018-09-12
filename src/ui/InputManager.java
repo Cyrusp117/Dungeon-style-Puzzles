@@ -57,16 +57,21 @@ public class InputManager implements KeyListener {
 	        System.out.println("DOWN");
 	    }
 	    
-	    // If F1 is pressed, the next two Integers in STDIN will be the  
-	    // coordinate of the treasure
+	    
 	    if (key == KeyEvent.VK_F1) {
 	    	System.out.println("Please enter co-ordinates of Treasure: ");
 			Scanner sc = new Scanner(System.in);
-			dx = sc.nextInt()*32+32;
-			dy = sc.nextInt()*32+32;
+			dx = sc.nextInt()*32;
+			dy = sc.nextInt()*32;
 			System.out.println("adding treasure at " + dx + dy);
+
 			Coordinate treasurePos = new Coordinate(dx, dy);
+			//if (!game.isOutOfBounds(game.getWidth(), game.getHeight(), treasurePos)) {
+				//System.out.println("adding treasure at " + treasurePos.getxPosition() +
+						//treasurePos.getyPosition());
 			game.addEntity(new Treasure(treasurePos));
+			//}
+			//sc.close();
 	    }
 	}
 
