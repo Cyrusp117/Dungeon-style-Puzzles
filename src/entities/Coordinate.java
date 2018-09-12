@@ -1,6 +1,5 @@
 package entities;
 
-import week07.lab.Set;
 
 public class Coordinate {
 	private int xPosition;

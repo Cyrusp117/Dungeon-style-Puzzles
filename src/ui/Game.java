@@ -1,7 +1,10 @@
 package ui;
 
+import java.util.ArrayList;
+
 import entities.Coordinate;
 import entities.Player;
+import entities.Wall;
 
 public class Game{ // implements Runnable{
 	private Application app;
@@ -9,19 +12,23 @@ public class Game{ // implements Runnable{
 	private String title;
 	private Player playerOne;
 	private InputManager playerInput;
+	private ArrayList<Wall> walls;
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.title = title;
 		this.playerInput = new InputManager(this);
+		this.walls = new ArrayList<>();
 	}
 	
 	private void update() {
 		playerOne.setDx(playerInput.getDx());
-		//CheckValidMove
 		playerOne.setDy(playerInput.getDy());
-		playerOne.move(width, height);
+		Coordinate newPos = playerOne.move();
+		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
+			playerOne.setPosition(newPos);
+		}
 		printPlayerCoordinates();
 	}
 	
@@ -44,8 +51,43 @@ public class Game{ // implements Runnable{
 		playerOne = new Player(position);
 	}
 
+	public void generatePerimeter() {
+		int i,j;
+		for(i = 0; i <= width; i += 32) {
+			for(j = 0; j <= height; j+= 32) {
+				if(j == 0 || j == height || i == 0 || i == width) {
+					Coordinate currentPosition = new Coordinate(i,j);
+					Wall newWall = new Wall(currentPosition, true);
+					addWall(newWall);	
+				}
+			}
+		}
+	}
 	
+	private void addWall(Wall wall) {
+		walls.add(wall);
+	}
+	
+	// Safety net to make sure the character can't go outside of the game
+	public boolean isOutOfBounds(int xBoundary, int yBoundary, Coordinate newPos) {
+		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
+		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
+			return true;
+		}else if( newPos.getyPosition() < 0 || newPos.getyPosition() > yBoundary) {
+			return true;
+		}
+		return false;
+	}
 
+	private boolean isSolid(Coordinate position) {
+		if(walls.isEmpty()) return false;
+		for (Wall wall: walls){
+			if(wall.willCollide(position)) {
+				return true;
+			}
+		}
+		return false;
+	}
 //	public void run() {
 //		init();
 //		
