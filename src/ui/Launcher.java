@@ -23,7 +23,7 @@ public class Launcher { // Will likely move this into Game at a later time
 			}
 			
 		}
-		sc.close();
+		//sc.close();
 		
 		xSize = xSize * 32;
 		ySize = ySize * 32;

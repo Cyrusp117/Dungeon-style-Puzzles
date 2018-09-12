@@ -2,6 +2,13 @@ package ui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.Scanner;
+
+import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
+
+import entities.Coordinate;
+import entities.Treasure;
 
 // to be refactored into the Game
 public class InputManager implements KeyListener {
@@ -48,6 +55,23 @@ public class InputManager implements KeyListener {
 	        dx = 0;
 	        game.newTurn();
 	        System.out.println("DOWN");
+	    }
+	    
+	    
+	    if (key == KeyEvent.VK_F1) {
+	    	System.out.println("Please enter co-ordinates of Treasure: ");
+			Scanner sc = new Scanner(System.in);
+			dx = sc.nextInt()*32;
+			dy = sc.nextInt()*32;
+			System.out.println("adding treasure at " + dx + dy);
+
+			Coordinate treasurePos = new Coordinate(dx, dy);
+			//if (!game.isOutOfBounds(game.getWidth(), game.getHeight(), treasurePos)) {
+				//System.out.println("adding treasure at " + treasurePos.getxPosition() +
+						//treasurePos.getyPosition());
+			game.addEntity(new Treasure(treasurePos));
+			//}
+			//sc.close();
 	    }
 	}
 

@@ -2,12 +2,15 @@ package ui;
 
 import java.util.ArrayList;
 
+import entities.Treasure;
 import entities.Coordinate;
 import entities.Entity;
 import entities.Player;
 import entities.Wall;
 
-public class Game{ 								// implements Runnable{
+public class Game{ 								
+	private static final Entity NULL = null;
+// implements Runnable{
 	private Application app;					//Executable window
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
@@ -41,14 +44,20 @@ public class Game{ 								// implements Runnable{
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
 			Entity interactable = getEntity(newPos);
-			interactable.interact(playerOne);
+			if (interactable!=NULL) {
+				System.out.println(interactable.getName());
+				if(((Treasure) interactable).interact(playerOne)) {
+					this.deleteEntity(interactable);
+				}
+			}
+
 		}
 		printPlayerCoordinates();
 	}
 	
 	private Entity getEntity(Coordinate newPos) {
 		for (Entity entity : entities) {
-			if(entity.getPosition() == playerOne.getPosition()) {
+			if(entity.getPosition().equals(playerOne.getPosition())) {
 				return entity;
 			}
 		}
@@ -136,10 +145,13 @@ public class Game{ 								// implements Runnable{
 		return false;
 	}
 	
-	private void addEntity(Entity entity) {
+	public void addEntity(Entity entity) {
 		if(isOccupied(entity.getPosition())) return;
+		System.out.println("adding entity: " + entity.getName());
 		entities.add(entity);
 	}
+	
+
 	/**
 	 * 
 	 * @param wall the Wall to be deleted, will only delete non-permanent walls
@@ -196,6 +208,15 @@ public class Game{ 								// implements Runnable{
 		return false;
 	}
 	
+	public int getHeight() {
+		return this.height;
+	}
+	
+	public int getWidth() {
+		return this.width;
+	}
+}
+	
 //	public void run() {
 //		init();
 //		
@@ -228,4 +249,4 @@ public class Game{ 								// implements Runnable{
 //	}
 
 	
-}
+

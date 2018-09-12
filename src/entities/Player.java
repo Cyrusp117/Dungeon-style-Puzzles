@@ -1,15 +1,20 @@
 package entities;
 
+import java.util.ArrayList;
+
+import ui.Game;
 
 public class Player extends Entity{
 	
 	private int dx; // Current x velocity
 	private int dy; // Current y velocity
+	ArrayList<Entity> inventory;
 	
 	public Player(Coordinate position){
 		super(position);
 		dx = 0;
 		dy = 0;
+		inventory = new ArrayList<Entity>();
 	}
 
 	/*
@@ -24,6 +29,12 @@ public class Player extends Entity{
 	    Coordinate newPos = new Coordinate(newX, newY);
 	    return newPos;
 	    
+	}
+	
+	public void pickUp(Entity entity) {
+		inventory.add(entity);
+		System.out.println("Picked up: " + entity.getName());
+		
 	}
 	
 	/**
@@ -89,6 +100,10 @@ public class Player extends Entity{
 	 */
 	public String returnPosition() {
 		return position.returnPosition();
+	}
+	
+	public String getName() {
+		return "Player";
 	}
 	
 }

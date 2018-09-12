@@ -6,8 +6,13 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
-	public abstract Coordinate move();
-	
+	public Coordinate move() {
+		System.out.println("Cant Move");
+		return null;
+	}
+
+	public abstract String getName();
+
 	/**
 	 * 
 	 * @return position, the Coordinate of the current entity
