@@ -55,6 +55,11 @@ public class Coordinate {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @return the string displaying the current Coordinate of the entity
+	 * The X and the Y Coordinate respectively
+	 */
 	public String returnPosition() {
 		return "X Coordinate:" + getxPosition() + " Y Coordinate:" + getyPosition(); 
 	}

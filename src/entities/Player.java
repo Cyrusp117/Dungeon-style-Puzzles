@@ -1,12 +1,10 @@
 package entities;
 
-import java.awt.event.KeyEvent;
-
 
 public class Player extends Entity{
 	
-	private int dx;
-	private int dy;
+	private int dx; // Current x velocity
+	private int dy; // Current y velocity
 	
 	public Player(Coordinate position){
 		super(position);
@@ -14,6 +12,10 @@ public class Player extends Entity{
 		dy = 0;
 	}
 
+	/*
+	 * 
+	 * @return the newPosition requested to be moved to by the player
+	 */
 	public Coordinate move() {
 		System.out.println("DX = " + dx + " DY = " + dy);
 		System.out.println(position.getxPosition());
@@ -26,7 +28,7 @@ public class Player extends Entity{
 	}
 	
 	/**
-	 * @return the dx
+	 * @return the dx: The change in the x position
 	 */
 	public int getDx() {
 		return dx;
@@ -40,7 +42,7 @@ public class Player extends Entity{
 	}
 
 	/**
-	 * @return the dy
+	 * @return the dy: The change in y position
 	 */
 	public int getDy() {
 		return dy;
@@ -53,23 +55,41 @@ public class Player extends Entity{
 		this.dy = dy;
 	}
 
+	/**
+	 * @return the position, the Coordinate of the player
+	 */
 	public Coordinate getPosition(){
 		return position;
 	}
 	
+	/**
+	 * @param position, the Coordinate of the player to set.
+	 */
 	public void setPosition(Coordinate position) {
 		this.position = position;
 	}
+	
+	/**
+	 * @return the X Coordinate of the player (int)
+	 */
 	public int returnX() {
 		return position.getxPosition();
 	}
 	
+	/**
+	 * @return the Y Coordinate of the player (int)
+	 */
 	public int returnY() {
 		return position.getyPosition();
 	}
 	
+	/**
+	 * 
+	 * @return the string displaying the current Coordinate of the player
+	 * The X and the Y Coordinate respectively
+	 */
 	public String returnPosition() {
-		return "X Coordinate:" + position.getxPosition() + " Y Coordinate:" + position.getyPosition(); 
+		return position.returnPosition();
 	}
 	
 }

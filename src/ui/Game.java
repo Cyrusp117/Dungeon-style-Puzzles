@@ -6,13 +6,13 @@ import entities.Coordinate;
 import entities.Player;
 import entities.Wall;
 
-public class Game{ // implements Runnable{
-	private Application app;
-	private int width, height;
-	private String title;
-	private Player playerOne;
-	private InputManager playerInput;
-	private ArrayList<Wall> walls;
+public class Game{ 								// implements Runnable{
+	private Application app;					//Executable window
+	private int width, height;					//Width and height of the app window
+	private String title;						//Title at the top of the window
+	private Player playerOne;					//Tracking the player entity
+	private InputManager playerInput;			//KeyListener, takes in key inputs
+	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -22,7 +22,14 @@ public class Game{ // implements Runnable{
 		this.walls = new ArrayList<>();
 	}
 	
-	private void update() {
+	private void update() {						//Updates the state of the game
+		movePlayer();
+	}
+
+	/**
+	 * Moves the player
+	 */
+	public void movePlayer() {
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
@@ -34,26 +41,39 @@ public class Game{ // implements Runnable{
 		printPlayerCoordinates();
 	}
 	
+	/**
+	 * Initialises the game board
+	 */
 	public void init() {
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
-		createPlayer(position);
-		generatePerimeter();
-		app = new Application(title, width, height);
-		app.getFrame().addKeyListener(playerInput); //refactor this
+		createPlayer(position);						 //Create the player at the given Coordinate
+		generatePerimeter();						 //Create a series of walls around the perimeter
+		app = new Application(title, width, height); //Create window application
+		app.getFrame().addKeyListener(playerInput);  //refactor this
 	}
 	
-	public void newTurn() {
+	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
 		update();
 	}
 
+	/**
+	 * print to the Console the Coordinates of the current player
+	 */
 	private void printPlayerCoordinates() {
 		System.out.println(playerOne.returnPosition());
 	}
 	
+	/**
+	 * 
+	 * @param position, the Coordinate to which the player should be placed
+	 */
 	public void createPlayer(Coordinate position) {
 		playerOne = new Player(position);
 	}
 
+	/**
+	 * Create a perimeter of wall around the board
+	 */
 	public void generatePerimeter() {
 		int i,j;
 		//System.out.print(width + " " + height);
@@ -68,10 +88,21 @@ public class Game{ // implements Runnable{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param wall, the wall to be added to the list of Walls
+	 */
 	private void addWall(Wall wall) {
 		walls.add(wall);
 	}
 	
+	/**
+	 * 
+	 * @param xBoundary the largest size of the wall on the x axis
+	 * @param yBoundary the largest size of the wall on the y axis
+	 * @param newPos the Coordinate the entity is attempting to occupy
+	 * @return true if the entity would leave the bounds, false otherwise
+	 */
 	// Safety net to make sure the character can't go outside of the game
 	public boolean isOutOfBounds(int xBoundary, int yBoundary, Coordinate newPos) {
 		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
@@ -85,6 +116,11 @@ public class Game{ // implements Runnable{
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param position the Coordinate the entity is trying to occupy
+	 * @return true if the Coordinate has a Solid object, false otherwise
+	 */
 	private boolean isSolid(Coordinate position) {
 		if(walls.isEmpty()) return false;
 		for (Wall wall: walls){
@@ -95,6 +131,7 @@ public class Game{ // implements Runnable{
 		}
 		return false;
 	}
+	
 //	public void run() {
 //		init();
 //		

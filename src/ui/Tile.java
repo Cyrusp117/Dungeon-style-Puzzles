@@ -3,6 +3,11 @@ package ui;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+/** 
+ * 
+ * CURRENTLY UNUSED JAVA FILE, BASIS FOR UI LATER DOWN THE ROAD.
+ *
+ */
 public class Tile {
 	public static final int tileWidth = 32;
 	public static final int tileHeight = 32;

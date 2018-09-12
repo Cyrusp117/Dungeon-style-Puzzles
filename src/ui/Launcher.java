@@ -1,10 +1,8 @@
 package ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Launcher {
+public class Launcher { // Will likely move this into Game at a later time
 	
 	public static void main(String[] args) {
 		Scanner sc = null;
