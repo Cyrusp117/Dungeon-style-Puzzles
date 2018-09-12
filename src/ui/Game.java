@@ -40,10 +40,21 @@ public class Game{ 								// implements Runnable{
 		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
+			Entity interactable = getEntity(newPos);
+			interactable.interact(playerOne);
 		}
 		printPlayerCoordinates();
 	}
 	
+	private Entity getEntity(Coordinate newPos) {
+		for (Entity entity : entities) {
+			if(entity.getPosition() == playerOne.getPosition()) {
+				return entity;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Initialises the game board
 	 */
