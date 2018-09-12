@@ -18,11 +18,10 @@ public class Player extends Entity{
 	 */
 	public Coordinate move() {
 		System.out.println("DX = " + dx + " DY = " + dy);
-		System.out.println(position.getxPosition());
+		//System.out.println(position.getxPosition());
 	    int newX = position.getxPosition() + dx;
 	    int newY = position.getyPosition() + dy;
 	    Coordinate newPos = new Coordinate(newX, newY);
-	    System.out.println("Hello");
 	    return newPos;
 	    
 	}

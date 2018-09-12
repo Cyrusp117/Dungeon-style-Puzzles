@@ -26,6 +26,7 @@ public class InputManager implements KeyListener {
 	        dy = 0;
 	        game.newTurn();
 	        System.out.println("LEFT");
+	        System.out.println(" ");
 	    }
 	    // If the right arrow key is pressed, request to move right by a tile
 	    if (key == KeyEvent.VK_RIGHT) {

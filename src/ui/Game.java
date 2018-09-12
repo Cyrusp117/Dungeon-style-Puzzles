@@ -33,7 +33,7 @@ public class Game{ 								// implements Runnable{
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
-		System.out.println("New position: " + newPos.returnPosition());
+		//System.out.println("New position: " + newPos.returnPosition());
 		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
