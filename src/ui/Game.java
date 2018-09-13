@@ -2,6 +2,8 @@ package ui;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import entities.Treasure;
 import entities.AI;
 import entities.Coordinate;
@@ -24,7 +26,7 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		this.playerInput = new InputManager(this);
+		this.playerInput = new InputManagerMenu(this);
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
@@ -98,6 +100,7 @@ public class Game{
 		generatePerimeter();						 //Create a series of walls around the perimeter
 		app = new Application(title, width, height); //Create window application
 		app.getFrame().addKeyListener(playerInput);  //refactor this
+		System.out.println("Press 1 for Designer mode and 2 for user mode");
 	}
 	
 	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
@@ -237,6 +240,10 @@ public class Game{
 		return false;
 	}
 	
+	public JFrame getFrame() {
+		return app.getFrame();
+	}
+	
 	public int getHeight() {
 		return this.height;
 	}
@@ -247,6 +254,21 @@ public class Game{
 	
 	public ArrayList<Entity> getPlayerInventory() {
 		return playerOne.getInventory();
+	}
+
+	public void changeState(InputManager playerInput) {
+		// There are three states: Menu, Player and Designer
+		// Each state only supports a certain subset of Key Inputs 
+		// Player and Designer both extend from Playable so they can both move, whereas Menu cant
+	
+		JFrame curFrame = app.getFrame();
+		curFrame.removeKeyListener(this.playerInput);
+		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
+		for (Entity entity : entities) {
+			this.deleteEntity(entity);
+		}
+    	this.playerInput = playerInput;
+    	app.getFrame().addKeyListener(playerInput);
 	}
 }
 	
