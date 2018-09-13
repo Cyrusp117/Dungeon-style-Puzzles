@@ -3,10 +3,16 @@ package ui;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
+
 public abstract class InputManagerPlayable extends InputManager {
+	protected Game game;
+	protected int dx = 0;
+	protected int dy = 0;
 	
-	public InputManagerPlayable(Game game) {
-		super(game);
+	public InputManagerPlayable(Game game, Application app) {
+		super(app);
+		this.game = game;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,7 +51,8 @@ public abstract class InputManagerPlayable extends InputManager {
 	    
 	    if (key == KeyEvent.VK_ESCAPE) {
 	    	System.out.println("*****  Returning to Menu.. *****");
-	    	game.changeState(new InputManagerMenu(game));
+	    	app.getFrame().removeKeyListener(this);
+	    	app.getFrame().addKeyListener(new InputManagerMenu(app));
 	    }
 	    extraFunctions(e);
 	}
@@ -62,5 +69,20 @@ public abstract class InputManagerPlayable extends InputManager {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+
+	/**
+	 * @return the dx the change in x position requested
+	 */
+	public int getDx() {
+		return dx;
+	}
+
+	/**
+	 * @return the dy the change in y position requested
+	 */
+	public int getDy() {
+		return dy;
 	}
 }

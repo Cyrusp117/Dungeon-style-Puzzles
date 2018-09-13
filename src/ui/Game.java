@@ -14,11 +14,11 @@ import entities.Wall;
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
-	private Application app;					//Executable window
+	private JFrame frame;
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
-	private InputManager playerInput;			//KeyListener, takes in key inputs
+	private InputManagerPlayable playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
 	// Need to implement generic iterator
@@ -26,7 +26,7 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		this.playerInput = new InputManagerMenu(this);
+		//this.playerInput;
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
@@ -95,12 +95,11 @@ public class Game{
 	 * Initialises the game board
 	 */
 	public void init() {
+		
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
-		app = new Application(title, width, height); //Create window application
-		app.getFrame().addKeyListener(playerInput);  //refactor this
-		System.out.println("Press 1 for Designer mode and 2 for user mode");
+
 	}
 	
 	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
@@ -240,9 +239,6 @@ public class Game{
 		return false;
 	}
 	
-	public JFrame getFrame() {
-		return app.getFrame();
-	}
 	
 	public int getHeight() {
 		return this.height;
@@ -256,19 +252,16 @@ public class Game{
 		return playerOne.getInventory();
 	}
 
-	public void changeState(InputManager playerInput) {
-		// There are three states: Menu, Player and Designer
+	public void changeState(InputManagerPlayable playerInput) {
+		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
-		// Player and Designer both extend from Playable so they can both move, whereas Menu cant
+		// Player and Designer both extend from Playable so they can both move
 	
-		JFrame curFrame = app.getFrame();
-		curFrame.removeKeyListener(this.playerInput);
 		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
-		for (Entity entity : entities) {
-			this.deleteEntity(entity);
-		}
-    	this.playerInput = playerInput;
-    	app.getFrame().addKeyListener(playerInput);
+		//this.playerInput = playerInput;
+		//this.frame = playerInput.getFrame();
+		this.playerInput = playerInput;
+		playerInput.getFrame().addKeyListener(playerInput);
 	}
 }
 	

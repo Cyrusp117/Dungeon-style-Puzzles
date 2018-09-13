@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 
-
 import entities.Coordinate;
 import entities.Entity;
 import entities.Hunter;
@@ -13,8 +12,9 @@ import entities.Treasure;
 // to be refactored into the Game
 public class InputManagerDesigner extends InputManagerPlayable {
 
-	public InputManagerDesigner(Game game) {
-		super(game);
+	public InputManagerDesigner(Game game, Application app) {
+		super(game, app);
+		System.out.println("Designer Mode Controls: Escape to return to menu, F1 - Treasure Placement, H - Hunter Placement, B - Backpack");
 	}
 	
 	/**
