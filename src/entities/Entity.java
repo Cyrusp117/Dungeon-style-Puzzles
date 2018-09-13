@@ -2,12 +2,11 @@ package entities;
 
 public abstract class Entity {
 	protected Coordinate position;
-	
 	public Entity(Coordinate position) {
 		this.position = position;
 	}
 	
-	public boolean interact(Player player) {
+	public boolean interactWithPlayer(Player player) {
 		return false;
 	}
 	
@@ -26,6 +25,14 @@ public abstract class Entity {
 		return position;
 	}
 	
+	
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Coordinate position) {
+		this.position = position;
+	}
+
 	/**
 	 * 
 	 * @return the x coordinate of the entity (int)
@@ -45,5 +52,12 @@ public abstract class Entity {
 	public boolean willCollide(Coordinate otherPos) {
 		return position.equals(otherPos);
 		
+	}
+	
+	public int getHitTime() {
+		return 0;
+	}
+	
+	public void setHitTime() {
 	}
 }

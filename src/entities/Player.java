@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import ui.Game;
 
@@ -34,11 +35,6 @@ public class Player extends Entity{
 	public void pickUp(Entity entity) {
 		inventory.add(entity);
 		System.out.println("Picked up: " + entity.getName());
-		
-	}
-	
-	public ArrayList<Entity> getInventory() {
-		return inventory;
 	}
 	
 	/**
@@ -105,6 +101,58 @@ public class Player extends Entity{
 	public String returnPosition() {
 		return position.returnPosition();
 	}
+	
+	/**
+	 * @return the inventory
+	 */
+	public ArrayList<Entity> getInventory() {
+		return inventory;
+	}
+
+	public boolean hasItem(String item) {
+		int has = 0;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals(item)) {
+				has = 1;
+			}
+		}
+		if(has == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean hitUsingSword() {
+		int r = 0;
+		Entity remove = null;
+		if(this.hasItem("Sword")) {
+			for(Entity e: this.getInventory()) {
+				if(e.getName().equals("Sword")) {
+					e.setHitTime();
+					if(e.getHitTime() == 0) {
+						remove = e;
+						r = 1;
+					}
+				}
+			}
+		}
+		//hit using sword
+		if(r == 0 && this.hasItem("Sword")) {
+			return true;
+		//presss v but don't have sword
+		}else if (r== 0 && !this.hasItem("Sword")){
+			System.out.println("You don't have sword!");
+			return false;
+	    //hit using sword and remove the sword from inventory
+		}else if(r == 1){
+			System.out.println("Remove sword from inventory!");
+			this.getInventory().remove(remove);
+			return false;
+		}
+		return false;
+	}
+	
 	
 	public String getName() {
 		return "Player";

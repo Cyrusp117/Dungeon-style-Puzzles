@@ -8,12 +8,7 @@ public class Treasure extends Entity {
 	}
 
 	@Override
-	public Coordinate move() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public boolean interact(Player player) {
+	public boolean interactWithPlayer(Player player) {
 		player.pickUp(this);
 		return true;
 	}
