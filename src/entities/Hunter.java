@@ -1,19 +1,26 @@
 package entities;
 
-public class Hunter extends Entity implements AI {
+public class Hunter extends AI {
 
 	public Hunter(Coordinate position) {
 		super(position);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Hunter";
 	}
 
-	@Override
+	public boolean interact(Player player) {
+		Coordinate playerPos = player.getPosition();
+		if(playerPos.equals(this.position)) {
+			player.setState(0);
+			return false;
+		}
+		return false;
+
+	}
+	
 	public void move() {
 		// TODO Auto-generated method stub
 		

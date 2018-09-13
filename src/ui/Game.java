@@ -30,11 +30,28 @@ public class Game{
 	}
 	
 	private void update() {						//Updates the state of the game
-		// Moves each entity that is supposed to move
+		int allTreasure = 1;
 		for (Entity entity : entities) {
+			// Moves each entity that is supposed to move
 			if (entity instanceof AI) {
-				System.out.println(entity.getName() + " would move if he was implemented");
+				Entity enemy = (AI) entity;
+				System.out.println(enemy.getName() + " would move if he was implemented");
 			}
+			// Checks if all treasure has been picked up
+			if (entity instanceof Treasure){
+				if (!playerOne.hasItem(entity)) {
+					allTreasure = 0;
+				}
+			}
+		}
+		// Checks if player is dead
+		if (!playerOne.isAlive()) {
+			// Launch new instance of game
+			System.out.println("Player is currently dead");
+		}
+		
+		if(allTreasure == 1) {
+			System.out.println("All treasure has been collected");
 		}
 		movePlayer();
 	}

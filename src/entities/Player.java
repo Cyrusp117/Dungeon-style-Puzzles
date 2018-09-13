@@ -6,8 +6,11 @@ import ui.Game;
 
 public class Player extends Entity{
 	
+	private static final int ALIVE = 1;
+	private static final int DEAD = 0;
 	private int dx; // Current x velocity
 	private int dy; // Current y velocity
+	private int state;
 	ArrayList<Entity> inventory;
 	
 	public Player(Coordinate position){
@@ -15,9 +18,10 @@ public class Player extends Entity{
 		dx = 0;
 		dy = 0;
 		inventory = new ArrayList<Entity>();
+		state = ALIVE;
 	}
 
-	/*
+	/**
 	 * 
 	 * @return the newPosition requested to be moved to by the player
 	 */
@@ -31,14 +35,47 @@ public class Player extends Entity{
 	    
 	}
 	
+	/**
+	 * 
+	 * @param An entity
+	 * @return True if entity exists in inventory
+	 */
+	public boolean hasItem(Entity entity) {
+		return inventory.contains(entity);
+	}
+	
+	/**
+	 * Picks up entity (No validity check here, this is checked elsewhere)
+	 * @param Entity to be picked up
+	 */
 	public void pickUp(Entity entity) {
 		inventory.add(entity);
 		System.out.println("Picked up: " + entity.getName());
 		
 	}
 	
+	public boolean isAlive () {
+		if(this.state == 1) return true;
+		return false;
+	}
+	
+	public void setState(int state) {
+		this.state=state;
+	}
+	
+	/**
+	 * 
+	 * @return Returns an arrayList representing the entities the player currently has
+	 */
 	public ArrayList<Entity> getInventory() {
 		return inventory;
+	}
+	
+	/**
+	 * Returns a string which is the name of the entity
+	 */
+	public String getName() {
+		return "Player";
 	}
 	
 	/**
@@ -106,9 +143,8 @@ public class Player extends Entity{
 		return position.returnPosition();
 	}
 	
-	public String getName() {
-		return "Player";
-	}
+
+	
 	
 }
 
