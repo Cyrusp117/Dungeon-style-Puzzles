@@ -44,7 +44,7 @@ public class PlayerTests {
 	}
 
 	@Test
-	public void RobottestMove() {
+	public void RobotTestMove() {
 		robot.waitForIdle();
 		robot.keyPress(KeyEvent.VK_DOWN);
 		System.out.println("Button pressed");
