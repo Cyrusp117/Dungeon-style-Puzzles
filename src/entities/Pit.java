@@ -9,13 +9,8 @@ public class Pit extends Entity{
 		this.keyCode = KeyEvent.VK_P;
 	}
 
-	public boolean interactWithPlayer(Player player,int x, int y) {
-		if(player.hasItem("HoverPotion")) {
-			int newX = position.getxPosition() + x;
-		    int newY = position.getyPosition() + y;
-		    Coordinate newPos = new Coordinate(newX, newY);
-		    player.setPosition(newPos);
-		}else{
+	public boolean interactWithPlayer(Player player) {
+		if(!player.hasItem("HoverPotion")) {
 			player.setState(0); // player is dead
 		}
 		return false;

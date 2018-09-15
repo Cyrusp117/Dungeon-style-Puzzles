@@ -61,10 +61,10 @@ public class Game{
 	}
 
 	public void printGame() {
-        int i = 0;
-        int j = 0;
-		while (i <= 10) {
-        	while (j <= 10) {
+        int i = 1;
+        int j = 1;
+		while (i <= this.getHeight()/32) {
+        	while (j <= this.getWidth()/32) {
         		Coordinate curPos = new Coordinate(j*32, i*32);
         		Entity entity = getEntity(curPos);
         		if (curPos.equals(playerOne.getPosition())) {
@@ -120,10 +120,10 @@ public class Game{
 	 * Initialises the game board
 	 */
 	public void init() {
-		
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
+		printGame();
 
 	}
 	
@@ -188,9 +188,10 @@ public class Game{
 	}
 	
 	public boolean addEntity(Entity entity) {
-		if(isOccupied(entity.getPosition())) return false;
-		if(isOutOfBounds(entity.getPosition())) return false;
-		System.out.println("adding entity: " + entity.getName());
+		Coordinate position = entity.getPosition();
+		if(isOccupied(position)) return false;
+		if(isOutOfBounds(position)) return false;
+		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
 		entities.add(entity);
 		return true;
 	}
@@ -218,7 +219,7 @@ public class Game{
 	public boolean isOutOfBounds(Coordinate newPos) {
 		int xBoundary = this.width;
 		int yBoundary = this.height;
-		System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
+		//System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
 		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
 			System.out.println("Out of bounds");
 			return true;
