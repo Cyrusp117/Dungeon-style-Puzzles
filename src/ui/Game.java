@@ -1,5 +1,5 @@
 package ui;
-
+import entities.*;
 import java.util.ArrayList;
 
 import entities.Coordinate;
@@ -14,7 +14,8 @@ public class Game{ 								// implements Runnable{
 	private Player playerOne;					//Tracking the player entity
 	private InputManager playerInput;			//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
-	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
+	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
+	
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -23,11 +24,14 @@ public class Game{ 								// implements Runnable{
 		this.playerInput = new InputManager(this);
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
+		
 	}
 	
 	private void update() {						//Updates the state of the game
 		movePlayer();
+		
 	}
+	
 
 	/**
 	 * Moves the player
@@ -35,7 +39,9 @@ public class Game{ 								// implements Runnable{
 	public void movePlayer() {
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
-		Coordinate newPos = playerOne.move();
+		//just making null variables for now
+		Graph g = null;
+		Coordinate newPos = playerOne.move(playerOne.getPosition(),g);
 		//System.out.println("New position: " + newPos.returnPosition());
 		if(!isOutOfBounds(width, height, newPos) && !isSolid(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
@@ -125,10 +131,12 @@ public class Game{ 								// implements Runnable{
 		return false;
 	}
 	
-	private void addEntity(Entity entity) {
+	public void addEntity(Entity entity) {
 		if(isOccupied(entity.getPosition())) return;
 		entities.add(entity);
 	}
+	
+
 	/**
 	 * 
 	 * @param wall the Wall to be deleted, will only delete non-permanent walls
@@ -215,6 +223,27 @@ public class Game{ 								// implements Runnable{
 //		}
 //		active = false;
 //	}
+
+	public Graph generateGraph() {
+		int i,j;
+		Coordinate cur;
+		Graph g = new Graph();
+		for(i = 0; i <= width; i += 32) {
+			for(j = 0; j <= height; j+= 32) {
+				cur = new Coordinate(i,j);
+				if(! isOccupied(cur)) {
+					g.addCoordinate(cur);	
+				}
+			}
+		}
+		
+		return g;
+	}
+	
+	public ArrayList<Entity> testEntities() {
+		return this.entities;
+	}
+	
 
 	
 }

@@ -6,7 +6,7 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
-	public abstract Coordinate move();
+	public abstract Coordinate move(Coordinate co, Graph g);
 	
 	/**
 	 * 
