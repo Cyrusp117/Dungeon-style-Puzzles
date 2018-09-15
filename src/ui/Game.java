@@ -14,12 +14,10 @@ import entities.Wall;
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
-	private Application app;					//Executable window
 	private JFrame frame;
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
-	private InputManager playerInput;			//KeyListener, takes in key inputs
 	private InputManagerPlayable playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
@@ -28,6 +26,7 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		//this.playerInput;
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
@@ -109,8 +108,6 @@ public class Game{
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
-		app = new Application(title, width, height); //Create window application
-		app.getFrame().addKeyListener(playerInput);  //refactor this
 
 	}
 	
