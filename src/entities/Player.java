@@ -3,7 +3,6 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
 public class Player extends Entity{
 	
@@ -165,6 +164,24 @@ public class Player extends Entity{
 		for(Entity e: this.getInventory()) {
 			if(e.getName().equals(item)) {
 				has = 1;
+			}
+		}
+		if(has == 1) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	
+	public boolean hasKey(int DoorId) {
+		int has = 0;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Key")) {
+				Key key = (Key) e;
+				if(key.getKeyId() == DoorId) {
+					has = 1;
+				}
 			}
 		}
 		if(has == 1) {

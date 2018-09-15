@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 import entities.Coordinate;
+import entities.Door;
 import entities.HoverPotion;
 import entities.Hunter;
+import entities.Key;
 import entities.Pit;
 import entities.Sword;
 
@@ -29,10 +31,18 @@ public class InputManagerMenu extends InputManager {
 	        Coordinate hunterPos = new Coordinate(4*32, 1*32);
 	        Coordinate hoverPos = new Coordinate(2*32, 1*32);
 	        Coordinate swordPos = new Coordinate(5*32, 1*32);
+	        Coordinate key1Pos = new Coordinate(7*32, 1*32);
+	        Coordinate key2Pos = new Coordinate(8*32, 1*32);
+	        Coordinate Door1Pos = new Coordinate(2*32, 7*32);
+	        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
 	        game.addEntity(new Hunter(hunterPos));
+	        game.addEntity(new Key(key1Pos));
+	        game.addEntity(new Key(key2Pos));
+	        game.addEntity(new Door(Door1Pos));
+	        game.addEntity(new Door(Door2Pos));
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}

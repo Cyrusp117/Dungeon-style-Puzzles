@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 import entities.Arrow;
 import entities.Boulder;
