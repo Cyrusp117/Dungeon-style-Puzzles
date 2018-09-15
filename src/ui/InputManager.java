@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 
+
 // to be refactored into the Game
 public abstract class InputManager implements KeyListener {
 	protected Application app;
