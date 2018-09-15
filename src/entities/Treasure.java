@@ -5,7 +5,8 @@ public class Treasure extends Entity {
 		super(position);
 	}
 	
-	public boolean interact(Player player) {
+	@Override
+	public boolean interactWithPlayer(Player player) {
 		player.pickUp(this);
 		return true;
 	}

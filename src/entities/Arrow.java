@@ -1,8 +1,7 @@
-
 package entities;
 
-public class HoverPotion extends Entity {
-	public HoverPotion(Coordinate position) {
+public class Arrow extends Entity {
+	public Arrow(Coordinate position) {
 		super(position);
 	}
 	
@@ -12,6 +11,7 @@ public class HoverPotion extends Entity {
 	}
 	
 	public String getName() {
-		return "HoverPotion";
+		return "Arrow";
 	}
+	
 }

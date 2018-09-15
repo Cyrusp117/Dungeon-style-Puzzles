@@ -7,7 +7,7 @@ public abstract class Entity {
 	}
 	
 
-	public boolean interact(Player player) {
+	public boolean interactWithPlayer(Player player) {
 		return false;
 	}
 	
@@ -59,5 +59,12 @@ public abstract class Entity {
 	public boolean willCollide(Coordinate otherPos) {
 		return position.equals(otherPos);
 		
+	}
+	
+	public int getHitTime() {
+		return 0;
+	}
+	
+	public void setHitTime() {
 	}
 }

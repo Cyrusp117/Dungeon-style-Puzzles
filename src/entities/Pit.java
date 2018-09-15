@@ -1,3 +1,4 @@
+
 package entities;
 
 
@@ -6,8 +7,8 @@ public class Pit extends Entity{
 	public Pit(Coordinate position) {
 		super(position);
 	}
-	
-	public void interactWithPlayer(Player player,int x, int y) {
+
+	public boolean interactWithPlayer(Player player,int x, int y) {
 		if(player.hasItem("HoverPotion")) {
 			int newX = position.getxPosition() + x;
 		    int newY = position.getyPosition() + y;
@@ -16,6 +17,7 @@ public class Pit extends Entity{
 		}else{
 			//player die
 		}
+		return false;
 	}
 	
 	public boolean interactWithBoulder(Boulder boulder) {

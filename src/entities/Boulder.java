@@ -1,3 +1,4 @@
+
 package entities;
 
 public class Boulder extends Entity {
@@ -5,11 +6,12 @@ public class Boulder extends Entity {
 		super(position);
 	}
 	
-	public void interactWithPlayer(int x,int y) {
+	public boolean interactWithPlayer(int x,int y) {
 		int newX = position.getxPosition() + x;
 	    int newY = position.getyPosition() + y;
 	    Coordinate newPos = new Coordinate(newX, newY);
 	    this.setPosition(newPos);
+	    return false;
 	}
 	
 	public boolean interactWithBomb() {

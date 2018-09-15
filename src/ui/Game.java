@@ -72,7 +72,7 @@ public class Game{
 			Entity entity = getEntity(newPos);
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-				if(entity.interact(playerOne)) {
+				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
 				}
