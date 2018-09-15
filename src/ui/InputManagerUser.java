@@ -19,14 +19,16 @@ public class InputManagerUser extends InputManager {
 		if (key == KeyEvent.VK_1) {
 			app.getFrame().removeKeyListener(this);
 		    playerGame.changeState(new InputManagerDesigner(playerGame, app));
+			playerGame.init();
 			
 		}
 	    if (key == KeyEvent.VK_2) {
 	    	app.getFrame().removeKeyListener(this);
 	    	playerGame.changeState(new InputManagerPlayer(playerGame, app));
+			playerGame.init();
 			
 	    }
-		playerGame.init();
+
 	}
 	
 	public void keyTyped(KeyEvent e) {
