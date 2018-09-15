@@ -2,14 +2,21 @@ package entities;
 
 public abstract class Entity {
 	protected Coordinate position;
+	protected int keyCode;
 	public Entity(Coordinate position) {
 		this.position = position;
 	}
 	
-	public Coordinate move() {
-		System.out.println("Cant Move");
-		return null;
+
+	public boolean interactWithPlayer(Player player) {
+		return false;
 	}
+	
+//	public Coordinate move() {
+//		System.out.println("Cant Move");
+//		return null;
+//	}
+
 
 	public abstract String getName();
 
@@ -48,5 +55,21 @@ public abstract class Entity {
 	public boolean willCollide(Coordinate otherPos) {
 		return position.equals(otherPos);
 		
+	}
+	
+	public int getKeyCode() {
+		return this.keyCode;
+	}
+	
+	public void getDesignerDescription() {
+		System.out.println(this.getName() + " - " + (char)this.getKeyCode());
+
+	}
+	
+	public int getHitTime() {
+		return 0;
+	}
+	
+	public void setHitTime() {
 	}
 }

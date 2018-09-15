@@ -2,20 +2,19 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
-public class Treasure extends Entity {
-	public Treasure(Coordinate position) {
+public class InvincibilityPotion extends Entity {
+	public InvincibilityPotion(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_T;
+		this.keyCode = KeyEvent.VK_I;
 	}
 	
-	@Override
 	public boolean interactWithPlayer(Player player) {
 		player.pickUp(this);
 		return true;
 	}
 	
 	public String getName() {
-		return "Treasure";
+		return "InvincibilityPotion";
 	}
 	
 }

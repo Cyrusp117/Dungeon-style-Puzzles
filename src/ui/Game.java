@@ -2,7 +2,10 @@ package ui;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import entities.Treasure;
+import entities.AI;
 import entities.Coordinate;
 import entities.Entity;
 import entities.Player;
@@ -12,10 +15,12 @@ public class Game{
 	private static final Entity NULL = null;
 // implements Runnable{
 	private Application app;					//Executable window
+	private JFrame frame;
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
 	private InputManager playerInput;			//KeyListener, takes in key inputs
+	private InputManagerPlayable playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
 	// Need to implement generic iterator
@@ -23,13 +28,37 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		this.playerInput = new InputManager(this);
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
 	
 	private void update() {						//Updates the state of the game
 		movePlayer();
+		int allTreasure = 1;
+		for (Entity entity : entities) {
+			// Moves each entity that is supposed to move
+			if (entity instanceof AI) {
+				Entity enemy = (AI) entity;
+				System.out.println(enemy.getName() + " would move if he was implemented");
+			}
+			// Checks if all treasure has been picked up
+			if (entity instanceof Treasure){
+				if (!playerOne.hasItem(entity)) {
+					allTreasure = 0;
+				}
+			}
+		}
+		// Checks if player is dead
+		if (!playerOne.isAlive()) {
+			// Launch new instance of game
+			System.out.println("Player is currently dead");
+		}
+		
+		if(allTreasure == 1) {
+			System.out.println("All treasure has been collected");
+		}
+		System.out.println("\n");
+		
 	}
 
 	/**
@@ -46,10 +75,17 @@ public class Game{
 			Entity entity = getEntity(newPos);
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
+<<<<<<< HEAD
 //				if(entity.interact(playerOne)) {
 //					// The above returns true if the entity is to be deleted afterwards
 //					this.deleteEntity(entity);
 //				}
+=======
+				if(entity.interactWithPlayer(playerOne)) {
+					// The above returns true if the entity is to be deleted afterwards
+					this.deleteEntity(entity);
+				}
+>>>>>>> master
 			}
 
 		}
@@ -69,11 +105,13 @@ public class Game{
 	 * Initialises the game board
 	 */
 	public void init() {
+		
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
 		app = new Application(title, width, height); //Create window application
 		app.getFrame().addKeyListener(playerInput);  //refactor this
+
 	}
 	
 	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
@@ -84,7 +122,7 @@ public class Game{
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
-		System.out.println(playerOne.returnPosition());
+		System.out.println(playerOne.returnPosition()+"\n");
 	}
 	
 	/**
@@ -213,6 +251,7 @@ public class Game{
 		return false;
 	}
 	
+	
 	public int getHeight() {
 		return this.height;
 	}
@@ -224,6 +263,7 @@ public class Game{
 	public ArrayList<Entity> getPlayerInventory() {
 		return playerOne.getInventory();
 	}
+<<<<<<< HEAD
 	
 	public Application getApp() {
 		return app;
@@ -244,6 +284,20 @@ public class Game{
 	}
 	
 	
+=======
+
+	public void changeState(InputManagerPlayable playerInput) {
+		// There are two game states: Player and Designer
+		// Each state only supports a certain subset of Key Inputs 
+		// Player and Designer both extend from Playable so they can both move
+	
+		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
+		//this.playerInput = playerInput;
+		//this.frame = playerInput.getFrame();
+		this.playerInput = playerInput;
+		playerInput.getFrame().addKeyListener(playerInput);
+	}
+>>>>>>> master
 }
 	
 //	public void run() {
