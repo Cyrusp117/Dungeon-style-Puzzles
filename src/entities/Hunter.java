@@ -16,8 +16,9 @@ public class Hunter extends AI {
 	
 	@Override
 	public boolean interactWithPlayer(Player player) {
-		Coordinate playerPos = player.getPosition();
-		if(playerPos.equals(this.position)) {
+		if(player.hasItem("Sword")) {
+			return true;
+		} else {
 			player.setState(0);
 		}
 		return false;

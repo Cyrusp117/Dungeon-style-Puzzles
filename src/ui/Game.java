@@ -61,10 +61,10 @@ public class Game{
 	}
 
 	public void printGame() {
-        int i = 1;
-        int j = 1;
-		while (i <= 9) {
-        	while (j <= 9) {
+        int i = 0;
+        int j = 0;
+		while (i <= 10) {
+        	while (j <= 10) {
         		Coordinate curPos = new Coordinate(j*32, i*32);
         		Entity entity = getEntity(curPos);
         		if (curPos.equals(playerOne.getPosition())) {
@@ -78,7 +78,7 @@ public class Game{
         		j++;
         	}
         	System.out.println("");
-        	j = 1;
+        	j = 0;
         	i++;
         }
 	}
@@ -157,22 +157,12 @@ public class Game{
 			for(j = 0; j <= height; j+= 32) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					addWall(currentPosition, true, true);	
+					addEntity(new Wall(currentPosition));	
 				}
 			}
 		}
 	}
 	
-	/**
-	 * 
-	 * @param wall, the wall to be added to the list of Walls
-	 */
-	private void addWall(Coordinate position, boolean isBlockable, boolean isPermanent) {
-		if(isOccupied(position)) return;
-		Wall newWall = new Wall(position, isBlockable, isPermanent);
-		walls.add(newWall);
-	}
-
 	/**
 	 * @param position
 	 */
@@ -206,15 +196,6 @@ public class Game{
 	}
 	
 
-	/**
-	 * 
-	 * @param wall the Wall to be deleted, will only delete non-permanent walls
-	 */
-	private void deleteWall(Wall wall) {
-		if(!wall.isPermanent()) {
-			walls.remove(wall);
-		}
-	}
 	
 	/**
 	 * 

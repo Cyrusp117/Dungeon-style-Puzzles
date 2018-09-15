@@ -1,15 +1,13 @@
 package entities;
 
-public class Wall {
+import java.awt.event.KeyEvent;
+
+public class Wall extends Entity {
 	//private BufferedImage sprite;
-	private Coordinate position;
-	private boolean isBlockable;
-	private boolean isPermanent;
 	
-	public Wall (Coordinate position, boolean isBlockable, boolean isPermanent) {
-		this.position = position;
-		this.isBlockable = isBlockable;
-		this.isPermanent = isPermanent;
+	public Wall (Coordinate position)  {
+		super(position);
+		this.keyCode = KeyEvent.VK_W;
 	}
 	
 	/**
@@ -20,44 +18,10 @@ public class Wall {
 		return position;
 	}
 	
-	/**
-	 * 
-	 * @return the x Coordinate of the Wall. (int)
-	 */
-	public int returnX() {
-		return position.getxPosition();
-	}
-	
-	/**
-	 * 
-	 * @return the y Coordinate of the Wall. (int)
-	 */
-	public int returnY() {
-		return position.getyPosition();
-	}
-	
-	/**
-	 * 
-	 * @param position the Coordinate to inspect collision with
-	 * @return true if Collision will occur, false otherwise.
-	 */
-	public boolean willCollide(Coordinate position) {
-		if(position.equals(this.position) && isBlockable) return true;
-		return false;
-	}
 
-	/**
-	 * @return the isBlockable
-	 */
-	public boolean isBlockable() {
-		return isBlockable;
-	}
-
-	/**
-	 * @return the isPermanent
-	 */
-	public boolean isPermanent() {
-		return isPermanent;
+	@Override
+	public String getName() {
+		return "Wall";
 	}
 	
 	
