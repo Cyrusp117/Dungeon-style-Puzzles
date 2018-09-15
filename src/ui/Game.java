@@ -304,6 +304,7 @@ public class Game{
 	
 	public void changeState(InputManagerPlayable playerInput) {
 	public void changeState(InputManagerPlayer playerInput) {
+>>>>>>> master
 		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
 		// Player and Designer both extend from Playable so they can both move
