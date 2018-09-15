@@ -203,9 +203,9 @@ public class Game{
 	}
 	
 	public boolean addEntity(Entity entity) {
-		if(isOccupied(entity.getPosition())) return false;
+		if(isOccupied(entity.getPosition())) return false;   
 		if(isOutOfBounds(entity.getPosition())) return false;
-		System.out.println("adding entity: " + entity.getName() + "at Coordinates: ");
+		System.out.println("adding entity: " + entity.getName() + "at Coordinates: " + entity.getPosition().returnPosition());
 		entities.add(entity);
 		return true;
 	}

@@ -39,7 +39,7 @@ public class PlayerTests {
 		xBoundary = 320;
 		yBoundary = 320;
 		Application app = new Application("Title", 32, 32);
-		Game game = new Game("Title", xBoundary, yBoundary);
+		game = new Game("Title", xBoundary, yBoundary);
 		KeyListener playerInput = new InputManagerPlayer(game, app);
 		app.getFrame().addKeyListener(playerInput);
 		game.init();
@@ -64,21 +64,16 @@ public class PlayerTests {
 		System.out.println(player.returnX()  + " " + player.returnY());
 	}
 
-//	@Test
-//	public void testHasItemEntity() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testPickUp() {
-//		Coordinate itemPlace = new Coordinate(32,32);
-//		HoverPotion hPot = new HoverPotion(itemPlace);
-//		game.addEntity(hPot);
-//		//robot.keyPress(KeyEvent.pickupbutton);
-//		assertTrue(player.hasItem(hPot));
-//		fail("Not yet implemented");
-//	}
-//
+	@Test
+	public void testPickUp() {
+		Coordinate itemPlace = new Coordinate(64,32);
+		HoverPotion hPot = new HoverPotion(itemPlace);
+		System.out.println(hPot == null);
+		game.addEntity(hPot);
+		player.pickUp(hPot);
+		assertTrue(player.hasItem(hPot));
+	}
+
 //	@Test
 //	public void testHitUsingSword() {
 //		fail("Not yet implemented");
