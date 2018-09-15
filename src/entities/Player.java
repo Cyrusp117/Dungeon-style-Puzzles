@@ -174,6 +174,32 @@ public class Player extends Entity{
 
 	}
 	
+	public void removeItem(Object o) {
+		this.getInventory().remove(o);
+	}
+	
+	public boolean removeKey(int KeyId) {
+		int r = 0;
+		Key remove = null;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Key")) {
+				Key key = (Key) e;
+				if(key.getKeyId() == KeyId) {
+					r = 1;
+					remove = key;
+				}
+			}
+		}
+		//remove key with specific id from inventory,and return true
+		if(r == 1) {
+			this.removeItem(remove);
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	
 	public boolean hasKey(int DoorId) {
 		int has = 0;
 		for(Entity e: this.getInventory()) {
@@ -223,10 +249,17 @@ public class Player extends Entity{
 		return false;
 	}
 	
-	
-	
 
-	
+	public void lightAndDropBomb() {
+		if(this.hasItem("Bomb")) {
+			for(Entity e: this.getInventory()) {
+				if(e.getName().equals("Bomb")) {
+					this.removeItem(e);
+					break;
+				}
+			}
+		}
+	}
 }
 
 

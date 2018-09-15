@@ -68,6 +68,11 @@ public class InputManagerPlayer extends InputManager {
 	    	}
 	    	System.out.println("\n");
 	    }
+	    
+	    if (key == KeyEvent.VK_V) {
+	    	System.out.println("Light and drop the bomb");
+	    	game.getPlayerOne().lightAndDropBomb();
+	    }
 	    extraFunctions(e);
 	}
 	

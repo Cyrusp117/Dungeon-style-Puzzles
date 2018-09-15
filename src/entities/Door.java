@@ -22,6 +22,7 @@ public class Door extends Entity {
 			if(player.hasItem("Key")) {
 				if(player.hasKey(this.getDoorId())) {
 					System.out.println("You have the right key, open the door");
+					player.removeKey(this.getDoorId());
 					this.setState(OPEN);
 				}else {
 					player.setPosition(player.getOldPosition());

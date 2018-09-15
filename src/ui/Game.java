@@ -276,6 +276,22 @@ public class Game{
 		this.playerInput = playerInput;
 		playerInput.getFrame().addKeyListener(playerInput);
 	}
+
+	/**
+	 * @return the playerOne
+	 */
+	public Player getPlayerOne() {
+		return playerOne;
+	}
+
+	/**
+	 * @param playerOne the playerOne to set
+	 */
+	public void setPlayerOne(Player playerOne) {
+		this.playerOne = playerOne;
+	}
+	
+	
 }
 	
 //	public void run() {
