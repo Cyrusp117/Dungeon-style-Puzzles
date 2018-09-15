@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.event.KeyEvent;
 
+import entities.Entity;
+
 
 
 public class InputManagerPlayer extends InputManager {
@@ -12,6 +14,7 @@ public class InputManagerPlayer extends InputManager {
 	public InputManagerPlayer(Game game, Application app) {
 		super(app);
 		this.game = game;
+		System.out.println("Arrow Keys to move, 1 for Inventory");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -56,6 +59,14 @@ public class InputManagerPlayer extends InputManager {
 	    	System.out.println("*****  Returning to Menu.. *****");
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerMenu(app));
+	    }
+	    
+	    if (key == KeyEvent.VK_1) {
+	    	System.out.println("Inventory contents: ");
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		System.out.print(curItem.getName() + " ");
+	    	}
+	    	System.out.println("\n");
 	    }
 	    extraFunctions(e);
 	}

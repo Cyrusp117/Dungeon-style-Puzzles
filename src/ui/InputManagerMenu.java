@@ -13,7 +13,7 @@ public class InputManagerMenu extends InputManager {
 	
 	public InputManagerMenu(Application application) {
 		super(application);
-		System.out.println("Press 1 for Preset dungeon #1 and 2 for Custom dungeon");
+		System.out.println("Press 1 for Preset dungeon #1 and 0 for Custom dungeon");
 	}
 
 	/**
