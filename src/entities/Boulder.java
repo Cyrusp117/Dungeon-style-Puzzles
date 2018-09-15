@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.awt.event.KeyEvent;
@@ -28,6 +27,12 @@ public class Boulder extends Entity {
 	
 	public String getName() {
 		return "Boulder";
+	}
+
+	@Override
+	public Coordinate move(Coordinate co, Graph g) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/**

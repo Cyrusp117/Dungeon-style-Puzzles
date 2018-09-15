@@ -3,14 +3,19 @@ package entities;
 public abstract class Entity {
 	protected Coordinate position;
 	protected int keyCode;
+	protected boolean movable;
 	public Entity(Coordinate position) {
 		this.position = position;
 	}
 	
 
+	public abstract Coordinate move(Coordinate co, Graph g);
+
+
 	public boolean interactWithPlayer(Player player) {
 		return false;
 	}
+
 	
 //	public Coordinate move() {
 //		System.out.println("Cant Move");

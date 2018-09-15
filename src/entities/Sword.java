@@ -8,8 +8,12 @@ public class Sword extends Entity {
 		super(position);
 		this.hitTime = 5;
 		this.keyCode = KeyEvent.VK_S;
+		this.movable = false;
 	}
 	
+	public Coordinate move(Coordinate co, Graph g) {
+		return position;
+	}
 	public boolean interactWithPlayer(Player player) {
 		if(!player.hasItem("Sword")) {
 			player.pickUp(this);

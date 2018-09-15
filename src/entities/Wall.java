@@ -8,8 +8,11 @@ public class Wall extends Entity {
 	public Wall (Coordinate position)  {
 		super(position);
 		this.keyCode = KeyEvent.VK_W;
+		this.movable = false;
 	}
-	
+	public Coordinate move(Coordinate co, Graph g) {
+		return position;
+	}
 	/**
 	 * 
 	 * @return position, the Coordinate of the Wall

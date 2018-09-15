@@ -1,5 +1,5 @@
 package ui;
-
+import entities.*;
 import java.util.ArrayList;
 
 
@@ -18,13 +18,14 @@ public class Game{
 	private int width, height;					//Width and height of the app window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
-	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
+	private ArrayList<Entity> entities;	//Array List of Entities, tracks all entities in the current game
+	
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
-		//this.playerInput;
 		this.entities = new ArrayList<>();
+		
 	}
 	
 	private void update() {						//Updates the state of the game
@@ -75,7 +76,9 @@ public class Game{
 		}
 		System.out.println("");
 		printGame();
+
 	}
+	
 
 	public void printGame() {
         int i = 0;
@@ -104,6 +107,7 @@ public class Game{
 	 * Moves the player
 	 */
 	public void movePlayer() {
+
 //		Coordinate curPos = playerOne.getPosition();
 //		int xPlayer = curPos.getxPosition();
 //		int yPlayer = curPos.getyPosition();
@@ -111,17 +115,31 @@ public class Game{
 //		int yMovement = playerInput.getDy();
 //		Coordinate newPos = new Coordinate(xPlayer+xMovement, yPlayer+yMovement);
 		// OR
+		playerInput.getDx();
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
+
+		//just making null variables for now
+		Graph g = null;
 		Coordinate newPos = playerOne.move();
+
 		if(!isOutOfBounds(newPos)) {
+
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
+
+			System.out.println("Player one at : " + playerOne.returnPosition());
 			Entity entity = getEntitynofs(newPos);
 			Entity boulderEntity = getEntity(playerOne.move());
+
+
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
+//				if(entity.interact(playerOne)) {
+//					// The above returns true if the entity is to be deleted afterwards
+//					this.deleteEntity(entity);
+//				}
 				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
@@ -247,7 +265,6 @@ public class Game{
 		return true;
 	}
 	
-
 	
 	/**
 	 * 
@@ -309,8 +326,24 @@ public class Game{
 	public ArrayList<Entity> getPlayerInventory() {
 		return playerOne.getInventory();
 	}
+	
+	/**
+	 * @return the playerOne
+	 */
+	public Player getPlayerOne() {
+		return playerOne;
+	}
 
+
+	/**
+	 * @param playerOne the playerOne to set
+	 */
+	public void setPlayerOne(Player playerOne) {
+		this.playerOne = playerOne;
+	}
+	
 	public void changeState(InputManagerPlayer playerInput) {
+		
 		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
 		// Player and Designer both extend from Playable so they can both move
@@ -321,38 +354,35 @@ public class Game{
 		this.playerInput = playerInput;
 		playerInput.getFrame().addKeyListener(playerInput);
 	}
-}
+
+	/**
+	 * @param playerInput the playerInput to set
+	 */
+	public void setPlayerInput(InputManagerPlayer playerInput) {
+		this.playerInput = playerInput;
+	}
+
+	public Graph generateGraph() {
+		int i,j;
+		Coordinate cur;
+		Graph g = new Graph();
+		for(i = 0; i <= width; i += 32) {
+			for(j = 0; j <= height; j+= 32) {
+				cur = new Coordinate(i,j);
+				if(! isOccupied(cur)) {
+					g.addCoordinate(cur);	
+				}
+			}
+		}
+		
+		return g;
+	}
 	
-//	public void run() {
-//		init();
-//		
-//		while(active) {
-//			update();
-//			render();
-//		}
-//		stop();
-//	}
-//	
-//	public synchronized void start() {
-//		if(!active) {
-//			active = true;
-//			thread = new Thread(this);
-//			thread.start();
-//		}
-//	}
-//	
-//	public synchronized void stop() {
-//		if (active) {
-//			try {
-//				thread.join();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		
-//		}
-//		active = false;
-//	}
+	public ArrayList<Entity> testEntities() {
+		return this.entities;
+	}
+	}
+	
 
 	
 

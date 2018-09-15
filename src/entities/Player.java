@@ -28,8 +28,9 @@ public class Player extends Entity{
 	 * 
 	 * @return the newPosition requested to be moved to by the player
 	 */
-	public Coordinate move() {
-		//System.out.println("DX = " + dx + " DY = " + dy);
+
+	public Coordinate move(Coordinate co, Graph g) {
+		System.out.println("DX = " + dx + " DY = " + dy);
 		//System.out.println(position.getxPosition());
 	    int newX = position.getxPosition() + dx;
 	    int newY = position.getyPosition() + dy;
@@ -38,6 +39,20 @@ public class Player extends Entity{
 	    
 	}
 	
+	/**
+	 * 
+	 * @return the newPosition requested to be moved to by the player
+	 */
+
+	public Coordinate move() {
+		System.out.println("DX = " + dx + " DY = " + dy);
+		//System.out.println(position.getxPosition());
+	    int newX = position.getxPosition() + dx;
+	    int newY = position.getyPosition() + dy;
+	    Coordinate newPos = new Coordinate(newX, newY);
+	    return newPos;
+	 
+	}
 	/**
 	 * 
 	 * @param An entity

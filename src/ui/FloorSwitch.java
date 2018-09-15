@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
+import entities.Graph;
 
 
 public class FloorSwitch extends Entity {
@@ -41,5 +42,11 @@ public class FloorSwitch extends Entity {
 	@Override
 	public String getName() {
 		return "FloorSwitch";
+	}
+
+	@Override
+	public Coordinate move(Coordinate co, Graph g) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

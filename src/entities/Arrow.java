@@ -8,6 +8,10 @@ public class Arrow extends Entity {
 		this.keyCode = KeyEvent.VK_A;
 	}
 	
+	public Coordinate move(Coordinate co, Graph g) {
+		return position;
+	}
+	
 	public boolean interactWithPlayer(Player player) {
 		player.pickUp(this);
 		return true;
