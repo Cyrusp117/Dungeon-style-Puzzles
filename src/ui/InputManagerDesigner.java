@@ -18,6 +18,7 @@ import entities.InvincibilityPotion;
 import entities.Pit;
 import entities.Sword;
 import entities.Treasure;
+import entities.Wall;
 
 // to be refactored into the Game
 public class InputManagerDesigner extends InputManagerPlayer {
@@ -36,6 +37,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new Boulder(defaultPos));
 		allDesignerObjects.add(new Pit(defaultPos));
 		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
+		allDesignerObjects.add(new Wall(defaultPos));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}

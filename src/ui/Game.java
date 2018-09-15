@@ -27,7 +27,6 @@ public class Game{
 		this.height = height;
 		this.title = title;
 		//this.playerInput;
-		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
 	
@@ -61,8 +60,8 @@ public class Game{
 	}
 
 	public void printGame() {
-        int i = 1;
-        int j = 1;
+        int i = 0;
+        int j = 0;
 		while (i <= this.getHeight()/32) {
         	while (j <= this.getWidth()/32) {
         		Coordinate curPos = new Coordinate(j*32, i*32);
@@ -91,7 +90,7 @@ public class Game{
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
 		//System.out.println("New position: " + newPos.returnPosition());
-		if(!isOutOfBounds(newPos) && !isSolid(newPos)) {
+		if(!isOutOfBounds(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setPosition(newPos);
 			Entity entity = getEntity(newPos);
@@ -135,7 +134,7 @@ public class Game{
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
-		System.out.println(playerOne.returnPosition()+"\n");
+		System.out.println(playerOne.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	
 	/**
@@ -157,7 +156,7 @@ public class Game{
 			for(j = 0; j <= height; j+= 32) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					addEntity(new Wall(currentPosition));	
+					entities.add(new Wall(currentPosition));
 				}
 			}
 		}
@@ -175,15 +174,15 @@ public class Game{
 				}
 			}
 		}
-		
-		if(!walls.isEmpty()) {
-			for(Wall wall: walls) {
-				if(wall.willCollide(position)) {
-					System.out.println("Cannot be placed here");
-					return true;
-				}
-			}
-		}
+//		
+//		if(!walls.isEmpty()) {
+//			for(Wall wall: walls) {
+//				if(wall.willCollide(position)) {
+//					System.out.println("Cannot be placed here");
+//					return true;
+//				}
+//			}
+//		}
 		return false;
 	}
 	
@@ -220,10 +219,10 @@ public class Game{
 		int xBoundary = this.width;
 		int yBoundary = this.height;
 		//System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
-		if(newPos.getxPosition() < 0 || newPos.getxPosition() > xBoundary ) {
+		if(newPos.getxPosition() <= 0 || newPos.getxPosition() >= xBoundary ) {
 			System.out.println("Out of bounds");
 			return true;
-		}else if( newPos.getyPosition() < 0 || newPos.getyPosition() > yBoundary) {
+		}else if( newPos.getyPosition() <= 0 || newPos.getyPosition() >= yBoundary) {
 			System.out.println("Out of bounds");
 			return true;
 		}
@@ -235,16 +234,16 @@ public class Game{
 	 * @param position the Coordinate the entity is trying to occupy
 	 * @return true if the Coordinate has a Solid object, false otherwise
 	 */
-	private boolean isSolid(Coordinate position) {
-		if(walls.isEmpty()) return false;
-		for (Wall wall: walls){
-			if(wall.willCollide(position)) {
-				System.out.println("Colliding with Wall");
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean isSolid(Coordinate position) {
+//		if(walls.isEmpty()) return false;
+//		for (Wall wall: walls){
+//			if(wall.willCollide(position)) {
+//				System.out.println("Colliding with Wall");
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	
 	public int getHeight() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Player extends Entity{
 	
+	Coordinate oldPos; 
 	private static final int ALIVE = 1;
 	private static final int DEAD = 0;
 	private int dx; // Current x velocity
