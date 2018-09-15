@@ -74,17 +74,14 @@ public class Game{
 			Entity entity = getEntity(newPos);
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-<<<<<<< HEAD
 //				if(entity.interact(playerOne)) {
 //					// The above returns true if the entity is to be deleted afterwards
 //					this.deleteEntity(entity);
 //				}
-=======
 				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
 				}
->>>>>>> master
 			}
 
 		}
@@ -260,12 +257,7 @@ public class Game{
 	public ArrayList<Entity> getPlayerInventory() {
 		return playerOne.getInventory();
 	}
-<<<<<<< HEAD
 	
-	public Application getApp() {
-		return app;
-	}
-
 	/**
 	 * @return the playerOne
 	 */
@@ -280,9 +272,6 @@ public class Game{
 		this.playerOne = playerOne;
 	}
 	
-	
-=======
-
 	public void changeState(InputManagerPlayable playerInput) {
 		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
@@ -294,7 +283,6 @@ public class Game{
 		this.playerInput = playerInput;
 		playerInput.getFrame().addKeyListener(playerInput);
 	}
->>>>>>> master
 }
 	
 //	public void run() {
