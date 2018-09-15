@@ -1,20 +1,44 @@
 package ui;
 
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
+import entities.Arrow;
+import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
+import entities.HoverPotion;
 import entities.Hunter;
+import entities.InvincibilityPotion;
+import entities.Pit;
+import entities.Sword;
 import entities.Treasure;
 
 // to be refactored into the Game
 public class InputManagerDesigner extends InputManagerPlayable {
-
+	ArrayList<Entity> allDesignerObjects;
+	
 	public InputManagerDesigner(Game game, Application app) {
 		super(game, app);
-		System.out.println("Designer Mode Controls: Escape to return to menu, F1 - Treasure Placement, H - Hunter Placement, B - Backpack");
+		//System.out.println("Designer Mode Controls: Escape to return to menu, F1 - Treasure Placement, H - Hunter Placement, B - Backpack");
+		allDesignerObjects = new ArrayList<Entity>();
+		Coordinate defaultPos = new Coordinate(1, 1);
+		allDesignerObjects.add(new Hunter(defaultPos));
+		allDesignerObjects.add(new Arrow(defaultPos));
+		allDesignerObjects.add(new HoverPotion(defaultPos));
+		allDesignerObjects.add(new Treasure(defaultPos));
+		allDesignerObjects.add(new Sword(defaultPos));
+		allDesignerObjects.add(new Boulder(defaultPos));
+		allDesignerObjects.add(new Pit(defaultPos));
+		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
+		for (Entity entity : allDesignerObjects) {
+			entity.getDesignerDescription();
+		}
 	}
 	
 	/**
@@ -29,42 +53,89 @@ public class InputManagerDesigner extends InputManagerPlayable {
 	@Override
 	public void extraFunctions(KeyEvent e) {
 		int key = e.getKeyCode();
-	    // If F1 is pressed, the next two Integers in STDIN will be the  
-	    // coordinate of the treasure
-	    if (key == KeyEvent.VK_F1) {
-	    	System.out.println("Please enter co-ordinates of Treasure: ");
+		
+		// ideally for (entity entity : game.getEntities) {
+		// 	 if (entity instanceof DesignerObject ) {
+		//		if (entity.getKeyCode == key) {
+		//			system.out.println("Please enter coordinates of entity.getName(): ") // also scan two integers
+		//			game.addEntity(entity)
+		// ^ refactor into this later
+		
+	 
+		Entity requiredEntity = null;
+		for (Entity entity : allDesignerObjects) {
+			if (entity.getKeyCode() == key) {
+				System.out.println("Please enter co-ordinates of " + entity.getName() + ": ");
+				requiredEntity = entity;
+			}
+		}
+		
+		if (requiredEntity != null) { 
 			Scanner sc = new Scanner(System.in);
 			dx = sc.nextInt()*32;
 			dy = sc.nextInt()*32;
+			Coordinate entityPos = new Coordinate(dx, dy);
 			
-			Coordinate treasurePos = new Coordinate(dx, dy);
-			if (game.addEntity(new Treasure(treasurePos))) {
-				System.out.println("adding treasure at " + dx + dy);
-			} else {
-				System.out.println("Couldn't add treasure");
+			Class<? extends Entity> c = requiredEntity.getClass();
+			Constructor<? extends Entity> constructor = null;
+			Entity instance = null;
+			try {
+				constructor = c.getConstructor(Coordinate.class);
+				instance = constructor.newInstance(entityPos);
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
-	    }
-	    
-	    if (key == KeyEvent.VK_B) {
-	    	System.out.println("Inventory contents: ");
-	    	for (Entity curItem : game.getPlayerInventory()) {
-	    		System.out.print(curItem.getName() + " ");
-	    	}
-	    	System.out.println("\n");
-	    }
-	    
-	    if (key == KeyEvent.VK_H) {
-	    	System.out.println("Enter Hunter's Coordinates: ");
-			Scanner sc = new Scanner(System.in);
-			dx = sc.nextInt()*32;
-			dy = sc.nextInt()*32;
-			Coordinate hunterPos = new Coordinate(dx, dy);
-			if (game.addEntity(new Hunter(hunterPos))) {
-				System.out.println("adding hunter at " + dx + dy);
-			} else {
-				System.out.println("Couldn't add hunter");
-			}
-	    }
+			game.addEntity(instance);
+		}
+		
+//	    if (key == KeyEvent.VK_F1) {
+//	    	System.out.println("Please enter co-ordinates of Treasure: ");
+//			Scanner sc = new Scanner(System.in);
+//			dx = sc.nextInt()*32;
+//			dy = sc.nextInt()*32;
+//			
+//			Coordinate treasurePos = new Coordinate(dx, dy);
+//			if (game.addEntity(new Treasure(treasurePos))) {
+//				System.out.println("adding treasure at " + dx + dy);
+//			} else {
+//				System.out.println("Couldn't add treasure");
+//			}
+//	    }
+//	    
+//	    if (key == KeyEvent.VK_F2) {
+//	    	System.out.println("Please enter co-ordinates of Pit: ");
+//			Scanner sc = new Scanner(System.in);
+//			dx = sc.nextInt()*32;
+//			dy = sc.nextInt()*32;
+//			
+//			Coordinate pitPos = new Coordinate(dx, dy);
+//			if (game.addEntity(new Pit(pitPos))) {
+//				System.out.println("adding pit at " + dx + dy);
+//			} else {
+//				System.out.println("Couldn't add pit");
+//			}
+//	    }
+//	    
+//	    if (key == KeyEvent.VK_B) {
+//	    	System.out.println("Inventory contents: ");
+//	    	for (Entity curItem : game.getPlayerInventory()) {
+//	    		System.out.print(curItem.getName() + " ");
+//	    	}
+//	    	System.out.println("\n");
+//	    }
+//	    
+//	    if (key == KeyEvent.VK_H) {
+//	    	System.out.println("Enter Hunter's Coordinates: ");
+//			Scanner sc = new Scanner(System.in);
+//			dx = sc.nextInt()*32;
+//			dy = sc.nextInt()*32;
+//			Coordinate hunterPos = new Coordinate(dx, dy);
+//			if (game.addEntity(new Hunter(hunterPos))) {
+//				System.out.println("adding hunter at " + dx + dy);
+//			} else {
+//				System.out.println("Couldn't add hunter");
+//			}
+//	    }
 		
 	
 	}

@@ -1,10 +1,13 @@
 package entities;
 
+import java.awt.event.KeyEvent;
+
 public class Sword extends Entity {
 	int hitTime;
 	public Sword(Coordinate position) {
 		super(position);
 		this.hitTime = 5;
+		this.keyCode = KeyEvent.VK_S;
 	}
 	
 	public boolean interactWithPlayer(Player player) {

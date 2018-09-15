@@ -32,6 +32,7 @@ public class Game{
 	}
 	
 	private void update() {						//Updates the state of the game
+		movePlayer();
 		int allTreasure = 1;
 		for (Entity entity : entities) {
 			// Moves each entity that is supposed to move
@@ -55,7 +56,8 @@ public class Game{
 		if(allTreasure == 1) {
 			System.out.println("All treasure has been collected");
 		}
-		movePlayer();
+		System.out.println("\n");
+		
 	}
 
 	/**
@@ -110,7 +112,7 @@ public class Game{
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
-		System.out.println(playerOne.returnPosition());
+		System.out.println(playerOne.returnPosition()+"\n");
 	}
 	
 	/**

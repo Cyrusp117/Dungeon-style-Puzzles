@@ -1,9 +1,12 @@
 
 package entities;
 
+import java.awt.event.KeyEvent;
+
 public class Boulder extends Entity {
 	public Boulder(Coordinate position) {
 		super(position);
+		this.keyCode = KeyEvent.VK_B;
 	}
 	
 	public boolean interactWithPlayer(int x,int y) {

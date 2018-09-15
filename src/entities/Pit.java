@@ -1,11 +1,12 @@
 
 package entities;
 
-
+import java.awt.event.KeyEvent;
 
 public class Pit extends Entity{
 	public Pit(Coordinate position) {
 		super(position);
+		this.keyCode = KeyEvent.VK_P;
 	}
 
 	public boolean interactWithPlayer(Player player,int x, int y) {
@@ -15,7 +16,7 @@ public class Pit extends Entity{
 		    Coordinate newPos = new Coordinate(newX, newY);
 		    player.setPosition(newPos);
 		}else{
-			//player die
+			player.setState(0); // player is dead
 		}
 		return false;
 	}
