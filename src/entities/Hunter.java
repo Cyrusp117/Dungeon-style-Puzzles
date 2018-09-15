@@ -21,8 +21,9 @@ public class Hunter extends AI {
 
 	}
 	
-	public void move() {
+	public Coordinate move() {
 		// TODO Auto-generated method stub
+		return null;
 		
 	}
 	

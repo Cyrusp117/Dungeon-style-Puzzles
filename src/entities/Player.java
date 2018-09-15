@@ -54,6 +54,7 @@ public class Player extends Entity{
 		
 	}
 	
+
 	public boolean isAlive () {
 		if(this.state == 1) return true;
 		return false;
@@ -70,7 +71,7 @@ public class Player extends Entity{
 	public ArrayList<Entity> getInventory() {
 		return inventory;
 	}
-	
+
 	/**
 	 * Returns a string which is the name of the entity
 	 */
@@ -144,7 +145,21 @@ public class Player extends Entity{
 	}
 	
 
+	public boolean hasItem(String item) {
+		int has = 0;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals(item)) {
+				has = 1;
+			}
+		}
+		if(has == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
+
 	
 }
 

@@ -12,5 +12,5 @@ public abstract class AI extends Entity {
 		return false;
 	}
 	
-	public abstract void move ();
+	public abstract Coordinate move ();
 }

@@ -1,7 +1,5 @@
 package entities;
 
-
-
 public class Treasure extends Entity {
 	public Treasure(Coordinate position) {
 		super(position);
