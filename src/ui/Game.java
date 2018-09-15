@@ -53,11 +53,8 @@ public class Game{
 		}
 		
 		if(allTreasure == 1) {
-			System.out.println("All treasure has been collected");
 			//System.out.println("All treasure has been collected");
 		}
-		System.out.println("\n");
-		
 		System.out.println("");
 		printGame();
 	}
@@ -113,10 +110,8 @@ public class Game{
 		printPlayerCoordinates();
 	}
 	
-	private Entity getEntity(Coordinate newPos) {
 	public Entity getEntity(Coordinate newPos) {
 		for (Entity entity : entities) {
-			if(entity.getPosition().equals(playerOne.getPosition())) {
 			if(entity.getPosition().equals(newPos)) {
 				return entity;
 			}
@@ -292,6 +287,7 @@ public class Game{
 		return playerOne;
 	}
 
+
 	/**
 	 * @param playerOne the playerOne to set
 	 */
@@ -299,9 +295,8 @@ public class Game{
 		this.playerOne = playerOne;
 	}
 	
-	public void changeState(InputManagerPlayable playerInput) {
 	public void changeState(InputManagerPlayer playerInput) {
->>>>>>> master
+		
 		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
 		// Player and Designer both extend from Playable so they can both move
