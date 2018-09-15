@@ -10,6 +10,7 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithPlayer(Player player) {
+		System.out.println("Boulder hi");
 		int dx = player.getDx();
 		int dy = player.getDy();
 		int curX = position.getxPosition();
@@ -29,6 +30,14 @@ public class Boulder extends Entity {
 		return "Boulder";
 	}
 
+	/**
+	 * Reverts position of player and boulder to a turn ago
+	 * @param Player
+	 */
+	public void revert(Player player) {
+		this.setPosition(this.oldPos);
+		player.setPosition(player.getOldPosition());
+	}
 
 	
 	/**

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 
 import entities.Treasure;
-import entities.AI;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
@@ -28,14 +27,39 @@ public class Game{
 		
 	}
 	
+	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
+		// Checks for arrow collisions
+		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
+		for (Entity entity : entities) {
+			if (entity instanceof Arrow) {
+				Arrow arrow = (Arrow)entity;
+				int newX = arrow.returnX() + arrow.getDx();
+				int newY = arrow.returnY() + arrow.getDy();
+				Coordinate newPos = new Coordinate(newX, newY);
+				arrow.setPosition(newPos);
+				Entity onArrow = getEntityExcept(newPos, arrow);
+				if (onArrow instanceof Enemy){
+					toBeDeleted.add(onArrow);
+				}
+			}
+		}
+		for (Entity entity : toBeDeleted) {
+			entities.remove(entity);
+		}
+		update();
+	}
+	
 	private void update() {						//Updates the state of the game
 		movePlayer();
 		int allTreasure = 1;
 		int allSwitch = 1;
+		int allEnemy = 1;
 		for (Entity entity : entities) {
-			// Moves each entity that is supposed to move and checks all killed wincondition
-			if (entity instanceof AI) {
-				Entity enemy = (AI) entity;
+			
+			// Checks all killed win condition
+			if (entity instanceof Enemy) {
+				Entity enemy = (Enemy) entity;
+				allEnemy = 0;
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			
@@ -46,33 +70,39 @@ public class Game{
 				}
 			}
 			
-			if (entity instanceof FloorSwitch) {
+			// Checks if all floor switches are active (have a boulder on them)
+			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 				FloorSwitch fs = (FloorSwitch)entity; 
 				fs.deactivate();
-				for (Entity e : entities)  {
-					if (e instanceof Boulder) {
-						Boulder b = (Boulder)e;
-						if(b.getPosition().equals(fs.getPosition())) {
-							fs.activate();
-						}
-					}
+				if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+					fs.activate();
 				}
 				if(!fs.getState()) {
 					allSwitch = 0;
 				}
+//				if (e instanceof Boulder) {
+//				Boulder b = (Boulder)e;
+//				if(b.getPosition().equals(fs.getPosition())) {
+//					fs.activate();
+//				}
 			}
+			
+
 		}
+		
 		// Checks if player is dead
 		if (!playerOne.isAlive()) {
-			// Launch new instance of game
 			System.out.println("Player is currently dead");
 		}
 		
 		if(allTreasure == 1) {
-			//System.out.println("All treasure has been collected");
+			System.out.println("All treasure has been collected");
 		}
 		if(allSwitch == 1) {
 			System.out.println("All Switches active");
+		}
+		if(allEnemy == 1) {
+			System.out.println("All enemies dead");
 		}
 		System.out.println("");
 		printGame();
@@ -128,18 +158,13 @@ public class Game{
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
-
-			System.out.println("Player one at : " + playerOne.returnPosition());
-			Entity entity = getEntitynofs(newPos);
+			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
+			System.out.println(entity);
 			Entity boulderEntity = getEntity(playerOne.move());
 
 
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-//				if(entity.interact(playerOne)) {
-//					// The above returns true if the entity is to be deleted afterwards
-//					this.deleteEntity(entity);
-//				}
 				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
@@ -149,12 +174,12 @@ public class Game{
 				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
 				if(isOutOfBounds(entity.getPosition())) {		
 					Boulder boulder = (Boulder) entity;
-					boulder.setPosition(boulder.getOldPosition());
-					playerOne.setPosition(playerOne.getOldPosition());
+					boulder.revert(playerOne);
 					System.out.println("Boulder cannot be moved here");
 				} else if (boulderEntity != NULL) {
 					if (boulderEntity instanceof Pit) {
 						entities.remove(entity);
+						System.out.println("Boulder is Dead :)");
 					}
 				}
 				// BOULDER STUFF END
@@ -172,9 +197,19 @@ public class Game{
 		return null;
 	}
 	
-	public Entity getEntitynofs(Coordinate newPos) {
+//	public Entity getEntitynofs(Coordinate newPos) {
+//		for (Entity entity : entities) {
+//			if(entity instanceof FloorSwitch) continue;
+//			if(entity.getPosition().equals(newPos)) {
+//				return entity;
+//			}
+//		}
+//		return NULL;
+//	}
+	
+	public Entity getEntityExcept(Coordinate newPos, Entity e) {
 		for (Entity entity : entities) {
-			if(entity instanceof FloorSwitch) continue;
+			if(e.getName().equals(entity.getName())) continue;
 			if(entity.getPosition().equals(newPos)) {
 				return entity;
 			}
@@ -193,9 +228,7 @@ public class Game{
 
 	}
 	
-	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
-		update();
-	}
+
 
 	/**
 	 * print to the Console the Coordinates of the current player
@@ -258,9 +291,6 @@ public class Game{
 		if(isOccupied(position)) return false;
 		if(isOutOfBounds(position)) return false;
 		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
-		if (entity instanceof FloorSwitch) {
-			
-		}
 		entities.add(entity);
 		return true;
 	}

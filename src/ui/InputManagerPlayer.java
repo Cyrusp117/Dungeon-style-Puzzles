@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.event.KeyEvent;
 
+import entities.Arrow;
 import entities.Entity;
 
 
@@ -14,12 +15,14 @@ public class InputManagerPlayer extends InputManager {
 	public InputManagerPlayer(Game game, Application app) {
 		super(app);
 		this.game = game;
-		System.out.println("Arrow Keys to move, 1 for Inventory");
+		System.out.println("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
 		// TODO Auto-generated constructor stub
 	}
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		dx = 0;
+		dy = 0;
 		// If the left arrow key is pressed, request to move left by a tile
 	    if (key == KeyEvent.VK_LEFT) {
 	        dx = -32;
@@ -67,6 +70,20 @@ public class InputManagerPlayer extends InputManager {
 	    		System.out.print(curItem.getName() + " ");
 	    	}
 	    	System.out.println("\n");
+	    }
+	    
+	    if (key == KeyEvent.VK_2) {
+	    	System.out.println("Shooting upwards");
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Arrow) {
+	    			Arrow arrow = (Arrow)curItem;
+	    			game.addEntity(arrow);
+	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setDy(-32); 
+	    			arrow.setDx(0);
+	    		}
+	    	}
+	    	game.newTurn();
 	    }
 	    extraFunctions(e);
 	}

@@ -3,6 +3,7 @@ package ui;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
+import entities.Arrow;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.HoverPotion;
@@ -32,12 +33,14 @@ public class InputManagerMenu extends InputManager {
 	        Coordinate swordPos = new Coordinate(5*32, 1*32);
 	        Coordinate fsPos = new Coordinate(1*32, 8*32);
 	        Coordinate boulderPos = new Coordinate(5*32, 5*32);
+	        Coordinate arrowPos = new Coordinate(4*32, 4*32);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
 	        game.addEntity(new Hunter(hunterPos));
 	        game.addEntity(new FloorSwitch(fsPos));
 	        game.addEntity(new Boulder(boulderPos));
+	        game.addEntity(new Arrow(arrowPos));
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}
@@ -82,25 +85,19 @@ public class InputManagerMenu extends InputManager {
 		return game;
 	}
 
-	
-	
-	/**
-	 * Actions when a key is released (currently nothing)
-	 */
-
-	public void keyReleased(KeyEvent e) {
-		
-	}
-	
-
-	/**
-	 * Actions when a key is typed (currently nothing)
-	 */
-
-	public void keyTyped(KeyEvent e) {
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 }

@@ -30,16 +30,19 @@ public class InputManagerUser extends InputManager {
 	    }
 
 	}
-	
-	public void keyTyped(KeyEvent e) {
-		
-	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
  
 }
