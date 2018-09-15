@@ -29,11 +29,7 @@ public class Boulder extends Entity {
 		return "Boulder";
 	}
 
-	@Override
-	public Coordinate move(Coordinate co, Graph g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	/**
 	 * 

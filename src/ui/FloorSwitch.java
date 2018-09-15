@@ -44,9 +44,5 @@ public class FloorSwitch extends Entity {
 		return "FloorSwitch";
 	}
 
-	@Override
-	public Coordinate move(Coordinate co, Graph g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
