@@ -20,7 +20,7 @@ import entities.Sword;
 import entities.Treasure;
 
 // to be refactored into the Game
-public class InputManagerDesigner extends InputManagerPlayable {
+public class InputManagerDesigner extends InputManagerPlayer {
 	ArrayList<Entity> allDesignerObjects;
 	
 	public InputManagerDesigner(Game game, Application app) {

@@ -3,11 +3,17 @@ package ui;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
+import entities.Coordinate;
+import entities.HoverPotion;
+import entities.Hunter;
+import entities.Pit;
+import entities.Sword;
+
 public class InputManagerMenu extends InputManager {
 	
 	public InputManagerMenu(Application application) {
 		super(application);
-		System.out.println("Press 1 for Designer mode and 2 for Player mode");
+		System.out.println("Press 1 for Preset dungeon #1 and 2 for Custom dungeon");
 	}
 
 	/**
@@ -17,19 +23,29 @@ public class InputManagerMenu extends InputManager {
 		int key = e.getKeyCode();
 	    
 		if (key == KeyEvent.VK_1) {
-			Game playerGame = makeGame("Designer");
-			app.getFrame().removeKeyListener(this);
-		    playerGame.changeState(new InputManagerDesigner(playerGame, app));
-			playerGame.init();
-			
-		}
-	    if (key == KeyEvent.VK_2) {
-	    	Game playerGame = makeGame("Player");
+	    	Game game = new Game("Preset #1", 10*32, 10*32);
 	    	app.getFrame().removeKeyListener(this);
-	    	playerGame.changeState(new InputManagerPlayer(playerGame, app));
-			playerGame.init();
+	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
+
+			
+	        System.out.println("First Preset Dungeon");
+	        Coordinate pitPos = new Coordinate(2*32, 2*32);
+	        Coordinate hunterPos = new Coordinate(4*32, 1*32);
+	        Coordinate hoverPos = new Coordinate(2*32, 1*32);
+	        Coordinate swordPos = new Coordinate(5*32, 1*32);
+	        game.addEntity(new Pit(pitPos));
+	        game.addEntity(new HoverPotion(hoverPos));
+	        game.addEntity(new Sword(swordPos));
+	        game.addEntity(new Hunter(hunterPos));
+		}
+	    if (key == KeyEvent.VK_0) {
+			Game playerGame = makeGame("Custom");
+			app.getFrame().removeKeyListener(this);
+		    app.getFrame().addKeyListener(new InputManagerUser(playerGame, app));
 			
 	    }
+	    
+
 	}
 	
 

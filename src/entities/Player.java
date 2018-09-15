@@ -1,9 +1,7 @@
 package entities;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import ui.Game;
 
 public class Player extends Entity{
 	
@@ -20,6 +18,7 @@ public class Player extends Entity{
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
+		keyCode = KeyEvent.VK_JAPANESE_HIRAGANA;
 	}
 
 	/**
@@ -167,8 +166,9 @@ public class Player extends Entity{
 		if(this.hasItem("Sword")) {
 			for(Entity e: this.getInventory()) {
 				if(e.getName().equals("Sword")) {
-					e.setHitTime();
-					if(e.getHitTime() == 0) {
+					Sword sword = (Sword) e; 
+					sword.setHitTime();
+					if(sword.getHitTime() == 0) {
 						remove = e;
 						r = 1;
 					}

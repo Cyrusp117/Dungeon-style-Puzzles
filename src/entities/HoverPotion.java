@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 public class HoverPotion extends Entity {
 	public HoverPotion(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_P;
+		this.keyCode = KeyEvent.VK_F;
 	}
 	
 	public boolean interactWithPlayer(Player player) {
