@@ -2,30 +2,27 @@ package ui;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 
 import entities.Treasure;
 import entities.AI;
+import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
+import entities.Pit;
 import entities.Player;
 import entities.Wall;
 
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
-	private JFrame frame;
 	private int width, height;					//Width and height of the app window
-	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
-	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.title = title;
 		//this.playerInput;
 		this.entities = new ArrayList<>();
 	}
@@ -33,16 +30,34 @@ public class Game{
 	private void update() {						//Updates the state of the game
 		movePlayer();
 		int allTreasure = 1;
+		int allSwitch = 1;
 		for (Entity entity : entities) {
-			// Moves each entity that is supposed to move
+			// Moves each entity that is supposed to move and checks all killed wincondition
 			if (entity instanceof AI) {
 				Entity enemy = (AI) entity;
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
+			
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
 				if (!playerOne.hasItem(entity)) {
 					allTreasure = 0;
+				}
+			}
+			
+			if (entity instanceof FloorSwitch) {
+				FloorSwitch fs = (FloorSwitch)entity; 
+				fs.deactivate();
+				for (Entity e : entities)  {
+					if (e instanceof Boulder) {
+						Boulder b = (Boulder)e;
+						if(b.getPosition().equals(fs.getPosition())) {
+							fs.activate();
+						}
+					}
+				}
+				if(!fs.getState()) {
+					allSwitch = 0;
 				}
 			}
 		}
@@ -54,6 +69,9 @@ public class Game{
 		
 		if(allTreasure == 1) {
 			//System.out.println("All treasure has been collected");
+		}
+		if(allSwitch == 1) {
+			System.out.println("All Switches active");
 		}
 		System.out.println("");
 		printGame();
@@ -100,15 +118,29 @@ public class Game{
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
-			Entity entity = getEntity(newPos);
+			Entity entity = getEntitynofs(newPos);
+			Entity boulderEntity = getEntity(playerOne.move());
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
 				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
 				}
+				
+				// BOULDER HARDCODE STUFF;
+				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
+				if(isOutOfBounds(entity.getPosition())) {		
+					Boulder boulder = (Boulder) entity;
+					boulder.setPosition(boulder.getOldPosition());
+					playerOne.setPosition(playerOne.getOldPosition());
+					System.out.println("Boulder cannot be moved here");
+				} else if (boulderEntity != NULL) {
+					if (boulderEntity instanceof Pit) {
+						entities.remove(entity);
+					}
+				}
+				// BOULDER STUFF END
 			}
-
 		}
 		printPlayerCoordinates();
 	}
@@ -120,6 +152,16 @@ public class Game{
 			}
 		}
 		return null;
+	}
+	
+	public Entity getEntitynofs(Coordinate newPos) {
+		for (Entity entity : entities) {
+			if(entity instanceof FloorSwitch) continue;
+			if(entity.getPosition().equals(newPos)) {
+				return entity;
+			}
+		}
+		return NULL;
 	}
 
 	/**
@@ -198,6 +240,9 @@ public class Game{
 		if(isOccupied(position)) return false;
 		if(isOutOfBounds(position)) return false;
 		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
+		if (entity instanceof FloorSwitch) {
+			
+		}
 		entities.add(entity);
 		return true;
 	}

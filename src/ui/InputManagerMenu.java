@@ -3,6 +3,7 @@ package ui;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
+import entities.Boulder;
 import entities.Coordinate;
 import entities.HoverPotion;
 import entities.Hunter;
@@ -29,10 +30,14 @@ public class InputManagerMenu extends InputManager {
 	        Coordinate hunterPos = new Coordinate(4*32, 1*32);
 	        Coordinate hoverPos = new Coordinate(2*32, 1*32);
 	        Coordinate swordPos = new Coordinate(5*32, 1*32);
+	        Coordinate fsPos = new Coordinate(1*32, 8*32);
+	        Coordinate boulderPos = new Coordinate(5*32, 5*32);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
 	        game.addEntity(new Hunter(hunterPos));
+	        game.addEntity(new FloorSwitch(fsPos));
+	        game.addEntity(new Boulder(boulderPos));
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}

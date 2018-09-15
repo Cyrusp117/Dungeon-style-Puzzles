@@ -38,6 +38,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new Pit(defaultPos));
 		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
 		allDesignerObjects.add(new Wall(defaultPos));
+		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}

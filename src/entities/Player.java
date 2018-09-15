@@ -29,7 +29,7 @@ public class Player extends Entity{
 	 * @return the newPosition requested to be moved to by the player
 	 */
 	public Coordinate move() {
-		System.out.println("DX = " + dx + " DY = " + dy);
+		//System.out.println("DX = " + dx + " DY = " + dy);
 		//System.out.println(position.getxPosition());
 	    int newX = position.getxPosition() + dx;
 	    int newY = position.getyPosition() + dy;
@@ -74,7 +74,10 @@ public class Player extends Entity{
 	public void setOldPosition(Coordinate position) {
 		this.oldPos = position;
 	}
-	
+	/**
+	 * 
+	 * @return previous position of Entity
+	 */
 	public Coordinate getOldPosition () {
 		return oldPos;
 	}
