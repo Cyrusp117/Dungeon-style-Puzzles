@@ -33,7 +33,10 @@ public class InputManagerMenu extends InputManager {
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
 	        game.addEntity(new Hunter(hunterPos));
+	    	app.getFrame().removeKeyListener(this);
+	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}
+		
 	    if (key == KeyEvent.VK_0) {
 			Game playerGame = makeGame("Custom");
 			app.getFrame().removeKeyListener(this);
