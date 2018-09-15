@@ -24,10 +24,6 @@ public class InputManagerMenu extends InputManager {
 	    
 		if (key == KeyEvent.VK_1) {
 	    	Game game = new Game("Preset #1", 10*32, 10*32);
-	    	app.getFrame().removeKeyListener(this);
-	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
-
-			
 	        System.out.println("First Preset Dungeon");
 	        Coordinate pitPos = new Coordinate(2*32, 2*32);
 	        Coordinate hunterPos = new Coordinate(4*32, 1*32);

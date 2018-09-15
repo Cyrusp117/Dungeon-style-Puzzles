@@ -123,10 +123,10 @@ public class Game{
 	 * Initialises the game board
 	 */
 	public void init() {
-		
 		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
+		printGame();
 
 	}
 	
@@ -203,7 +203,7 @@ public class Game{
 	public boolean addEntity(Entity entity) {
 		if(isOccupied(entity.getPosition())) return false;
 		if(isOutOfBounds(entity.getPosition())) return false;
-		System.out.println("adding entity: " + entity.getName());
+		System.out.println("adding entity: " + entity.getName() + "at Coordinates: ");
 		entities.add(entity);
 		return true;
 	}
