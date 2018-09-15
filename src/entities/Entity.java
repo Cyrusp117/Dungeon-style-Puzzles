@@ -66,10 +66,4 @@ public abstract class Entity {
 
 	}
 	
-	public int getHitTime() {
-		return 0;
-	}
-	
-	public void setHitTime() {
-	}
 }

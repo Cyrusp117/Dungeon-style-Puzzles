@@ -19,12 +19,10 @@ public class Sword extends Entity {
 		return false;
 	}
 	
-	@Override
 	public int getHitTime() {
 		return hitTime;
 	}
 	
-	@Override
 	public void setHitTime() {
 		hitTime--;
 	}

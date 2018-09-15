@@ -20,7 +20,6 @@ public abstract class InputManagerPlayable extends InputManager {
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		int movedOrExit = 0;
 		// If the left arrow key is pressed, request to move left by a tile
 	    if (key == KeyEvent.VK_LEFT) {
 	        dx = -32;
