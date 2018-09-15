@@ -19,13 +19,12 @@ public class Wall extends Entity {
 	}
 	
 	
-//	public boolean interactWithPlayer(Player player) {
-//		int newX = position.getxPosition() + x;
-//	    int newY = position.getyPosition() + y;
-//	    Coordinate newPos = new Coordinate(newX, newY);
-//	    this.setPosition(newPos);
-//	    return false;
-//	}
+	public boolean interactWithPlayer(Player player) {
+		player.setPosition(player.getOldPosition());
+		System.out.println("There is a wall here... Moving back");
+		return false;
+
+	}
 
 	@Override
 	public String getName() {

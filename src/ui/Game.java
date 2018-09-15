@@ -86,12 +86,19 @@ public class Game{
 	 * Moves the player
 	 */
 	public void movePlayer() {
+//		Coordinate curPos = playerOne.getPosition();
+//		int xPlayer = curPos.getxPosition();
+//		int yPlayer = curPos.getyPosition();
+//		int xMovement = playerInput.getDx();
+//		int yMovement = playerInput.getDy();
+//		Coordinate newPos = new Coordinate(xPlayer+xMovement, yPlayer+yMovement);
+		// OR
 		playerOne.setDx(playerInput.getDx());
 		playerOne.setDy(playerInput.getDy());
 		Coordinate newPos = playerOne.move();
-		//System.out.println("New position: " + newPos.returnPosition());
 		if(!isOutOfBounds(newPos)) {
 			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
+			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
 			Entity entity = getEntity(newPos);
 			if (entity!=NULL) {

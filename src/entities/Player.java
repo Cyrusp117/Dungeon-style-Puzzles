@@ -3,9 +3,11 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
 public class Player extends Entity{
 	
-	Coordinate oldPos; 
+	private Coordinate oldPos; 
 	private static final int ALIVE = 1;
 	private static final int DEAD = 0;
 	private int dx; // Current x velocity
@@ -64,6 +66,18 @@ public class Player extends Entity{
 		this.state=state;
 	}
 	
+
+	/**
+	 * 
+	 * @param sets oldPos to position
+	 */
+	public void setOldPosition(Coordinate position) {
+		this.oldPos = position;
+	}
+	
+	public Coordinate getOldPosition () {
+		return oldPos;
+	}
 	/**
 	 * 
 	 * @return Returns an arrayList representing the entities the player currently has
