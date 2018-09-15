@@ -18,7 +18,6 @@ public class Game{
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
-	private InputManagerPlayable playerInput;	//KeyListener, takes in key inputs
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
@@ -27,7 +26,6 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		this.playerInput = new InputManagerPlayable(this);
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
@@ -39,7 +37,6 @@ public class Game{
 			// Moves each entity that is supposed to move
 			if (entity instanceof AI) {
 				Entity enemy = (AI) entity;
-				System.out.println(enemy.getName() + " would move if he was implemented");
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			// Checks if all treasure has been picked up
