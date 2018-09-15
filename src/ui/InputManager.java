@@ -12,6 +12,7 @@ import entities.Entity;
 import entities.Player;
 import entities.Treasure;
 
+
 // to be refactored into the Game
 public class InputManager implements KeyListener {
 	private int dx = 0;

@@ -46,10 +46,10 @@ public class Game{
 			Entity entity = getEntity(newPos);
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-				if(entity.interact(playerOne)) {
-					// The above returns true if the entity is to be deleted afterwards
-					this.deleteEntity(entity);
-				}
+//				if(entity.interact(playerOne)) {
+//					// The above returns true if the entity is to be deleted afterwards
+//					this.deleteEntity(entity);
+//				}
 			}
 
 		}
@@ -224,6 +224,26 @@ public class Game{
 	public ArrayList<Entity> getPlayerInventory() {
 		return playerOne.getInventory();
 	}
+	
+	public Application getApp() {
+		return app;
+	}
+
+	/**
+	 * @return the playerOne
+	 */
+	public Player getPlayerOne() {
+		return playerOne;
+	}
+
+	/**
+	 * @param playerOne the playerOne to set
+	 */
+	public void setPlayerOne(Player playerOne) {
+		this.playerOne = playerOne;
+	}
+	
+	
 }
 	
 //	public void run() {
