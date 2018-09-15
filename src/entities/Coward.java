@@ -3,7 +3,7 @@ package entities;
 public class Coward extends Enemy {
 
 	public Coward(Coordinate position,String name) {
-		super(position,name);
+		super(position);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,7 +25,7 @@ public class Coward extends Enemy {
 	}
 	
 	public String getName() {
-		return super.getName();
+		return "Coward";
 	}
 
 }

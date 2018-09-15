@@ -23,8 +23,8 @@ public class TestGraph {
 			for (Edge object: g.getEdges()) {
 				object.printCoords();
 			}
-			game.addEntity(new Hunter(new Coordinate(32,32),"Hunter"));
-			game.addEntity(new Hunter(new Coordinate(32,96),"Hunter2"));
+			game.addEntity(new Hunter(new Coordinate(32,32)));
+			game.addEntity(new Hunter(new Coordinate(32,96)));
 			g = game.generateGraph();
 			g.generateEdges();
 			System.out.println("Vertexes: ");

@@ -3,11 +3,10 @@ package entities;
 public abstract class Enemy extends Entity{
 
     //protected Coordinate position;
-    protected String name;
     
-	public Enemy (Coordinate position,String name){
+	public Enemy (Coordinate position){
 		super(position);
-	    this.name = name;
+	    this.movable = true;
 	}
 	
 	public abstract Coordinate getTargetSpace(Coordinate co,Graph g);
@@ -50,9 +49,6 @@ public abstract class Enemy extends Entity{
 		return position.equals(otherPos);
 	}
 	
-	public String getName() {
-		return this.name;
-	}
 	
 	
 

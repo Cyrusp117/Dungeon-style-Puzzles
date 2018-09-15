@@ -2,12 +2,29 @@ package entities;
 
 public abstract class Entity {
 	protected Coordinate position;
+	protected int keyCode;
+	protected boolean movable;
 	public Entity(Coordinate position) {
 		this.position = position;
 	}
 	
+
 	public abstract Coordinate move(Coordinate co, Graph g);
+
+
+	public boolean interactWithPlayer(Player player) {
+		return false;
+	}
+
 	
+//	public Coordinate move() {
+//		System.out.println("Cant Move");
+//		return null;
+//	}
+
+
+	public abstract String getName();
+
 	/**
 	 * 
 	 * @return position, the Coordinate of the current entity
@@ -16,6 +33,14 @@ public abstract class Entity {
 		return position;
 	}
 	
+	
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Coordinate position) {
+		this.position = position;
+	}
+
 	/**
 	 * 
 	 * @return the x coordinate of the entity (int)
@@ -36,4 +61,14 @@ public abstract class Entity {
 		return position.equals(otherPos);
 		
 	}
+	
+	public int getKeyCode() {
+		return this.keyCode;
+	}
+	
+	public void getDesignerDescription() {
+		System.out.println(this.getName() + " - " + (char)this.getKeyCode());
+
+	}
+	
 }

@@ -3,9 +3,10 @@ package entities;
 public class Hound extends Enemy {
     private Hunter hunter;
 	
-	public Hound(Coordinate position,Hunter hunter,String name) {
-		super(position,name);
+	public Hound(Coordinate position,Hunter hunter) {
+		super(position);
 		this.hunter = hunter;
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,6 +29,6 @@ public class Hound extends Enemy {
 	}
 	
 	public String getName() {
-		return super.getName();
+		return "Hound";
 	}
 }
