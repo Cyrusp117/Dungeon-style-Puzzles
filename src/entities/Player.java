@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Player extends Entity{
@@ -17,6 +18,7 @@ public class Player extends Entity{
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
+		keyCode = KeyEvent.VK_JAPANESE_HIRAGANA;
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class Game{
 	private int width, height;					//Width and height of the app window
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
-	private InputManagerPlayable playerInput;	//KeyListener, takes in key inputs
+	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;			//Array List of Entities, tracks all entities in the current game
 	// Need to implement generic iterator
@@ -38,7 +38,7 @@ public class Game{
 			// Moves each entity that is supposed to move
 			if (entity instanceof AI) {
 				Entity enemy = (AI) entity;
-				System.out.println(enemy.getName() + " would move if he was implemented");
+				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
@@ -54,12 +54,35 @@ public class Game{
 		}
 		
 		if(allTreasure == 1) {
-			System.out.println("All treasure has been collected");
+			//System.out.println("All treasure has been collected");
 		}
-		System.out.println("\n");
-		
+		System.out.println("");
+		printGame();
 	}
 
+	public void printGame() {
+        int i = 1;
+        int j = 1;
+		while (i <= 9) {
+        	while (j <= 9) {
+        		Coordinate curPos = new Coordinate(j*32, i*32);
+        		Entity entity = getEntity(curPos);
+        		if (curPos.equals(playerOne.getPosition())) {
+        			System.out.print("1");
+        		} else if(entity != null) {
+        			System.out.print((char)entity.getKeyCode());
+        		} else {
+        			System.out.print("-");
+        		}
+        		System.out.print(" ");
+        		j++;
+        	}
+        	System.out.println("");
+        	j = 1;
+        	i++;
+        }
+	}
+	
 	/**
 	 * Moves the player
 	 */
@@ -84,9 +107,9 @@ public class Game{
 		printPlayerCoordinates();
 	}
 	
-	private Entity getEntity(Coordinate newPos) {
+	public Entity getEntity(Coordinate newPos) {
 		for (Entity entity : entities) {
-			if(entity.getPosition().equals(playerOne.getPosition())) {
+			if(entity.getPosition().equals(newPos)) {
 				return entity;
 			}
 		}
@@ -254,7 +277,7 @@ public class Game{
 		return playerOne.getInventory();
 	}
 
-	public void changeState(InputManagerPlayable playerInput) {
+	public void changeState(InputManagerPlayer playerInput) {
 		// There are two game states: Player and Designer
 		// Each state only supports a certain subset of Key Inputs 
 		// Player and Designer both extend from Playable so they can both move
