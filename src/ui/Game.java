@@ -26,7 +26,7 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		//this.playerInput;
+		this.playerInput = new InputManagerPlayable(this);
 		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 	}
