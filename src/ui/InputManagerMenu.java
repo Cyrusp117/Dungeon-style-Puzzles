@@ -11,6 +11,7 @@ import entities.Door;
 import entities.FloorSwitch;
 import entities.HoverPotion;
 import entities.Hunter;
+import entities.InvincibilityPotion;
 import entities.Key;
 import entities.Pit;
 import entities.Sword;
@@ -51,6 +52,7 @@ public class InputManagerMenu extends InputManager {
 	        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
 	        Coordinate Bomb1Pos = new Coordinate(7*32, 7*32);
 	        Coordinate Bomb2Pos = new Coordinate(8*32, 7*32);
+	        Coordinate IPpotPos = new Coordinate(5*32, 4*32);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
@@ -64,6 +66,7 @@ public class InputManagerMenu extends InputManager {
 	        game.addEntity(new Door(Door2Pos));
 	        game.addEntity(new Bomb(Bomb1Pos));
 	        game.addEntity(new Bomb(Bomb2Pos));
+	        game.addEntity(new InvincibilityPotion(IPpotPos));
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}

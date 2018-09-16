@@ -56,7 +56,18 @@ public abstract class Enemy extends Entity{
 	}
 	
 	
-	
+	public boolean interactWithPlayer(Player player) {
+		if(player.hasItem("Sword")) {
+			player.hitUsingSword();
+			return true;
+		} else if (player.hasItem("InvincibilityPotion")) {
+			return true;
+		} else {
+			player.setState(0);
+		}
+		return false;
+
+	}
 	
 
 }

@@ -30,17 +30,19 @@ public class Hunter extends Enemy {
 		return "Hunter";
 	}
 	
-	@Override
-	public boolean interactWithPlayer(Player player) {
-		if(player.hasItem("Sword")) {
-			player.hitUsingSword();
-			return true;
-		} else {
-			player.setState(0);
-		}
-		return false;
-
-	}
+//	@Override
+//	public boolean interactWithPlayer(Player player) {
+//		if(player.hasItem("Sword")) {
+//			player.hitUsingSword();
+//			return true;
+//		} else if (player.hasItem("InvincibilityPotion")) {
+//			return true;
+//		} else {
+//			player.setState(0);
+//		}
+//		return false;
+//
+//	}
 	
 	
 	

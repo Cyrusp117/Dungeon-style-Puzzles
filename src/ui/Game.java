@@ -127,7 +127,7 @@ public class Game{
 			}	
 		}
 		entities.removeAll(toBeRemoved);
-	
+		toBeRemoved = new ArrayList<>();
 		for (Entity entity: playerOne.getInventory()) {
 			if (entity instanceof InvincibilityPotion){
 				if(playerOne.hasItem(entity)) {
