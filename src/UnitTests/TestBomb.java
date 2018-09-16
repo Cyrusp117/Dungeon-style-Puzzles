@@ -58,8 +58,11 @@ public class TestBomb extends testSetup {
 		move(KeyEvent.VK_V, 1);
 		move(LEFT, 1);
 		move(DOWN, 1);
+		move(DOWN, 1);
+		move(DOWN, 1);
+		move(DOWN, 1);
 		assert(!entities.contains(boulder1));
-		assert(!entities.contains(hunter2));
+		assert(entities.contains(hunter2));
 		assert(!entities.contains(hunter1));
 		
 	}

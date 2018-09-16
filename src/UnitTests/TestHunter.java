@@ -79,6 +79,8 @@ public class TestHunter extends testSetup {
 		position = position.moveDown();
 		game.addEntity(new Key(position.moveDown()));
 		position = position.moveDown();
+		Door fakeDoorForFirstKey = new Door(position.moveRight());
+		game.addEntity(fakeDoorForFirstKey);
 		Door door = new Door(position.moveDown());
 		game.addEntity(door);
 		position = position.moveLeft().moveDown();

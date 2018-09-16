@@ -32,7 +32,7 @@ public class TestBoulder extends testSetup {
 		Coordinate newPos = new Coordinate(2*32, 5*32);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved down");
-		robot.delay(1000);
+		//robot.delay(1000);
 		
 		move(LEFT, 1);
 		move(DOWN, 1);
@@ -40,7 +40,7 @@ public class TestBoulder extends testSetup {
 		newPos = new Coordinate(3*32, 5*32);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved right");
-		robot.delay(1000);
+		//robot.delay(1000);
 		
 		move(DOWN, 1);
 		move(RIGHT, 1);
@@ -48,7 +48,7 @@ public class TestBoulder extends testSetup {
 		newPos = new Coordinate(3*32, 4*32);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved up");
-		robot.delay(1000);
+		//robot.delay(1000);
 		
 		move(RIGHT, 1);
 		move(UP, 1);
@@ -56,7 +56,7 @@ public class TestBoulder extends testSetup {
 		newPos = new Coordinate(2*32, 4*32);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved left");
-		robot.delay(1000);
+		//robot.delay(1000);
 	}
 	
 	@Test
