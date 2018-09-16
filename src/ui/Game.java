@@ -2,8 +2,6 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 
 import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
 
@@ -15,7 +13,6 @@ import entities.Pit;
 import entities.Player;
 import entities.Wall;
 
->>>>>>> f3437760208804162d612863bd9b3484c2230ac0
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
