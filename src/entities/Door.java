@@ -27,6 +27,7 @@ public class Door extends Entity {
 					System.out.println("You have the right key, open the door");
 					player.removeKey(this.getDoorId());
 					this.setState(OPEN);
+					return true;
 				}else {
 					player.setPosition(player.getOldPosition());
 					System.out.println("You don't have the right key");
