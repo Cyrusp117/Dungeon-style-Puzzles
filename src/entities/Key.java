@@ -20,9 +20,16 @@ public class Key extends Entity {
 	
 	@Override
 	public boolean interactWithPlayer(Player player) {
-		player.pickUp(this);
 		System.out.println("keyID is: "+ this.getKeyId());
-		return true;
+		if (!player.hasItem("Key")) {
+			player.pickUp(this);
+			return true;
+		} else {
+			System.out.println("Already have key");
+			player.setPosition(player.getOldPosition());
+			return false;
+		}
+
 	}
 	
 	/**

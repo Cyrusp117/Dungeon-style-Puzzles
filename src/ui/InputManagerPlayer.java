@@ -84,6 +84,7 @@ public class InputManagerPlayer extends InputManager {
 	    			arrow.setDy(-32); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
+	    			break;
 	    		}
 	    	}
 	    	if(arrow!=null) {
@@ -105,6 +106,7 @@ public class InputManagerPlayer extends InputManager {
 	    			arrow.setDy(32); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
+	    			break;
 	    		}
 	    	}
 	    	if(arrow!=null) {
@@ -127,7 +129,7 @@ public class InputManagerPlayer extends InputManager {
 	    			arrow.setDy(0); 
 	    			arrow.setDx(-32);
 	    			game.addEntity(arrow);
-	  
+	    			break;
 	    		}
 	    	}
 	    	if(arrow!=null) {
@@ -149,6 +151,7 @@ public class InputManagerPlayer extends InputManager {
 	    			arrow.setDy(0); 
 	    			arrow.setDx(32);
 	    			game.addEntity(arrow);
+	    			break;
 	    		}
 	    	}
 	    	if(arrow!=null) {

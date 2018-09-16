@@ -43,8 +43,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new Wall(defaultPos));
 		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		allDesignerObjects.add(new Exit(defaultPos));
-
-		allDesignerObjects.add(new Door(defaultPos));
+		allDesignerObjects.add(new Door());
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}

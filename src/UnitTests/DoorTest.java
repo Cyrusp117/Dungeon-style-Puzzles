@@ -19,15 +19,32 @@ public class DoorTest extends testSetup {
 		assert(door.getNumOfDoors() == 1);
 		assert(game.getEntity(doorPos) instanceof Door);
 	}
-	
+
 	@Test
-	public void openDoor() {
+	public void openDoor1() {
 		Key.resetNumOfKeys();
 		Door.resetNumOfDoors();
 		Coordinate key1Pos = new Coordinate(7*32, 1*32);
-        Coordinate key2Pos = new Coordinate(8*32, 1*32);
         Coordinate Door1Pos = new Coordinate(2*32, 7*32);
-        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
+        Key key1 = new Key(key1Pos);
+        game.addEntity(key1);
+        Door door1 = new Door(Door1Pos);
+        game.addEntity(door1);
+        move(RIGHT, 6);
+        move(DOWN, 6);
+        move(LEFT, 5);
+		game.printGame();
+		assert(door1.getState() == 1);
+	}
+	
+	@Test
+	public void openDoor2() {
+		Key.resetNumOfKeys();
+		Door.resetNumOfDoors();
+		Coordinate key1Pos = new Coordinate(6*32, 7*32);
+		Coordinate key2Pos = new Coordinate(7*32, 1*32);
+        Coordinate Door1Pos = new Coordinate(7*32, 4*32);
+        Coordinate Door2Pos = new Coordinate(7*32, 3*32);
         Key key1 = new Key(key1Pos);
         game.addEntity(key1);
         Key key2 = new Key(key2Pos);
@@ -36,19 +53,10 @@ public class DoorTest extends testSetup {
         game.addEntity(door1);
         Door door2 = new Door(Door2Pos);
         game.addEntity(door2);
+        move(RIGHT, 6);
+        move(DOWN, 3);
 		game.printGame();
 		assert(door1.getState() == 0);
-		assert(door2.getState() == 0);
-		move(RIGHT, 6);
-		assert(player.hasKey(0));
-		move(DOWN, 5);
-		move(LEFT, 4);
-		move(DOWN, 1);
-		assert(door1.getState() == 0);
-		assert(door2.getState() == 0);
-		move(LEFT, 1);
-		move(DOWN, 1);
-		assert(door1.getState() == 1);
-		assert(door2.getState() == 0);
+		assert(door2.getState() == 1);
 	}
 }
