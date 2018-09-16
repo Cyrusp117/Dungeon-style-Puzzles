@@ -6,7 +6,9 @@ public class Key extends Entity {
 	private static int numOfKeys = 0;
 	private int keyId;
 	
-	public Key() {}
+	public Key() {
+		this.keyCode = KeyEvent.VK_K;
+	}
 
 	public Key(Coordinate position) {
 		super(position);
