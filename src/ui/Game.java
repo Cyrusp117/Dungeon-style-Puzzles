@@ -2,6 +2,8 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
+import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
+
 import entities.Treasure;
 import entities.Boulder;
 import entities.Coordinate;
@@ -15,6 +17,7 @@ public class Game{
 // implements Runnable{
 	private int width, height;					//Width and height of the app window
 	private Player playerOne;					//Tracking the player entity
+	boolean win;
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	// Need to implement generic iterator
@@ -48,15 +51,15 @@ public class Game{
 	
 	private void update() {						//Updates the state of the game
 		movePlayer();
+		ArrayList<Entity> toBeRemoved = new ArrayList<>();
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
-		int won = 0;
+		win = false;
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-				Entity enemy = (Enemy) entity;
 				allEnemy = 0;
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
@@ -87,7 +90,7 @@ public class Game{
 			
 			if (entity instanceof Exit){
 				if(entity.getPosition().equals(playerOne.getPosition())) {
-					won = 1;
+					win = true;
 				}
 			}
 			if (entity instanceof InvincibilityPotion){
@@ -102,10 +105,29 @@ public class Game{
 				}
 			}
 			
-
+			if (entity instanceof Bomb) {
+				Bomb bomb = (Bomb)entity;
+				if(bomb.isLit()) {
+					bomb.tickTock();
+				}
+				if (bomb.getTurnsLeft() == 0) { 
+					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						Entity affectedEntity = getEntity(affectedArea);
+						if (affectedEntity != NULL) {
+							if(affectedEntity.interactWithBomb()) {
+								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
+							}
+						}
+					}
+					toBeRemoved.add(entity);
+				}
+					
 		}
-		
-		// Checks if player is dead
+		entities.removeAll(toBeRemoved);
+	
+		if(win && playerOne.isAlive()) {
+			System.out.println("You have won");
+		}
 		if (!playerOne.isAlive()) {
 			System.out.println("Player is currently dead");
 		}
@@ -118,9 +140,6 @@ public class Game{
 		}
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
-		}
-		if(won == 1) {
-			System.out.println("You have won");
 		}
 		System.out.println("");
 		printGame();
@@ -432,6 +451,11 @@ public class Game{
 	
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+	
+	
+	public boolean victory() {
+		return win;
 	}
 }
 	
