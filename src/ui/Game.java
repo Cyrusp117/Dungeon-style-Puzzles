@@ -329,7 +329,7 @@ public class Game{
 		if(!entities.isEmpty()) {
 			for(Entity entity: entities) {
 				if(entity.willCollide(position)) {
-					System.out.println("Cannot be placed here");
+					//System.out.println("Cannot be placed here");
 					return true;
 				}
 			}
