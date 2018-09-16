@@ -79,11 +79,6 @@ public class Game{
 				if(!fs.getState()) {
 					allSwitch = 0;
 				}
-//				if (e instanceof Boulder) {
-//				Boulder b = (Boulder)e;
-//				if(b.getPosition().equals(fs.getPosition())) {
-//					fs.activate();
-//				}
 			}
 			
 			// Checks general win condition

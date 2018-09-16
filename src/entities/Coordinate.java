@@ -7,7 +7,7 @@ public class Coordinate {
 	public static final Coordinate UP = new Coordinate(0, -32);
 	public static final Coordinate LEFT = new Coordinate(-32, 0);
 	public static final Coordinate RIGHT = new Coordinate(32, 0);
-	public static final Coordinate DOWN = new Coordinate(0, -32);
+	public static final Coordinate DOWN = new Coordinate(0, 32);
 	
 	public Coordinate(int xPosition, int yPosition){
 		this.xPosition = xPosition;
