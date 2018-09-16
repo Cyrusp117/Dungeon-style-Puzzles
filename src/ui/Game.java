@@ -17,6 +17,7 @@ public class Game{
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
+	private boolean win = false;
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -51,7 +52,7 @@ public class Game{
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
-		int won = 0;
+		win = false;
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
@@ -87,7 +88,9 @@ public class Game{
 			
 			if (entity instanceof Exit){
 				if(entity.getPosition().equals(playerOne.getPosition())) {
-					won = 1;
+					if (playerOne.isAlive()) {
+						win = true;
+					}
 				}
 			}
 			
@@ -108,7 +111,7 @@ public class Game{
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
 		}
-		if(won == 1) {
+		if(win) {
 			System.out.println("You have won");
 		}
 		System.out.println("");
@@ -421,6 +424,10 @@ public class Game{
 	
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+	
+	public boolean victory() {
+		return win;
 	}
 }
 	
