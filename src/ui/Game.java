@@ -138,9 +138,32 @@ public class Game{
 				}
 			}
 			
+
+			if (entity instanceof Bomb) {
+				Bomb bomb = (Bomb)entity;
+				if(bomb.isLit()) {
+					bomb.tickTock();
+				}
+				if (bomb.getTurnsLeft() == 0) { 
+					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						Entity affectedEntity = getEntity(affectedArea);
+						if (affectedEntity != NULL) {
+							if(affectedEntity.interactWithBomb()) {
+								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
+							}
+						}
+					}
+					toBeRemoved.add(entity);
+				}
+			}
+					
 		}
 		entities.removeAll(toBeRemoved);
-		// Checks if player is dead
+	
+		if(win && playerOne.isAlive()) {
+			System.out.println("You have won");
+		}
+
 		if (!playerOne.isAlive()) {
 			System.out.println("Player is currently dead");
 		}
@@ -471,7 +494,9 @@ public class Game{
 		return entities;
 	}
 	
+	
 	public boolean victory() {
 		return win;
 	}
+
 }
