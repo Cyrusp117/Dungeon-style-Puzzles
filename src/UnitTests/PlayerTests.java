@@ -130,12 +130,12 @@ public class PlayerTests {
 	}
 	
 	@Test
-	public void testLightAndDropBomb() {
+	public void testSetBomb() {
 		Coordinate itemPlace = new Coordinate(32,32);
 		Bomb bigBomb = new Bomb(itemPlace);
 		player.getInventory().add(bigBomb);
 		assertTrue(player.hasItem(bigBomb));
-		player.lightAndDropBomb();
+		player.setBomb();
 		assertFalse(player.hasItem(bigBomb));
 	}
 //	@Test
