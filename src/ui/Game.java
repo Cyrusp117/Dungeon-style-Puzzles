@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 <<<<<<< HEAD
 =======
+
 import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
 
 import entities.Treasure;
