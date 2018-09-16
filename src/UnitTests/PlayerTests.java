@@ -60,11 +60,11 @@ public class PlayerTests {
 		robot.waitForIdle();
 		robot.keyPress(KeyEvent.VK_DOWN);
 		robot.delay(500);
-		System.out.println("Button pressed");
-		System.out.println(player.returnX()  + " " + player.returnY());
+		//System.out.println("Button pressed");
+		//System.out.println(player.returnX()  + " " + player.returnY());
 		assertEquals(player.returnX(), 32);
 		assertEquals(player.returnY(), 64);
-		System.out.println(player.returnX()  + " " + player.returnY());
+		//System.out.println(player.returnX()  + " " + player.returnY());
 	}
 
 	@Test
