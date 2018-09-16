@@ -106,6 +106,19 @@ public class Game{
 					toBeRemoved.add(entity);
 				}
 			}
+			
+			if (entity instanceof InvincibilityPotion){
+				System.out.println("###########################");
+				if(playerOne.hasItem(entity)) {
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
+					invincibilityPotion.reduceDurability();
+					if(invincibilityPotion.getDurability() == 0) {
+						this.getPlayerInventory().remove(invincibilityPotion);
+					}
+				}
+			}
+			
 		}
 		entities.removeAll(toBeRemoved);
 		// Checks if player is dead
@@ -443,7 +456,3 @@ public class Game{
 		return win;
 	}
 }
-	
-
-	
-
