@@ -51,6 +51,7 @@ public class Game{
 	
 	private void update() {						//Updates the state of the game
 		movePlayer();
+		ArrayList<Entity> toBeRemoved = new ArrayList<>();
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
@@ -59,16 +60,13 @@ public class Game{
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-				Entity enemy = (Enemy) entity;
 				allEnemy = 0;
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
-				if (!playerOne.hasItem(entity)) {
-					allTreasure = 0;
-				}
+				allTreasure = 0;
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
@@ -81,13 +79,9 @@ public class Game{
 				if(!fs.getState()) {
 					allSwitch = 0;
 				}
-//				if (e instanceof Boulder) {
-//				Boulder b = (Boulder)e;
-//				if(b.getPosition().equals(fs.getPosition())) {
-//					fs.activate();
-//				}
 			}
 			
+			// Checks general win condition
 			if (entity instanceof Exit){
 				if(entity.getPosition().equals(playerOne.getPosition())) {
 					if (playerOne.isAlive()) {
@@ -96,14 +90,32 @@ public class Game{
 				}
 			}
 			
-
+			if (entity instanceof Bomb) {
+				Bomb bomb = (Bomb)entity;
+				if(bomb.isLit()) {
+					bomb.tickTock();
+				}
+				if (bomb.getTurnsLeft() == 0) { 
+					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						Entity affectedEntity = getEntity(affectedArea);
+						if (affectedEntity != NULL) {
+							if(affectedEntity.interactWithBomb()) {
+								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
+							}
+						}
+					}
+					toBeRemoved.add(entity);
+				}
+			}
 		}
-		
+		entities.removeAll(toBeRemoved);
 		// Checks if player is dead
 		if (!playerOne.isAlive()) {
 			System.out.println("Player is currently dead");
 		}
-		
+		if(win && playerOne.isAlive()) {
+			System.out.println("You have won");
+		}
 		if(allTreasure == 1) {
 			System.out.println("All treasure has been collected");
 		}
@@ -113,9 +125,7 @@ public class Game{
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
 		}
-		if(win) {
-			System.out.println("You have won");
-		}
+
 		System.out.println("");
 		printGame();
 
@@ -195,6 +205,8 @@ public class Game{
 					}
 				}
 				// BOULDER STUFF END
+				
+				
 			}
 		}
 		printPlayerCoordinates();

@@ -3,7 +3,9 @@ package ui;
 import java.awt.event.KeyEvent;
 
 import entities.Arrow;
+import entities.Bomb;
 import entities.Entity;
+import entities.Player;
 
 
 
@@ -88,7 +90,12 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_V) {
 	    	System.out.println("Light and drop the bomb");
-	    	game.getPlayerOne().lightAndDropBomb();
+	    	Player player = game.getPlayerOne();
+	    	if(player.hasItem("Bomb")) {
+	    		Bomb placedBomb = player.setBomb();
+	    		placedBomb.setPosition(player.getPosition());
+	    		game.addEntity(placedBomb);
+	    	}
 	    }
 	    extraFunctions(e);
 	}

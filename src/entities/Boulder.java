@@ -21,7 +21,6 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithBomb() {
-		//delete this boulder
 		return true;
 	}
 	
@@ -53,5 +52,6 @@ public class Boulder extends Entity {
 	public Coordinate getOldPosition () {
 		return oldPos;
 	}
+
 	
 }

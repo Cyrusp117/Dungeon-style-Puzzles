@@ -3,6 +3,8 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import ui.Game;
+
 
 public class Player extends Entity{
 	
@@ -280,18 +282,23 @@ public class Player extends Entity{
 	
 	
 	
-	public void lightAndDropBomb() {
-		if(this.hasItem("Bomb")) {
-			for(Entity e: this.getInventory()) {
-				if(e.getName().equals("Bomb")) {
-					this.removeItem(e);
-					break;
-				}
+	public Bomb setBomb() {
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Bomb")) {
+				Bomb bomb = (Bomb)e;
+				bomb.light();
+				this.removeItem(e);
+				return bomb;
 			}
 		}
+		return null;
 	}
 	
-
+	@Override
+	public boolean interactWithBomb() {
+		this.setState(0);
+		return false;
+	}
 	
 }
 

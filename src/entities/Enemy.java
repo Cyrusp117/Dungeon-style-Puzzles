@@ -1,3 +1,4 @@
+
 package entities;
 
 public abstract class Enemy extends Entity{
@@ -49,7 +50,15 @@ public abstract class Enemy extends Entity{
 		return position.equals(otherPos);
 	}
 	
+	@Override
+	public boolean interactWithBomb() {
+		return true;
+	}
+	
+	
 	
 	
 
 }
+
+	
