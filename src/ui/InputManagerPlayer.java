@@ -75,19 +75,35 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_2) {
-	    	System.out.println("Checking for arrow");
+//	    	System.out.println("Checking for arrow");
+//	    	Player player = game.getPlayerOne();
+//	    	if(player.hasItem("Arrow")) {
+//	    		System.out.println("Shooting Arrow Upwards");
+//	    		Arrow placedArrow = player.setArrow(int );
+//	    		//placedArrow.setPosition(player.getPosition());
+//	    		game.addEntity(placedArrow);
+//	    	}
+	    	Arrow arrow = null;
 	    	Player player = game.getPlayerOne();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
-	    			System.out.println("Shooting upwards");
-	    			Arrow arrow = (Arrow)curItem;
+	    			arrow = (Arrow)curItem;
 	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(-32); 
 	    			arrow.setDx(0);
+	    			
 	    		}
 	    	}
-	    	game.newTurn();
+	    	
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting upwards");
+	    		player.removeItem(arrow);
+	    		game.newTurn();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
+	    	
 	    }
 	    
 	    if (key == KeyEvent.VK_V) {
