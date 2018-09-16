@@ -4,6 +4,10 @@ package entities;
 public class Coordinate {
 	private int xPosition;
 	private int yPosition;
+	public static final Coordinate UP = new Coordinate(0, -32);
+	public static final Coordinate LEFT = new Coordinate(-32, 0);
+	public static final Coordinate RIGHT = new Coordinate(32, 0);
+	public static final Coordinate DOWN = new Coordinate(0, -32);
 	
 	public Coordinate(int xPosition, int yPosition){
 		this.xPosition = xPosition;
@@ -64,4 +68,29 @@ public class Coordinate {
 		return "X Coordinate:" + getxPosition() + " Y Coordinate:" + getyPosition(); 
 	}
 	
+	public static Coordinate addCoordinates(Coordinate x, Coordinate y) {
+		int xSum = x.getxPosition() + y.getxPosition();
+		int ySum = y.getyPosition() + x.getyPosition();
+		return new Coordinate(xSum, ySum);
+	}
+	
+	public Coordinate moveDown() {
+		return addCoordinates(this, DOWN);
+	}
+	
+	public Coordinate moveRight() {
+		return addCoordinates(this, RIGHT);
+	}
+	
+	public Coordinate moveUp() {
+		return addCoordinates(this, UP);
+	}
+	
+	public Coordinate moveLeft() {
+		return addCoordinates(this, LEFT);
+	}
+	
+	
+	
+
 }

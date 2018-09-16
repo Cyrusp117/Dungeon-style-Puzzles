@@ -20,6 +20,10 @@ public abstract class Entity {
 	public boolean interactWithPlayer(Player player) {
 		return false;
 	}
+	
+	public boolean interactWithBomb() {
+		return false;
+	}
 
 	
 //	public Coordinate move() {

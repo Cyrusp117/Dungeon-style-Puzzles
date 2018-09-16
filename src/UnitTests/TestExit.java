@@ -1,12 +1,10 @@
 package UnitTests;
 
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import entities.Coordinate;
 import entities.Exit;
-import entities.Pit;
 
 public class TestExit extends testSetup {
 
