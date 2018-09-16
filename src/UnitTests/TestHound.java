@@ -55,12 +55,14 @@ public class TestHound extends testSetup {
 		assert(hunter.getPosition().equals(expectedPos));
 		move(DOWN, 6);
 		move(RIGHT,1);
-		expectedPos = new Coordinate(1*32, 7*32);
-		assert(hunter.getPosition().equals(expectedPos));
+		expectedPos = new Coordinate(3*32, 9*32);
+		assert(hound.getPosition().equals(expectedPos));
 	}
 	
 	@Test
 	public void TestObstacleRecognition() {
+		Door.resetNumOfDoors();
+		Key.resetNumOfKeys();
 		Coordinate hunterPos = new Coordinate(8*32, 4*32);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
@@ -82,6 +84,8 @@ public class TestHound extends testSetup {
 		position = position.moveDown();
 		game.addEntity(new InvincibilityPotion(position.moveDown()));
 		position = position.moveDown();
+		Door fakeDoorForFirstKey = new Door(position.moveRight());
+		game.addEntity(fakeDoorForFirstKey);
 		game.addEntity(new Key(position.moveDown()));
 		position = position.moveDown();
 		Door door = new Door(position.moveDown());
@@ -92,9 +96,12 @@ public class TestHound extends testSetup {
 		
 		game.printGame();
 		move(DOWN, 8);
-		assert(hunter.getPosition().equals(hunterPos));
+		
+		assert(hound.getPosition().equals(houndPos));
 		move(RIGHT, 6);
-		move(UP,3);
-		assert(!hunter.getPosition().equals(hunterPos));
+		move(UP,2);
+		houndPos = new Coordinate(7*32,8*32);
+		
+		assert(hound.getPosition().equals(houndPos));
 	}
 }
