@@ -3,7 +3,6 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
 public class Player extends Entity{
 	
@@ -28,6 +27,7 @@ public class Player extends Entity{
 	 * 
 	 * @return the newPosition requested to be moved to by the player
 	 */
+
 	public Coordinate move(Coordinate co, Graph g) {
 		System.out.println("DX = " + dx + " DY = " + dy);
 		//System.out.println(position.getxPosition());
@@ -38,6 +38,20 @@ public class Player extends Entity{
 	    
 	}
 	
+	/**
+	 * 
+	 * @return the newPosition requested to be moved to by the player
+	 */
+
+	public Coordinate move() {
+		System.out.println("DX = " + dx + " DY = " + dy);
+		//System.out.println(position.getxPosition());
+	    int newX = position.getxPosition() + dx;
+	    int newY = position.getyPosition() + dy;
+	    Coordinate newPos = new Coordinate(newX, newY);
+	    return newPos;
+	 
+	}
 	/**
 	 * 
 	 * @param An entity
@@ -74,7 +88,10 @@ public class Player extends Entity{
 	public void setOldPosition(Coordinate position) {
 		this.oldPos = position;
 	}
-	
+	/**
+	 * 
+	 * @return previous position of Entity
+	 */
 	public Coordinate getOldPosition () {
 		return oldPos;
 	}
@@ -175,6 +192,50 @@ public class Player extends Entity{
 
 	}
 	
+	public void removeItem(Object o) {
+		this.getInventory().remove(o);
+	}
+	
+	public boolean removeKey(int KeyId) {
+		int r = 0;
+		Key remove = null;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Key")) {
+				Key key = (Key) e;
+				if(key.getKeyId() == KeyId) {
+					r = 1;
+					remove = key;
+				}
+			}
+		}
+		//remove key with specific id from inventory,and return true
+		if(r == 1) {
+			this.removeItem(remove);
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	
+	public boolean hasKey(int DoorId) {
+		int has = 0;
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Key")) {
+				Key key = (Key) e;
+				if(key.getKeyId() == DoorId) {
+					has = 1;
+				}
+			}
+		}
+		if(has == 1) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	
 	public boolean hitUsingSword() {
 		int r = 0;
 		Entity remove = null;
@@ -206,7 +267,16 @@ public class Player extends Entity{
 		return false;
 	}
 	
-	
+	public void lightAndDropBomb() {
+		if(this.hasItem("Bomb")) {
+			for(Entity e: this.getInventory()) {
+				if(e.getName().equals("Bomb")) {
+					this.removeItem(e);
+					break;
+				}
+			}
+		}
+	}
 	
 
 	

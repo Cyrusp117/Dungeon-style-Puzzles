@@ -2,58 +2,107 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 
 import entities.Treasure;
-import entities.AI;
+import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
+import entities.Pit;
 import entities.Player;
 import entities.Wall;
 
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
-	private JFrame frame;
 	private int width, height;					//Width and height of the app window
-	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
-	
+	private String title;
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.title = title;
 		this.entities = new ArrayList<>();
-		
+	}
+	
+	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
+		// Checks for arrow collisions
+		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
+		for (Entity entity : entities) {
+			if (entity instanceof Arrow) {
+				Arrow arrow = (Arrow)entity;
+				int newX = arrow.returnX() + arrow.getDx();
+				int newY = arrow.returnY() + arrow.getDy();
+				Coordinate newPos = new Coordinate(newX, newY);
+				arrow.setPosition(newPos);
+				Entity onArrow = getEntityExcept(newPos, arrow);
+				if (onArrow instanceof Enemy){
+					toBeDeleted.add(onArrow);
+				}
+			}
+		}
+		for (Entity entity : toBeDeleted) {
+			entities.remove(entity);
+		}
+		update();
 	}
 	
 	private void update() {						//Updates the state of the game
 		movePlayer();
 		int allTreasure = 1;
+		int allSwitch = 1;
+		int allEnemy = 1;
 		for (Entity entity : entities) {
-			// Moves each entity that is supposed to move
-			if (entity instanceof AI) {
-				Entity enemy = (AI) entity;
+			
+			// Checks all killed win condition
+			if (entity instanceof Enemy) {
+				Entity enemy = (Enemy) entity;
+				allEnemy = 0;
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
+			
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
 				if (!playerOne.hasItem(entity)) {
 					allTreasure = 0;
 				}
 			}
+			
+			// Checks if all floor switches are active (have a boulder on them)
+			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
+				FloorSwitch fs = (FloorSwitch)entity; 
+				fs.deactivate();
+				if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+					fs.activate();
+				}
+				if(!fs.getState()) {
+					allSwitch = 0;
+				}
+//				if (e instanceof Boulder) {
+//				Boulder b = (Boulder)e;
+//				if(b.getPosition().equals(fs.getPosition())) {
+//					fs.activate();
+//				}
+			}
+			
+
 		}
+		
 		// Checks if player is dead
 		if (!playerOne.isAlive()) {
-			// Launch new instance of game
 			System.out.println("Player is currently dead");
 		}
 		
 		if(allTreasure == 1) {
-			//System.out.println("All treasure has been collected");
+			System.out.println("All treasure has been collected");
+		}
+		if(allSwitch == 1) {
+			System.out.println("All Switches active");
+		}
+		if(allEnemy == 1) {
+			System.out.println("All enemies dead");
 		}
 		System.out.println("");
 		printGame();
@@ -102,27 +151,39 @@ public class Game{
 
 		//just making null variables for now
 		Graph g = null;
-		Coordinate newPos = playerOne.move(playerOne.getPosition(),g);
+		Coordinate newPos = playerOne.move();
 
 		if(!isOutOfBounds(newPos)) {
 
-			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
+			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
-			System.out.println("Player one at : " + playerOne.returnPosition());
-			Entity entity = getEntity(newPos);
+			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
+			//System.out.println(entity);
+			Entity boulderEntity = getEntity(playerOne.move());
+
+
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-//				if(entity.interact(playerOne)) {
-//					// The above returns true if the entity is to be deleted afterwards
-//					this.deleteEntity(entity);
-//				}
 				if(entity.interactWithPlayer(playerOne)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
 				}
+				
+				// BOULDER HARDCODE STUFF;
+				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
+				if(isOutOfBounds(entity.getPosition())) {		
+					Boulder boulder = (Boulder) entity;
+					boulder.revert(playerOne);
+					System.out.println("Boulder cannot be moved here");
+				} else if (boulderEntity != NULL) {
+					if (boulderEntity instanceof Pit) {
+						entities.remove(entity);
+						System.out.println("Boulder is Dead :)");
+					}
+				}
+				// BOULDER STUFF END
 			}
-
 		}
 		printPlayerCoordinates();
 	}
@@ -134,6 +195,26 @@ public class Game{
 			}
 		}
 		return null;
+	}
+	
+//	public Entity getEntitynofs(Coordinate newPos) {
+//		for (Entity entity : entities) {
+//			if(entity instanceof FloorSwitch) continue;
+//			if(entity.getPosition().equals(newPos)) {
+//				return entity;
+//			}
+//		}
+//		return NULL;
+//	}
+	
+	public Entity getEntityExcept(Coordinate newPos, Entity e) {
+		for (Entity entity : entities) {
+			if(e.getName().equals(entity.getName())) continue;
+			if(entity.getPosition().equals(newPos)) {
+				return entity;
+			}
+		}
+		return NULL;
 	}
 
 	/**
@@ -147,9 +228,7 @@ public class Game{
 
 	}
 	
-	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
-		update();
-	}
+
 
 	/**
 	 * print to the Console the Coordinates of the current player

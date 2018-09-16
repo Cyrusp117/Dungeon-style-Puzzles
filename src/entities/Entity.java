@@ -9,7 +9,9 @@ public abstract class Entity {
 	}
 	
 
-	public abstract Coordinate move(Coordinate co, Graph g);
+	public Coordinate move(Coordinate co, Graph g) {
+		return null;
+	}
 
 
 	public boolean interactWithPlayer(Player player) {

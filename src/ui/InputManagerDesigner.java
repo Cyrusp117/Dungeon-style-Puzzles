@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 import entities.Arrow;
 import entities.Boulder;
@@ -38,6 +37,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new Pit(defaultPos));
 		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
 		allDesignerObjects.add(new Wall(defaultPos));
+		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}
@@ -89,73 +89,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 			}
 			game.addEntity(instance);
 		}
-		
-//	    if (key == KeyEvent.VK_F1) {
-//	    	System.out.println("Please enter co-ordinates of Treasure: ");
-//			Scanner sc = new Scanner(System.in);
-//			dx = sc.nextInt()*32;
-//			dy = sc.nextInt()*32;
-//			
-//			Coordinate treasurePos = new Coordinate(dx, dy);
-//			if (game.addEntity(new Treasure(treasurePos))) {
-//				System.out.println("adding treasure at " + dx + dy);
-//			} else {
-//				System.out.println("Couldn't add treasure");
-//			}
-//	    }
-//	    
-//	    if (key == KeyEvent.VK_F2) {
-//	    	System.out.println("Please enter co-ordinates of Pit: ");
-//			Scanner sc = new Scanner(System.in);
-//			dx = sc.nextInt()*32;
-//			dy = sc.nextInt()*32;
-//			
-//			Coordinate pitPos = new Coordinate(dx, dy);
-//			if (game.addEntity(new Pit(pitPos))) {
-//				System.out.println("adding pit at " + dx + dy);
-//			} else {
-//				System.out.println("Couldn't add pit");
-//			}
-//	    }
-//	    
-//	    if (key == KeyEvent.VK_B) {
-//	    	System.out.println("Inventory contents: ");
-//	    	for (Entity curItem : game.getPlayerInventory()) {
-//	    		System.out.print(curItem.getName() + " ");
-//	    	}
-//	    	System.out.println("\n");
-//	    }
-//	    
-//	    if (key == KeyEvent.VK_H) {
-//	    	System.out.println("Enter Hunter's Coordinates: ");
-//			Scanner sc = new Scanner(System.in);
-//			dx = sc.nextInt()*32;
-//			dy = sc.nextInt()*32;
-//			Coordinate hunterPos = new Coordinate(dx, dy);
-//			if (game.addEntity(new Hunter(hunterPos))) {
-//				System.out.println("adding hunter at " + dx + dy);
-//			} else {
-//				System.out.println("Couldn't add hunter");
-//			}
-//	    }
-		
-	
 	}
-
-
-	/**
-	 * Actions when a key is released (currently nothing)
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
-
-	/**
-	 * Actions when a key is typed (currently nothing)
-	 */
-	@Override
-	public void keyTyped(KeyEvent e) {}
 
 	/**
 	 * @return the dx the change in x position requested
