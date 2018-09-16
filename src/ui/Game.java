@@ -50,7 +50,7 @@ public class Game{
 	
 	private void update() {						//Updates the state of the game
 
-		//movePlayer();
+		movePlayer();
 		ArrayList<Entity> toBeRemoved = new ArrayList<>();
 
 		int allTreasure = 1;
