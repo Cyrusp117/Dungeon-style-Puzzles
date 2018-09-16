@@ -7,22 +7,21 @@ public class Hound extends Enemy {
 		super(position);
 		this.hunter = hunter;
 		
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Coordinate getTargetSpace(Coordinate co, Graph g) {
 		Coordinate target = null;
 		if (hunter != null) {
-			
-			target = g.between(co,hunter.getPosition());
-			
+			target = g.hound(co,hunter.getPosition(),this.position);
 		} else {
 			target = co;
 		}
-		// TODO Auto-generated method stub
+	
 		return target;
 	}
+	
+	
 	
 	public void setHunter (Hunter hunter) {
 		this.hunter = hunter;

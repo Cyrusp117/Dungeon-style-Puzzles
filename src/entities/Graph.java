@@ -7,14 +7,18 @@ public class Graph {
 	private ArrayList<Edge> edgeList;
 	private int nV;
 	private int coordConst;
+	private int height;
+	private int width;
 	
 	
 	
-	public Graph() {
+	public Graph(int height,int width) {
 		this.coordList = new ArrayList<Coordinate>();
 		this.edgeList = new ArrayList<Edge>();
 		this.nV = 0;
 		this.coordConst = 32;
+		this.height = height;
+		this.width = width;
 	}
 	public void addCoordinate(Coordinate c) {
 		this.coordList.add(c);
@@ -59,9 +63,6 @@ public class Graph {
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		int srcIndex = coordList.indexOf(src);
 		int destIndex = coordList.indexOf(dest);
-		//test
-		System.out.println("Indexs are " + srcIndex +destIndex );
-		//test end
 		int vertex;
 		int w;
 		boolean found = false;
@@ -74,7 +75,7 @@ public class Graph {
 		
 		while (queue.size() != 0) {
 			vertex = queue.poll();
-			System.out.println("vertex is " + vertex);
+			//System.out.println("vertex is " + vertex);
 			for (w = 0; w < nV; w++) {
 			    if (w == vertex)
 			    	continue;
@@ -175,7 +176,7 @@ public class Graph {
     		return target; 
     }
     
-    
+    //not currently used
     public Coordinate between(Coordinate player, Coordinate enemy) {
     	Coordinate target = enemy;
     	int ax = player.getxPosition()/coordConst;
@@ -199,6 +200,61 @@ public class Graph {
     	return target;
     }
     
+    public Coordinate hound(Coordinate player , Coordinate enemy,Coordinate hound) {
+    	Coordinate target = player;
+    	int ax = player.getxPosition()/coordConst;
+        int ay = player.getyPosition()/coordConst;
+        int bx = enemy.getxPosition()/coordConst;
+        int by = enemy.getyPosition()/coordConst;
+     
+        //player ahead in x coordinate
+        int houndx;
+        int houndy;
+        if (ax -bx > 0) {
+        	houndx = 1;
+        } else if (ax - bx < 0) { //player behind in x coordinate
+        	houndx = -1;
+        } else { //player same x row as 
+        	houndx = 0;
+        }
+        //player ahead in y coordinate
+        if (ay -by > 0) {
+        	houndy = 1;
+        } else if (ay - by < 0) { //player behind in y coordinate
+        	houndy = -1;
+        } else { //player same y row as 
+        	houndy = 0;
+        }
+        
+        boolean check = false;
+        while (!check) {
+        	if (coordConst*(ax + houndx) == hound.getxPosition() && coordConst*(ay+houndy) == hound.getyPosition()) {
+        		target = hound;
+        		check = true;
+      
+        	} else {
+        	    if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy) )) {
+        		    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy));
+        		
+        		    check = true;
+        	    } else {
+        		    houndx+=houndx;
+        		    houndy+=houndy;
+        		
+        	    }
+        	    if (Math.abs(ax + houndx) > width || Math.abs(by+houndy) > height) {
+        		    check = true;
+        		
+        		    target = player; //not sure about this
+        	    }
+        	}
+        }
+        
+        
+    	return target;
+    	
+    }
+    
     public ArrayList<Coordinate> getCoords() {
     	return this.coordList;
     }
@@ -206,6 +262,8 @@ public class Graph {
     public ArrayList<Edge> getEdges() {
     	return this.edgeList;
     }
+    
+    
    
     
 }

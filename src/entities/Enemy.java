@@ -20,9 +20,10 @@ public abstract class Enemy extends Entity{
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else {
+		} else if (move != position){
 		    move = g.BFS(this.position, move);
 		}
-		// TODO Auto-generated method stub
+		
 		return move;
 	}
 
