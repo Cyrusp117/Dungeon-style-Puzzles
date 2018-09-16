@@ -10,11 +10,11 @@ public class DoorTest extends testSetup {
 
 	@Test
 	public void placeDoor() {
-		Coordinate keyPos = new Coordinate(1*32, 7*32);
-		Key key = new Key(keyPos);
-		game.addEntity(key);
+		Coordinate doorPos = new Coordinate(1*32, 7*32);
+		Door door = new Door(doorPos);
+		game.addEntity(door);
 		game.printGame();
-		assert(game.getEntity(keyPos) instanceof Key);
+		assert(game.getEntity(doorPos) instanceof Door);
 	}
 	
 	@Test
