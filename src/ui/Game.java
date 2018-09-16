@@ -107,36 +107,18 @@ public class Game{
 				}
 			}
 			
-			if (entity instanceof InvincibilityPotion){
-				System.out.println("###########################");
-				if(playerOne.hasItem(entity)) {
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
-					invincibilityPotion.reduceDurability();
-					if(invincibilityPotion.getDurability() == 0) {
-						this.getPlayerInventory().remove(invincibilityPotion);
-					}
-				}
-			}
+//			if (entity instanceof InvincibilityPotion){
+//				System.out.println("###########################");
+//				if(playerOne.hasItem(entity)) {
+//					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
+//					invincibilityPotion.reduceDurability();
+//					if(invincibilityPotion.getDurability() == 0) {
+//						this.getPlayerInventory().remove(invincibilityPotion);
+//					}
+//				}
+//			}
 			
-
-			if (entity instanceof Bomb) {
-				Bomb bomb = (Bomb)entity;
-				if(bomb.isLit()) {
-					bomb.tickTock();
-				}
-				if (bomb.getTurnsLeft() == 0) { 
-					for (Coordinate affectedArea : bomb.affectedAreas()) {
-						Entity affectedEntity = getEntity(affectedArea);
-						if (affectedEntity != NULL) {
-							if(affectedEntity.interactWithBomb()) {
-								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
-							}
-						}
-					}
-					toBeRemoved.add(entity);
-				}
-			}
 					
 		}
 		entities.removeAll(toBeRemoved);
