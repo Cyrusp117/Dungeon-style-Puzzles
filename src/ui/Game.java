@@ -155,11 +155,11 @@ public class Game{
 
 		if(!isOutOfBounds(newPos)) {
 
-			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
+			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
 			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
-			System.out.println(entity);
+			//System.out.println(entity);
 			Entity boulderEntity = getEntity(playerOne.move());
 
 

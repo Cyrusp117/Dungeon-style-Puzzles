@@ -10,7 +10,7 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithPlayer(Player player) {
-		System.out.println("Boulder hi");
+		System.out.println("Boulder hit");
 		int dx = player.getDx();
 		int dy = player.getDy();
 		int curX = position.getxPosition();
