@@ -1,10 +1,10 @@
 package entities;
 
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import entities.*;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 
 public class Bomb extends Entity {
 //	private static int numOfBombs;
