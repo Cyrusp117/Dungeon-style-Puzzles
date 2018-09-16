@@ -2,6 +2,19 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
+
+import entities.Treasure;
+import entities.Boulder;
+import entities.Coordinate;
+import entities.Entity;
+import entities.Pit;
+import entities.Player;
+import entities.Wall;
+
+>>>>>>> f3437760208804162d612863bd9b3484c2230ac0
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
@@ -45,6 +58,7 @@ public class Game{
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
+		int won = 0;
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
@@ -78,6 +92,12 @@ public class Game{
 //				}
 			}
 			
+			if (entity instanceof Exit){
+				if(entity.getPosition().equals(playerOne.getPosition())) {
+					won = 1;
+				}
+			}
+			
 
 		}
 		
@@ -94,6 +114,9 @@ public class Game{
 		}
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
+		}
+		if(won == 1) {
+			System.out.println("You have won");
 		}
 		System.out.println("");
 		printGame();
@@ -402,7 +425,11 @@ public class Game{
 	public ArrayList<Entity> testEntities() {
 		return this.entities;
 	}
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
+}
 	
 
 	

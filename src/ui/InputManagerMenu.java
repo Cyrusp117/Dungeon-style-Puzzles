@@ -28,6 +28,13 @@ public class InputManagerMenu extends InputManager {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 	    
+		if (key == KeyEvent.VK_2) {
+			Game game = new Game("Blank 10x10", 10*32, 10*32);
+	        System.out.println("Blank 10x10 Dungeon");
+	    	app.getFrame().removeKeyListener(this);
+	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
+		}
+		
 		if (key == KeyEvent.VK_1) {
 	    	Game game = new Game("Preset #1", 10*32, 10*32);
 	        System.out.println("First Preset Dungeon");

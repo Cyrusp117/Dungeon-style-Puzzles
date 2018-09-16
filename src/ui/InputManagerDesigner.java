@@ -10,11 +10,14 @@ import java.util.Scanner;
 import entities.Arrow;
 import entities.Boulder;
 import entities.Coordinate;
+import entities.Door;
 import entities.Entity;
 import entities.FloorSwitch;
+import entities.Exit;
 import entities.HoverPotion;
 import entities.Hunter;
 import entities.InvincibilityPotion;
+import entities.Key;
 import entities.Pit;
 import entities.Sword;
 import entities.Treasure;
@@ -39,6 +42,9 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
 		allDesignerObjects.add(new Wall(defaultPos));
 		allDesignerObjects.add(new FloorSwitch(defaultPos));
+		allDesignerObjects.add(new Exit(defaultPos));
+		allDesignerObjects.add(new Key(defaultPos));
+		allDesignerObjects.add(new Door(defaultPos));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}
