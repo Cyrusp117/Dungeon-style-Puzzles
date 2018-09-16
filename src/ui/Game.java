@@ -2,6 +2,7 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
+import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
 
 import entities.Treasure;
 import entities.Boulder;
@@ -17,14 +18,13 @@ public class Game{
 	private int width, height;					//Width and height of the app window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
-	private ArrayList<Entity> entities;	//Array List of Entities, tracks all entities in the current game
-	
+	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
+	private boolean win = false;
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.entities = new ArrayList<>();
-		
 	}
 	
 	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
@@ -50,15 +50,23 @@ public class Game{
 	}
 	
 	private void update() {						//Updates the state of the game
-		//movePlayer();
+
+		movePlayer();
+		ArrayList<Entity> toBeRemoved = new ArrayList<>();
+
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
+
 		Coordinate position;
+
+		win = false;
+
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
+
 				Entity enemy = (Enemy) entity;
 				position = enemy.move(playerOne.getPosition(), generateGraph() );
 				if ( getEntity(position) == null ) {
@@ -69,14 +77,15 @@ public class Game{
 				//if (position.getxPosition() != enemy.returnX() || position.getyPosition() != enemy.returnY()) {
 				//    enemy.setPosition(position);
 				//}
+
+				allEnemy = 0;
+
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
-				if (!playerOne.hasItem(entity)) {
-					allTreasure = 0;
-				}
+				allTreasure = 0;
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
@@ -96,14 +105,41 @@ public class Game{
 //				}
 			}
 			
-
+			// Checks general win condition
+			if (entity instanceof Exit){
+				if(entity.getPosition().equals(playerOne.getPosition())) {
+					if (playerOne.isAlive()) {
+						win = true;
+					}
+				}
+			}
+			
+			if (entity instanceof Bomb) {
+				Bomb bomb = (Bomb)entity;
+				if(bomb.isLit()) {
+					bomb.tickTock();
+				}
+				if (bomb.getTurnsLeft() == 0) { 
+					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						Entity affectedEntity = getEntity(affectedArea);
+						if (affectedEntity != NULL) {
+							if(affectedEntity.interactWithBomb()) {
+								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
+							}
+						}
+					}
+					toBeRemoved.add(entity);
+				}
+			}
 		}
-		
+		entities.removeAll(toBeRemoved);
 		// Checks if player is dead
 		if (!playerOne.isAlive()) {
 			System.out.println("Player is currently dead");
 		}
-		
+		if(win && playerOne.isAlive()) {
+			System.out.println("You have won");
+		}
 		if(allTreasure == 1) {
 			System.out.println("All treasure has been collected");
 		}
@@ -113,6 +149,7 @@ public class Game{
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
 		}
+
 		System.out.println("");
 		printGame();
 
@@ -164,11 +201,11 @@ public class Game{
 
 		if(!isOutOfBounds(newPos)) {
 
-			System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
+			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
 			playerOne.setPosition(newPos);
 			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
-			System.out.println(entity);
+			//System.out.println(entity);
 			Entity boulderEntity = getEntity(playerOne.move());
 
 
@@ -192,6 +229,8 @@ public class Game{
 					}
 				}
 				// BOULDER STUFF END
+				
+				
 			}
 		}
 		printPlayerCoordinates();
@@ -420,7 +459,15 @@ public class Game{
 	public ArrayList<Entity> testEntities() {
 		return this.entities;
 	}
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
+	
+	public boolean victory() {
+		return win;
+	}
+}
 	
 
 	

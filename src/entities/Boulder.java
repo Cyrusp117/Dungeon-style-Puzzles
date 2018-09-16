@@ -10,7 +10,6 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithPlayer(Player player) {
-		System.out.println("Boulder hi");
 		int dx = player.getDx();
 		int dy = player.getDy();
 		int curX = position.getxPosition();
@@ -22,7 +21,6 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithBomb() {
-		//delete this boulder
 		return true;
 	}
 	
@@ -54,5 +52,6 @@ public class Boulder extends Entity {
 	public Coordinate getOldPosition () {
 		return oldPos;
 	}
+
 	
 }

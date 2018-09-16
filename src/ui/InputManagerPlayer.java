@@ -3,7 +3,9 @@ package ui;
 import java.awt.event.KeyEvent;
 
 import entities.Arrow;
+import entities.Bomb;
 import entities.Entity;
+import entities.Player;
 
 
 
@@ -85,6 +87,16 @@ public class InputManagerPlayer extends InputManager {
 	    	}
 	    	game.newTurn();
 	    }
+	    
+	    if (key == KeyEvent.VK_V) {
+	    	System.out.println("Light and drop the bomb");
+	    	Player player = game.getPlayerOne();
+	    	if(player.hasItem("Bomb")) {
+	    		Bomb placedBomb = player.setBomb();
+	    		placedBomb.setPosition(player.getPosition());
+	    		game.addEntity(placedBomb);
+	    	}
+	    }
 	    extraFunctions(e);
 	}
 	
@@ -104,6 +116,9 @@ public class InputManagerPlayer extends InputManager {
 		
 	}
 	
+	public Game getGame() {
+		return this.game;
+	}
 
 	/**
 	 * @return the dx the change in x position requested

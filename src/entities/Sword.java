@@ -3,10 +3,10 @@ package entities;
 import java.awt.event.KeyEvent;
 
 public class Sword extends Entity {
-	int hitTime;
+	int durability;
 	public Sword(Coordinate position) {
 		super(position);
-		this.hitTime = 5;
+		this.durability = 5;
 		this.keyCode = KeyEvent.VK_S;
 		this.movable = false;
 	}
@@ -23,12 +23,12 @@ public class Sword extends Entity {
 		return false;
 	}
 	
-	public int getHitTime() {
-		return hitTime;
+	public int getDurability() {
+		return durability;
 	}
 	
-	public void setHitTime() {
-		hitTime--;
+	public void reduceDurability() {
+		durability--;
 	}
 
 	public String getName() {

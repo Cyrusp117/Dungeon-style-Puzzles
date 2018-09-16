@@ -8,6 +8,9 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
+	public Entity() {
+		
+	}
 
 	public Coordinate move(Coordinate co, Graph g) {
 		return null;
@@ -15,6 +18,10 @@ public abstract class Entity {
 
 
 	public boolean interactWithPlayer(Player player) {
+		return false;
+	}
+	
+	public boolean interactWithBomb() {
 		return false;
 	}
 
