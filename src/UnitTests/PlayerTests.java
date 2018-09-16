@@ -11,9 +11,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import entities.Bomb;
 import entities.Coordinate;
 import entities.HoverPotion;
+import entities.Key;
 import entities.Player;
+import entities.Sword;
 import ui.Application;
 import ui.Game;
 import ui.InputManagerMenu;
@@ -68,12 +71,73 @@ public class PlayerTests {
 	public void testPickUp() {
 		Coordinate itemPlace = new Coordinate(64,32);
 		HoverPotion hPot = new HoverPotion(itemPlace);
-		System.out.println(hPot == null);
 		game.addEntity(hPot);
 		player.pickUp(hPot);
 		assertTrue(player.hasItem(hPot));
 	}
-
+	
+	@Test
+	public void testHasItem() {
+		Coordinate itemPlace = new Coordinate(32,32);
+		HoverPotion hPot = new HoverPotion(itemPlace);
+		assertFalse(player.hasItem(hPot));
+		player.getInventory().add(hPot);
+		assertTrue(player.hasItem(hPot));
+	}
+	
+	@Test
+	public void testIsAlive() {
+		player.setState(1);
+		assertTrue(player.isAlive());
+		player.setState(0);
+		assertFalse(player.isAlive());
+	}
+	
+	@Test
+	public void testHitUsingSword() {
+		Coordinate itemPlace = new Coordinate(32,32);
+		Sword bigHugeBlade = new Sword(itemPlace);
+		player.getInventory().add(bigHugeBlade);
+		assertEquals(bigHugeBlade.getDurability(),5);
+		player.hitUsingSword();
+		assertEquals(bigHugeBlade.getDurability(),4);
+		player.hitUsingSword();
+		player.hitUsingSword();
+		player.hitUsingSword();
+		player.hitUsingSword();
+		assertFalse(player.hasItem(bigHugeBlade));
+	}
+	
+	@Test
+	public void testRemoveItem() {
+		Coordinate itemPlace = new Coordinate(32,32);
+		Sword bigHugeBlade = new Sword(itemPlace);
+		player.getInventory().add(bigHugeBlade);
+		assertTrue(player.hasItem(bigHugeBlade));
+		player.removeItem(bigHugeBlade);
+		assertFalse(player.hasItem(bigHugeBlade));
+	}
+	
+	@Test
+	public void testRemoveKey() {
+		Coordinate itemPlace = new Coordinate(32,32);
+		Key bigKey = new Key(itemPlace);
+		player.getInventory().add(bigKey);
+		assertTrue(player.hasItem(bigKey));
+		player.removeKey(0);
+		assertFalse(player.hasItem(bigKey));
+		
+	}
+	
+	@Test
+	public void testLightAndDropBomb() {
+		Coordinate itemPlace = new Coordinate(32,32);
+		Bomb bigBomb = new Bomb(itemPlace);
+		player.getInventory().add(bigBomb);
+		assertTrue(player.hasItem(bigBomb));
+		player.lightAndDropBomb();
+		assertFalse(player.hasItem(bigBomb));
+	}
 //	@Test
 //	public void testHitUsingSword() {
 //		fail("Not yet implemented");
