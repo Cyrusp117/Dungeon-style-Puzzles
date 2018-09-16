@@ -47,4 +47,47 @@ public class ArrowTest extends testSetup {
 		assert(game.getEntity(hunterPos) == null);
 	}
 
+	@Test
+	public void shootArrowDown() {
+		Coordinate arrowPos = new Coordinate(3*32, 1*32);
+		arrow = new Arrow(arrowPos);
+		game.addEntity(arrow);
+		move(RIGHT, 3);
+		move(DOWN, 3);
+		move(KeyEvent.VK_3, 1);
+		Coordinate hunterPos = new Coordinate(7*32, 8*32);
+		game.addEntity(new Hunter(hunterPos));
+		assert(game.getEntity(hunterPos) instanceof Hunter);
+		move(RIGHT, 3);
+		assert(game.getEntity(hunterPos) == null);
+	}
+	
+	@Test
+	public void shootArrowLeft() {
+		Coordinate arrowPos = new Coordinate(8*32, 2*32);
+		arrow = new Arrow(arrowPos);
+		game.addEntity(arrow);
+		move(RIGHT, 7);
+		move(DOWN, 1);
+		move(KeyEvent.VK_4, 1);
+		Coordinate hunterPos = new Coordinate(1*32, 9*32);
+		game.addEntity(new Hunter(hunterPos));
+		assert(game.getEntity(hunterPos) instanceof Hunter);
+		move(DOWN, 3);
+		assert(game.getEntity(hunterPos) == null);
+	}
+	
+	@Test
+	public void shootArrowRight() {
+		Coordinate arrowPos = new Coordinate(1*32, 2*32);
+		arrow = new Arrow(arrowPos);
+		game.addEntity(arrow);
+		move(DOWN, 2);
+		move(KeyEvent.VK_5, 1);
+		Coordinate hunterPos = new Coordinate(9*32, 9*32);
+		game.addEntity(new Hunter(hunterPos));
+		assert(game.getEntity(hunterPos) instanceof Hunter);
+		move(DOWN, 6);
+		assert(game.getEntity(hunterPos) == null);
+	}
 }
