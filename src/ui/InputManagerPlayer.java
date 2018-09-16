@@ -75,14 +75,6 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_2) {
-//	    	System.out.println("Checking for arrow");
-//	    	Player player = game.getPlayerOne();
-//	    	if(player.hasItem("Arrow")) {
-//	    		System.out.println("Shooting Arrow Upwards");
-//	    		Arrow placedArrow = player.setArrow(int );
-//	    		//placedArrow.setPosition(player.getPosition());
-//	    		game.addEntity(placedArrow);
-//	    	}
 	    	Arrow arrow = null;
 	    	Player player = game.getPlayerOne();
 	    	for (Entity curItem : game.getPlayerInventory()) {
@@ -95,7 +87,6 @@ public class InputManagerPlayer extends InputManager {
 	    			
 	    		}
 	    	}
-	    	
 	    	if(arrow!=null) {
 	    		System.out.println("Shooting upwards");
 	    		player.removeItem(arrow);
@@ -103,7 +94,72 @@ public class InputManagerPlayer extends InputManager {
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
-	    	
+	    }
+	    
+	    if (key == KeyEvent.VK_3) {
+	    	Arrow arrow = null;
+	    	Player player = game.getPlayerOne();
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Arrow) {
+	    			arrow = (Arrow)curItem;
+	    			game.addEntity(arrow);
+	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setDy(32); 
+	    			arrow.setDx(0);
+	    			
+	    		}
+	    	}
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting downwards");
+	    		player.removeItem(arrow);
+	    		game.newTurn();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
+	    }
+	    
+	    if (key == KeyEvent.VK_4) {
+	    	Arrow arrow = null;
+	    	Player player = game.getPlayerOne();
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Arrow) {
+	    			arrow = (Arrow)curItem;
+	    			game.addEntity(arrow);
+	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setDy(0); 
+	    			arrow.setDx(-32);
+	    			
+	    		}
+	    	}
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting downwards");
+	    		player.removeItem(arrow);
+	    		game.newTurn();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
+	    }
+	    
+	    if (key == KeyEvent.VK_5) {
+	    	Arrow arrow = null;
+	    	Player player = game.getPlayerOne();
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Arrow) {
+	    			arrow = (Arrow)curItem;
+	    			game.addEntity(arrow);
+	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setDy(0); 
+	    			arrow.setDx(32);
+	    			
+	    		}
+	    	}
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting downwards");
+	    		player.removeItem(arrow);
+	    		game.newTurn();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
 	    }
 	    
 	    if (key == KeyEvent.VK_V) {
