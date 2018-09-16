@@ -75,23 +75,42 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_2) {
-	    	System.out.println("Shooting upwards");
+//	    	System.out.println("Checking for arrow");
+//	    	Player player = game.getPlayerOne();
+//	    	if(player.hasItem("Arrow")) {
+//	    		System.out.println("Shooting Arrow Upwards");
+//	    		Arrow placedArrow = player.setArrow(int );
+//	    		//placedArrow.setPosition(player.getPosition());
+//	    		game.addEntity(placedArrow);
+//	    	}
+	    	Arrow arrow = null;
+	    	Player player = game.getPlayerOne();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
-	    			Arrow arrow = (Arrow)curItem;
+	    			arrow = (Arrow)curItem;
 	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(-32); 
 	    			arrow.setDx(0);
+	    			
 	    		}
 	    	}
-	    	game.newTurn();
+	    	
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting upwards");
+	    		player.removeItem(arrow);
+	    		game.newTurn();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
+	    	
 	    }
 	    
 	    if (key == KeyEvent.VK_V) {
-	    	System.out.println("Light and drop the bomb");
+	    	System.out.println("Checking for bomb");
 	    	Player player = game.getPlayerOne();
 	    	if(player.hasItem("Bomb")) {
+	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);

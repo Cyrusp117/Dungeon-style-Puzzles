@@ -234,7 +234,7 @@ public class Player extends Entity{
 
 	}
 	
-	public void removeItem(Object o) {
+	public void removeItem(Entity o) {
 		this.getInventory().remove(o);
 	}
 	
@@ -287,6 +287,17 @@ public class Player extends Entity{
 				bomb.light();
 				this.removeItem(e);
 				return bomb;
+			}
+		}
+		return null;
+	}
+	
+	public Arrow setArrow() {
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Arrow")) {
+				Arrow arrow = (Arrow)e;
+				this.removeItem(arrow);
+				return arrow;
 			}
 		}
 		return null;
