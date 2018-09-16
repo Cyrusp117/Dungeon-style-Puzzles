@@ -74,4 +74,18 @@ public class TestBoulder extends testSetup {
 		assert(!entities.contains(boulder));
 		assert(game.getEntityExcept(pitPos, pit) == null);
 	}
+	
+	@Test
+	public void testCantPushTwo() {
+		boulderPos = new Coordinate(1*32, 4*32);
+		Boulder boulder = new Boulder(boulderPos);
+		game.addEntity(boulder);
+		boulderPos = new Coordinate(1*32, 3*32);
+		boulder = new Boulder(boulderPos);
+		game.addEntity(boulder);
+		move(DOWN, 1);
+		move(DOWN, 1);
+		Coordinate expectedPos = new Coordinate(1*32, 2*32);
+		assert(expectedPos.equals(player.getPosition()));
+	}
 }

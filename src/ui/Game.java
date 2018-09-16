@@ -240,10 +240,16 @@ public class Game{
 					Boulder boulder = (Boulder) entity;
 					boulder.revert(playerOne);
 					System.out.println("Boulder cannot be moved here");
-				} else if (boulderEntity != NULL) {
+				} else if (boulderEntity != NULL && (entity instanceof Boulder)) {
 					if (boulderEntity instanceof Pit) {
 						entities.remove(entity);
 						System.out.println("Boulder is Dead :)");
+					} else if (!(boulderEntity instanceof FloorSwitch)) {
+						// entity is boulder, boulderEntity is not Pit or FloorSwitch
+						// Revert
+						Boulder boulder = (Boulder) entity;
+						boulder.revert(playerOne);
+						System.out.println("Boulder cannot be moved here");
 					}
 				}
 				// BOULDER STUFF END
