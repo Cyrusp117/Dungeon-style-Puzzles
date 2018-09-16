@@ -2,10 +2,6 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
-import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
-
 import entities.Treasure;
 import entities.Boulder;
 import entities.Coordinate;
@@ -14,7 +10,6 @@ import entities.Pit;
 import entities.Player;
 import entities.Wall;
 
->>>>>>> f3437760208804162d612863bd9b3484c2230ac0
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
@@ -22,12 +17,10 @@ public class Game{
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
-	private String title;
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.title = title;
 		this.entities = new ArrayList<>();
 	}
 	
