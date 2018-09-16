@@ -50,16 +50,25 @@ public class Game{
 	}
 	
 	private void update() {						//Updates the state of the game
-		movePlayer();
+		//movePlayer();
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
+		Coordinate position;
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
 				Entity enemy = (Enemy) entity;
-				allEnemy = 0;
+				position = enemy.move(playerOne.getPosition(), generateGraph() );
+				if ( getEntity(position) == null ) {
+					enemy.setPosition(position);
+				} //else if (getEntity(position).equals(entity)) {
+					
+				//}
+				//if (position.getxPosition() != enemy.returnX() || position.getyPosition() != enemy.returnY()) {
+				//    enemy.setPosition(position);
+				//}
 				//System.out.println(enemy.getName() + " would move if he was implemented");
 			}
 			
@@ -395,7 +404,7 @@ public class Game{
 	public Graph generateGraph() {
 		int i,j;
 		Coordinate cur;
-		Graph g = new Graph();
+		Graph g = new Graph(height,width);
 		for(i = 0; i <= width; i += 32) {
 			for(j = 0; j <= height; j+= 32) {
 				cur = new Coordinate(i,j);
