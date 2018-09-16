@@ -51,6 +51,9 @@ public class TestSword extends testSetup {
 		// Successful
 		
 		// Testing if sowrd is broken when durability is 0
+		enemyPos = new Coordinate(1*32, 8*32);
+		hunter = new Hunter(enemyPos);
+		game.addEntity(hunter);
 		enemyPos = new Coordinate(1*32, 4*32);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
@@ -60,22 +63,19 @@ public class TestSword extends testSetup {
 		enemyPos = new Coordinate(1*32, 6*32);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
+
+		// Kill 5 enemies, should be alive at the end
+		move(DOWN, 4);
+		move(UP, 2);
+		assert(player.isAlive());
+		assert(sword.getDurability() == 0);
+		assert(!player.hasItem(sword));
+		
+		// Testing if Player dies with no sword (6th entity kills him)
 		enemyPos = new Coordinate(1*32, 7*32);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
-		enemyPos = new Coordinate(1*32, 8*32);
-		hunter = new Hunter(enemyPos);
-		game.addEntity(hunter);
-		move(DOWN, 4);
-		assert(sword.getDurability() == 0);
-		assert(!player.hasItem(sword));
-		assert(player.isAlive());
-		// Successful
-		
-		// Testing if Player dies with no sword
-		move(DOWN, 1);
+		move(DOWN, 2);
 		assert(!player.isAlive());
-		
-
 	}
 }

@@ -57,6 +57,8 @@ public class TestHunter extends testSetup {
 	
 	@Test
 	public void TestObstacleRecognition() {
+		Door.resetNumOfDoors();
+		Key.resetNumOfKeys();
 		Coordinate hunterPos = new Coordinate(8*32, 4*32);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);

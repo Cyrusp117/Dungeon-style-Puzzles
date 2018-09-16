@@ -120,6 +120,7 @@ public class PlayerTests {
 	
 	@Test
 	public void testRemoveKey() {
+		Key.resetNumOfKeys();
 		Coordinate itemPlace = new Coordinate(32,32);
 		Key bigKey = new Key(itemPlace);
 		player.getInventory().add(bigKey);
