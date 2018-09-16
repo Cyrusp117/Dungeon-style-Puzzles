@@ -3,7 +3,6 @@ package entities;
 import java.awt.event.KeyEvent;
 
 public class Door extends Entity {
-	private static int numOfDoors;
 	private static int numOfDoors = 0;
 	private int DoorId;
 	private static final int OPEN = 1;
