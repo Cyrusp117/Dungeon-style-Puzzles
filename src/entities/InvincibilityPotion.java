@@ -7,7 +7,7 @@ public class InvincibilityPotion extends Entity {
 	public InvincibilityPotion(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_I;
-		this.durability = 2;
+		this.durability = 2+1; // actual durability is two
 	}
 	
 	public Coordinate move(Coordinate co, Graph g) {
