@@ -11,6 +11,7 @@ import entities.Arrow;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.Entity;
+import entities.FloorSwitch;
 import entities.HoverPotion;
 import entities.Hunter;
 import entities.InvincibilityPotion;

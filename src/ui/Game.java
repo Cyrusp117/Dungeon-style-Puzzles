@@ -2,15 +2,6 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-
-import entities.Treasure;
-import entities.Boulder;
-import entities.Coordinate;
-import entities.Entity;
-import entities.Pit;
-import entities.Player;
-import entities.Wall;
-
 public class Game{ 								
 	private static final Entity NULL = null;
 // implements Runnable{
