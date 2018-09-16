@@ -40,6 +40,4 @@ public class KeyTest extends testSetup {
 		move(RIGHT, 7);
 		assert(player.hasItem("Key"));
 	}
-	
-	
 }
