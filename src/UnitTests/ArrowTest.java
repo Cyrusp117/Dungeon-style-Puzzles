@@ -1,6 +1,5 @@
 package UnitTests;
 
-import static org.junit.Assert.*;
 
 import java.awt.event.KeyEvent;
 
@@ -8,7 +7,6 @@ import org.junit.Test;
 
 import entities.Arrow;
 import entities.Coordinate;
-import entities.Entity;
 import entities.Hunter;
 
 public class ArrowTest extends testSetup {

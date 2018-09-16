@@ -1,11 +1,6 @@
-package ui;
+package entities;
 
 import java.awt.event.KeyEvent;
-
-import entities.Boulder;
-import entities.Coordinate;
-import entities.Entity;
-import entities.Graph;
 
 
 public class FloorSwitch extends Entity {
