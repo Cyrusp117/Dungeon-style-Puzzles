@@ -92,7 +92,29 @@ public class TestHunter extends testSetup {
 		assert(hunter.getPosition().equals(hunterPos));
 		move(RIGHT, 4);
 		assert(!hunter.getPosition().equals(hunterPos));
+	}
+	
+	@Test
+	public void TestInvincibility() {
+		Coordinate hunterPos = new Coordinate(5*32, 1*32);
+		Hunter hunter = new Hunter(hunterPos);
+		game.addEntity(hunter);
+		Coordinate ipPos = new Coordinate(3*32, 1*32);
+		InvincibilityPotion ip = new InvincibilityPotion(ipPos);
+		game.addEntity(ip);
+		game.printGame();
+		//robot.delay(1000);
+		move(RIGHT, 1);
+		// Hunter wouldve gone left towards player
+		assert(hunter.getPosition().equals(hunterPos.moveLeft())); 
+		move(RIGHT, 1);
+		// Hunter wouldve gone back to original pos bcause player has potion now
+		assert(hunter.getPosition().equals(hunterPos)); 
 
+		robot.delay(1000);
+		move(RIGHT, 2);
+		Coordinate expectedPos = hunterPos.moveRight().moveRight();
+		assert(hunter.getPosition().equals(expectedPos));
 	}
 }
 
