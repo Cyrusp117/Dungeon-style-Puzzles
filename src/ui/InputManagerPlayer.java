@@ -85,6 +85,11 @@ public class InputManagerPlayer extends InputManager {
 	    	}
 	    	game.newTurn();
 	    }
+	    
+	    if (key == KeyEvent.VK_V) {
+	    	System.out.println("Light and drop the bomb");
+	    	game.getPlayerOne().lightAndDropBomb();
+	    }
 	    extraFunctions(e);
 	}
 	

@@ -4,10 +4,13 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 import entities.Arrow;
+import entities.Bomb;
 import entities.Boulder;
 import entities.Coordinate;
+import entities.Door;
 import entities.HoverPotion;
 import entities.Hunter;
+import entities.Key;
 import entities.Pit;
 import entities.Sword;
 
@@ -34,6 +37,12 @@ public class InputManagerMenu extends InputManager {
 	        Coordinate fsPos = new Coordinate(1*32, 8*32);
 	        Coordinate boulderPos = new Coordinate(5*32, 5*32);
 	        Coordinate arrowPos = new Coordinate(4*32, 4*32);
+	        Coordinate key1Pos = new Coordinate(7*32, 1*32);
+	        Coordinate key2Pos = new Coordinate(8*32, 1*32);
+	        Coordinate Door1Pos = new Coordinate(2*32, 7*32);
+	        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
+	        Coordinate Bomb1Pos = new Coordinate(7*32, 7*32);
+	        Coordinate Bomb2Pos = new Coordinate(8*32, 7*32);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
@@ -41,6 +50,12 @@ public class InputManagerMenu extends InputManager {
 	        game.addEntity(new FloorSwitch(fsPos));
 	        game.addEntity(new Boulder(boulderPos));
 	        game.addEntity(new Arrow(arrowPos));
+	        game.addEntity(new Key(key1Pos));
+	        game.addEntity(new Key(key2Pos));
+	        game.addEntity(new Door(Door1Pos));
+	        game.addEntity(new Door(Door2Pos));
+	        game.addEntity(new Bomb(Bomb1Pos));
+	        game.addEntity(new Bomb(Bomb2Pos));
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}
