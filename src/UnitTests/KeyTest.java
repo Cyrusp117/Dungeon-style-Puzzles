@@ -8,13 +8,14 @@ import entities.Key;
 
 public class KeyTest extends testSetup {
 
-	//static int numOfKeys = 0;
 	@Test
 	public void placeKey() {
+		Key.resetNumOfKeys();
 		Coordinate keyPos = new Coordinate(1*32, 7*32);
 		Key key = new Key(keyPos);
 		game.addEntity(key);
 		game.printGame();
+		System.out.println(key.getKeyId());
 		assert(key.getKeyId() == 0);
 		assert(key.getNumOfKeys() == 1);
 		assert(game.getEntity(keyPos) instanceof Key);
@@ -22,6 +23,7 @@ public class KeyTest extends testSetup {
 	
 	@Test
 	public void pickUpKey() {
+		Key.resetNumOfKeys();
 		assert(!player.hasItem("Key"));
 		Coordinate key1Pos = new Coordinate(1*32, 7*32);
 		Key key1 = new Key(key1Pos);

@@ -8,6 +8,9 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
+	public Entity() {
+		
+	}
 
 	public Coordinate move(Coordinate co, Graph g) {
 		return null;
