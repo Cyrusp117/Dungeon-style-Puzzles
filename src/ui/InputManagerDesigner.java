@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,6 +31,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		//System.out.println("Designer Mode Controls: Escape to return to menu, F1 - Treasure Placement, H - Hunter Placement, B - Backpack");
 		allDesignerObjects = new ArrayList<Entity>();
 		Coordinate defaultPos = new Coordinate(1, 1);
+		allDesignerObjects.add(new Key());
 		allDesignerObjects.add(new Hunter(defaultPos));
 		allDesignerObjects.add(new Arrow(defaultPos));
 		allDesignerObjects.add(new HoverPotion(defaultPos));
@@ -43,7 +43,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new Wall(defaultPos));
 		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		allDesignerObjects.add(new Exit(defaultPos));
-		allDesignerObjects.add(new Key(defaultPos));
+
 		allDesignerObjects.add(new Door(defaultPos));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();

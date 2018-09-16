@@ -1,4 +1,5 @@
 
+
 package entities;
 import java.awt.event.KeyEvent;
 
@@ -32,6 +33,7 @@ public class Hunter extends Enemy {
 	@Override
 	public boolean interactWithPlayer(Player player) {
 		if(player.hasItem("Sword")) {
+			player.hitUsingSword();
 			return true;
 		} else {
 			player.setState(0);
@@ -45,4 +47,3 @@ public class Hunter extends Enemy {
 	
 
 }
-

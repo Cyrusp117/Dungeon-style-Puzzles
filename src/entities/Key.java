@@ -3,11 +3,15 @@ package entities;
 import java.awt.event.KeyEvent;
 
 public class Key extends Entity {
-	private static int numOfKeys;
+	private static int numOfKeys = 0;
 	private int keyId;
+	
+	public Key() {}
+
 	public Key(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_K;
+		System.out.println(numOfKeys);
 		keyId = numOfKeys;
 		numOfKeys++;
 	}
@@ -36,4 +40,10 @@ public class Key extends Entity {
 	public String getName() {
 		return "Key";
 	}
+	
+	public static void resetNumOfKeys() {
+		numOfKeys = 0;
+	}
+	
+	
 }
