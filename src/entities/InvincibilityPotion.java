@@ -3,9 +3,12 @@ package entities;
 import java.awt.event.KeyEvent;
 
 public class InvincibilityPotion extends Entity {
+	int durability;
 	public InvincibilityPotion(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_I;
+		this.movable = false;
+		this.durability = 2;
 	}
 	
 	public Coordinate move(Coordinate co, Graph g) {
@@ -20,5 +23,12 @@ public class InvincibilityPotion extends Entity {
 	public String getName() {
 		return "InvincibilityPotion";
 	}
+
+	public int getDurability() {
+		return durability;
+	}
 	
+	public void reduceDurability() {
+		this.durability--;
+	}
 }
