@@ -19,7 +19,6 @@ public class Game{
 	private String title;						//Title at the top of the window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
-	private ArrayList<Wall> walls;				//Array List of Walls, tracks walls in the current game
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	
 	// Need to implement generic iterator
@@ -27,7 +26,6 @@ public class Game{
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		this.walls = new ArrayList<>();
 		this.entities = new ArrayList<>();
 		
 	}
