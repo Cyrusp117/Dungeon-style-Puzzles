@@ -3,8 +3,6 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import ui.Game;
-
 
 public class Player extends Entity{
 	

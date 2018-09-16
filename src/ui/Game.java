@@ -2,7 +2,6 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
 
 import entities.Treasure;
 import entities.Boulder;
