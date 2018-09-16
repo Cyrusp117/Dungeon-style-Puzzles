@@ -80,11 +80,10 @@ public class InputManagerPlayer extends InputManager {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(-32); 
 	    			arrow.setDx(0);
-	    			
+	    			game.addEntity(arrow);
 	    		}
 	    	}
 	    	if(arrow!=null) {
@@ -102,11 +101,10 @@ public class InputManagerPlayer extends InputManager {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(32); 
 	    			arrow.setDx(0);
-	    			
+	    			game.addEntity(arrow);
 	    		}
 	    	}
 	    	if(arrow!=null) {
@@ -124,15 +122,16 @@ public class InputManagerPlayer extends InputManager {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			game.addEntity(arrow);
+	      			
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(0); 
 	    			arrow.setDx(-32);
-	    			
+	    			game.addEntity(arrow);
+	  
 	    		}
 	    	}
 	    	if(arrow!=null) {
-	    		System.out.println("Shooting downwards");
+	    		System.out.println("Shooting left");
 	    		player.removeItem(arrow);
 	    		game.newTurn();
 	    	} else {
@@ -146,11 +145,10 @@ public class InputManagerPlayer extends InputManager {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(0); 
 	    			arrow.setDx(32);
-	    			
+	    			game.addEntity(arrow);
 	    		}
 	    	}
 	    	if(arrow!=null) {

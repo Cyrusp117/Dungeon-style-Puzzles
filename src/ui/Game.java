@@ -114,7 +114,7 @@ public class Game{
 				}
 				if (bomb.getTurnsLeft() == 0) { 
 					for (Coordinate affectedArea : bomb.affectedAreas()) {
-						if(bomb.affectedAreas().contains(playerOne.getPosition())) {
+						if(bomb.affectedAreas().contains(playerOne.getPosition())) {		// can be refactored later by having player be part of entities
 							playerOne.setState(0);
 						}
 						Entity affectedEntity = getEntity(affectedArea);

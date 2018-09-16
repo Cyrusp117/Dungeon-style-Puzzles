@@ -64,16 +64,17 @@ public class ArrowTest extends testSetup {
 	
 	@Test
 	public void shootArrowLeft() {
-		Coordinate arrowPos = new Coordinate(8*32, 2*32);
+		Coordinate arrowPos = new Coordinate(4*32, 1*32);
 		arrow = new Arrow(arrowPos);
 		game.addEntity(arrow);
-		move(RIGHT, 7);
-		move(DOWN, 1);
-		move(KeyEvent.VK_4, 1);
-		Coordinate hunterPos = new Coordinate(1*32, 9*32);
+		move(RIGHT, 3);
+		Coordinate hunterPos = new Coordinate(3*32, 1*32);
 		game.addEntity(new Hunter(hunterPos));
-		assert(game.getEntity(hunterPos) instanceof Hunter);
-		move(DOWN, 3);
+		move(RIGHT, 1);
+		move(KeyEvent.VK_4, 1);
+		robot.delay(2000);
+		move(RIGHT, 1);
+		move(RIGHT, 1);
 		assert(game.getEntity(hunterPos) == null);
 	}
 	
