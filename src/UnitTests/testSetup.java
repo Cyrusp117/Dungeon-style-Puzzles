@@ -29,8 +29,8 @@ public abstract class testSetup {
 		this.robot = new Robot();
 		robot.waitForIdle();
 		robot.setAutoDelay(50);
-		robot.keyPress(KeyEvent.VK_1);
-		robot.keyRelease(KeyEvent.VK_1);
+		robot.keyPress(KeyEvent.VK_2);
+		robot.keyRelease(KeyEvent.VK_2);
 		robot.delay(100);
 		robot.keyPress(KeyEvent.VK_1);
 		robot.keyRelease(KeyEvent.VK_1);
