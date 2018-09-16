@@ -65,21 +65,20 @@ public class Game{
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-
+            
 				Entity enemy = (Enemy) entity;
-				position = enemy.move(playerOne.getPosition(), generateGraph() );
+				if (playerOne.hasItem("InvincibilityPotion")) {
+					position = enemy.invincibilityMove(playerOne.getPosition(), generateGraph() );
+				} else {
+				    position = enemy.move(playerOne.getPosition(), generateGraph() );
+				}
 				if ( getEntity(position) == null ) {
 					enemy.setPosition(position);
-				} //else if (getEntity(position).equals(entity)) {
-					
-				//}
-				//if (position.getxPosition() != enemy.returnX() || position.getyPosition() != enemy.returnY()) {
-				//    enemy.setPosition(position);
-				//}
+				} 
 
 				allEnemy = 0;
 
-				//System.out.println(enemy.getName() + " would move if he was implemented");
+				
 			}
 			
 			// Checks if all treasure has been picked up

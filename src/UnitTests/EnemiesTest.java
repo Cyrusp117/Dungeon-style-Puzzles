@@ -21,6 +21,8 @@ public class EnemiesTest {
 		
 		cur = new Coordinate(128,128);
 		Coward coward = new Coward(cur);
+		Player player = game.getPlayerOne();
+		player.pickUp(new InvincibilityPotion(new Coordinate(32,164)));
 		game.addEntity(coward);
 		game.newTurn();
 		game.newTurn();

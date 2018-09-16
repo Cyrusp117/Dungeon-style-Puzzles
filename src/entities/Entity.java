@@ -26,10 +26,17 @@ public abstract class Entity {
 	}
 
 	
-//	public Coordinate move() {
-//		System.out.println("Cant Move");
-//		return null;
-//	}
+public Coordinate invincibilityMove(Coordinate co, Graph g) {
+		
+		g.addCoordinate(this.position); //need this?
+		g.generateEdges();
+		Coordinate move = g.moveAway(co,this.position);
+		
+		move = g.BFS(this.position, move);
+		
+		
+		return move;
+	}
 
 
 	public abstract String getName();
