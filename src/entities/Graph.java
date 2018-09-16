@@ -176,7 +176,7 @@ public class Graph {
     		return target; 
     }
     
-    
+    //not currently used
     public Coordinate between(Coordinate player, Coordinate enemy) {
     	Coordinate target = enemy;
     	int ax = player.getxPosition()/coordConst;
@@ -262,6 +262,8 @@ public class Graph {
     public ArrayList<Edge> getEdges() {
     	return this.edgeList;
     }
+    
+    
    
     
 }
