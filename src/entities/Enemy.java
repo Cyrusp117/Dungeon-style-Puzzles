@@ -25,6 +25,7 @@ public abstract class Enemy extends Entity{
 		
 		return move;
 	}
+	
 
 	//@Override
 	public Coordinate getPosition() {
