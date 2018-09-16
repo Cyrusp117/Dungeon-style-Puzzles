@@ -75,9 +75,11 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_2) {
-	    	System.out.println("Shooting upwards");
+	    	System.out.println("Checking for arrow");
+	    	Player player = game.getPlayerOne();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
+	    			System.out.println("Shooting upwards");
 	    			Arrow arrow = (Arrow)curItem;
 	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
@@ -89,9 +91,10 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_V) {
-	    	System.out.println("Light and drop the bomb");
+	    	System.out.println("Checking for bomb");
 	    	Player player = game.getPlayerOne();
 	    	if(player.hasItem("Bomb")) {
+	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);
