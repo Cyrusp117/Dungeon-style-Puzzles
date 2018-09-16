@@ -19,15 +19,18 @@ public class Bomb extends Entity {
 	public Bomb(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_U;
-		this.turnsLeft = 2;
+		this.turnsLeft = 3;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}
 	
 	public boolean interactWithPlayer(Player player) {
-		player.pickUp(this);
+		if(!active) {
+			player.pickUp(this);
+			return true;
+		}
 		//System.out.println("Num Of Bombs: "+ player.getNumOfBombs());
-		return true;
+		return false;
 	}
 	
 	public ArrayList<Coordinate> affectedAreas() {

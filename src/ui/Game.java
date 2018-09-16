@@ -114,6 +114,9 @@ public class Game{
 				}
 				if (bomb.getTurnsLeft() == 0) { 
 					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						if(bomb.affectedAreas().contains(playerOne.getPosition())) {
+							playerOne.setState(0);
+						}
 						Entity affectedEntity = getEntity(affectedArea);
 						if (affectedEntity != NULL) {
 							if(affectedEntity.interactWithBomb()) {
@@ -125,7 +128,11 @@ public class Game{
 				}
 			}	
 		}
+//		if (toBeRemoved.contains(playerOne)) {
+//			playerOne.setState(0);   // if bomb explosion is on player
+//		}
 		entities.removeAll(toBeRemoved);
+
 		toBeRemoved = new ArrayList<>();
 		for (Entity entity: playerOne.getInventory()) {
 			if (entity instanceof InvincibilityPotion){

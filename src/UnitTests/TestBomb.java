@@ -64,7 +64,18 @@ public class TestBomb extends testSetup {
 		assert(!entities.contains(boulder1));
 		assert(entities.contains(hunter2));
 		assert(!entities.contains(hunter1));
-		
+	}
+	
+	@Test
+	public void TestPlayerDeath() {			// side effect : ensures player cant pick up bomb when lit
+		Bomb bomb = new Bomb(bombPos);
+		game.addEntity(bomb);
+		move(DOWN, 1);
+		move(RIGHT, 1);
+		move(KeyEvent.VK_V, 1);
+		move(RIGHT, 1);
+		move(RIGHT, 1);
+		move(LEFT, 1);
 	}
 
 }
