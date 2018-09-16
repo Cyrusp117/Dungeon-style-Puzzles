@@ -121,6 +121,7 @@ public class Game{
 					}
 					toBeRemoved.add(entity);
 				}
+			}
 					
 		}
 		entities.removeAll(toBeRemoved);
