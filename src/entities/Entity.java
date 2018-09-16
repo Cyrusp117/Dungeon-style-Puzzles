@@ -32,7 +32,7 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		g.generateEdges();
 		Coordinate move = g.moveAway(co,this.position);
 		
-		move = g.BFS(this.position, move);
+		move = g.BFS(this.position, move,co);
 		
 		
 		return move;

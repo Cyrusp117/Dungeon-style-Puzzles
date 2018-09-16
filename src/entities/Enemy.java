@@ -20,7 +20,7 @@ public abstract class Enemy extends Entity{
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else if (move != position){
-		    move = g.BFS(this.position, move);
+		    move = g.BFS(this.position, move,co);
 		}
 		
 		return move;

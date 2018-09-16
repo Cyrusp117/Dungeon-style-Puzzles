@@ -57,7 +57,7 @@ public class Graph {
 		return check;
 	}
 	
-	public Coordinate BFS(Coordinate src, Coordinate dest) {
+	public Coordinate BFS(Coordinate src, Coordinate dest, Coordinate player) {
 		Coordinate cur = null;
 		int[] visited = new int[this.nV];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
@@ -82,7 +82,8 @@ public class Graph {
 			    
 			    if (visited[w] == -1 && hasEdge(coordList.get(vertex),coordList.get(w))) {
 			    	visited[w] = vertex;
-			    	queue.add(w);
+			    	if ( w != coordList.indexOf(player))
+			    	    queue.add(w);
 			    	if (w == destIndex) {
 			    		found = true;
 			  
@@ -225,14 +226,19 @@ public class Graph {
         } else { //player same y row as 
         	houndy = 0;
         }
-        
+      //Test
+		//System.out.println(ax + " " +houndx + " " + ay + " " + houndy);
         boolean check = false;
         while (!check) {
         	if (coordConst*(ax + houndx) == hound.getxPosition() && coordConst*(ay+houndy) == hound.getyPosition()) {
+        		//Test
+        		System.out.println(ax + houndx + " " + ay + houndy);
         		target = hound;
         		check = true;
       
         	} else {
+        		//Test
+        		//System.out.println(availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy)));
         	    if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy) )) {
         		    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy));
         		
@@ -244,7 +250,7 @@ public class Graph {
         	    }
         	    if (Math.abs(ax + houndx) > width || Math.abs(by+houndy) > height) {
         		    check = true;
-        		
+        		    System.out.println("here");
         		    target = player; //not sure about this
         	    }
         	}
