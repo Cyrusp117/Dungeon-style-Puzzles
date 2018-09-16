@@ -72,7 +72,7 @@ public class Game{
 				} else {
 				    position = enemy.move(playerOne.getPosition(), generateGraph() );
 				}
-				if ( getEntity(position) == null ) {
+				if ( getEntity(position) == null && !(playerOne.getPosition().equals(position)) ) {
 					enemy.setPosition(position);
 				} 
 

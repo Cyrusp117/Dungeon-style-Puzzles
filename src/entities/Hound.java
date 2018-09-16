@@ -14,6 +14,7 @@ public class Hound extends Enemy {
 		Coordinate target = null;
 		if (hunter != null) {
 			target = g.hound(co,hunter.getPosition(),this.position);
+			
 		} else {
 			target = co;
 		}

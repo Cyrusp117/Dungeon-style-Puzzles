@@ -10,7 +10,7 @@ public class TestGraph {
 		
 		
 		public static void main(String[] args) {
-			Game game = new Game("testEnemy",96,96);
+			Game game = new Game("testEnemy",11*32,11*32);
 			Graph g = game.generateGraph();
 			g.generateEdges();
 			System.out.println("Vertexes: ");
@@ -38,7 +38,7 @@ public class TestGraph {
 				object.printCoords();
 			}
 			
-			Coordinate bfs = g.BFS(new Coordinate(32,64), new Coordinate(32,96));
+			Coordinate bfs = g.BFS(new Coordinate(32,64), new Coordinate(32,96),new Coordinate(32,96));
 			System.out.println("Bfs result : " + bfs.getxPosition() + " " + bfs.getyPosition());
 			
 			System.out.println("Vertexes: ");
@@ -53,7 +53,7 @@ public class TestGraph {
 			Coordinate between = g.between(new Coordinate(32,32), new Coordinate(32,64));
 			System.out.println("between result : " + between.getxPosition() + " " + between.getyPosition());
 			
-			Coordinate hound = g.hound(new Coordinate(32,96), new Coordinate(32,64),new Coordinate(32,128));
+			Coordinate hound = g.hound(new Coordinate(32,7*32), new Coordinate(32,6*32),new Coordinate(64,7*32));
 			System.out.println("hound result : " + hound.getxPosition() + " " + hound.getyPosition());
 			
 			
