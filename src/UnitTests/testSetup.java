@@ -8,7 +8,10 @@ import org.junit.Before;
 
 import ui.Application;
 import ui.Game;
+import entities.Coordinate;
+import entities.Entity;
 import entities.Player;
+import entities.Wall;
 import ui.InputManagerDesigner;
 import ui.InputManagerMenu;
 

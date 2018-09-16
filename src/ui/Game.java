@@ -411,7 +411,11 @@ public class Game{
 	public ArrayList<Entity> testEntities() {
 		return this.entities;
 	}
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
+}
 	
 
 	
