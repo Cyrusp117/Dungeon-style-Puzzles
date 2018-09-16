@@ -2,12 +2,8 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-
 import com.sun.java.swing.plaf.windows.resources.windows_zh_CN;
 
-=======
->>>>>>> 49f32b95e264aa3e5911638add598d54676a115d
 import entities.Treasure;
 import entities.Boulder;
 import entities.Coordinate;
