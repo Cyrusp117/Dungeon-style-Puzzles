@@ -109,6 +109,9 @@ public class InputManagerPlayer extends InputManager {
 		
 	}
 	
+	public Game getGame() {
+		return this.game;
+	}
 
 	/**
 	 * @return the dx the change in x position requested

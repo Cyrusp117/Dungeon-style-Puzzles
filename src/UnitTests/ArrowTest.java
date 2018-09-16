@@ -6,15 +6,34 @@ import java.awt.event.KeyEvent;
 
 import org.junit.Test;
 
+import entities.Arrow;
+import entities.Coordinate;
+import entities.Entity;
+import entities.Hunter;
+
 public class ArrowTest extends testSetup {
 
-	
-
+	Arrow arrow;
+	@Test
+	public void placeArrow() {
+		Coordinate arrowPos = new Coordinate(1*32, 5*32);
+		arrow = new Arrow(arrowPos);
+		game.addEntity(arrow);
+		game.printGame();
+		assert(game.getEntity(arrowPos) instanceof Arrow);
+	}
 
 	@Test
-	public void pickUpArrow() {
-		move(DOWN, 4);
-		move(RIGHT, 4);
+	public void pickUpAndShootArrow() {
+		assert(!player.hasItem("Arrow"));
+		move(DOWN, 3);
+		move(RIGHT, 3);
+		assert(player.hasItem("Arrow"));
+		move(KeyEvent.VK_2, 1);
+		Coordinate hunterPos = new Coordinate(4*32, 1*32);
+		assert(game.getEntity(hunterPos) instanceof Hunter);
+		move(RIGHT, 3);
+		assert(game.getEntity(hunterPos) == null);
 	}
 //	public void setUp() throws Exception {
 //		// TODO Auto-generated method stub
