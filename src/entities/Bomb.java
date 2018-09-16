@@ -19,7 +19,7 @@ public class Bomb extends Entity {
 	public Bomb(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_U;
-		this.turnsLeft = 3;
+		this.turnsLeft = 2;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}
