@@ -9,7 +9,9 @@ public class Door extends Entity {
 	private static final int CLOSE = 0;
 	private int state;
 	
-	public Door() {}
+	public Door() {
+		this.keyCode = KeyEvent.VK_D;
+	}
 	
 	public Door(Coordinate position) {
 		super(position);
@@ -31,6 +33,7 @@ public class Door extends Entity {
 				}else {
 					player.setPosition(player.getOldPosition());
 					System.out.println("You don't have the right key");
+					System.out.println("DoorID: " + DoorId);
 				}
 			}else {
 				player.setPosition(player.getOldPosition());

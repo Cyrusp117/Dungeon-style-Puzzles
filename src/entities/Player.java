@@ -268,6 +268,7 @@ public class Player extends Entity{
 				if(key.getKeyId() == DoorId) {
 					has = 1;
 				}
+				System.out.println("KeyID: " + key.getKeyId());
 			}
 		}
 		if(has == 1) {
