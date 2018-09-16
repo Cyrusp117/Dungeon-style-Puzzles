@@ -175,7 +175,49 @@ public class Player extends Entity{
 		return position.returnPosition();
 	}
 	
-
+	public Sword getSword() {
+		for(Entity entity : inventory) {
+			if (entity instanceof Sword) return (Sword)entity;
+		}
+		return null;
+	}
+	
+	
+	public void hitUsingSword() {
+		Sword curSword = getSword();
+		curSword.reduceDurability();
+		if(curSword.getDurability() == 0) {
+			inventory.remove(curSword);
+		}
+//		int r = 0;
+//		Entity remove = null;
+//		if(this.hasItem("Sword")) {
+//			for(Entity e: this.getInventory()) {
+//				if(e.getName().equals("Sword")) {
+//					Sword sword = (Sword) e; 
+//					sword.getDesignerDescription();
+//					if(sword.getHitTime() == 0) {
+//						remove = e;
+//						r = 1;
+//					}
+//				}
+//			}
+//		}
+//		//hit using sword
+//		if(r == 0 && this.hasItem("Sword")) {
+//			return true;
+//		//presss v but don't have sword
+//		}else if (r== 0 && !this.hasItem("Sword")){
+//			System.out.println("You don't have sword!");
+//			return false;
+//	    //hit using sword and remove the sword from inventory
+//		}else if(r == 1){
+//			System.out.println("Remove sword from inventory!");
+//			this.getInventory().remove(remove);
+//			return false;
+//		}
+//		return false;
+	}
 
 	public boolean hasItem(String item) {
 		int has = 0;
@@ -236,36 +278,7 @@ public class Player extends Entity{
 
 	}
 	
-	public boolean hitUsingSword() {
-		int r = 0;
-		Entity remove = null;
-		if(this.hasItem("Sword")) {
-			for(Entity e: this.getInventory()) {
-				if(e.getName().equals("Sword")) {
-					Sword sword = (Sword) e; 
-					sword.setHitTime();
-					if(sword.getHitTime() == 0) {
-						remove = e;
-						r = 1;
-					}
-				}
-			}
-		}
-		//hit using sword
-		if(r == 0 && this.hasItem("Sword")) {
-			return true;
-		//presss v but don't have sword
-		}else if (r== 0 && !this.hasItem("Sword")){
-			System.out.println("You don't have sword!");
-			return false;
-	    //hit using sword and remove the sword from inventory
-		}else if(r == 1){
-			System.out.println("Remove sword from inventory!");
-			this.getInventory().remove(remove);
-			return false;
-		}
-		return false;
-	}
+	
 	
 	public void lightAndDropBomb() {
 		if(this.hasItem("Bomb")) {

@@ -26,8 +26,9 @@ public class TestTreasure extends testSetup {
 		Treasure treasure = new Treasure(treasurePos);
 		game.addEntity(treasure);
 		game.printGame();
-		move(DOWN, 3);
 		ArrayList<Entity> inventory = game.getPlayerInventory();
+		move(DOWN, 3);
+		assert(!inventory.contains(treasure));
 		assert(inventory.contains(treasure));
 	}
 
