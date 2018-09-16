@@ -8,6 +8,7 @@ import entities.Bomb;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.Door;
+import entities.FloorSwitch;
 import entities.HoverPotion;
 import entities.Hunter;
 import entities.Key;

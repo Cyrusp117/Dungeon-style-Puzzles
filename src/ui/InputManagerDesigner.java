@@ -12,6 +12,7 @@ import entities.Boulder;
 import entities.Coordinate;
 import entities.Door;
 import entities.Entity;
+import entities.FloorSwitch;
 import entities.Exit;
 import entities.HoverPotion;
 import entities.Hunter;

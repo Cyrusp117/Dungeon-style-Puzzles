@@ -1,4 +1,5 @@
 
+
 package entities;
 import java.awt.event.KeyEvent;
 
@@ -46,4 +47,3 @@ public class Hunter extends Enemy {
 	
 
 }
-
