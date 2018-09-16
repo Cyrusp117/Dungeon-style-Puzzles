@@ -10,15 +10,20 @@ public class DoorTest extends testSetup {
 
 	@Test
 	public void placeDoor() {
+		Door.resetNumOfDoors();
 		Coordinate doorPos = new Coordinate(1*32, 7*32);
 		Door door = new Door(doorPos);
 		game.addEntity(door);
 		game.printGame();
+		assert(door.getDoorId() == 0);
+		assert(door.getNumOfDoors() == 1);
 		assert(game.getEntity(doorPos) instanceof Door);
 	}
 	
 	@Test
 	public void openDoor() {
+		Key.resetNumOfKeys();
+		Door.resetNumOfDoors();
 		Coordinate key1Pos = new Coordinate(7*32, 1*32);
         Coordinate key2Pos = new Coordinate(8*32, 1*32);
         Coordinate Door1Pos = new Coordinate(2*32, 7*32);
