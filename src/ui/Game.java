@@ -13,21 +13,45 @@ import entities.Wall;
 
 public class Game{ 								
 	private static final Entity NULL = null;
-// implements Runnable{
 	private int width, height;					//Width and height of the app window
 	private Player playerOne;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
+	private ArrayList<ArrayList<Coordinate>> map;
 	// Need to implement generic iterator
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.entities = new ArrayList<>();
+		this.map = new ArrayList<ArrayList<Coordinate>>();
+		generateMap();
 	}
 	
+	//Done
+	public void generateMap() {
+		for( int i = 0; i <= width; i++ ) {
+			ArrayList<Coordinate> coords = new ArrayList<>();
+			for ( int j = 0; j <= height; j++ ) {
+				Coordinate newPos = new Coordinate(i,j);
+				coords.add(newPos);
+			}
+			map.add(coords);
+		}
+	}
+	
+	//Done
 	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
 		// Checks for arrow collisions
+		deleteShot();
+		update();
+	}
+	
+	//Done
+	/**
+	 * 
+	 */
+	public void deleteShot() {
 		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
 		for (Entity entity : entities) {
 			if (entity instanceof Arrow) {
@@ -35,7 +59,7 @@ public class Game{
 				int newX = arrow.returnX() + arrow.getDx();
 				int newY = arrow.returnY() + arrow.getDy();
 				Coordinate newPos = new Coordinate(newX, newY);
-				arrow.setPosition(newPos);
+				moveEntity(newPos, arrow);
 				Entity onArrow = getEntityExcept(newPos, arrow);
 				if (onArrow instanceof Enemy){
 					toBeDeleted.add(onArrow);
@@ -45,14 +69,20 @@ public class Game{
 		for (Entity entity : toBeDeleted) {
 			entities.remove(entity);
 		}
-		update();
 	}
 	
+	public void moveEntity(Coordinate newPos, Entity entity) {
+		Coordinate newMapTile = retrieveMapCo(newPos);
+		Coordinate oldMapTile = retrieveMapCo(entity);
+		oldMapTile.removeEntity(entity);
+		entity.setPosition(newMapTile);
+		newMapTile.addEntity(entity);
+	}
 	private void update() {						//Updates the state of the game
 
 		movePlayer();
 		ArrayList<Entity> toBeRemoved = new ArrayList<>();
-
+		
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
@@ -73,7 +103,7 @@ public class Game{
 				    position = enemy.move(playerOne.getPosition(), generateGraph() );
 				}
 				if ( getEntity(position) == null && !(playerOne.getPosition().equals(position)) ) {
-					enemy.setPosition(position);
+					moveEntity(position, enemy);
 				} 
 
 				allEnemy = 0;
@@ -177,9 +207,9 @@ public class Game{
 	public void printGame() {
         int i = 0;
         int j = 0;
-		while (i <= this.getHeight()/32) {
-        	while (j <= this.getWidth()/32) {
-        		Coordinate curPos = new Coordinate(j*32, i*32);
+		while (i <= this.getHeight()) {
+        	while (j <= this.getWidth()) {
+        		Coordinate curPos = new Coordinate(j, i);
         		Entity entity = getEntity(curPos);
         		if (curPos.equals(playerOne.getPosition())) {
         			System.out.print("1");
@@ -221,7 +251,7 @@ public class Game{
 
 			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 			playerOne.setOldPosition(playerOne.getPosition());
-			playerOne.setPosition(newPos);
+			moveEntity(newPos, playerOne);
 			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
 			//System.out.println(entity);
 			Entity boulderEntity = getEntity(playerOne.move());
@@ -260,14 +290,16 @@ public class Game{
 		printPlayerCoordinates();
 	}
 	
+	//Done
 	public Entity getEntity(Coordinate newPos) {
-		for (Entity entity : entities) {
-			if(entity.getPosition().equals(newPos)) {
-				return entity;
-			}
+		ArrayList<Entity> curEntities = retrieveMapCo(newPos).getEntities();
+		for (Entity entity : curEntities) {
+			return entity; // Just returning top of the entity list
 		}
 		return null;
 	}
+	
+	//public getSpecificEntity()
 	
 //	public Entity getEntitynofs(Coordinate newPos) {
 //		for (Entity entity : entities) {
@@ -278,29 +310,28 @@ public class Game{
 //		}
 //		return NULL;
 //	}
-	
+	//Done
 	public Entity getEntityExcept(Coordinate newPos, Entity e) {
-		for (Entity entity : entities) {
-			if(e.getName().equals(entity.getName())) continue;
-			if(entity.getPosition().equals(newPos)) {
-				return entity;
+		ArrayList<Entity> curEntities = retrieveMapCo(newPos).getEntities();
+		for (Entity entity : curEntities) {
+			if(!entity.equals(e)) {
+				return entity; // Just returning top of the entity list	
 			}
+			
 		}
-		return NULL;
+		return null;
 	}
 
 	/**
 	 * Initialises the game board
 	 */
 	public void init() {
-		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
+		Coordinate position = new Coordinate(1,1);   // For test, this would be specified by user
 		createPlayer(position);						 //Create the player at the given Coordinate
 		generatePerimeter();						 //Create a series of walls around the perimeter
 		printGame();
-
 	}
 	
-
 
 	/**
 	 * print to the Console the Coordinates of the current player
@@ -309,26 +340,29 @@ public class Game{
 		System.out.println(playerOne.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	
+	//done
 	/**
 	 * 
 	 * @param position, the Coordinate to which the player should be placed
 	 */
 	public void createPlayer(Coordinate position) {
 		if(isOccupied(position)) return;
-		playerOne = new Player(position);
+		playerOne = new Player(position, this);
+		retrieveMapCo(position).addEntity(playerOne);
 	}
 
+	//done
 	/**
 	 * Create a perimeter of wall around the board
 	 */
 	public void generatePerimeter() {
 		int i,j;
 		//System.out.print(width + " " + height);
-		for(i = 0; i <= width; i += 32) {
-			for(j = 0; j <= height; j+= 32) {
+		for(i = 0; i <= width; i ++) {
+			for(j = 0; j <= height; j++) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					entities.add(new Wall(currentPosition));
+					retrieveMapCo(currentPosition).addEntity(new Wall(currentPosition));
 				}
 			}
 		}
@@ -358,26 +392,32 @@ public class Game{
 		return false;
 	}
 	
+	//done
 	public boolean addEntity(Entity entity) {
 		Coordinate position = entity.getPosition();
 		if(isOccupied(position)) return false;
 		if(isOutOfBounds(position)) return false;
 		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
+		retrieveMapCo(entity).addEntity(entity);
+		entity.setPosition(retrieveMapCo(entity));
 		entities.add(entity);
 		return true;
 	}
 	
-	
+	//done
 	/**
 	 * 
 	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
 	 */
 	private void deleteEntity(Entity entity) {
+		retrieveMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
 		if(entity.equals(playerOne)) {
 			playerOne = null;
 		}
 	}
+	
+	
 	/**
 	 * 
 	 * @param xBoundary the largest size of the wall on the x axis
@@ -415,7 +455,12 @@ public class Game{
 //		}
 //		return false;
 //	}
-	
+	public Coordinate retrieveMapCo(Coordinate position) {
+		return map.get(position.getxPosition()).get(position.getyPosition());
+	}
+	public Coordinate retrieveMapCo(Entity entity) {
+		return map.get(entity.returnX()).get(entity.returnY());
+	}
 	
 	public int getHeight() {
 		return this.height;
@@ -468,8 +513,8 @@ public class Game{
 		int i,j;
 		Coordinate cur;
 		Graph g = new Graph(height,width);
-		for(i = 0; i <= width; i += 32) {
-			for(j = 0; j <= height; j+= 32) {
+		for(i = 0; i <= width; i ++) {
+			for(j = 0; j <= height; j++) {
 				cur = new Coordinate(i,j);
 				if(! isOccupied(cur)) {
 					g.addCoordinate(cur);	
@@ -478,10 +523,6 @@ public class Game{
 		}
 		
 		return g;
-	}
-	
-	public ArrayList<Entity> testEntities() {
-		return this.entities;
 	}
 	
 	public ArrayList<Entity> getEntities() {

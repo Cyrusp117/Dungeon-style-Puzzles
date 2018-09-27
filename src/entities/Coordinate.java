@@ -1,17 +1,21 @@
 package entities;
 
+import java.util.ArrayList;
 
 public class Coordinate {
 	private int xPosition;
 	private int yPosition;
-	public static final Coordinate UP = new Coordinate(0, -32);
-	public static final Coordinate LEFT = new Coordinate(-32, 0);
-	public static final Coordinate RIGHT = new Coordinate(32, 0);
-	public static final Coordinate DOWN = new Coordinate(0, 32);
+	private ArrayList<Entity> entities;
+	public static final Coordinate UP = new Coordinate(0, -1);
+	public static final Coordinate LEFT = new Coordinate(-1, 0);
+	public static final Coordinate RIGHT = new Coordinate(1, 0);
+	public static final Coordinate DOWN = new Coordinate(0, 1);
+	
 	
 	public Coordinate(int xPosition, int yPosition){
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
+		this.entities = new ArrayList<>();
 	}
 
 	/**
@@ -90,6 +94,27 @@ public class Coordinate {
 		return addCoordinates(this, LEFT);
 	}
 	
+	public void addEntity(Entity entity) {
+		entities.add(entity);
+	}
+	
+	public void removeEntity(Entity entity) {
+		entities.remove(entity);
+	}
+
+	/**
+	 * @return the entities
+	 */
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	/**
+	 * @param entities the entities to set
+	 */
+	public void setEntities(ArrayList<Entity> entities) {
+		this.entities = entities;
+	}
 	
 	
 

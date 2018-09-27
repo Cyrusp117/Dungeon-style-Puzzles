@@ -2,8 +2,10 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import ui.Game;
+
 public class Boulder extends Entity {
-	private Coordinate oldPos; 
+	private Coordinate oldPos;
 	public Boulder(Coordinate position) {
 		super(position);
 		this.keyCode = KeyEvent.VK_B;

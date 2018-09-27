@@ -12,6 +12,7 @@ import entities.Coordinate;
 import entities.Door;
 import entities.Entity;
 import entities.FloorSwitch;
+import entities.Hound;
 import entities.Exit;
 import entities.HoverPotion;
 import entities.Hunter;
@@ -44,6 +45,7 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		allDesignerObjects.add(new Exit(defaultPos));
 		allDesignerObjects.add(new Door());
+		allDesignerObjects.add(new Hound(defaultPos, new Hunter(defaultPos)));
 		for (Entity entity : allDesignerObjects) {
 			entity.getDesignerDescription();
 		}
@@ -80,8 +82,8 @@ public class InputManagerDesigner extends InputManagerPlayer {
 		
 		if (requiredEntity != null) { 
 			Scanner sc = new Scanner(System.in);
-			dx = sc.nextInt()*32;
-			dy = sc.nextInt()*32;
+			dx = sc.nextInt();
+			dy = sc.nextInt();
 			Coordinate entityPos = new Coordinate(dx, dy);
 			
 			Class<? extends Entity> c = requiredEntity.getClass();

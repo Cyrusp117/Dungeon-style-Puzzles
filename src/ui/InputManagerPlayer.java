@@ -27,7 +27,7 @@ public class InputManagerPlayer extends InputManager {
 		dy = 0;
 		// If the left arrow key is pressed, request to move left by a tile
 	    if (key == KeyEvent.VK_LEFT) {
-	        dx = -32;
+	        dx = -1;
 	        dy = 0;
 	        System.out.println("LEFT");
 	        game.newTurn();
@@ -35,7 +35,7 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    // If the right arrow key is pressed, request to move right by a tile
 	    if (key == KeyEvent.VK_RIGHT) {
-	        dx = 32;
+	        dx = 1;
 	        dy = 0;
 	        System.out.println("RIGHT");
 	        game.newTurn();
@@ -43,7 +43,7 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    // If the up arrow key is pressed, request to move up by a tile
 	    if (key == KeyEvent.VK_UP) {
-	        dy = -32;
+	        dy = -1;
 	        dx = 0;
 	        System.out.println("UP");
 	        game.newTurn();
@@ -51,7 +51,7 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    // If the down arrow key is pressed, request to move down by a tile
 	    if (key == KeyEvent.VK_DOWN) {
-	        dy = 32;
+	        dy = 1;
 	        dx = 0;
 	        System.out.println("DOWN");
 	        game.newTurn();
@@ -59,8 +59,8 @@ public class InputManagerPlayer extends InputManager {
 	    }
 	    
 	    if (key == KeyEvent.VK_ESCAPE) {
-	    	dx = 32;
-	    	dy = 32;
+	    	dx = 0;
+	    	dy = 0;
 	    	System.out.println("*****  Returning to Menu.. *****");
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerMenu(app));
@@ -81,7 +81,7 @@ public class InputManagerPlayer extends InputManager {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
-	    			arrow.setDy(-32); 
+	    			arrow.setDy(-1); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
 	    			break;
@@ -103,7 +103,7 @@ public class InputManagerPlayer extends InputManager {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
-	    			arrow.setDy(32); 
+	    			arrow.setDy(1); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
 	    			break;
@@ -127,7 +127,7 @@ public class InputManagerPlayer extends InputManager {
 	      			
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(0); 
-	    			arrow.setDx(-32);
+	    			arrow.setDx(-1);
 	    			game.addEntity(arrow);
 	    			break;
 	    		}
@@ -149,7 +149,7 @@ public class InputManagerPlayer extends InputManager {
 	    			arrow = (Arrow)curItem;
 	    			arrow.setPosition(game.getPlayerOne().getPosition());
 	    			arrow.setDy(0); 
-	    			arrow.setDx(32);
+	    			arrow.setDx(1);
 	    			game.addEntity(arrow);
 	    			break;
 	    		}

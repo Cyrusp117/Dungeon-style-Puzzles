@@ -30,29 +30,29 @@ public class InputManagerMenu extends InputManager {
 		int key = e.getKeyCode();
 	    
 		if (key == KeyEvent.VK_2) {
-			Game game = new Game("Blank 10x10", 10*32, 10*32);
+			Game game = new Game("Blank 10x10", 10, 10);
 	        System.out.println("Blank 10x10 Dungeon");
 	    	app.getFrame().removeKeyListener(this);
 	    	app.getFrame().addKeyListener(new InputManagerUser(game, app));
 		}
 		
 		if (key == KeyEvent.VK_1) {
-	    	Game game = new Game("Preset #1", 10*32, 10*32);
+	    	Game game = new Game("Preset #1", 10, 10);
 	        System.out.println("First Preset Dungeon");
-	        Coordinate pitPos = new Coordinate(2*32, 2*32);
-	        Coordinate hunterPos = new Coordinate(4*32, 1*32);
-	        Coordinate hoverPos = new Coordinate(2*32, 1*32);
-	        Coordinate swordPos = new Coordinate(5*32, 1*32);
-	        Coordinate fsPos = new Coordinate(1*32, 8*32);
-	        Coordinate boulderPos = new Coordinate(5*32, 5*32);
-	        Coordinate arrowPos = new Coordinate(4*32, 4*32);
-	        Coordinate key1Pos = new Coordinate(7*32, 1*32);
-	        Coordinate key2Pos = new Coordinate(8*32, 1*32);
-	        Coordinate Door1Pos = new Coordinate(2*32, 7*32);
-	        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
-	        Coordinate Bomb1Pos = new Coordinate(7*32, 7*32);
-	        Coordinate Bomb2Pos = new Coordinate(8*32, 7*32);
-	        Coordinate IPpotPos = new Coordinate(5*32, 4*32);
+	        Coordinate pitPos = new Coordinate(2, 2);
+	        Coordinate hunterPos = new Coordinate(4, 1);
+	        Coordinate hoverPos = new Coordinate(2, 1);
+	        Coordinate swordPos = new Coordinate(5, 1);
+	        Coordinate fsPos = new Coordinate(1, 8);
+	        Coordinate boulderPos = new Coordinate(5, 5);
+	        Coordinate arrowPos = new Coordinate(4, 4);
+	        Coordinate key1Pos = new Coordinate(7, 1);
+	        Coordinate key2Pos = new Coordinate(8, 1);
+	        Coordinate Door1Pos = new Coordinate(2, 7);
+	        Coordinate Door2Pos = new Coordinate(3, 7);
+	        Coordinate Bomb1Pos = new Coordinate(7, 7);
+	        Coordinate Bomb2Pos = new Coordinate(8, 7);
+	        Coordinate IPpotPos = new Coordinate(5, 4);
 	        game.addEntity(new Pit(pitPos));
 	        game.addEntity(new HoverPotion(hoverPos));
 	        game.addEntity(new Sword(swordPos));
@@ -103,9 +103,6 @@ public class InputManagerMenu extends InputManager {
 			
 		}
 		//sc.close();
-		
-		xSize = xSize * 32;
-		ySize = ySize * 32;
 		Game game = new Game(title, xSize, ySize);
 		System.out.println("Game created with xBoundary: " + xSize + " and yBoundary: " + ySize);
 		return game;
