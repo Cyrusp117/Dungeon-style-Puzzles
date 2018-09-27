@@ -23,7 +23,7 @@ public class TestCoward extends testSetup {
 
 	@Test
 	public void placeCoward() {
-		Coordinate cowardPos = new Coordinate(3*32, 1*32);
+		Coordinate cowardPos = new Coordinate(3, 1);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
@@ -32,12 +32,12 @@ public class TestCoward extends testSetup {
 
 	@Test
 	public void TestOneAway() {
-		Coordinate cowardPos = new Coordinate(3*32, 1*32);
+		Coordinate cowardPos = new Coordinate(3, 1);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
 		move(RIGHT, 1);
-		Coordinate correctPos = new Coordinate(4*32, 1*32);
+		Coordinate correctPos = new Coordinate(4, 1);
 		assert(player.isAlive());
 		assertTrue(coward.getPosition().equals(correctPos));
 		// Because This enemy constantly moves toward the player, 
@@ -46,15 +46,15 @@ public class TestCoward extends testSetup {
 	
 	@Test
 	public void TestVerticalChase() {
-		Coordinate cowardPos = new Coordinate(3*32, 1*32);
+		Coordinate cowardPos = new Coordinate(3, 1);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
 		move(DOWN, 1);
-		Coordinate expectedPos = new Coordinate(2*32, 1*32);
+		Coordinate expectedPos = new Coordinate(2, 1);
 		assert(coward.getPosition().equals(expectedPos));
 		move(DOWN, 6);
-		expectedPos = new Coordinate(1*32, 6*32);
+		expectedPos = new Coordinate(1, 6);
 		assert(coward.getPosition().equals(expectedPos));
 	}
 	
@@ -62,12 +62,12 @@ public class TestCoward extends testSetup {
 	public void TestObstacleRecognition() {
 		Door.resetNumOfDoors();
 		Key.resetNumOfKeys();
-		Coordinate cowardPos = new Coordinate(8*32, 4*32);
+		Coordinate cowardPos = new Coordinate(8, 4);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
 
-		Coordinate position = new Coordinate(4*32, 1*32);
+		Coordinate position = new Coordinate(4, 1);
 		game.addEntity(new Boulder(position));
 		game.addEntity(new Pit(position.moveDown()));
 		position = position.moveDown();
@@ -100,10 +100,10 @@ public class TestCoward extends testSetup {
 	
 	@Test
 	public void TestInvincibility() {
-		Coordinate cowardPos = new Coordinate(5*32, 1*32);
+		Coordinate cowardPos = new Coordinate(5, 1);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
-		Coordinate ipPos = new Coordinate(3*32, 1*32);
+		Coordinate ipPos = new Coordinate(3, 1);
 		InvincibilityPotion ip = new InvincibilityPotion(ipPos);
 		game.addEntity(ip);
 		game.printGame();
@@ -122,12 +122,12 @@ public class TestCoward extends testSetup {
 	}
 	@Test
 	public void testDiag() {
-		Coordinate cowardPos = new Coordinate(2*32, 2*32);
+		Coordinate cowardPos = new Coordinate(2, 2);
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
 		move(DOWN,1);
-		Coordinate expectedPos = new Coordinate(3*32,2*32);
+		Coordinate expectedPos = new Coordinate(3,2);
 		assertTrue(coward.getPosition().equals((expectedPos)));
 		
 	}

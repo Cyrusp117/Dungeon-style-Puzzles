@@ -205,26 +205,26 @@ public class Game{
 	
 
 	public void printGame() {
-        int i = 0;
-        int j = 0;
-		while (i <= this.getHeight()) {
-        	while (j <= this.getWidth()) {
-        		Coordinate curPos = new Coordinate(j, i);
-        		Entity entity = getEntity(curPos);
-        		if (curPos.equals(playerOne.getPosition())) {
-        			System.out.print("1");
-        		} else if(entity != null) {
-        			System.out.print((char)entity.getKeyCode());
-        		} else {
-        			System.out.print("-");
-        		}
-        		System.out.print(" ");
-        		j++;
-        	}
-        	System.out.println("");
-        	j = 0;
-        	i++;
-        }
+//        int i = 0;
+//        int j = 0;
+//		while (i <= this.getHeight()) {
+//        	while (j <= this.getWidth()) {
+//        		Coordinate curPos = new Coordinate(j, i);
+//        		Entity entity = getEntity(curPos);
+//        		if (curPos.equals(playerOne.getPosition())) {
+//        			System.out.print("1");
+//        		} else if(entity != null) {
+//        			System.out.print((char)entity.getKeyCode());
+//        		} else {
+//        			System.out.print("-");
+//        		}
+//        		System.out.print(" ");
+//        		j++;
+//        	}
+//        	System.out.println("");
+//        	j = 0;
+//        	i++;
+//        }
 	}
 	
 	/**

@@ -9,7 +9,7 @@ import entities.Entity;
 import entities.InvincibilityPotion;
 
 public class InvincibilityPotionTest extends testSetup {
-	Coordinate ipPotPos = new Coordinate(1*32, 5*32);
+	Coordinate ipPotPos = new Coordinate(1, 5);
 	
 	@Test
 	public void placeInvincibilityPotionTest() {
@@ -31,7 +31,7 @@ public class InvincibilityPotionTest extends testSetup {
 	
 	@Test
 	public void checkNumOfTurns() {
-		InvincibilityPotion ipPot = new InvincibilityPotion(new Coordinate(1*32, 3*32));
+		InvincibilityPotion ipPot = new InvincibilityPotion(new Coordinate(1, 3));
 		game.addEntity(ipPot);
 		game.printGame();
 		assert(!game.getPlayerInventory().contains(ipPot));
