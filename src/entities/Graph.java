@@ -22,6 +22,7 @@ public class Graph {
 	}
 	public void addCoordinate(Coordinate c) {
 		this.coordList.add(c);
+		 
 		this.nV++;
 	}
 	public void addEdge(Edge e) {
@@ -38,6 +39,7 @@ public class Graph {
 				}
 			}
 		}
+		//Collections.shuffle(this.coordList);
 	}
 	
 	public boolean isAdjacent(Coordinate a, Coordinate b) {
@@ -207,10 +209,13 @@ public class Graph {
         int ay = player.getyPosition()/coordConst;
         int bx = enemy.getxPosition()/coordConst;
         int by = enemy.getyPosition()/coordConst;
+        int array[] = {0,1,-1};
+        int i;
      
         //player ahead in x coordinate
-        int houndx;
-        int houndy;
+        int houndx; //initial
+        int houndy; //initial
+        //do I need other iterators?
         if (ax -bx > 0) {
         	houndx = 1;
         } else if (ax - bx < 0) { //player behind in x coordinate
@@ -232,22 +237,54 @@ public class Graph {
         while (!check) {
         	if (coordConst*(ax + houndx) == hound.getxPosition() && coordConst*(ay+houndy) == hound.getyPosition()) {
         		//Test
-        		System.out.println(ax + houndx + " " + ay + houndy);
+        		//System.out.println(ax + houndx + " " + ay + houndy);
         		target = hound;
         		check = true;
       
         	} else {
         		//Test
         		//System.out.println(availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy)));
-        	    if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy) )) {
-        		    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy));
+        	   // if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy) )) {
+        		//    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy));
         		
-        		    check = true;
-        	    } else {
+        		//    check = true;
+        	    //} else {
+        	    	//needs to accept cone of options
+        	    	//so given hound difference point, should have an increasing bound of options it
+        	    	//checks for 
+        	    	
+        	    	if (houndx == 0) {
+        	    		for (i = 0; i < 3; i++) {
+        	    			if (availablePoint(coordConst*(ax + houndx + + array[i]),coordConst*(ay+houndy) )) {
+        	        		    target = getPoint(coordConst*(ax + houndx + + array[i]),coordConst*(ay+houndy ));
+        	        		
+        	        		    check = true;
+        	        		    break;
+        	    			}
+        	    		}
+        	    		
+        	    	} else if (houndy == 0) {
+        	    		for (i = 0; i < 3; i++) {
+        	    			if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy + array[i]) )) {
+        	        		    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy + array[i]));
+        	        		
+        	        		    check = true;
+        	        		    break;
+        	    			}
+        	    		}
+        	    		//check houndx + 1 and houndx -1 
+        	    		//else incriment
+        	    	} else {
+        	    		for (i = 1; i < 3; i++) {
+        	    			
+        	    		}
+        	    		//maybe consider point that shares x of target and y of player, or vise versa
+        	    		//should produce list of options needed
+        	    	}
         		    houndx+=houndx;
         		    houndy+=houndy;
         		
-        	    }
+        	    //}
         	    if (Math.abs(ax + houndx) > width || Math.abs(by+houndy) > height) {
         		    check = true;
         		    System.out.println("here");

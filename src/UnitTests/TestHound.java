@@ -49,12 +49,26 @@ public class TestHound extends testSetup {
 		Hound hound = new Hound(houndPos,hunter);
 		game.addEntity(hound);
 		
+		houndPos = new Coordinate(7*32,7*32);
+		hound = new Hound(houndPos,hunter);
+		game.addEntity(hound);
+		
+		
+		houndPos = new Coordinate(9*32,6*32);
+		hound = new Hound(houndPos,hunter);
+		game.addEntity(hound);
+		
+		houndPos = new Coordinate(3*32,1*32);
+		hound = new Hound(houndPos,hunter);
+		game.addEntity(hound);
+		
 		game.printGame();
 		move(DOWN, 1);
 		Coordinate expectedPos = new Coordinate(1*32, 1*32);
 		assert(hunter.getPosition().equals(expectedPos));
 		move(DOWN, 6);
 		move(RIGHT,1);
+		move(UP,1);
 		expectedPos = new Coordinate(3*32, 9*32);
 		assert(hound.getPosition().equals(expectedPos));
 	}
