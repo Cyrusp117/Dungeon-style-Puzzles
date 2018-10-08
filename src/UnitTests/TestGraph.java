@@ -38,7 +38,7 @@ public class TestGraph {
 				object.printCoords();
 			}
 			
-			Coordinate bfs = g.BFS(new Coordinate(32,64), new Coordinate(32,96),new Coordinate(32,96));
+			Coordinate bfs = g.BFS(new Coordinate(1,2), new Coordinate(2,3),new Coordinate(4,8));
 			System.out.println("Bfs result : " + bfs.getxPosition() + " " + bfs.getyPosition());
 			
 			System.out.println("Vertexes: ");
@@ -53,8 +53,20 @@ public class TestGraph {
 			Coordinate between = g.between(new Coordinate(1,1), new Coordinate(1,2));
 			System.out.println("between result : " + between.getxPosition() + " " + between.getyPosition());
 			
-			Coordinate hound = g.hound(new Coordinate(32,7), new Coordinate(32,6),new Coordinate(64,7));
-			System.out.println("hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			Coordinate hound = g.hound(new Coordinate(10,7), new Coordinate(10,6),new Coordinate(6,7));
+			System.out.println("Hunter up 1: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			
+			hound = g.hound(new Coordinate(10,7), new Coordinate(10,8),new Coordinate(6,7));
+			System.out.println("Hunter down 1: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			
+			hound = g.hound(new Coordinate(10,7), new Coordinate(11,7),new Coordinate(6,7));
+			System.out.println("Hunter right: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			
+			hound = g.hound(new Coordinate(10,7), new Coordinate(11,6),new Coordinate(6,7));
+			System.out.println("Hunter left: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			
+			hound = g.hound(new Coordinate(10,7), new Coordinate(11,8),new Coordinate(6,7));
+			System.out.println("Hunter bottom right:hound result : " + hound.getxPosition() + " " + hound.getyPosition());
 			
 			
 		}
