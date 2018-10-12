@@ -1,6 +1,9 @@
 package ui;
 
+import entities.Arrow;
+import entities.Bomb;
 import entities.Coordinate;
+import entities.Entity;
 import entities.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -66,6 +69,7 @@ public class PlayerController extends Controller {
 	}
 	
 	public void previousMenu() {
+		
         Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());
         mapSelect.start(msc);
@@ -82,8 +86,43 @@ public class PlayerController extends Controller {
 			moveLeft();
 		} else if (key.equals(KeyCode.D)) {
 			moveRight();
-		} else {
-			moveDown();
+		} else if (key.equals(KeyCode.ESCAPE)) {
+			previousMenu();
+		} else if (key.equals(KeyCode.DIGIT1)) {
+	    	System.out.println("Inventory contents: ");
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		System.out.print(curItem.getName() + " ");
+	    	}
+	    	System.out.println("\n");
+		} else if (key.equals(KeyCode.DIGIT2)) {
+	    	Arrow arrow = null;
+	    	Player player = game.getPlayer();
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Arrow) {
+	    			arrow = (Arrow)curItem;
+	    			arrow.setPosition(game.getPlayer().getPosition());
+	    			arrow.setDy(-1); 
+	    			arrow.setDx(0);
+	    			game.addEntity(arrow);
+	    			break;
+	    		}
+	    	}
+	    	if(arrow!=null) {
+	    		System.out.println("Shooting upwards");
+	    		player.removeItem(arrow);
+	    		game.update();
+	    	} else {
+	    		System.out.println("No arrows :(");
+	    	}
+		} else if (key.equals(KeyCode.V)) {
+	    	System.out.println("Checking for bomb");
+	    	Player player = game.getPlayer();
+	    	if(player.hasItem("Bomb")) {
+	    		System.out.println("Light and drop the bomb");
+	    		Bomb placedBomb = player.setBomb();
+	    		placedBomb.setPosition(player.getPosition());
+	    		game.addEntity(placedBomb);
+	    	}
 		}
 	}
 	

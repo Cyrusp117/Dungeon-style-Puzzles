@@ -54,6 +54,9 @@ public class Game{
 				int newX = arrow.returnX() + arrow.getDx();
 				int newY = arrow.returnY() + arrow.getDy();
 				Coordinate newPos = new Coordinate(newX, newY);
+				if (isOutOfBounds(newPos)) {
+					toBeDeleted.add(arrow);
+				}
 				moveEntity(newPos, arrow);
 				Entity onArrow = getEntityExcept(newPos, arrow);
 				if (onArrow instanceof Enemy){
