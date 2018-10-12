@@ -182,6 +182,7 @@ public class PlayerController extends Controller {
 			      map1.start(dc);
 			}
 		}
+		printGame();
 	}
 	
 	
@@ -196,14 +197,14 @@ public class PlayerController extends Controller {
 		player.setDx(0);
 		player.setDy(-1);
 		game.update();
-		printGame();
+//		printGame();
 		map.setText(game.toString());
 	}
 	public void moveRight () {
 		player.setDx(1);
 		player.setDy(0);
 		game.update();
-		printGame();
+//		printGame();
 		map.setText(game.toString());
 	}
 	
@@ -211,14 +212,14 @@ public class PlayerController extends Controller {
 		player.setDx(-1);
 		player.setDy(0);
 		game.update();
-		printGame();
+//		printGame();
 		map.setText(game.toString());
 	}
 	public void moveDown () {
 		player.setDx(0);
 		player.setDy(1);
 		game.update();
-		printGame();
+//		printGame();
 		map.setText(game.toString());
 	}
 }

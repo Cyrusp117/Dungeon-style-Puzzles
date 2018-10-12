@@ -22,8 +22,6 @@ public class MainMenuController extends Controller {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
 	public void startGame() {
 		Stage curStage = super.getS();
 		curStage.setUserData(false);

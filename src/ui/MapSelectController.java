@@ -11,6 +11,7 @@ import entities.Hunter;
 import entities.InvincibilityPotion;
 import entities.Key;
 import entities.Pit;
+import entities.Player;
 import entities.Sword;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class MapSelectController extends Controller {
 	protected boolean designer;
 	public MapSelectController(Stage s) {
 		super(s);
+		designer = (boolean)s.getUserData();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -51,7 +53,7 @@ public class MapSelectController extends Controller {
         Coordinate IPpotPos = new Coordinate(5, 4);
 		game.generatePerimeter();		 //Create a series of walls around the perimeter
 		if (!designer) {
-	    	game.createPlayer(playerPos);
+	    	game.addEntity(new Player(playerPos));
 		}
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
@@ -67,7 +69,7 @@ public class MapSelectController extends Controller {
         game.addEntity(new Bomb(Bomb1Pos));
         game.addEntity(new Bomb(Bomb2Pos));
         game.addEntity(new InvincibilityPotion(IPpotPos));
-        game.printGame();
+        //game.printGame();
 		
         Screen map1 = new Screen(super.getS(), "Map", "view/map.fxml");
         PlayerController pc = new PlayerController(super.getS(), game);

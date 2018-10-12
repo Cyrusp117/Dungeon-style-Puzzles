@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
-import ui.Game;
 
 
 public class Player extends Entity{
@@ -16,11 +15,11 @@ public class Player extends Entity{
 	private int dy; // Current y velocity
 	private int state;
 	ArrayList<Entity> inventory;
-	private Game game;
+	//private Game game;
 	
-	public Player(Coordinate position, Game game){
+	public Player(Coordinate position){
 		super(position);
-		this.game = game;
+		//this.game = game;
 		dx = 0;
 		dy = 0;
 		inventory = new ArrayList<Entity>();
