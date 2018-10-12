@@ -197,6 +197,31 @@ public class Game{
         }
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+        int i = 0;
+        int j = 0;
+		while (i <= this.getHeight()/32) {
+        	while (j <= this.getWidth()/32) {
+        		Coordinate curPos = new Coordinate(j*32, i*32);
+        		Entity entity = getEntity(curPos);
+        		if (curPos.equals(playerOne.getPosition())) {
+        			sb.append("1");
+        		} else if(entity != null) {
+        			sb.append((char)entity.getKeyCode());
+        		} else {
+        			sb.append("-");
+        		}
+        		sb.append(" ");
+        		j++;
+        	}
+        	sb.append("");
+        	j = 0;
+        	i++;
+        }
+		return sb.toString();
+	}
+	
 	/**
 	 * Moves the player
 	 */
