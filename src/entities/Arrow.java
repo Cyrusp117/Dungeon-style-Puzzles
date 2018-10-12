@@ -2,13 +2,15 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Arrow extends Entity {
 	int dx;
 	int dy;
 	
 	public Arrow(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_A;
+		this.keyCode = KeyCode.A;
 	}
 	
 	public boolean interactWithPlayer(Player player) {

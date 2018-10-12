@@ -2,12 +2,14 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Wall extends Entity {
 	//private BufferedImage sprite;
 	
 	public Wall (Coordinate position)  {
 		super(position);
-		this.keyCode = KeyEvent.VK_W;
+		this.keyCode = KeyCode.W;
 		this.movable = false;
 	}
 	public Coordinate move(Coordinate co, Graph g) {

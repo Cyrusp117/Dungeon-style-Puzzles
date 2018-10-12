@@ -13,15 +13,29 @@ import javafx.stage.Stage;
 public class MainMenuController extends Controller {
 
 	@FXML 
-	private Button btn1;
+	private Button playerMode;
+	@FXML
+	private Button designMode;
 	
 	public MainMenuController(Stage s) {
 		super(s);
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
 	public void startGame() {
-        Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
+		Stage curStage = super.getS();
+		curStage.setUserData(false);
+        Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
+        MapSelectController msc = new MapSelectController(super.getS());
+        mapSelect.start(msc);
+	}
+	
+	public void designGame() {
+		Stage curStage = super.getS();
+		curStage.setUserData(true);
+        Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());
         mapSelect.start(msc);
 	}

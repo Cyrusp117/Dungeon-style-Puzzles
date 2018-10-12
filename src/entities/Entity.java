@@ -1,8 +1,10 @@
 package entities;
 
+import javafx.scene.input.KeyCode;
+
 public abstract class Entity {
 	protected Coordinate position;
-	protected int keyCode;
+	protected KeyCode keyCode;
 	protected boolean movable;
 	public Entity(Coordinate position) {
 		this.position = position;
@@ -78,12 +80,13 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		
 	}
 	
-	public int getKeyCode() {
+	public KeyCode getKeyCode() {
 		return this.keyCode;
 	}
 	
-	public void getDesignerDescription() {
-		System.out.println(this.getName() + " - " + (char)this.getKeyCode());
+	public String getDesignerDescription() {
+
+		return(this.getName() + " - " + getKeyCode().getName());
 
 	}
 	

@@ -3,6 +3,7 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCode;
 import ui.Game;
 
 
@@ -24,7 +25,7 @@ public class Player extends Entity{
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
-		keyCode = KeyEvent.VK_JAPANESE_HIRAGANA;
+		keyCode = KeyCode.JAPANESE_HIRAGANA;
 	}
 
 	/**

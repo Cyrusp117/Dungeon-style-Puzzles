@@ -25,6 +25,7 @@ public class MapSelectController extends Controller {
 	@FXML 
 	private Button btn3;
 	
+	protected boolean designer;
 	public MapSelectController(Stage s) {
 		super(s);
 		// TODO Auto-generated constructor stub
@@ -49,7 +50,9 @@ public class MapSelectController extends Controller {
         Coordinate Bomb2Pos = new Coordinate(8, 7);
         Coordinate IPpotPos = new Coordinate(5, 4);
 		game.generatePerimeter();		 //Create a series of walls around the perimeter
-    	game.createPlayer(playerPos);
+		if (!designer) {
+	    	game.createPlayer(playerPos);
+		}
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));
@@ -76,8 +79,10 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void previousMenu() {
-        Screen mainMenu = new Screen(super.getS(), "Main Menu", "view/mainmenu.fxml");
-        MainMenuController mmc = new MainMenuController(super.getS());
+		Stage curStage = super.getS();
+		curStage.setUserData(null);
+        Screen mainMenu = new Screen(curStage, "Main Menu", "view/mainmenu.fxml");
+        MainMenuController mmc = new MainMenuController(curStage);
         mainMenu.start(mmc);
 	}
 }

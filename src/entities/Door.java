@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Door extends Entity {
 	private static int numOfDoors = 0;
 	private int DoorId;
@@ -10,12 +12,12 @@ public class Door extends Entity {
 	private int state;
 	
 	public Door() {
-		this.keyCode = KeyEvent.VK_D;
+		this.keyCode = KeyCode.D;
 	}
 	
 	public Door(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_D;
+		this.keyCode = KeyCode.D;
 		DoorId = numOfDoors;
 		numOfDoors++;
 		state = CLOSE;

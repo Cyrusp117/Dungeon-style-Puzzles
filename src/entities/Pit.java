@@ -3,10 +3,12 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Pit extends Entity{
 	public Pit(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_P;
+		this.keyCode = KeyCode.P;
 		this.movable = false;
 	}
 

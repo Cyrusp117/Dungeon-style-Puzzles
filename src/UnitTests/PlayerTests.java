@@ -17,12 +17,13 @@ import entities.HoverPotion;
 import entities.Key;
 import entities.Player;
 import entities.Sword;
-import ui.Application;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import ui.Game;
-import ui.InputManagerMenu;
-import ui.InputManagerPlayer;
+import ui.MainMenuController;
+import ui.Screen;
 
-public class PlayerTests {
+public class PlayerTests extends Application {
 
 	private Player player;
 	private int xBoundary;
@@ -35,19 +36,23 @@ public class PlayerTests {
 	public static void setUpBeforeClass() throws Exception {
 	}
 
+
+
+	
 	@Before
 	public void setUp() throws Exception {
-		Coordinate start = new Coordinate(1,1);
-		player = new Player(start, game);
-		xBoundary = 32;
-		yBoundary = 32;
-		Application app = new Application("Title", 32, 32);
-		game = new Game("Title", xBoundary, yBoundary);
-		KeyListener playerInput = new InputManagerPlayer(game, app);
-		app.getFrame().addKeyListener(playerInput);
-		game.init();
-		game.setPlayerInput((InputManagerPlayer)playerInput);
-		game.setPlayerOne(player);
+        
+//		Coordinate start = new Coordinate(1,1);
+//		player = new Player(start, game);
+//		xBoundary = 32;
+//		yBoundary = 32;
+//		Application app = new Application("Title", 32, 32);
+//		game = new Game("Title", xBoundary, yBoundary);
+//		KeyListener playerInput = new InputManagerPlayer(game, app);
+//		app.getFrame().addKeyListener(playerInput);
+//		game.init();
+//		game.setPlayerInput((InputManagerPlayer)playerInput);
+//		game.setPlayerOne(player);
 		this.robot = new Robot();
 	}
 

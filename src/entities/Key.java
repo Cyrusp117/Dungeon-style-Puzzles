@@ -2,17 +2,19 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Key extends Entity {
 	private static int numOfKeys = 0;
 	private int keyId;
 	
 	public Key() {
-		this.keyCode = KeyEvent.VK_K;
+		this.keyCode = KeyCode.K;
 	}
 
 	public Key(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_K;
+		this.keyCode = KeyCode.K;
 		System.out.println(numOfKeys);
 		keyId = numOfKeys;
 		numOfKeys++;

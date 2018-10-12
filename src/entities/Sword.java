@@ -2,12 +2,14 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Sword extends Entity {
 	int durability;
 	public Sword(Coordinate position) {
 		super(position);
 		this.durability = 5;
-		this.keyCode = KeyEvent.VK_S;
+		this.keyCode = KeyCode.S;
 		this.movable = false;
 	}
 	

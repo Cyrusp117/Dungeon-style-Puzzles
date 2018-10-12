@@ -2,13 +2,14 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
 import ui.Game;
 
 public class Boulder extends Entity {
 	private Coordinate oldPos;
 	public Boulder(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_B;
+		this.keyCode = KeyCode.B;
 	}
 	
 	public boolean interactWithPlayer(Player player) {

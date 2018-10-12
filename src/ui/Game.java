@@ -2,20 +2,11 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-
-import entities.Treasure;
-import entities.Boulder;
-import entities.Coordinate;
-import entities.Entity;
-import entities.Pit;
-import entities.Player;
-import entities.Wall;
-
 public class Game{ 								
 	private static final Entity NULL = null;
 	private int width, height;					//Width and height of the app window
 	private Player player;					//Tracking the player entity
-	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
+//	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
@@ -216,7 +207,7 @@ public class Game{
         		if (curPos.equals(player.getPosition())) {
         			System.out.print("1");
         		} else if(entity != null) {
-        			System.out.print((char)entity.getKeyCode());
+        			System.out.print(entity.getKeyCode().getName());
         		} else {
         			System.out.print("-");
         		}
@@ -241,7 +232,7 @@ public class Game{
         		if (curPos.equals(player.getPosition())) {
         			sb.append("1");
         		} else if(entity != null) {
-        			sb.append((char)entity.getKeyCode());
+        			sb.append(entity.getKeyCode().getName());
         		} else {
         			sb.append("-");
         		}
@@ -517,26 +508,26 @@ public class Game{
 	public void setPlayerOne(Player playerOne) {
 		this.player = playerOne;
 	}
-	
-	public void changeState(InputManagerPlayer playerInput) {
-		
-		// There are two game states: Player and Designer
-		// Each state only supports a certain subset of Key Inputs 
-		// Player and Designer both extend from Playable so they can both move
-	
-		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
-		//this.playerInput = playerInput;
-		//this.frame = playerInput.getFrame();
-		this.playerInput = playerInput;
-		playerInput.getFrame().addKeyListener(playerInput);
-	}
-
-	/**
-	 * @param playerInput the playerInput to set
-	 */
-	public void setPlayerInput(InputManagerPlayer playerInput) {
-		this.playerInput = playerInput;
-	}
+//	
+//	public void changeState(InputManagerPlayer playerInput) {
+//		
+//		// There are two game states: Player and Designer
+//		// Each state only supports a certain subset of Key Inputs 
+//		// Player and Designer both extend from Playable so they can both move
+//	
+//		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
+//		//this.playerInput = playerInput;
+//		//this.frame = playerInput.getFrame();
+//		this.playerInput = playerInput;
+//		playerInput.getFrame().addKeyListener(playerInput);
+//	}
+//
+//	/**
+//	 * @param playerInput the playerInput to set
+//	 */
+//	public void setPlayerInput(InputManagerPlayer playerInput) {
+//		this.playerInput = playerInput;
+//	}
 
 	public Graph generateGraph() {
 		int i,j;
@@ -561,6 +552,26 @@ public class Game{
 	
 	public boolean victory() {
 		return win;
+	}
+	
+	public ArrayList<Entity> getAllEntities() {
+		ArrayList<Entity> allDesignerObjects = new ArrayList<Entity>();
+		Coordinate defaultPos = new Coordinate(1, 1);
+		allDesignerObjects.add(new Key());
+		allDesignerObjects.add(new Hunter(defaultPos));
+		allDesignerObjects.add(new Arrow(defaultPos));
+		allDesignerObjects.add(new HoverPotion(defaultPos));
+		allDesignerObjects.add(new Treasure(defaultPos));
+		allDesignerObjects.add(new Sword(defaultPos));
+		allDesignerObjects.add(new Boulder(defaultPos));
+		allDesignerObjects.add(new Pit(defaultPos));
+		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
+		allDesignerObjects.add(new Wall(defaultPos));
+		allDesignerObjects.add(new FloorSwitch(defaultPos));
+		allDesignerObjects.add(new Exit(defaultPos));
+		allDesignerObjects.add(new Door());
+		allDesignerObjects.add(new Hound(defaultPos, new Hunter(defaultPos)));
+		return allDesignerObjects;
 	}
 
 }

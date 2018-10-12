@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+
 import entities.Arrow;
 import entities.Bomb;
 import entities.Coordinate;
@@ -13,9 +15,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import sun.print.resources.serviceui;
@@ -24,22 +32,26 @@ public class PlayerController extends Controller {
 	
 	@FXML
 	private AnchorPane screen;
+	@FXML 
+	private Button upBtn;
+	@FXML 
+	private Button rightBtn;
+	@FXML 
+	private Button downBtn;
+	@FXML 
+	private Button leftBtn;
 	@FXML
-	private Label label1;
-	@FXML 
-	private Button btn1;
-	@FXML 
-	private Button btn2;
-	@FXML 
-	private Button btn3;
-	@FXML 
-	private Button btn4;
+	private Button escapeBtn;
 	@FXML
-	private Button btn5;
+	protected Label map;
+	@FXML
+	protected GridPane imageMap;
 	
-	Game game;
-	Player player;
-	Scene scene;
+	
+	protected Game game;
+	protected Player player;
+	protected Scene scene;
+	
 	public PlayerController(Stage s, Game game) {
 		super(s);
 		this.game = game;
@@ -47,9 +59,28 @@ public class PlayerController extends Controller {
 		this.scene = s.getScene();
 	}
 	
+
+	
 	public void initialize() {
-		label1.setText(game.toString());
-		
+		map.setText(game.toString());
+		imageMap.setCenterShape(true);
+		imageMap.setGridLinesVisible(true);
+
+        for (int row = 0 ; row < game.getHeight() ; row++ ){
+            RowConstraints rc = new RowConstraints();
+            rc.setMaxHeight(32);
+            rc.setFillHeight(true);
+            rc.setVgrow(Priority.ALWAYS);
+            imageMap.getRowConstraints().add(rc);
+        }
+        for (int col = 0 ; col < game.getWidth(); col++ ) {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setMaxWidth(32);
+            cc.setFillWidth(true);
+            cc.setHgrow(Priority.ALWAYS);
+            imageMap.getColumnConstraints().add(cc);
+        }
+		//imageMap.setPrefHeight(5);
 //    	EventHandler<KeyEvent> ke = new EventHandler<KeyEvent>() {
 //			@Override
 //			public void handle(KeyEvent event) {
@@ -68,15 +99,34 @@ public class PlayerController extends Controller {
 //    	scene.setOnKeyPressed(ke);
 	}
 	
-	public void previousMenu() {
-		
-        Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
-        MapSelectController msc = new MapSelectController(super.getS());
-        mapSelect.start(msc);
+	public void printGame() {
+		imageMap.getChildren().clear();
+		for( int i = 0; i <= game.getWidth(); i++ ) {
+			for ( int j = 0; j <= game.getHeight(); j++ ) {
+				Coordinate newPos = new Coordinate(i,j);
+				Entity entity = game.getEntity(newPos);
+				Image image = new Image("resources/white.png");
+				if (entity != null) {
+					//if(entity instanceof Player) {
+						System.out.println("resources/" + entity.getName()
+												+ ".png");
+						image = new Image("resources/" + entity.getName()
+												+ ".png");
+				}
+				
+				ImageView iv = new ImageView(image);
+				iv.setFitHeight(32);
+				iv.setFitWidth(32);
+//				GridPane.setFillWidth(iv, true);
+//				GridPane.setFillHeight(iv, true);
+				imageMap.add(iv, i, j);
+
+			}
+		}
+
 	}
 	
 	public void keyPressed(KeyEvent ke) {
-		System.out.println("HOWDY");
 		KeyCode key = ke.getCode();
 		if (key.equals(KeyCode.W)) {
 			moveUp();
@@ -123,32 +173,51 @@ public class PlayerController extends Controller {
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);
 	    	}
+		} else if (key.equals(KeyCode.E)) {
+			boolean designer = (boolean)super.getS().getUserData();
+			if(designer) {
+			      Screen map1 = new Screen(super.getS(), "Map", "view/design.fxml");
+			      DesignController dc = new DesignController(super.getS(), game);
+			      map1.start(dc);
+			}
 		}
+	}
+	
+	
+	
+	public void previousMenu() {
+        Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
+        MapSelectController msc = new MapSelectController(super.getS());
+        mapSelect.start(msc);
 	}
 	
 	public void moveUp () {
 		player.setDx(0);
 		player.setDy(-1);
 		game.update();
-		label1.setText(game.toString());
+		printGame();
+		map.setText(game.toString());
 	}
 	public void moveRight () {
 		player.setDx(1);
 		player.setDy(0);
 		game.update();
-		label1.setText(game.toString());
+		printGame();
+		map.setText(game.toString());
 	}
 	
 	public void moveLeft () {
 		player.setDx(-1);
 		player.setDy(0);
 		game.update();
-		label1.setText(game.toString());
+		printGame();
+		map.setText(game.toString());
 	}
 	public void moveDown () {
 		player.setDx(0);
 		player.setDy(1);
 		game.update();
-		label1.setText(game.toString());
+		printGame();
+		map.setText(game.toString());
 	}
 }
