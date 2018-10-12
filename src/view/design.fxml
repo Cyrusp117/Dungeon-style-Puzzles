@@ -9,10 +9,10 @@
 
 <AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="560.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="upBtn" layoutX="514.0" layoutY="35.0" mnemonicParsing="false" onAction="#moveUp" text="Button" />
-      <Button fx:id="downBtn" layoutX="514.0" layoutY="110.0" mnemonicParsing="false" onAction="#moveDown" text="Button" />
-      <Button fx:id="rightBtn" layoutX="514.0" layoutY="85.0" mnemonicParsing="false" onAction="#moveRight" text="Button" />
-      <Button fx:id="leftBtn" layoutX="514.0" layoutY="60.0" mnemonicParsing="false" onAction="#moveLeft" text="Button" />
+      <Button fx:id="upBtn" layoutX="514.0" layoutY="37.0" mnemonicParsing="false" onAction="#moveUp" text="Button" />
+      <Button fx:id="downBtn" layoutX="514.0" layoutY="87.0" mnemonicParsing="false" onAction="#moveDown" text="Button" />
+      <Button fx:id="rightBtn" layoutX="566.0" layoutY="62.0" mnemonicParsing="false" onAction="#moveRight" text="Button" />
+      <Button fx:id="leftBtn" layoutX="462.0" layoutY="62.0" mnemonicParsing="false" onAction="#moveLeft" text="Button" />
       <Button fx:id="escapeBtn" layoutY="521.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
       <Label fx:id="map" layoutX="99.0" layoutY="386.0" prefHeight="160.0" prefWidth="252.0" text="Label" />
       <GridPane fx:id="imageMap" layoutX="58.0" layoutY="49.0" maxHeight="320.0" maxWidth="320.0" minHeight="320.0" minWidth="320.0" prefHeight="320.0" prefWidth="320.0" AnchorPane.bottomAnchor="253.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="49.0">
