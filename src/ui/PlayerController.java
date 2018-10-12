@@ -63,21 +63,24 @@ public class PlayerController extends Controller {
 	
 	public void initialize() {
 		map.setText(game.toString());
-		imageMap.setCenterShape(true);
-		imageMap.setGridLinesVisible(true);
+		printGame();
+		//imageMap.setCenterShape(true);
+		//imageMap.setGridLinesVisible(true);
 
         for (int row = 0 ; row < game.getHeight() ; row++ ){
             RowConstraints rc = new RowConstraints();
-            rc.setMaxHeight(32);
+//            rc.setMaxHeight(32);
+//            rc.setPrefHeight(32);
             rc.setFillHeight(true);
-            rc.setVgrow(Priority.ALWAYS);
+            //rc.setVgrow(Priority.ALWAYS);
             imageMap.getRowConstraints().add(rc);
         }
         for (int col = 0 ; col < game.getWidth(); col++ ) {
             ColumnConstraints cc = new ColumnConstraints();
-            cc.setMaxWidth(32);
+//            cc.setMaxWidth(32);
+//            cc.setPrefWidth(32);
             cc.setFillWidth(true);
-            cc.setHgrow(Priority.ALWAYS);
+            //cc.setHgrow(Priority.ALWAYS);
             imageMap.getColumnConstraints().add(cc);
         }
 		//imageMap.setPrefHeight(5);
@@ -108,15 +111,13 @@ public class PlayerController extends Controller {
 				Image image = new Image("resources/white.png");
 				if (entity != null) {
 					//if(entity instanceof Player) {
-						System.out.println("resources/" + entity.getName()
-												+ ".png");
 						image = new Image("resources/" + entity.getName()
 												+ ".png");
 				}
 				
 				ImageView iv = new ImageView(image);
-				iv.setFitHeight(32);
-				iv.setFitWidth(32);
+				iv.setFitHeight(30);
+				iv.setFitWidth(30);
 //				GridPane.setFillWidth(iv, true);
 //				GridPane.setFillHeight(iv, true);
 				imageMap.add(iv, i, j);

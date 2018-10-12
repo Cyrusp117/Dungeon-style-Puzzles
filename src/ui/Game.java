@@ -243,7 +243,6 @@ public class Game{
         	j = 0;
         	i++;
         }
-		System.out.println(sb.toString());
 		return sb.toString();
 	}
 	
