@@ -33,6 +33,7 @@ public class MapSelectController extends Controller {
 	public void startMap1() {
     	Game game = new Game("Preset #1", 10*32, 10*32);
         System.out.println("First Preset Dungeon");
+		Coordinate playerPos = new Coordinate(32,32); 
         Coordinate pitPos = new Coordinate(2*32, 2*32);
         Coordinate hunterPos = new Coordinate(4*32, 1*32);
         Coordinate hoverPos = new Coordinate(2*32, 1*32);
@@ -47,6 +48,8 @@ public class MapSelectController extends Controller {
         Coordinate Bomb1Pos = new Coordinate(7*32, 7*32);
         Coordinate Bomb2Pos = new Coordinate(8*32, 7*32);
         Coordinate IPpotPos = new Coordinate(5*32, 4*32);
+		game.generatePerimeter();						 //Create a series of walls around the perimeter
+		game.createPlayer(playerPos);						 //Create the player at the given Coordinate
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));
@@ -61,8 +64,9 @@ public class MapSelectController extends Controller {
         game.addEntity(new Bomb(Bomb1Pos));
         game.addEntity(new Bomb(Bomb2Pos));
         game.addEntity(new InvincibilityPotion(IPpotPos));
+        game.printGame();
 		
-        Screen map1 = new Screen(super.getS(), "Map Select", "view/map.fxml");
+        Screen map1 = new Screen(super.getS(), "Map", "view/map.fxml");
         PlayerController pc = new PlayerController(super.getS(), game);
         map1.start(pc);
 	}

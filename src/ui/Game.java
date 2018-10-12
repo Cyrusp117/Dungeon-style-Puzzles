@@ -197,6 +197,7 @@ public class Game{
         }
 	}
 	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
         int i = 0;
@@ -215,10 +216,11 @@ public class Game{
         		sb.append(" ");
         		j++;
         	}
-        	sb.append("");
+        	sb.append("\n");
         	j = 0;
         	i++;
         }
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 	
