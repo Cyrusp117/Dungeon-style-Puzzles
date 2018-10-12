@@ -9,10 +9,10 @@ import entities.FloorSwitch;
 
 public class TestFloorSwitch extends testSetup {
 
-	Coordinate fsPos = new Coordinate(1*32, 4*32);
+	Coordinate fsPos = new Coordinate(1, 4);
 	@Test
 	public void placeFs() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		FloorSwitch fs = new FloorSwitch(fsPos);
 		game.addEntity(fs);
 		game.printGame();
@@ -22,7 +22,7 @@ public class TestFloorSwitch extends testSetup {
 	@Test
 	public void testBoulderInteraction() {
 		FloorSwitch fs = new FloorSwitch(fsPos);
-		Coordinate boulderPos = new Coordinate(1*32, 3*32);
+		Coordinate boulderPos = new Coordinate(1, 3);
 		Boulder boulder = new Boulder(boulderPos);
 		game.addEntity(boulder);
 		game.addEntity(fs);
@@ -37,7 +37,7 @@ public class TestFloorSwitch extends testSetup {
 		assert(!fs.getState());
 		assert(game.getEntity(fsPos) instanceof FloorSwitch);
 		assert(game.getEntityExcept(fsPos, fs) == null);
-		boulderPos = new Coordinate(1*32, 5*32);
+		boulderPos = new Coordinate(1, 5);
 		assert(boulder.getPosition().equals(boulderPos));
 	}
 

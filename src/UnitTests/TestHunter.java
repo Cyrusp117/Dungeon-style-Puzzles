@@ -22,7 +22,7 @@ public class TestHunter extends testSetup {
 
 	@Test
 	public void placeHunter() {
-		Coordinate hunterPos = new Coordinate(3*32, 1*32);
+		Coordinate hunterPos = new Coordinate(3, 1);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 		game.printGame();
@@ -31,7 +31,7 @@ public class TestHunter extends testSetup {
 
 	@Test
 	public void TestOneAway() {
-		Coordinate hunterPos = new Coordinate(3*32, 1*32);
+		Coordinate hunterPos = new Coordinate(3, 1);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 		game.printGame();
@@ -43,15 +43,15 @@ public class TestHunter extends testSetup {
 	
 	@Test
 	public void TestVerticalChase() {
-		Coordinate hunterPos = new Coordinate(2*32, 1*32);
+		Coordinate hunterPos = new Coordinate(2, 1);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 		game.printGame();
 		move(DOWN, 1);
-		Coordinate expectedPos = new Coordinate(1*32, 1*32);
+		Coordinate expectedPos = new Coordinate(1, 1);
 		assert(hunter.getPosition().equals(expectedPos));
 		move(DOWN, 6);
-		expectedPos = new Coordinate(1*32, 7*32);
+		expectedPos = new Coordinate(1, 7);
 		assert(hunter.getPosition().equals(expectedPos));
 	}
 	
@@ -59,11 +59,11 @@ public class TestHunter extends testSetup {
 	public void TestObstacleRecognition() {
 		Door.resetNumOfDoors();
 		Key.resetNumOfKeys();
-		Coordinate hunterPos = new Coordinate(8*32, 4*32);
+		Coordinate hunterPos = new Coordinate(8, 4);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 
-		Coordinate position = new Coordinate(4*32, 1*32);
+		Coordinate position = new Coordinate(4, 1);
 		game.addEntity(new Boulder(position));
 		game.addEntity(new Pit(position.moveDown()));
 		position = position.moveDown();
@@ -96,10 +96,10 @@ public class TestHunter extends testSetup {
 	
 	@Test
 	public void TestInvincibility() {
-		Coordinate hunterPos = new Coordinate(5*32, 1*32);
+		Coordinate hunterPos = new Coordinate(5, 1);
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
-		Coordinate ipPos = new Coordinate(3*32, 1*32);
+		Coordinate ipPos = new Coordinate(3, 1);
 		InvincibilityPotion ip = new InvincibilityPotion(ipPos);
 		game.addEntity(ip);
 		game.printGame();

@@ -15,10 +15,10 @@ import entities.Hunter;
 
 public class TestBomb extends testSetup {
 
-	Coordinate bombPos = new Coordinate(2*32, 2*32);
+	Coordinate bombPos = new Coordinate(2, 2);
 	@Test
 	public void placeBomb() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Bomb bomb = new Bomb(bombPos);
 		game.addEntity(bomb);
 		game.printGame();

@@ -11,7 +11,7 @@ public class KeyTest extends testSetup {
 	@Test
 	public void placeKey() {
 		Key.resetNumOfKeys();
-		Coordinate keyPos = new Coordinate(1*32, 7*32);
+		Coordinate keyPos = new Coordinate(1, 7);
 		Key key = new Key(keyPos);
 		game.addEntity(key);
 		game.printGame();
@@ -25,13 +25,13 @@ public class KeyTest extends testSetup {
 	public void pickUpKey() {
 		Key.resetNumOfKeys();
 		assert(!player.hasItem("Key"));
-		Coordinate key1Pos = new Coordinate(1*32, 7*32);
+		Coordinate key1Pos = new Coordinate(1, 7);
 		Key key1 = new Key(key1Pos);
 		game.addEntity(key1);
 		assert(!player.hasItem("Key"));
 		assert(key1.getKeyId() == 0);
 		assert(key1.getNumOfKeys() == 1);
-		Coordinate key2Pos = new Coordinate(1*32, 7*32);
+		Coordinate key2Pos = new Coordinate(1, 7);
 		Key key2 = new Key(key2Pos);
 		game.addEntity(key2);
 		assert(key2.getKeyId() == 1);

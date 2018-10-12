@@ -8,10 +8,10 @@ import entities.Exit;
 
 public class TestExit extends testSetup {
 
-	Coordinate exitPos = new Coordinate(1*32, 3*32);
+	Coordinate exitPos = new Coordinate(1, 3);
 	@Test
 	public void placeExit() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Exit exit = new Exit(exitPos);
 		game.addEntity(exit);
 		game.printGame();

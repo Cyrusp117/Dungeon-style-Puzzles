@@ -11,10 +11,10 @@ import entities.Treasure;
 
 public class TestTreasure extends testSetup {
 
-	Coordinate treasurePos = new Coordinate(1*32, 4*32);
+	Coordinate treasurePos = new Coordinate(1, 4);
 	@Test
 	public void placeTreasure() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Treasure treasure = new Treasure(treasurePos);
 		game.addEntity(treasure);
 		game.printGame();

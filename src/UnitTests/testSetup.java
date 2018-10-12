@@ -26,7 +26,7 @@ public abstract class testSetup {
 	
 	@Before
 	public void setUp() throws Exception {
-		Application app = new Application("Game Menu", 32, 32); //Create window application
+		Application app = new Application("Game Menu", 1, 1); //Create window application
 		KeyListener playerInput = new InputManagerMenu(app);
 		app.getFrame().addKeyListener(playerInput);  //refactor this
 		this.robot = new Robot();

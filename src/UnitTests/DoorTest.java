@@ -11,7 +11,7 @@ public class DoorTest extends testSetup {
 	@Test
 	public void placeDoor() {
 		Door.resetNumOfDoors();
-		Coordinate doorPos = new Coordinate(1*32, 7*32);
+		Coordinate doorPos = new Coordinate(1, 7);
 		Door door = new Door(doorPos);
 		game.addEntity(door);
 		game.printGame();
@@ -24,8 +24,8 @@ public class DoorTest extends testSetup {
 	public void openDoor1() {
 		Key.resetNumOfKeys();
 		Door.resetNumOfDoors();
-		Coordinate key1Pos = new Coordinate(7*32, 1*32);
-        Coordinate Door1Pos = new Coordinate(2*32, 7*32);
+		Coordinate key1Pos = new Coordinate(7, 1);
+        Coordinate Door1Pos = new Coordinate(2, 7);
         Key key1 = new Key(key1Pos);
         game.addEntity(key1);
         Door door1 = new Door(Door1Pos);
@@ -41,10 +41,10 @@ public class DoorTest extends testSetup {
 	public void openDoor2() {
 		Key.resetNumOfKeys();
 		Door.resetNumOfDoors();
-		Coordinate key1Pos = new Coordinate(6*32, 7*32);
-		Coordinate key2Pos = new Coordinate(7*32, 1*32);
-        Coordinate Door1Pos = new Coordinate(7*32, 4*32);
-        Coordinate Door2Pos = new Coordinate(7*32, 3*32);
+		Coordinate key1Pos = new Coordinate(6, 7);
+		Coordinate key2Pos = new Coordinate(7, 1);
+        Coordinate Door1Pos = new Coordinate(7, 4);
+        Coordinate Door2Pos = new Coordinate(7, 3);
         Key key1 = new Key(key1Pos);
         game.addEntity(key1);
         Key key2 = new Key(key2Pos);
