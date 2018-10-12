@@ -30,7 +30,7 @@ public class InputManagerPlayer extends InputManager {
 	        dx = -1;
 	        dy = 0;
 	        System.out.println("LEFT");
-	        game.newTurn();
+	        game.update();
 
 	    }
 	    // If the right arrow key is pressed, request to move right by a tile
@@ -38,7 +38,7 @@ public class InputManagerPlayer extends InputManager {
 	        dx = 1;
 	        dy = 0;
 	        System.out.println("RIGHT");
-	        game.newTurn();
+	        game.update();
 
 	    }
 	    // If the up arrow key is pressed, request to move up by a tile
@@ -46,7 +46,7 @@ public class InputManagerPlayer extends InputManager {
 	        dy = -1;
 	        dx = 0;
 	        System.out.println("UP");
-	        game.newTurn();
+	        game.update();
 
 	    }
 	    // If the down arrow key is pressed, request to move down by a tile
@@ -54,7 +54,7 @@ public class InputManagerPlayer extends InputManager {
 	        dy = 1;
 	        dx = 0;
 	        System.out.println("DOWN");
-	        game.newTurn();
+	        game.update();
 
 	    }
 	    
@@ -76,11 +76,11 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_2) {
 	    	Arrow arrow = null;
-	    	Player player = game.getPlayerOne();
+	    	Player player = game.getPlayer();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(-1); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
@@ -90,7 +90,7 @@ public class InputManagerPlayer extends InputManager {
 	    	if(arrow!=null) {
 	    		System.out.println("Shooting upwards");
 	    		player.removeItem(arrow);
-	    		game.newTurn();
+	    		game.update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
@@ -98,11 +98,11 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_3) {
 	    	Arrow arrow = null;
-	    	Player player = game.getPlayerOne();
+	    	Player player = game.getPlayer();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(1); 
 	    			arrow.setDx(0);
 	    			game.addEntity(arrow);
@@ -112,7 +112,7 @@ public class InputManagerPlayer extends InputManager {
 	    	if(arrow!=null) {
 	    		System.out.println("Shooting downwards");
 	    		player.removeItem(arrow);
-	    		game.newTurn();
+	    		game.update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
@@ -120,12 +120,12 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_4) {
 	    	Arrow arrow = null;
-	    	Player player = game.getPlayerOne();
+	    	Player player = game.getPlayer();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
 	      			
-	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(0); 
 	    			arrow.setDx(-1);
 	    			game.addEntity(arrow);
@@ -135,7 +135,7 @@ public class InputManagerPlayer extends InputManager {
 	    	if(arrow!=null) {
 	    		System.out.println("Shooting left");
 	    		player.removeItem(arrow);
-	    		game.newTurn();
+	    		game.update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
@@ -143,11 +143,11 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_5) {
 	    	Arrow arrow = null;
-	    	Player player = game.getPlayerOne();
+	    	Player player = game.getPlayer();
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			arrow.setPosition(game.getPlayerOne().getPosition());
+	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(0); 
 	    			arrow.setDx(1);
 	    			game.addEntity(arrow);
@@ -157,7 +157,7 @@ public class InputManagerPlayer extends InputManager {
 	    	if(arrow!=null) {
 	    		System.out.println("Shooting downwards");
 	    		player.removeItem(arrow);
-	    		game.newTurn();
+	    		game.update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
@@ -165,7 +165,7 @@ public class InputManagerPlayer extends InputManager {
 	    
 	    if (key == KeyEvent.VK_V) {
 	    	System.out.println("Checking for bomb");
-	    	Player player = game.getPlayerOne();
+	    	Player player = game.getPlayer();
 	    	if(player.hasItem("Bomb")) {
 	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();

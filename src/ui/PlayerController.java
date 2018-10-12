@@ -1,5 +1,7 @@
 package ui;
 
+import entities.Coordinate;
+import entities.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,10 +25,11 @@ public class PlayerController extends Controller {
 	private Button btn5;
 	
 	Game game;
+	Player player;
 	public PlayerController(Stage s, Game game) {
 		super(s);
 		this.game = game;
-		// TODO Auto-generated constructor stub
+		this.player = game.getPlayer();
 	}
 	
 	public void initialize() {
@@ -40,19 +43,28 @@ public class PlayerController extends Controller {
 	}
 	
 	public void moveUp () {
-		label1.setText(game.toString());;
-	}
-	public void moveRight () {
+		player.setDx(0);
+		player.setDy(-1);
+		game.update();
 		label1.setText(game.toString());
 	}
+	public void moveRight () {
+		player.setDx(1);
+		player.setDy(0);
+		game.update();
+		label1.setText(game.toString());
+	}
+	
 	public void moveLeft () {
-        dx = -32;
-        dy = 0;
-        System.out.println("LEFT");
-        game.newTurn();
+		player.setDx(-1);
+		player.setDy(0);
+		game.update();
 		label1.setText(game.toString());
 	}
 	public void moveDown () {
+		player.setDx(0);
+		player.setDy(1);
+		game.update();
 		label1.setText(game.toString());
 	}
 }

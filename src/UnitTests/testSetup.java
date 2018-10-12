@@ -40,7 +40,7 @@ public abstract class testSetup {
 		robot.delay(100);
 		InputManagerDesigner inputManager = (InputManagerDesigner) (app.getFrame().getKeyListeners()[0]);
 		game = inputManager.getGame();
-		player = game.getPlayerOne();
+		player = game.getPlayer();
 //
 //		KeyListener playerInput = new InputManagerPlayer(game, app);
 //		app.getFrame().addKeyListener(playerInput);

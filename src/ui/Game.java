@@ -14,7 +14,7 @@ import entities.Wall;
 public class Game{ 								
 	private static final Entity NULL = null;
 	private int width, height;					//Width and height of the app window
-	private Player playerOne;					//Tracking the player entity
+	private Player player;					//Tracking the player entity
 	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
@@ -40,12 +40,7 @@ public class Game{
 		}
 	}
 	
-	//Done
-	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
-		// Checks for arrow collisions
-		deleteShot();
-		update();
-	}
+
 	
 	//Done
 	/**
@@ -78,9 +73,13 @@ public class Game{
 		entity.setPosition(newMapTile);
 		newMapTile.addEntity(entity);
 	}
-	private void update() {						//Updates the state of the game
-
+	
+	public void update() {						//Updates the state of the game
+		// Arrow collisions, kills enemies first
+		deleteShot();
+		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
+		// Checks current state of the game after any interactions
 		ArrayList<Entity> toBeRemoved = new ArrayList<>();
 		
 		int allTreasure = 1;
@@ -97,12 +96,12 @@ public class Game{
 			if (entity instanceof Enemy) {
             
 				Entity enemy = (Enemy) entity;
-				if (playerOne.hasItem("InvincibilityPotion")) {
-					position = enemy.invincibilityMove(playerOne.getPosition(), generateGraph() );
+				if (player.hasItem("InvincibilityPotion")) {
+					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
 				} else {
-				    position = enemy.move(playerOne.getPosition(), generateGraph() );
+				    position = enemy.move(player.getPosition(), generateGraph() );
 				}
-				if ( getEntity(position) == null && !(playerOne.getPosition().equals(position)) ) {
+				if ( getEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(position, enemy);
 				} 
 
@@ -130,8 +129,8 @@ public class Game{
 			
 			// Checks general win condition
 			if (entity instanceof Exit){
-				if(entity.getPosition().equals(playerOne.getPosition())) {
-					if (playerOne.isAlive()) {
+				if(entity.getPosition().equals(player.getPosition())) {
+					if (player.isAlive()) {
 						win = true;
 					}
 				}
@@ -144,8 +143,8 @@ public class Game{
 				}
 				if (bomb.getTurnsLeft() == 0) { 
 					for (Coordinate affectedArea : bomb.affectedAreas()) {
-						if(bomb.affectedAreas().contains(playerOne.getPosition())) {		// can be refactored later by having player be part of entities
-							playerOne.setState(0);
+						if(bomb.affectedAreas().contains(player.getPosition())) {		// can be refactored later by having player be part of entities
+							player.setState(0);
 						}
 						Entity affectedEntity = getEntity(affectedArea);
 						if (affectedEntity != NULL) {
@@ -164,9 +163,9 @@ public class Game{
 		entities.removeAll(toBeRemoved);
 
 		toBeRemoved = new ArrayList<>();
-		for (Entity entity: playerOne.getInventory()) {
+		for (Entity entity: player.getInventory()) {
 			if (entity instanceof InvincibilityPotion){
-				if(playerOne.hasItem(entity)) {
+				if(player.hasItem(entity)) {
 					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
 					invincibilityPotion.reduceDurability();
 					if(invincibilityPotion.getDurability() == 0) {
@@ -175,17 +174,17 @@ public class Game{
 				}
 			}
 		}
-		playerOne.getInventory().removeAll(toBeRemoved);
+		player.getInventory().removeAll(toBeRemoved);
 
 		
-		if(win && playerOne.isAlive()) {
+		if(win && player.isAlive()) {
 			System.out.println("You have won");
 		}
 
-		if (!playerOne.isAlive()) {
+		if (!player.isAlive()) {
 			System.out.println("Player is currently dead");
 		}
-		if(win && playerOne.isAlive()) {
+		if(win && player.isAlive()) {
 			System.out.println("You have won");
 		}
 		if(allTreasure == 1) {
@@ -211,7 +210,7 @@ public class Game{
         	while (j <= this.getWidth()) {
         		Coordinate curPos = new Coordinate(j, i);
         		Entity entity = getEntity(curPos);
-        		if (curPos.equals(playerOne.getPosition())) {
+        		if (curPos.equals(player.getPosition())) {
         			System.out.print("1");
         		} else if(entity != null) {
         			System.out.print((char)entity.getKeyCode());
@@ -232,11 +231,11 @@ public class Game{
 		StringBuilder sb = new StringBuilder();
         int i = 0;
         int j = 0;
-		while (i <= this.getHeight()/32) {
-        	while (j <= this.getWidth()/32) {
-        		Coordinate curPos = new Coordinate(j*32, i*32);
+		while (i <= this.getHeight()) {
+        	while (j <= this.getWidth()) {
+        		Coordinate curPos = new Coordinate(j, i);
         		Entity entity = getEntity(curPos);
-        		if (curPos.equals(playerOne.getPosition())) {
+        		if (curPos.equals(player.getPosition())) {
         			sb.append("1");
         		} else if(entity != null) {
         			sb.append((char)entity.getKeyCode());
@@ -266,27 +265,27 @@ public class Game{
 //		int yMovement = playerInput.getDy();
 //		Coordinate newPos = new Coordinate(xPlayer+xMovement, yPlayer+yMovement);
 		// OR
-		playerInput.getDx();
-		playerOne.setDx(playerInput.getDx());
-		playerOne.setDy(playerInput.getDy());
+//		playerInput.getDx();
+//		player.setDx(playerInput.getDx());
+//		player.setDy(playerInput.getDy());
 
 		//just making null variables for now
 		Graph g = null;
-		Coordinate newPos = playerOne.move();
+		Coordinate newPos = player.getMove();
 
 		if(!isOutOfBounds(newPos)) {
 
 			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
-			playerOne.setOldPosition(playerOne.getPosition());
-			moveEntity(newPos, playerOne);
+			player.setOldPosition(player.getPosition());
+			moveEntity(newPos, player);
 			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
 			//System.out.println(entity);
-			Entity boulderEntity = getEntity(playerOne.move());
+			Entity boulderEntity = getEntity(player.getMove());
 
 
 			if (entity!=NULL) {
 				System.out.println("CurPos has a: " + entity.getName());
-				if(entity.interactWithPlayer(playerOne)) {
+				if(entity.interactWithPlayer(player)) {
 					// The above returns true if the entity is to be deleted afterwards
 					this.deleteEntity(entity);
 				}
@@ -295,7 +294,7 @@ public class Game{
 				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
 				if(isOutOfBounds(entity.getPosition())) {		
 					Boulder boulder = (Boulder) entity;
-					boulder.revert(playerOne);
+					boulder.revert(player);
 					System.out.println("Boulder cannot be moved here");
 				} else if (boulderEntity != NULL && (entity instanceof Boulder)) {
 					if (boulderEntity instanceof Pit) {
@@ -305,7 +304,7 @@ public class Game{
 						// entity is boulder, boulderEntity is not Pit or FloorSwitch
 						// Revert
 						Boulder boulder = (Boulder) entity;
-						boulder.revert(playerOne);
+						boulder.revert(player);
 						System.out.println("Boulder cannot be moved here");
 					}
 				}
@@ -364,7 +363,7 @@ public class Game{
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
-		System.out.println(playerOne.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
+		System.out.println(player.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	
 	//done
@@ -374,8 +373,8 @@ public class Game{
 	 */
 	public void createPlayer(Coordinate position) {
 		if(isOccupied(position)) return;
-		playerOne = new Player(position, this);
-		retrieveMapCo(position).addEntity(playerOne);
+		player = new Player(position, this);
+		retrieveMapCo(position).addEntity(player);
 	}
 
 	//done
@@ -439,8 +438,8 @@ public class Game{
 	private void deleteEntity(Entity entity) {
 		retrieveMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
-		if(entity.equals(playerOne)) {
-			playerOne = null;
+		if(entity.equals(player)) {
+			player = null;
 		}
 	}
 	
@@ -498,14 +497,14 @@ public class Game{
 	}
 	
 	public ArrayList<Entity> getPlayerInventory() {
-		return playerOne.getInventory();
+		return player.getInventory();
 	}
 	
 	/**
 	 * @return the playerOne
 	 */
-	public Player getPlayerOne() {
-		return playerOne;
+	public Player getPlayer() {
+		return player;
 	}
 
 
@@ -513,7 +512,7 @@ public class Game{
 	 * @param playerOne the playerOne to set
 	 */
 	public void setPlayerOne(Player playerOne) {
-		this.playerOne = playerOne;
+		this.player = playerOne;
 	}
 	
 	public void changeState(InputManagerPlayer playerInput) {

@@ -31,25 +31,25 @@ public class MapSelectController extends Controller {
 	}
 
 	public void startMap1() {
-    	Game game = new Game("Preset #1", 10*32, 10*32);
+    	Game game = new Game("Preset #1", 10, 10);
         System.out.println("First Preset Dungeon");
-		Coordinate playerPos = new Coordinate(32,32); 
-        Coordinate pitPos = new Coordinate(2*32, 2*32);
-        Coordinate hunterPos = new Coordinate(4*32, 1*32);
-        Coordinate hoverPos = new Coordinate(2*32, 1*32);
-        Coordinate swordPos = new Coordinate(5*32, 1*32);
-        Coordinate fsPos = new Coordinate(1*32, 8*32);
-        Coordinate boulderPos = new Coordinate(5*32, 5*32);
-        Coordinate arrowPos = new Coordinate(4*32, 4*32);
-        Coordinate key1Pos = new Coordinate(7*32, 1*32);
-        Coordinate key2Pos = new Coordinate(8*32, 1*32);
-        Coordinate Door1Pos = new Coordinate(2*32, 7*32);
-        Coordinate Door2Pos = new Coordinate(3*32, 7*32);
-        Coordinate Bomb1Pos = new Coordinate(7*32, 7*32);
-        Coordinate Bomb2Pos = new Coordinate(8*32, 7*32);
-        Coordinate IPpotPos = new Coordinate(5*32, 4*32);
-		game.generatePerimeter();						 //Create a series of walls around the perimeter
-		game.createPlayer(playerPos);						 //Create the player at the given Coordinate
+		Coordinate playerPos = new Coordinate(1,1); 
+        Coordinate pitPos = new Coordinate(2, 2);
+        Coordinate hunterPos = new Coordinate(4, 1);
+        Coordinate hoverPos = new Coordinate(2, 1);
+        Coordinate swordPos = new Coordinate(5, 1);
+        Coordinate fsPos = new Coordinate(1, 8);
+        Coordinate boulderPos = new Coordinate(5, 5);
+        Coordinate arrowPos = new Coordinate(4, 4);
+        Coordinate key1Pos = new Coordinate(7, 1);
+        Coordinate key2Pos = new Coordinate(8, 1);
+        Coordinate Door1Pos = new Coordinate(2, 7);
+        Coordinate Door2Pos = new Coordinate(3, 7);
+        Coordinate Bomb1Pos = new Coordinate(7, 7);
+        Coordinate Bomb2Pos = new Coordinate(8, 7);
+        Coordinate IPpotPos = new Coordinate(5, 4);
+		game.generatePerimeter();		 //Create a series of walls around the perimeter
+    	game.createPlayer(playerPos);
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));

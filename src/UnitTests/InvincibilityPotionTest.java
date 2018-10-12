@@ -37,9 +37,9 @@ public class InvincibilityPotionTest extends testSetup {
 		assert(!game.getPlayerInventory().contains(ipPot));
 		move(DOWN, 3);
 		assert(game.getPlayerInventory().contains(ipPot));
-		game.newTurn();
-		game.newTurn();
-		game.newTurn();
+		game.update();
+		game.update();
+		game.update();
 		assert(!game.getPlayerInventory().contains(ipPot));
 	}
 }
