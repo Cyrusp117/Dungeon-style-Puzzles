@@ -52,9 +52,9 @@ public class MapSelectController extends Controller {
         Coordinate Bomb2Pos = new Coordinate(8, 7);
         Coordinate IPpotPos = new Coordinate(5, 4);
 		game.generatePerimeter();		 //Create a series of walls around the perimeter
-		if (!designer) {
-	    	game.addEntity(new Player(playerPos));
-		}
+		//if (!designer) {
+	    	game.createPlayer((playerPos));
+		//}
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));

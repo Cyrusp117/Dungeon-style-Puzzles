@@ -21,6 +21,7 @@ public class DesignController extends PlayerController {
 	
 	
 	public void initialize() {
+		printGame();
 		for (Entity entity : game.getAllEntities()) {
 			System.out.println(entity.getDesignerDescription());
 		}
@@ -61,7 +62,7 @@ public class DesignController extends PlayerController {
 			}
 			game.addEntity(instance);
 		}
-		map.setText(game.toString());
+		
 	}
 
 }

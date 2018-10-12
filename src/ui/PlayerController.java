@@ -43,7 +43,7 @@ public class PlayerController extends Controller {
 	@FXML
 	private Button escapeBtn;
 	@FXML
-	protected Label map;
+	protected Label instructions;
 	@FXML
 	protected GridPane imageMap;
 	
@@ -62,8 +62,9 @@ public class PlayerController extends Controller {
 
 	
 	public void initialize() {
-		map.setText(game.toString());
 		printGame();
+		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
+		//map.setText(game.toString());
 		//imageMap.setCenterShape(true);
 		//imageMap.setGridLinesVisible(true);
 
@@ -83,23 +84,7 @@ public class PlayerController extends Controller {
             //cc.setHgrow(Priority.ALWAYS);
             imageMap.getColumnConstraints().add(cc);
         }
-		//imageMap.setPrefHeight(5);
-//    	EventHandler<KeyEvent> ke = new EventHandler<KeyEvent>() {
-//			@Override
-//			public void handle(KeyEvent event) {
-//				KeyCode key = event.getCode();
-//				if (key.equals(KeyCode.W)) {
-//					moveUp();
-//				} else if (key.equals(KeyCode.S)) {
-//					moveDown();
-//				} else if (key.equals(KeyCode.A)) {
-//					moveLeft();
-//				} else if (key.equals(KeyCode.D)) {
-//					moveRight();
-//				}
-//			}
-//		};
-//    	scene.setOnKeyPressed(ke);
+
 	}
 	
 	public void printGame() {
@@ -110,8 +95,7 @@ public class PlayerController extends Controller {
 				Entity entity = game.getEntity(newPos);
 				Image image = new Image("resources/white.png");
 				if (entity != null) {
-					//if(entity instanceof Player) {
-						image = new Image("resources/" + entity.getName()
+					image = new Image("resources/" + entity.getName()
 												+ ".png");
 				}
 				
@@ -197,29 +181,29 @@ public class PlayerController extends Controller {
 		player.setDx(0);
 		player.setDy(-1);
 		game.update();
-//		printGame();
-		map.setText(game.toString());
+		printGame();
+		//map.setText(game.toString());
 	}
 	public void moveRight () {
 		player.setDx(1);
 		player.setDy(0);
 		game.update();
-//		printGame();
-		map.setText(game.toString());
+		printGame();
+		//map.setText(game.toString());
 	}
 	
 	public void moveLeft () {
 		player.setDx(-1);
 		player.setDy(0);
 		game.update();
-//		printGame();
-		map.setText(game.toString());
+		printGame();
+		//map.setText(game.toString());
 	}
 	public void moveDown () {
 		player.setDx(0);
 		player.setDy(1);
 		game.update();
-//		printGame();
-		map.setText(game.toString());
+		printGame();
+		//map.setText(game.toString());
 	}
 }

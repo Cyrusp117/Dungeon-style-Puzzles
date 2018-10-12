@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 
 
-public class Player extends Entity{
+public class Player extends Entity {
 	
 	private Coordinate oldPos; 
 	private static final int ALIVE = 1;
@@ -24,7 +24,7 @@ public class Player extends Entity{
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
-		keyCode = KeyCode.JAPANESE_HIRAGANA;
+		keyCode = KeyCode.DIGIT1;
 	}
 
 	/**

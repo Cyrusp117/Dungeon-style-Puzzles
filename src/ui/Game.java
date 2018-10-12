@@ -58,6 +58,7 @@ public class Game{
 				if (player.hasItem("InvincibilityPotion")) {
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
 				} else {
+					System.out.println("hi\n\n\n");
 				    position = enemy.move(player.getPosition(), generateGraph() );
 				}
 				if ( getEntity(position) == null && !(player.getPosition().equals(position)) ) {
@@ -292,11 +293,11 @@ public class Game{
 	 * 
 	 * @param position, the Coordinate to which the player should be placed
 	 */
-//	public void createPlayer(Coordinate position) {
-//		if(isOccupied(position)) return;
-//		player = new Player(position, this);
-//		retrieveMapCo(position).addEntity(player);
-//	}
+	public void createPlayer(Coordinate position) {
+		if(isOccupied(position)) return;
+		player = new Player(position);
+		getMapCo(position).addEntity(player);
+	}
 
 	//done
 	/**
@@ -340,6 +341,9 @@ public class Game{
 		getMapCo(entity).addEntity(entity);
 		entity.setPosition(getMapCo(entity));
 		entities.add(entity);
+//		if (entity instanceof Player) {
+//			player = (Player)entity;
+//		}
 		return true;
 	}
 	
@@ -477,6 +481,7 @@ public class Game{
 		allDesignerObjects.add(new Exit(defaultPos));
 		allDesignerObjects.add(new Door());
 		allDesignerObjects.add(new Hound(defaultPos, new Hunter(defaultPos)));
+		allDesignerObjects.add(new Player(defaultPos));
 		return allDesignerObjects;
 	}
 
