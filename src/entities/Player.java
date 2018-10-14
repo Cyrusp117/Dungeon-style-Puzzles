@@ -50,8 +50,8 @@ public class Player extends Entity {
 	public Coordinate getMove() {
 		System.out.println("DX = " + dx + " DY = " + dy);
 		//System.out.println(position.getxPosition());
-	    int newX = position.getxPosition() + dx;
-	    int newY = position.getyPosition() + dy;
+	    int newX = position.getX() + dx;
+	    int newY = position.getY() + dy;
 	    Coordinate newPos = new Coordinate(newX, newY);
 	    return newPos;
 	 
@@ -159,15 +159,15 @@ public class Player extends Entity {
 	/**
 	 * @return the X Coordinate of the player (int)
 	 */
-	public int returnX() {
-		return position.getxPosition();
+	public int getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * @return the Y Coordinate of the player (int)
 	 */
 	public int returnY() {
-		return position.getyPosition();
+		return position.getY();
 	}
 	
 	/**
@@ -311,6 +311,12 @@ public class Player extends Entity {
 	@Override
 	public boolean interactWithBomb() {
 		this.setState(0);
+		return false;
+	}
+	
+	@Override
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof Arrow) {	return true; }
 		return false;
 	}
 	

@@ -58,7 +58,6 @@ public class MapSelectController extends Controller {
         Coordinate IPpotPos = new Coordinate(5, 4);
 		game.generatePerimeter();		 //Create a series of walls around the perimeter
 		//if (!designer) {
-	    	game.createPlayer((playerPos));
 		//}
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
@@ -74,6 +73,7 @@ public class MapSelectController extends Controller {
         game.addEntity(new Bomb(Bomb1Pos));
         game.addEntity(new Bomb(Bomb2Pos));
         game.addEntity(new InvincibilityPotion(IPpotPos));
+    	game.addEntity(new Player(playerPos));
         loadMapScreen(game, "Preset #1");
 
 	}
@@ -83,7 +83,7 @@ public class MapSelectController extends Controller {
 		int customWidth = Integer.parseInt(width.getText());
     	Game game = new Game(customHeight, customWidth);
 		Coordinate playerPos = new Coordinate(1,1); 
-    	game.createPlayer((playerPos));
+    	game.addEntity(new Player(playerPos));
     	loadMapScreen(game, "Custom map");
         System.out.println("Custom map");
 	}

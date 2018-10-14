@@ -42,10 +42,10 @@ public class Graph {
 	
 	public boolean isAdjacent(Coordinate a, Coordinate b) {
 		boolean check = false;
-		int ax = a.getxPosition();
-		int ay = a.getyPosition();
-		int bx = b.getxPosition();
-		int by = b.getyPosition();
+		int ax = a.getX();
+		int ay = a.getY();
+		int bx = b.getX();
+		int by = b.getY();
 		
 		if ((ax == bx) && (ay-1 == by || ay+1 == by)) {
 		    check = true;
@@ -122,10 +122,10 @@ public class Graph {
     public Coordinate moveAway(Coordinate player, Coordinate enemy) {
            	
         Coordinate point = enemy;
-        int ax = player.getxPosition();
-        int ay = player.getyPosition();
-        int bx = enemy.getxPosition();
-        int by = enemy.getyPosition();
+        int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
         
         int differenceX = ax - bx;
         int differenceY = ay -by;
@@ -136,8 +136,8 @@ public class Graph {
         	
         	for (Coordinate object: coordList) {
         		if (isAdjacent(enemy,object)) {
-        		    differenceX = object.getxPosition() - ax;
-        		    differenceY = object.getyPosition() - ay;
+        		    differenceX = object.getX() - ax;
+        		    differenceY = object.getY() - ay;
         		    totalDistance = Math.hypot(differenceX, differenceY);
         	
         	        if (totalDistance > curDistance) {
@@ -157,7 +157,7 @@ public class Graph {
         boolean check = false;  	
     
     	for (Coordinate object: coordList) {
-    	    if (x == object.getxPosition() && y == object.getyPosition()) {
+    	    if (x == object.getX() && y == object.getY()) {
     	    	check = true;
     	    	break;
     	    }
@@ -169,7 +169,7 @@ public class Graph {
     	Coordinate target = null;
     	
     	for (Coordinate object: coordList) {
-    	    if (x == object.getxPosition() && y == object.getyPosition()) {
+    	    if (x == object.getX() && y == object.getY()) {
     	    	target = object;
     	    	break;
     	    }
@@ -180,10 +180,10 @@ public class Graph {
     //not currently used
     public Coordinate between(Coordinate player, Coordinate enemy) {
     	Coordinate target = enemy;
-    	int ax = player.getxPosition();
-        int ay = player.getyPosition();
-        int bx = enemy.getxPosition();
-        int by = enemy.getyPosition();
+    	int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
         
         int midpointX = (ax + bx)/2;
         int midpointY = (ay + by)/2;
@@ -191,7 +191,7 @@ public class Graph {
     	double totalDistance;
     	
     	for (Coordinate object: coordList) {
-    	    totalDistance = Math.hypot(midpointX - object.getxPosition(), midpointY - object.getyPosition());
+    	    totalDistance = Math.hypot(midpointX - object.getX(), midpointY - object.getY());
     	    if (curDistance == -1 || curDistance > totalDistance) {
     	    	curDistance = totalDistance;
     	    	target = object;
@@ -203,10 +203,10 @@ public class Graph {
     
     public Coordinate hound(Coordinate player , Coordinate enemy,Coordinate hound) {
     	Coordinate target = player;
-    	int ax = player.getxPosition();
-        int ay = player.getyPosition();
-        int bx = enemy.getxPosition();
-        int by = enemy.getyPosition();
+    	int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
         int array[] = {0,1,-1};
         int i;
      
@@ -235,7 +235,7 @@ public class Graph {
         boolean check = false;
         while (!check) {
         	// hound already in position
-        	if ((ax + houndx) == hound.getxPosition() && (ay+houndy) == hound.getyPosition()) {
+        	if ((ax + houndx) == hound.getX() && (ay+houndy) == hound.getY()) {
         		//Test
         		//System.out.println(ax + houndx + " " + ay + houndy);
         		target = hound;

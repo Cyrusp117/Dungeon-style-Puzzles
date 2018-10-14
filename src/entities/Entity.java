@@ -14,9 +14,9 @@ public abstract class Entity {
 		
 	}
 
-	public Coordinate move(Coordinate co, Graph g) {
-		return null;
-	}
+//	public Coordinate move(Coordinate co, Graph g) {
+//		return null;
+//	}
 
 
 	public boolean interactWithPlayer(Player player) {
@@ -63,16 +63,16 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 	 * 
 	 * @return the x coordinate of the entity (int)
 	 */
-	public int returnX() {
-		return position.getxPosition();
+	public int getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * 
 	 * @return the y coordinate of the entity (int)
 	 */
-	public int returnY() {
-		return position.getyPosition();
+	public int getY() {
+		return position.getY();
 	}
 
 	public boolean willCollide(Coordinate otherPos) {
@@ -88,6 +88,10 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 
 		return(this.getName() + " - " + getKeyCode().getName());
 
+	}
+
+	public boolean canBePlacedOnTop(Entity entity) {
+		return false;
 	}
 	
 }

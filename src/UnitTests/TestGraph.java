@@ -16,7 +16,7 @@ public class TestGraph {
 			System.out.println("Vertexes: ");
 			System.out.println("x value | y value");
 			for (Coordinate object: g.getCoords()) {
-				System.out.println(object.getxPosition() + " " + object.getyPosition());
+				System.out.println(object.getX() + " " + object.getY());
 			}
 			
 			System.out.println("\n Edges: ");
@@ -30,7 +30,7 @@ public class TestGraph {
 			System.out.println("Vertexes: ");
 			System.out.println("x value | y value");
 			for (Coordinate object: g.getCoords()) {
-				System.out.println(object.getxPosition() + " " + object.getyPosition());
+				System.out.println(object.getX() + " " + object.getY());
 			}
 			
 			System.out.println("\n Edges: ");
@@ -39,34 +39,34 @@ public class TestGraph {
 			}
 			
 			Coordinate bfs = g.BFS(new Coordinate(1,2), new Coordinate(2,3),new Coordinate(4,8));
-			System.out.println("Bfs result : " + bfs.getxPosition() + " " + bfs.getyPosition());
+			System.out.println("Bfs result : " + bfs.getX() + " " + bfs.getY());
 			
 			System.out.println("Vertexes: ");
 			System.out.println("x value | y value");
 			for (Coordinate object: g.getCoords()) {
-				System.out.println(object.getxPosition() + " " + object.getyPosition());
+				System.out.println(object.getX() + " " + object.getY());
 			}
 			
 			Coordinate moveAway = g.moveAway(new Coordinate(3,2), new Coordinate(3,1));
-			System.out.println("moveAway result : " + moveAway.getxPosition() + " " + moveAway.getyPosition());
+			System.out.println("moveAway result : " + moveAway.getX() + " " + moveAway.getY());
 			
 			Coordinate between = g.between(new Coordinate(1,1), new Coordinate(1,2));
-			System.out.println("between result : " + between.getxPosition() + " " + between.getyPosition());
+			System.out.println("between result : " + between.getX() + " " + between.getY());
 			
 			Coordinate hound = g.hound(new Coordinate(10,7), new Coordinate(10,6),new Coordinate(6,7));
-			System.out.println("Hunter up 1: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			System.out.println("Hunter up 1: hound result : " + hound.getX() + " " + hound.getY());
 			
 			hound = g.hound(new Coordinate(10,7), new Coordinate(10,8),new Coordinate(6,7));
-			System.out.println("Hunter down 1: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			System.out.println("Hunter down 1: hound result : " + hound.getX() + " " + hound.getY());
 			
 			hound = g.hound(new Coordinate(10,7), new Coordinate(11,7),new Coordinate(6,7));
-			System.out.println("Hunter right: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			System.out.println("Hunter right: hound result : " + hound.getX() + " " + hound.getY());
 			
 			hound = g.hound(new Coordinate(10,7), new Coordinate(11,6),new Coordinate(6,7));
-			System.out.println("Hunter left: hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			System.out.println("Hunter left: hound result : " + hound.getX() + " " + hound.getY());
 			
 			hound = g.hound(new Coordinate(10,7), new Coordinate(11,8),new Coordinate(6,7));
-			System.out.println("Hunter bottom right:hound result : " + hound.getxPosition() + " " + hound.getyPosition());
+			System.out.println("Hunter bottom right:hound result : " + hound.getX() + " " + hound.getY());
 			
 			
 		}

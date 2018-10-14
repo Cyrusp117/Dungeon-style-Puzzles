@@ -9,10 +9,10 @@ public class Coward extends Enemy {
 
 	@Override
 	public Coordinate getTargetSpace(Coordinate co, Graph g) {
-		int ax = co.getxPosition()/32;
-		int ay = co.getyPosition()/32;
-		int bx = this.position.getxPosition()/32;
-		int by = this.position.getyPosition()/32;
+		int ax = co.getX()/32;
+		int ay = co.getY()/32;
+		int bx = this.position.getX()/32;
+		int by = this.position.getY()/32;
 		Coordinate move;
 		if (Math.hypot(ax-bx,ay-by) > Math.sqrt(2)) { //Math.sqrt(2)
 			move = co;

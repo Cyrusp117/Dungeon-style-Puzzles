@@ -21,7 +21,7 @@ public class Coordinate {
 	/**
 	 * @return the xPosition
 	 */
-	public int getxPosition() {
+	public int getX() {
 		return xPosition;
 	}
 
@@ -35,7 +35,7 @@ public class Coordinate {
 	/**
 	 * @return the yPosition
 	 */
-	public int getyPosition() {
+	public int getY() {
 		return yPosition;
 	}
 
@@ -57,7 +57,7 @@ public class Coordinate {
 		if(!(obj instanceof Coordinate)) return false;
 		
 		Coordinate other = (Coordinate) obj;
-		if(xPosition == other.getxPosition() && yPosition == other.getyPosition()) {
+		if(xPosition == other.getX() && yPosition == other.getY()) {
 			return true;
 		}
 		return false;
@@ -69,12 +69,12 @@ public class Coordinate {
 	 * The X and the Y Coordinate respectively
 	 */
 	public String returnPosition() {
-		return "X Coordinate:" + getxPosition() + " Y Coordinate:" + getyPosition(); 
+		return "X Coordinate:" + getX() + " Y Coordinate:" + getY(); 
 	}
 	
 	public static Coordinate addCoordinates(Coordinate x, Coordinate y) {
-		int xSum = x.getxPosition() + y.getxPosition();
-		int ySum = y.getyPosition() + x.getyPosition();
+		int xSum = x.getX() + y.getX();
+		int ySum = y.getY() + x.getY();
 		return new Coordinate(xSum, ySum);
 	}
 	

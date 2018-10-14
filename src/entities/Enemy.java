@@ -12,7 +12,7 @@ public abstract class Enemy extends Entity{
 	
 	public abstract Coordinate getTargetSpace(Coordinate co,Graph g);
 	
-	@Override
+	
 	public Coordinate move(Coordinate co,Graph g) {
 		Coordinate move = getTargetSpace(co,g);
 		g.addCoordinate(position); //need this?
@@ -34,15 +34,15 @@ public abstract class Enemy extends Entity{
 	}
 
 	//@Override
-	public int returnX() {
+	public int getX() {
 		// TODO Auto-generated method stub
-		return position.getxPosition();
+		return position.getX();
 	}
 
 	//@Override
 	public int returnY() {
 		// TODO Auto-generated method stub
-		return position.getyPosition();
+		return position.getY();
 	}
 
 	//@Override

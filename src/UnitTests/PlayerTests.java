@@ -67,7 +67,7 @@ public class PlayerTests extends Application {
 		robot.delay(500);
 		//System.out.println("Button pressed");
 		//System.out.println(player.returnX()  + " " + player.returnY());
-		assertEquals(player.returnX(), 1);
+		assertEquals(player.getX(), 1);
 		assertEquals(player.returnY(), 2);
 		//System.out.println(player.returnX()  + " " + player.returnY());
 	}

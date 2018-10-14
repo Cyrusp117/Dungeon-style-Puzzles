@@ -156,10 +156,11 @@ public class MapController extends Controller {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
+	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(-1); 
 	    			arrow.setDx(0);
-	    			game.addEntity(arrow);
+
 	    			break;
 	    		}
 	    	}

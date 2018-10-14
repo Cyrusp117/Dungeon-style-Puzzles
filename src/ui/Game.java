@@ -43,7 +43,7 @@ public class Game{
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
             
-				Entity enemy = (Enemy) entity;
+				Enemy enemy = (Enemy) entity;
 				if (player.hasItem("InvincibilityPotion")) {
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
 				} else {
@@ -183,9 +183,7 @@ public class Game{
 		for (Entity entity : entities) {
 			if (entity instanceof Arrow) {
 				Arrow arrow = (Arrow)entity;
-				int newX = arrow.returnX() + arrow.getDx();
-				int newY = arrow.returnY() + arrow.getDy();
-				Coordinate newPos = new Coordinate(newX, newY);
+				Coordinate newPos = arrow.move();
 				if (isOutOfBounds(newPos)) {
 					toBeDeleted.add(arrow);
 					break;
@@ -254,13 +252,12 @@ public class Game{
 	
 
 	public Entity getEntity(Coordinate newPos) {
-		ArrayList<Entity> curEntities = getMapCo(newPos).getEntities();
-		for (Entity entity : curEntities) {
-			return entity; // Just returning top of the entity list
-		}
-		return null;
+		return getEntities(newPos).get(0);
 	}
 	
+	public ArrayList<Entity> getEntities(Coordinate newPos) {
+		return getMapCo(newPos).getEntities();
+	}
 
 
 	public Entity getEntityExcept(Coordinate newPos, Entity e) {
@@ -293,15 +290,16 @@ public class Game{
 	}
 	
 	//done
-	/**
-	 * 
-	 * @param position, the Coordinate to which the player should be placed
-	 */
-	public void createPlayer(Coordinate position) {
-		if(isOccupied(position)) return;
-		player = new Player(position);
-		getMapCo(position).addEntity(player);
-	}
+//	/**
+//	 * 
+//	 * @param position, the Coordinate to which the player should be placed
+//	 */
+//	public void createPlayer(Coordinate position) {
+//		if(isOccupied(position)) return;
+//		player = new Player(position);
+//		getMapCo(position).addEntity(player);
+//		entities.add(player);
+//	}
 
 	//done
 	/**
@@ -324,12 +322,10 @@ public class Game{
 	 * @param position
 	 */
 	public boolean isOccupied(Coordinate position) {
-		if(!entities.isEmpty()) {
-			for(Entity entity: entities) {
-				if(entity.willCollide(position)) {
-					//System.out.println("Cannot be placed here");
-					return true;
-				}
+		for(Entity entity: entities) {
+			if(entity.willCollide(position)) {
+				//System.out.println("Cannot be placed here");
+				return true;
 			}
 		}
 
@@ -339,18 +335,38 @@ public class Game{
 	//done
 	public boolean addEntity(Entity entity) {
 		Coordinate position = entity.getPosition();
-		if(isOccupied(position)) return false;
+		ArrayList<Entity> curEntities = getEntities(position);
+		if(curEntities.size() >= 2) {
+			return false;
+		} 
+		
+		if (curEntities.size() == 1) {
+			Entity curEntity = curEntities.get(0);
+			// can add boulder/floor switch on top of one another
+			// Arrow can be added on top of Player
+			if (!curEntity.canBePlacedOnTop(entity)) {
+				return false;
+			}
+		}
+
+
+
+
 		if(isOutOfBounds(position)) return false;
-		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
+		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getX() + ", " + position.getY());
 		getMapCo(entity).addEntity(entity);
 		entity.setPosition(getMapCo(entity));
 		entities.add(entity);
-//		if (entity instanceof Player) {
-//			player = (Player)entity;
-//		}
+		if (entity instanceof Player) {
+			player = (Player)entity;
+		}
 		return true;
 	}
 	
+//	public void forceAddEntity(Entity entity) {
+//		Coordinate position = entity.getPosition();
+//		if (!isOccupied(position))
+//	}
 	//done
 	/**
 	 * 
@@ -377,10 +393,10 @@ public class Game{
 		int xBoundary = this.width;
 		int yBoundary = this.height;
 		//System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
-		if(newPos.getxPosition() <= 0 || newPos.getxPosition() >= xBoundary ) {
+		if(newPos.getX() <= 0 || newPos.getX() >= xBoundary ) {
 			System.out.println("Out of bounds");
 			return true;
-		}else if( newPos.getyPosition() <= 0 || newPos.getyPosition() >= yBoundary) {
+		}else if( newPos.getY() <= 0 || newPos.getY() >= yBoundary) {
 			System.out.println("Out of bounds");
 			return true;
 		}
@@ -390,10 +406,10 @@ public class Game{
 
 
 	public Coordinate getMapCo(Coordinate position) {
-		return map.get(position.getxPosition()).get(position.getyPosition());
+		return map.get(position.getX()).get(position.getY());
 	}
 	public Coordinate getMapCo(Entity entity) {
-		return map.get(entity.returnX()).get(entity.returnY());
+		return map.get(entity.getX()).get(entity.getY());
 	}
 	
 	public int getHeight() {
@@ -450,7 +466,7 @@ public class Game{
 		for(i = 1; i < width; i ++) {
 			for(j = 1; j < height; j++) {
 				cur = new Coordinate(i,j);
-				if(! isOccupied(cur) ) {
+				if(! isOccupied(cur) || getEntity(cur) instanceof Player) {
 					g.addCoordinate(cur);	
 				}
 			}

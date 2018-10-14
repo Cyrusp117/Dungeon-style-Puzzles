@@ -40,6 +40,11 @@ public class FloorSwitch extends Entity {
 	public String getName() {
 		return "FloorSwitch";
 	}
+	
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof Boulder) { return true; }
+		return false;
+	}
 
 
 }
