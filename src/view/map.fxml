@@ -5,41 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="618.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="679.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="upBtn" layoutX="462.0" layoutY="305.0" mnemonicParsing="false" onAction="#moveUp" text="Button" />
-      <Button fx:id="downBtn" layoutX="462.0" layoutY="355.0" mnemonicParsing="false" onAction="#moveDown" text="Button" />
-      <Button fx:id="rightBtn" layoutX="514.0" layoutY="330.0" mnemonicParsing="false" onAction="#moveRight" text="Button" />
-      <Button fx:id="leftBtn" layoutX="410.0" layoutY="330.0" mnemonicParsing="false" onAction="#moveLeft" text="Button" />
-      <Button fx:id="escapeBtn" layoutX="7.0" layoutY="589.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
-      <Label fx:id="instructions" layoutX="73.0" layoutY="403.0" prefHeight="211.0" prefWidth="337.0" text="Label" />
-      <GridPane fx:id="imageMap" layoutX="48.0" layoutY="39.0" prefHeight="320.0" prefWidth="320.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <Button fx:id="upBtn" layoutX="746.0" layoutY="577.0" mnemonicParsing="false" onAction="#moveUp" text="Button" />
+      <Button fx:id="downBtn" layoutX="746.0" layoutY="627.0" mnemonicParsing="false" onAction="#moveDown" text="Button" />
+      <Button fx:id="rightBtn" layoutX="798.0" layoutY="602.0" mnemonicParsing="false" onAction="#moveRight" text="Button" />
+      <Button fx:id="leftBtn" layoutX="694.0" layoutY="602.0" mnemonicParsing="false" onAction="#moveLeft" text="Button" />
+      <Button fx:id="escapeBtn" layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
+      <Label fx:id="instructions" layoutX="350.0" layoutY="558.0" prefHeight="107.0" prefWidth="275.0" text="Label" />
+      <GridPane fx:id="imageMap" layoutX="122.0" layoutY="105.0">
       </GridPane>
    </children>
 </AnchorPane>

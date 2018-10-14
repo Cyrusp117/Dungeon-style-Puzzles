@@ -11,7 +11,7 @@ public class Game{
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
 	// Need to implement generic iterator
-	public Game(String title, int width, int height) {
+	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.entities = new ArrayList<>();

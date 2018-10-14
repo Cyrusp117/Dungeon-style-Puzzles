@@ -10,7 +10,7 @@ public class TestGraph {
 		
 		
 		public static void main(String[] args) {
-			Game game = new Game("testEnemy",11,11);
+			Game game = new Game(11,11);
 			Graph g = game.generateGraph();
 			g.generateEdges();
 			System.out.println("Vertexes: ");

@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class DesignController extends PlayerController {
+public class DesignController extends MapController {
 	
 	ArrayList<Entity> allDesignerObjects;
 	
@@ -31,7 +31,7 @@ public class DesignController extends PlayerController {
 	
 	public void previousMenu() {
 		Screen map = new Screen(super.getS(), "Map", "view/map.fxml");
-		PlayerController pc = new PlayerController(super.getS(), game);
+		MapController pc = new MapController(super.getS(), game);
 		map.start(pc);
 	}
 	

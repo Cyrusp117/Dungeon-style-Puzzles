@@ -15,6 +15,7 @@ import entities.Player;
 import entities.Sword;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class MapSelectController extends Controller {
@@ -25,6 +26,10 @@ public class MapSelectController extends Controller {
 	private Button btn2;
 	@FXML 
 	private Button btn3;
+	@FXML
+	private TextField height;
+	@FXML
+	private TextField width;
 	
 	protected boolean designer;
 	public MapSelectController(Stage s) {
@@ -34,7 +39,7 @@ public class MapSelectController extends Controller {
 	}
 
 	public void startMap1() {
-    	Game game = new Game("Preset #1", 10, 10);
+    	Game game = new Game(10, 10);
         System.out.println("First Preset Dungeon");
 		Coordinate playerPos = new Coordinate(1,1); 
         Coordinate pitPos = new Coordinate(2, 2);
@@ -74,8 +79,13 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void startCustomMap() {
-    	Game game = new Game("Custom map", 10, 10);
-        System.out.println("First Preset Dungeon");
+		int customHeight = Integer.parseInt(height.getText());
+		int customWidth = Integer.parseInt(width.getText());
+    	Game game = new Game(customHeight, customWidth);
+		Coordinate playerPos = new Coordinate(1,1); 
+    	game.createPlayer((playerPos));
+    	loadMapScreen(game, "Custom map");
+        System.out.println("Custom map");
 	}
 	
 	public void previousMenu() {
@@ -87,8 +97,8 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void loadMapScreen(Game game, String title) {
-        Screen map1 = new Screen(super.getS(), title, "view/map.fxml");
-        PlayerController pc = new PlayerController(super.getS(), game);
-        map1.start(pc);
+        Screen map = new Screen(super.getS(), title, "view/map.fxml");
+        MapController pc = new MapController(super.getS(), game);
+        map.start(pc);
 	}
 }

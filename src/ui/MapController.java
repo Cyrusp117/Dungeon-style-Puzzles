@@ -2,6 +2,8 @@ package ui;
 
 import java.util.ArrayList;
 
+import com.sun.javafx.collections.MappingChange.Map;
+
 import entities.Arrow;
 import entities.Bomb;
 import entities.Coordinate;
@@ -28,7 +30,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import sun.print.resources.serviceui;
 
-public class PlayerController extends Controller {
+public class MapController extends Controller {
 	
 	@FXML
 	private AnchorPane screen;
@@ -52,7 +54,7 @@ public class PlayerController extends Controller {
 	protected Player player;
 	protected Scene scene;
 	
-	public PlayerController(Stage s, Game game) {
+	public MapController(Stage s, Game game) {
 		super(s);
 		this.game = game;
 		this.player = game.getPlayer();
@@ -62,6 +64,7 @@ public class PlayerController extends Controller {
 
 	
 	public void initialize() {
+		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
 		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
 		//map.setText(game.toString());
@@ -87,6 +90,24 @@ public class PlayerController extends Controller {
 
 	}
 	
+	private void makeGridPane(int height, int width) {
+		// TODO Auto-generated method stub
+
+		for( int i = 0; i <= width; i++ ) {
+	        ColumnConstraints colConst = new ColumnConstraints();
+	        colConst.setPercentWidth(100.0 / width);
+	        imageMap.getColumnConstraints().add(colConst);
+		}
+		
+	   for (int i = 0; i < height; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPercentHeight(100.0 / height);
+            imageMap.getRowConstraints().add(rowConst);         
+       }
+	}
+
+
+
 	public void printGame() {
 		imageMap.getChildren().clear();
 		for( int i = 0; i <= game.getWidth(); i++ ) {
@@ -100,8 +121,8 @@ public class PlayerController extends Controller {
 				}
 				
 				ImageView iv = new ImageView(image);
-				iv.setFitHeight(30);
-				iv.setFitWidth(30);
+				iv.setFitHeight(32);
+				iv.setFitWidth(32);
 //				GridPane.setFillWidth(iv, true);
 //				GridPane.setFillHeight(iv, true);
 				imageMap.add(iv, i, j);
