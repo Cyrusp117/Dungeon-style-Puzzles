@@ -19,7 +19,7 @@ public class TestBoulder extends testSetup {
 		Boulder boulder = new Boulder(boulderPos);
 		game.addEntity(boulder);
 		game.printGame();
-		assert(game.getEntity(boulderPos) instanceof Boulder);
+		assert(game.getFirstEntity(boulderPos) instanceof Boulder);
 	}
 	
 	@Test

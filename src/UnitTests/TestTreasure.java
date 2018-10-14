@@ -18,7 +18,7 @@ public class TestTreasure extends testSetup {
 		Treasure treasure = new Treasure(treasurePos);
 		game.addEntity(treasure);
 		game.printGame();
-		assert(game.getEntity(treasurePos) instanceof Treasure);
+		assert(game.getFirstEntity(treasurePos) instanceof Treasure);
 	}
 	
 	@Test

@@ -18,7 +18,7 @@ public class ArrowTest extends testSetup {
 		arrow = new Arrow(arrowPos);
 		game.addEntity(arrow);
 		game.printGame();
-		assert(game.getEntity(arrowPos) instanceof Arrow);
+		assert(game.getFirstEntity(arrowPos) instanceof Arrow);
 	}
 
 	@Test
@@ -42,9 +42,9 @@ public class ArrowTest extends testSetup {
 		move(KeyEvent.VK_2, 1);
 		Coordinate hunterPos = new Coordinate(4, 1);
 		game.addEntity(new Hunter(hunterPos));
-		assert(game.getEntity(hunterPos) instanceof Hunter);
+		assert(game.getFirstEntity(hunterPos) instanceof Hunter);
 		move(RIGHT, 3);
-		assert(game.getEntity(hunterPos) == null);
+		assert(game.getFirstEntity(hunterPos) == null);
 	}
 
 	@Test
@@ -57,9 +57,9 @@ public class ArrowTest extends testSetup {
 		move(KeyEvent.VK_3, 1);
 		Coordinate hunterPos = new Coordinate(7, 8);
 		game.addEntity(new Hunter(hunterPos));
-		assert(game.getEntity(hunterPos) instanceof Hunter);
+		assert(game.getFirstEntity(hunterPos) instanceof Hunter);
 		move(RIGHT, 3);
-		assert(game.getEntity(hunterPos) == null);
+		assert(game.getFirstEntity(hunterPos) == null);
 	}
 	
 	@Test
@@ -75,7 +75,7 @@ public class ArrowTest extends testSetup {
 		robot.delay(2000);
 		move(RIGHT, 1);
 		move(RIGHT, 1);
-		assert(game.getEntity(hunterPos) == null);
+		assert(game.getFirstEntity(hunterPos) == null);
 	}
 	
 	@Test
@@ -87,8 +87,8 @@ public class ArrowTest extends testSetup {
 		move(KeyEvent.VK_5, 1);
 		Coordinate hunterPos = new Coordinate(9, 9);
 		game.addEntity(new Hunter(hunterPos));
-		assert(game.getEntity(hunterPos) instanceof Hunter);
+		assert(game.getFirstEntity(hunterPos) instanceof Hunter);
 		move(DOWN, 6);
-		assert(game.getEntity(hunterPos) == null);
+		assert(game.getFirstEntity(hunterPos) == null);
 	}
 }

@@ -1,8 +1,11 @@
 package entities;
 
+import java.util.ArrayList;
+
 import javafx.scene.input.KeyCode;
 
 public abstract class Entity {
+	protected Coordinate oldPos; 
 	protected Coordinate position;
 	protected KeyCode keyCode;
 	protected boolean movable;
@@ -19,8 +22,8 @@ public abstract class Entity {
 //	}
 
 
-	public boolean interactWithPlayer(Player player) {
-		return false;
+	public Coordinate interactWithPlayer(Player player) {
+		return position;
 	}
 	
 	public boolean interactWithBomb() {
@@ -92,6 +95,23 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 
 	public boolean canBePlacedOnTop(Entity entity) {
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @return previous position of Entity
+	 */
+	public Coordinate getOldPosition () {
+		return oldPos;
+	}
+
+	public boolean isValidInteraction(Entity atNewEntityPos) {
+		//if (atNewEntityPos.size() == 0) { return true; }
+		return false;
+	}
+
+	public Coordinate interact(Entity entity) {
+		return position;
 	}
 	
 }

@@ -24,14 +24,14 @@ public class Door extends Entity {
 	}
 	
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(this.getState() == CLOSE) {
 			if(player.hasItem("Key")) {
 				if(player.hasKey(this.getDoorId())) {
 					System.out.println("You have the right key, open the door");
 					player.removeKey(this.getDoorId());
 					this.setState(OPEN);
-					return true;
+					return null;
 				}else {
 					player.setPosition(player.getOldPosition());
 					System.out.println("You don't have the right key");
@@ -45,7 +45,7 @@ public class Door extends Entity {
 			System.out.println("Go through the door");
 		}
 		
-		return false;
+		return position;
 	}
 	
 	

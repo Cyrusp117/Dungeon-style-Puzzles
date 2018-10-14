@@ -15,9 +15,9 @@ public class Treasure extends Entity {
 		return position;
 	}
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

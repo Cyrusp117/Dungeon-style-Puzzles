@@ -16,9 +16,9 @@ public class InvincibilityPotion extends Entity {
 		return position;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

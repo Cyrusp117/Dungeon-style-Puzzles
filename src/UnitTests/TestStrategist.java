@@ -15,7 +15,7 @@ public class TestStrategist extends testSetup {
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
 		game.printGame();
-		assert(game.getEntity(stratPos) instanceof Strategist);
+		assert(game.getFirstEntity(stratPos) instanceof Strategist);
 	}
 
 	@Test

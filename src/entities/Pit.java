@@ -15,16 +15,16 @@ public class Pit extends Entity{
 	public Coordinate move(Coordinate co, Graph g) {
 		return position;
 	}
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!player.hasItem("HoverPotion")) {
 			player.setState(0); // player is dead
 		}
-		return false;
+		return position;
 	}
 	
-	public boolean interactWithBoulder(Boulder boulder) {
+	public Coordinate interact(Boulder boulder) {
 		//delete boulder
-		return true;
+		return null;
 	}
 	
 	public String getName() {

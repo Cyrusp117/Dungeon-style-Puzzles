@@ -113,7 +113,7 @@ public class MapController extends Controller {
 		for( int i = 0; i <= game.getWidth(); i++ ) {
 			for ( int j = 0; j <= game.getHeight(); j++ ) {
 				Coordinate newPos = new Coordinate(i,j);
-				Entity entity = game.getEntity(newPos);
+				Entity entity = game.getFirstEntity(newPos);
 				Image image = new Image("resources/white.png");
 				if (entity != null) {
 					image = new Image("resources/" + entity.getName()
@@ -156,11 +156,10 @@ public class MapController extends Controller {
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
-	    			game.addEntity(arrow);
 	    			arrow.setPosition(game.getPlayer().getPosition());
 	    			arrow.setDy(-1); 
 	    			arrow.setDx(0);
-
+	    			game.addEntity(arrow);
 	    			break;
 	    		}
 	    	}

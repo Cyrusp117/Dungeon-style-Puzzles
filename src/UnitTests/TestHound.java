@@ -18,7 +18,7 @@ public class TestHound extends testSetup {
 		Hound hound = new Hound(houndPos,hunter);
 		game.addEntity(hound);
 		game.printGame();
-		assert(game.getEntity(houndPos) instanceof Hound);
+		assert(game.getFirstEntity(houndPos) instanceof Hound);
 	}
 
 	@Test

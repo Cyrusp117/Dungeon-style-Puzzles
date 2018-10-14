@@ -16,7 +16,7 @@ public class TestFloorSwitch extends testSetup {
 		FloorSwitch fs = new FloorSwitch(fsPos);
 		game.addEntity(fs);
 		game.printGame();
-		assert(game.getEntity(fsPos) instanceof FloorSwitch);
+		assert(game.getFirstEntity(fsPos) instanceof FloorSwitch);
 	}
 	
 	@Test
@@ -35,7 +35,7 @@ public class TestFloorSwitch extends testSetup {
 		// Test if fs is deactivated if boulder pushed out
 		move(DOWN, 1);
 		assert(!fs.getState());
-		assert(game.getEntity(fsPos) instanceof FloorSwitch);
+		assert(game.getFirstEntity(fsPos) instanceof FloorSwitch);
 		assert(game.getEntityExcept(fsPos, fs) == null);
 		boulderPos = new Coordinate(1, 5);
 		assert(boulder.getPosition().equals(boulderPos));

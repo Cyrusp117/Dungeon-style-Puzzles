@@ -26,7 +26,7 @@ public class TestHunter extends testSetup {
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 		game.printGame();
-		assert(game.getEntity(hunterPos) instanceof Hunter);
+		assert(game.getFirstEntity(hunterPos) instanceof Hunter);
 	}
 
 	@Test

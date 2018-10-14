@@ -20,7 +20,7 @@ public class TestSword extends testSetup {
 		Sword sword = new Sword(swordPos);
 		game.addEntity(sword);
 		game.printGame();
-		assert(game.getEntity(swordPos) instanceof Sword);
+		assert(game.getFirstEntity(swordPos) instanceof Sword);
 	}
 	
 	@Test

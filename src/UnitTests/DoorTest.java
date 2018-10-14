@@ -17,7 +17,7 @@ public class DoorTest extends testSetup {
 		game.printGame();
 		assert(door.getDoorId() == 0);
 		assert(door.getNumOfDoors() == 1);
-		assert(game.getEntity(doorPos) instanceof Door);
+		assert(game.getFirstEntity(doorPos) instanceof Door);
 	}
 
 	@Test

@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
 import ui.Game;
@@ -12,7 +13,7 @@ public class Boulder extends Entity {
 		this.keyCode = KeyCode.B;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 
 		int dx = player.getDx();
 		int dy = player.getDy();
@@ -21,7 +22,7 @@ public class Boulder extends Entity {
 	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
 	    this.setOldPosition(this.position);
 	    this.setPosition(newPos);
-	    return false;
+	    return position;
 	}
 	
 	public boolean interactWithBomb() {
@@ -60,6 +61,20 @@ public class Boulder extends Entity {
 	public boolean canBePlacedOnTop(Entity entity) {
 		if (entity instanceof FloorSwitch) {	return true; }
 		return false;
+	}
+	
+	public boolean isValidInteraction(Entity entity) {
+		if (entity instanceof Pit) {
+				return true;
+		}
+		return super.isValidInteraction(entity);
+	}
+	
+	public Coordinate interact(Entity entity) {
+		if(entity instanceof Pit){
+			return null;
+		}
+		return position;
 	}
 	
 }

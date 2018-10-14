@@ -50,7 +50,7 @@ public class Game{
 					System.out.println("hi\n\n\n");
 				    position = enemy.move(player.getPosition(), generateGraph() );
 				}
-				if ( getEntity(position) == null && !(player.getPosition().equals(position)) ) {
+				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(enemy, position);
 				} 
 
@@ -124,56 +124,74 @@ public class Game{
 	 * Moves the player
 	 */
 	public void movePlayer() {
-		Coordinate newPos = player.getMove();
-		if(isOutOfBounds(newPos)) {
+		Coordinate newPlayerPos = player.getMove();
+		if(isOutOfBounds(newPlayerPos)) {
 			return;
 		}
 			
 		//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
 		player.setOldPosition(player.getPosition());
-		moveEntity(player, newPos);
-		Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1,2)));
+		moveEntity(player, newPlayerPos);
+		Entity entity = getEntityExcept(newPlayerPos, new FloorSwitch(new Coordinate(1,2)));
 		//System.out.println(entity);
 
 
 		if (entity!=NULL) {
 			System.out.println("CurPos has a: " + entity.getName());
-			if(entity.interactWithPlayer(player)) {
-				// The above returns true if the entity is to be deleted afterwards
-				this.deleteEntity(entity);
+			Coordinate newEntityPos = entity.interactWithPlayer(player);
+			if(newEntityPos == null) {
+				// The above returns null if the entity is to be deleted afterwards
+				deleteEntity(entity);
 			} else {
-				// BOULDER HARDCODE STUFF;
-				Entity boulderEntity = getEntity(player.getMove());
-				// This checks whether the entity has moved due to the interaction 
-				// with Player, therefore has to be a boulder
-				if(isOutOfBounds(entity.getPosition())) {		
-					Boulder boulder = (Boulder) entity;
-					boulder.revert(player);
-					System.out.println("Boulder cannot be moved here");
-				} else if (boulderEntity != NULL && (entity instanceof Boulder)) {
-					if (boulderEntity instanceof Pit) {
-						entities.remove(entity);
-						System.out.println("Boulder is Dead :)");
-					} else if (!(boulderEntity instanceof FloorSwitch)) {
-						// entity is boulder, boulderEntity is not Pit or FloorSwitch
-						// Revert
-						Boulder boulder = (Boulder) entity;
-						boulder.revert(player);
-						System.out.println("Boulder cannot be moved here");
-					} 
-	
+				Entity atNewEntityPos = getFirstEntity(newEntityPos);
+				if (isOutOfBounds(newEntityPos) || 
+						!entity.isValidInteraction(atNewEntityPos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
+					moveEntity(player, player.getOldPosition());
 				} else {
-					moveEntity(entity, entity.getPosition());
-					
+					// The entity that player has interacted with can have
+					// further interactions, check if these are valid
+					moveEntity(entity, newEntityPos);
+					newEntityPos = entity.interact(atNewEntityPos);
+					if (newEntityPos == null) {
+						deleteEntity(entity);
+					}
 				}
-			// BOULDER STUFF END
+				// BOULDER HARDCODE STUFF;
+//				Entity boulderEntity = getFirstEntity(player.getMove());
+//				// This checks whether the entity has moved due to the interaction 
+//				// with Player, therefore has to be a boulder
+//				if(isOutOfBounds(entity.getPosition())) {		
+//					Boulder boulder = (Boulder) entity;
+//					boulder.revert(player);
+//					System.out.println("Boulder cannot be moved here");
+//				} else if (boulderEntity != NULL && (entity instanceof Boulder)) {
+//					if (boulderEntity instanceof Pit) {
+//						entities.remove(entity);
+//						System.out.println("Boulder is Dead :)");
+//					} else if (!(boulderEntity instanceof FloorSwitch)) {
+//						// entity is boulder, boulderEntity is not Pit or FloorSwitch
+//						// Revert
+//						Boulder boulder = (Boulder) entity;
+//						boulder.revert(player);
+//						System.out.println("Boulder cannot be moved here");
+//					} 
+//	
+//				} else {
+//					moveEntity(entity, entity.getPosition());
+//					
+//				}
+//			// BOULDER STUFF END
 			}
-			
 			
 		}
 		printPlayerCoordinates();
 	}
 	
+	private boolean isValidPosition(Entity entity, Coordinate position) {
+		return entity.isValid()
+	// TODO Auto-generated method stub
+		return true;
+	}
 
 	/**
 	 *  Updates interactions with items (player inv + in dungeon)
@@ -188,8 +206,8 @@ public class Game{
 					toBeDeleted.add(arrow);
 					break;
 				}
-				if (getEntity(newPos) instanceof Enemy){
-					toBeDeleted.add(getEntity(newPos));
+				if (getFirstEntity(newPos) instanceof Enemy){
+					toBeDeleted.add(getFirstEntity(newPos));
 				}
 				moveEntity(arrow, newPos);
 			}
@@ -203,7 +221,7 @@ public class Game{
 						if(bomb.affectedAreas().contains(player.getPosition())) {		// can be refactored later by having player be part of entities
 							player.setState(0);
 						}
-						Entity affectedEntity = getEntity(affectedArea);
+						Entity affectedEntity = getFirstEntity(affectedArea);
 						if (affectedEntity != NULL) {
 							if(affectedEntity.interactWithBomb()) {
 								toBeDeleted.add(affectedEntity); // to workaround ConcurrentModificationException
@@ -249,10 +267,40 @@ public class Game{
 		}
 	}
 	
-	
+	public boolean addEntity(Entity entity) {
+		Coordinate position = entity.getPosition();
+		ArrayList<Entity> curEntities = getEntities(position);
+		if(curEntities.size() >= 2) {
+			return false;
+		} 
+		
+		if (curEntities.size() == 1) {
+			Entity curEntity = curEntities.get(0);
+			// can add boulder/floor switch on top of one another
+			// Arrow can be added on top of Player
+			if (!curEntity.canBePlacedOnTop(entity)) {
+				return false;
+			}
+		}
 
-	public Entity getEntity(Coordinate newPos) {
-		return getEntities(newPos).get(0);
+		if(isOutOfBounds(position)) return false;
+		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getX() + ", " + position.getY());
+		getMapCo(entity).addEntity(entity);
+		entity.setPosition(getMapCo(entity));
+		entities.add(entity);
+		if (entity instanceof Player) {
+			player = (Player)entity;
+		}
+		return true;
+	}
+
+	public Entity getFirstEntity(Coordinate newPos) {
+		if (getEntities(newPos).size() > 0) {
+			return getEntities(newPos).get(0);
+		} else {
+			return null;
+		}
+
 	}
 	
 	public ArrayList<Entity> getEntities(Coordinate newPos) {
@@ -333,35 +381,7 @@ public class Game{
 	}
 	
 	//done
-	public boolean addEntity(Entity entity) {
-		Coordinate position = entity.getPosition();
-		ArrayList<Entity> curEntities = getEntities(position);
-		if(curEntities.size() >= 2) {
-			return false;
-		} 
-		
-		if (curEntities.size() == 1) {
-			Entity curEntity = curEntities.get(0);
-			// can add boulder/floor switch on top of one another
-			// Arrow can be added on top of Player
-			if (!curEntity.canBePlacedOnTop(entity)) {
-				return false;
-			}
-		}
 
-
-
-
-		if(isOutOfBounds(position)) return false;
-		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getX() + ", " + position.getY());
-		getMapCo(entity).addEntity(entity);
-		entity.setPosition(getMapCo(entity));
-		entities.add(entity);
-		if (entity instanceof Player) {
-			player = (Player)entity;
-		}
-		return true;
-	}
 	
 //	public void forceAddEntity(Entity entity) {
 //		Coordinate position = entity.getPosition();
@@ -466,7 +486,7 @@ public class Game{
 		for(i = 1; i < width; i ++) {
 			for(j = 1; j < height; j++) {
 				cur = new Coordinate(i,j);
-				if(! isOccupied(cur) || getEntity(cur) instanceof Player) {
+				if(! isOccupied(cur) || getFirstEntity(cur) instanceof Player) {
 					g.addCoordinate(cur);	
 				}
 			}

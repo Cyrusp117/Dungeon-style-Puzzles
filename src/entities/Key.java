@@ -21,15 +21,15 @@ public class Key extends Entity {
 	}
 	
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		System.out.println("keyID is: "+ this.getKeyId());
 		if (!player.hasItem("Key")) {
 			player.pickUp(this);
-			return true;
+			return null;
 		} else {
 			System.out.println("Already have key");
 			player.setPosition(player.getOldPosition());
-			return false;
+			return position;
 		}
 
 	}

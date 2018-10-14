@@ -26,13 +26,13 @@ public class Bomb extends Entity {
 //		numOfBombs++;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!active) {
 			player.pickUp(this);
-			return true;
+			return null;
 		}
 		//System.out.println("Num Of Bombs: "+ player.getNumOfBombs());
-		return false;
+		return position;
 	}
 	
 	public ArrayList<Coordinate> affectedAreas() {

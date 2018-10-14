@@ -22,7 +22,7 @@ public class TestBomb extends testSetup {
 		Bomb bomb = new Bomb(bombPos);
 		game.addEntity(bomb);
 		game.printGame();
-		assert(game.getEntity(bombPos) instanceof Bomb);
+		assert(game.getFirstEntity(bombPos) instanceof Bomb);
 	}
 	
 	public void TestPickUp() {

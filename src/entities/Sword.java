@@ -16,13 +16,13 @@ public class Sword extends Entity {
 	public Coordinate move(Coordinate co, Graph g) {
 		return position;
 	}
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!player.hasItem("Sword")) {
 			player.pickUp(this);
-			return true;
+			return null;
 		}
 		System.out.println("You already have sword, you can only carry one sword!!");
-		return false;
+		return position;
 	}
 	
 	public int getDurability() {

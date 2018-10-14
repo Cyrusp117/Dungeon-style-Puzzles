@@ -13,9 +13,9 @@ public class Arrow extends Entity {
 		this.keyCode = KeyCode.A;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

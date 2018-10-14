@@ -15,7 +15,7 @@ public class TestPit extends testSetup {
 		Pit pit = new Pit(pitPos);
 		game.addEntity(pit);
 		game.printGame();
-		assert(game.getEntity(pitPos) instanceof Pit);
+		assert(game.getFirstEntity(pitPos) instanceof Pit);
 	}
 	
 	@Test

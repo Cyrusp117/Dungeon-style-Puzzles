@@ -16,7 +16,7 @@ public class InvincibilityPotionTest extends testSetup {
 		InvincibilityPotion ipPot = new InvincibilityPotion(ipPotPos);
 		game.addEntity(ipPot);
 		game.printGame();
-		assert(game.getEntity(ipPotPos) instanceof InvincibilityPotion);
+		assert(game.getFirstEntity(ipPotPos) instanceof InvincibilityPotion);
 	}
 	
 	@Test

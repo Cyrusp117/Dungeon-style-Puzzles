@@ -27,7 +27,7 @@ public class TestCoward extends testSetup {
 		Coward coward = new Coward(cowardPos);
 		game.addEntity(coward);
 		game.printGame();
-		assert(game.getEntity(cowardPos) instanceof Coward);
+		assert(game.getFirstEntity(cowardPos) instanceof Coward);
 	}
 
 	@Test

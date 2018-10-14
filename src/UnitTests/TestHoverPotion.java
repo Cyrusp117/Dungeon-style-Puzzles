@@ -20,7 +20,7 @@ public class TestHoverPotion extends testSetup {
 		HoverPotion hp = new HoverPotion(hpPos);
 		game.addEntity(hp);
 		game.printGame();
-		assert(game.getEntity(hpPos) instanceof HoverPotion);
+		assert(game.getFirstEntity(hpPos) instanceof HoverPotion);
 	}
 	
 	@Test

@@ -18,7 +18,7 @@ public class KeyTest extends testSetup {
 		System.out.println(key.getKeyId());
 		assert(key.getKeyId() == 0);
 		assert(key.getNumOfKeys() == 1);
-		assert(game.getEntity(keyPos) instanceof Key);
+		assert(game.getFirstEntity(keyPos) instanceof Key);
 	}
 	
 	@Test

@@ -24,10 +24,10 @@ public class Wall extends Entity {
 	}
 	
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.setPosition(player.getOldPosition());
 		System.out.println("There is a wall here... Moving back");
-		return false;
+		return position;
 
 	}
 

@@ -57,16 +57,16 @@ public abstract class Enemy extends Entity{
 	}
 	
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(player.hasItem("Sword")) {
 			player.hitUsingSword();
-			return true;
+			return position;
 		} else if (player.hasItem("InvincibilityPotion")) {
-			return true;
+			return position;
 		} else {
 			player.setState(0);
 		}
-		return false;
+		return null;
 
 	}
 	

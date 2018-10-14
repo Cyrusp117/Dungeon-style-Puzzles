@@ -15,7 +15,7 @@ public class TestExit extends testSetup {
 		Exit exit = new Exit(exitPos);
 		game.addEntity(exit);
 		game.printGame();
-		assert(game.getEntity(exitPos) instanceof Exit);
+		assert(game.getFirstEntity(exitPos) instanceof Exit);
 	}
 	
 	@Test
