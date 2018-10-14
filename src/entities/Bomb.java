@@ -21,7 +21,7 @@ public class Bomb extends Entity {
 	public Bomb(Coordinate position) {
 		super(position);
 		this.keyCode = KeyCode.U;
-		this.turnsLeft = 2;
+		this.turnsLeft = 3;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}

@@ -304,6 +304,7 @@ public class Player extends Entity {
 	@Override
 	public boolean canBePlacedOnTop(Entity entity) {
 		if (entity instanceof Arrow) {	return true; }
+		if (entity instanceof Bomb) { return true; }
 		return false;
 	}
 	

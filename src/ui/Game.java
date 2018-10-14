@@ -129,38 +129,49 @@ public class Game{
 		if(isOutOfBounds(newPlayerPos)) {
 			return;
 		}
-		Entity entity = getEntityExcept(newPlayerPos, new FloorSwitch(new Coordinate(1,2)));
+		ArrayList<Entity> entities = getEntities(newPlayerPos);
+		Entity interactable = null;
+		for (Entity curEntity : entities) {
+			// maybe add an canInteractWithPlayer?
+			if (curEntity instanceof FloorSwitch) {
+				continue;
+			} else {
+				interactable = curEntity;
+			}
+		}
 		moveEntity(player, newPlayerPos);
 		
-		if (entity!=NULL) {
-			System.out.println("CurPos has a: " + entity.getName());
-			Coordinate newEntityPos = entity.interactWithPlayer(player);
-			if(newEntityPos == null) {
+		if (interactable!=NULL) {
+			System.out.println("CurPos has a: " + interactable.getName());
+			Coordinate newInteractablePos = interactable.interactWithPlayer(player);
+			if(newInteractablePos == null) {
 				// The above returns null if the entity is to be deleted afterwards
-				deleteEntity(entity);
+				deleteEntity(interactable);
 			} else {
-				if (isOutOfBounds(newEntityPos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
+				if (isOutOfBounds(newInteractablePos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
 					moveEntity(player, player.getOldPosition());
 				} else {
-					Entity atNewEntityPos = getFirstEntity(newEntityPos);
-					if (atNewEntityPos == entity) {
+					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
+					if (atNewEntityPos == interactable) {
 						// do nothing, entity hasnt moved
-						if (entity instanceof Enemy){
+						if (interactable instanceof Enemy){
+							// if we've interacted with the enemy but enemy is still in same position (not dead)
+							// therefore, we are dead
 						} else {
 							moveEntity(player, player.getOldPosition());
 						}
 					// BOULDER STUFF
 					} else if (atNewEntityPos == NULL) {
 						// boulder has moved to empty spot
-						moveEntity(entity, newEntityPos);
+						moveEntity(interactable, newInteractablePos);
 					} else if (atNewEntityPos instanceof Pit) {
 						// boulder has moved onto pit
-						deleteEntity(entity);
+						deleteEntity(interactable);
 					} else if (atNewEntityPos instanceof FloorSwitch) {
 						// boulder has moved onto floorswitch
-						moveEntity(entity, newEntityPos);
+						moveEntity(interactable, newInteractablePos);
 					} else {
-						moveEntity(entity, entity.getOldPosition());
+						moveEntity(interactable, interactable.getOldPosition());
 						moveEntity(player, player.getOldPosition());
 					}
 					// END BOULDER STUFF
