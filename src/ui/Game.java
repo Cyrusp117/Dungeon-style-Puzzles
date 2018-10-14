@@ -19,18 +19,7 @@ public class Game{
 		generateMap();
 	}
 	
-	//Done
-	public void generateMap() {
-		for( int i = 0; i <= width; i++ ) {
-			ArrayList<Coordinate> coords = new ArrayList<>();
-			for ( int j = 0; j <= height; j++ ) {
-				Coordinate newPos = new Coordinate(i,j);
-				coords.add(newPos);
-			}
-			map.add(coords);
-		}
-	}
-	
+
 
 	
 	public void update() {						//Updates the state of the game
@@ -135,30 +124,28 @@ public class Game{
 	 * Moves the player
 	 */
 	public void movePlayer() {
-
-		//just making null variables for now
-		//Graph g = null;
 		Coordinate newPos = player.getMove();
+		if(isOutOfBounds(newPos)) {
+			return;
+		}
+			
+		//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
+		player.setOldPosition(player.getPosition());
+		moveEntity(player, newPos);
+		Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1,2)));
+		//System.out.println(entity);
 
-		if(!isOutOfBounds(newPos)) {
 
-			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
-			player.setOldPosition(player.getPosition());
-			moveEntity(player, newPos);
-			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
-			//System.out.println(entity);
-			Entity boulderEntity = getEntity(player.getMove());
-
-
-			if (entity!=NULL) {
-				System.out.println("CurPos has a: " + entity.getName());
-				if(entity.interactWithPlayer(player)) {
-					// The above returns true if the entity is to be deleted afterwards
-					this.deleteEntity(entity);
-				}
-				
+		if (entity!=NULL) {
+			System.out.println("CurPos has a: " + entity.getName());
+			if(entity.interactWithPlayer(player)) {
+				// The above returns true if the entity is to be deleted afterwards
+				this.deleteEntity(entity);
+			} else {
 				// BOULDER HARDCODE STUFF;
-				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
+				Entity boulderEntity = getEntity(player.getMove());
+				// This checks whether the entity has moved due to the interaction 
+				// with Player, therefore has to be a boulder
 				if(isOutOfBounds(entity.getPosition())) {		
 					Boulder boulder = (Boulder) entity;
 					boulder.revert(player);
@@ -173,12 +160,16 @@ public class Game{
 						Boulder boulder = (Boulder) entity;
 						boulder.revert(player);
 						System.out.println("Boulder cannot be moved here");
-					}
+					} 
+	
+				} else {
+					moveEntity(entity, entity.getPosition());
+					
 				}
-				// BOULDER STUFF END
-				
-				
+			// BOULDER STUFF END
 			}
+			
+			
 		}
 		printPlayerCoordinates();
 	}
@@ -247,6 +238,19 @@ public class Game{
 		player.getInventory().removeAll(toBeDeleted);
 
 	}
+	
+	//Done
+	public void generateMap() {
+		for( int i = 0; i <= width; i++ ) {
+			ArrayList<Coordinate> coords = new ArrayList<>();
+			for ( int j = 0; j <= height; j++ ) {
+				Coordinate newPos = new Coordinate(i,j);
+				coords.add(newPos);
+			}
+			map.add(coords);
+		}
+	}
+	
 	
 
 	public Entity getEntity(Coordinate newPos) {

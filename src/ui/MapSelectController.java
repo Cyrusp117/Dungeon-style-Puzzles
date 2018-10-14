@@ -69,15 +69,13 @@ public class MapSelectController extends Controller {
         game.addEntity(new Bomb(Bomb1Pos));
         game.addEntity(new Bomb(Bomb2Pos));
         game.addEntity(new InvincibilityPotion(IPpotPos));
-        //game.printGame();
-		
-        Screen map1 = new Screen(super.getS(), "Map", "view/map.fxml");
-        PlayerController pc = new PlayerController(super.getS(), game);
-        map1.start(pc);
+        loadMapScreen(game, "Preset #1");
+
 	}
 	
 	public void startCustomMap() {
-		
+    	Game game = new Game("Custom map", 10, 10);
+        System.out.println("First Preset Dungeon");
 	}
 	
 	public void previousMenu() {
@@ -86,5 +84,11 @@ public class MapSelectController extends Controller {
         Screen mainMenu = new Screen(curStage, "Main Menu", "view/mainmenu.fxml");
         MainMenuController mmc = new MainMenuController(curStage);
         mainMenu.start(mmc);
+	}
+	
+	public void loadMapScreen(Game game, String title) {
+        Screen map1 = new Screen(super.getS(), title, "view/map.fxml");
+        PlayerController pc = new PlayerController(super.getS(), game);
+        map1.start(pc);
 	}
 }

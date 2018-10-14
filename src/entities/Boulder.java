@@ -13,6 +13,7 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean interactWithPlayer(Player player) {
+
 		int dx = player.getDx();
 		int dy = player.getDy();
 		int curX = position.getxPosition();

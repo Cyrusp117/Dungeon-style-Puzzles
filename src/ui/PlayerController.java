@@ -68,22 +68,22 @@ public class PlayerController extends Controller {
 		//imageMap.setCenterShape(true);
 		//imageMap.setGridLinesVisible(true);
 
-        for (int row = 0 ; row < game.getHeight() ; row++ ){
-            RowConstraints rc = new RowConstraints();
-//            rc.setMaxHeight(32);
-//            rc.setPrefHeight(32);
-            rc.setFillHeight(true);
-            //rc.setVgrow(Priority.ALWAYS);
-            imageMap.getRowConstraints().add(rc);
-        }
-        for (int col = 0 ; col < game.getWidth(); col++ ) {
-            ColumnConstraints cc = new ColumnConstraints();
-//            cc.setMaxWidth(32);
-//            cc.setPrefWidth(32);
-            cc.setFillWidth(true);
-            //cc.setHgrow(Priority.ALWAYS);
-            imageMap.getColumnConstraints().add(cc);
-        }
+//        for (int row = 0 ; row < game.getHeight() ; row++ ){
+//            RowConstraints rc = new RowConstraints();
+////          rc.setMaxHeight(32);
+////          rc.setPrefHeight(32);
+//            rc.setFillHeight(true);
+////          rc.setVgrow(Priority.ALWAYS);
+//            imageMap.getRowConstraints().add(rc);
+//        }
+//        for (int col = 0 ; col < game.getWidth(); col++ ) {
+//            ColumnConstraints cc = new ColumnConstraints();
+////          cc.setMaxWidth(32);
+////          cc.setPrefWidth(32);
+//            cc.setFillWidth(true);
+////          cc.setHgrow(Priority.ALWAYS);
+//            imageMap.getColumnConstraints().add(cc);
+//        }
 
 	}
 	

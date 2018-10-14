@@ -22,9 +22,11 @@ public class DesignController extends PlayerController {
 	
 	public void initialize() {
 		printGame();
+		StringBuilder sb = new StringBuilder();
 		for (Entity entity : game.getAllEntities()) {
-			System.out.println(entity.getDesignerDescription());
+			sb.append(entity.getDesignerDescription() + "\n");
 		}
+		instructions.setText(sb.toString());
 	}
 	
 	public void previousMenu() {
