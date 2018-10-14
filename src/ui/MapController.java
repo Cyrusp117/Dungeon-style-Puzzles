@@ -94,15 +94,21 @@ public class MapController extends Controller {
 		// TODO Auto-generated method stub
 
 		for( int i = 0; i <= width; i++ ) {
-	        ColumnConstraints colConst = new ColumnConstraints();
-	        colConst.setPercentWidth(100.0 / width);
-	        imageMap.getColumnConstraints().add(colConst);
+	        ColumnConstraints cc = new ColumnConstraints();
+	        cc.setPercentWidth(100.0 / width);
+	        cc.setMaxWidth(32);
+	        cc.setPrefWidth(32);
+	        cc.setFillWidth(true);
+	        imageMap.getColumnConstraints().add(cc);
 		}
 		
-	   for (int i = 0; i < height; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / height);
-            imageMap.getRowConstraints().add(rowConst);         
+	   for (int i = 0; i <= height; i++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setPercentHeight(100.0 / height);
+	        rc.setMaxHeight(32);
+	        rc.setPrefHeight(32);
+	        rc.setFillHeight(true);
+            imageMap.getRowConstraints().add(rc);         
        }
 	}
 
