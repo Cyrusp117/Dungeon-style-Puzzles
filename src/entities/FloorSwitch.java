@@ -41,6 +41,7 @@ public class FloorSwitch extends Entity {
 		return "FloorSwitch";
 	}
 	
+	@Override
 	public boolean canBePlacedOnTop(Entity entity) {
 		if (entity instanceof Boulder) { return true; }
 		return false;

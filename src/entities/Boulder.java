@@ -1,7 +1,5 @@
 package entities;
 
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
 import ui.Game;
@@ -15,14 +13,14 @@ public class Boulder extends Entity {
 	
 	public Coordinate interactWithPlayer(Player player) {
 
-		int dx = player.getDx();
-		int dy = player.getDy();
-		int curX = position.getX();
-		int curY = position.getY();
-	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
+//		int dx = player.getDx();
+//		int dy = player.getDy();
+//		int curX = position.getX();
+//		int curY = position.getY();
+//	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
 	    this.setOldPosition(this.position);
-	    this.setPosition(newPos);
-	    return position;
+//	    this.setPosition(newPos);
+	    return player.getMove();
 	}
 	
 	public boolean interactWithBomb() {
@@ -64,8 +62,13 @@ public class Boulder extends Entity {
 	}
 	
 	public boolean isValidInteraction(Entity entity) {
+		System.out.println(entity);
 		if (entity instanceof Pit) {
-				return true;
+			return true;
+		} else if (entity instanceof Player) {
+			return true;
+		} else if (entity == null) {
+			return true;
 		}
 		return super.isValidInteraction(entity);
 	}
@@ -73,6 +76,8 @@ public class Boulder extends Entity {
 	public Coordinate interact(Entity entity) {
 		if(entity instanceof Pit){
 			return null;
+		} else if (entity instanceof FloorSwitch) {
+			return entity.getPosition();
 		}
 		return position;
 	}

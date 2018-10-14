@@ -8,7 +8,6 @@ import javafx.scene.input.KeyCode;
 
 public class Player extends Entity {
 	
-	private Coordinate oldPos; 
 	private static final int ALIVE = 1;
 	private static final int DEAD = 0;
 	private int dx; // Current x velocity
@@ -85,20 +84,8 @@ public class Player extends Entity {
 	}
 	
 
-	/**
-	 * 
-	 * @param sets oldPos to position
-	 */
-	public void setOldPosition(Coordinate position) {
-		this.oldPos = position;
-	}
-	/**
-	 * 
-	 * @return previous position of Entity
-	 */
-	public Coordinate getOldPosition () {
-		return oldPos;
-	}
+
+
 	/**
 	 * 
 	 * @return Returns an arrayList representing the entities the player currently has

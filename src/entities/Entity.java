@@ -114,4 +114,11 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		return position;
 	}
 	
+	/**
+	 * 
+	 * @param sets oldPos to position
+	 */
+	public void setOldPosition(Coordinate position) {
+		this.oldPos = position;
+	}
 }
