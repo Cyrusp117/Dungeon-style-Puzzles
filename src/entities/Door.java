@@ -33,12 +33,12 @@ public class Door extends Entity {
 					this.setState(OPEN);
 					return null;
 				}else {
-					player.setPosition(player.getOldPosition());
+					//player.setPosition(player.getOldPosition());
 					System.out.println("You don't have the right key");
 					System.out.println("DoorID: " + DoorId);
 				}
 			}else {
-				player.setPosition(player.getOldPosition());
+				//player.setPosition(player.getOldPosition());
 				System.out.println("You don't have key");
 			}
 		}else {

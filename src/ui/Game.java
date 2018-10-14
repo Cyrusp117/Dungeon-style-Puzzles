@@ -153,10 +153,12 @@ public class Game{
 				} else {
 					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
 					if (atNewEntityPos == interactable) {
-						// do nothing, entity hasnt moved
+						// entity hasnt moved after interaction
 						if (interactable instanceof Enemy){
-							// if we've interacted with the enemy but enemy is still in same position (not dead)
+							// if we've interacted with the enemy 
+							// but enemy is still in same position (not dead)
 							// therefore, we are dead
+						} else if (interactable instanceof Pit) {
 						} else {
 							moveEntity(player, player.getOldPosition());
 						}
@@ -171,6 +173,7 @@ public class Game{
 						// boulder has moved onto floorswitch
 						moveEntity(interactable, newInteractablePos);
 					} else {
+						//System.out.println("Entity is" + interactable.getDesignerDescription());
 						moveEntity(interactable, interactable.getOldPosition());
 						moveEntity(player, player.getOldPosition());
 					}

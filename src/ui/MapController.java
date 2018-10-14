@@ -140,6 +140,9 @@ public class MapController extends Controller {
 	
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
+    	Player player = game.getPlayer();
+    	player.setDx(0);
+    	player.setDy(0);
 		if (key.equals(KeyCode.W)) {
 			moveUp();
 		} else if (key.equals(KeyCode.S)) {
@@ -158,7 +161,8 @@ public class MapController extends Controller {
 	    	System.out.println("\n");
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Arrow arrow = null;
-	    	Player player = game.getPlayer();
+
+
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
 	    			arrow = (Arrow)curItem;
@@ -178,7 +182,6 @@ public class MapController extends Controller {
 	    	}
 		} else if (key.equals(KeyCode.V)) {
 	    	System.out.println("Checking for bomb");
-	    	Player player = game.getPlayer();
 	    	if(player.hasItem("Bomb")) {
 	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();
