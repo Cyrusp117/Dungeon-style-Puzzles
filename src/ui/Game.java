@@ -2,57 +2,34 @@ package ui;
 import entities.*;
 import java.util.ArrayList;
 
-
-import entities.Treasure;
-import entities.Boulder;
-import entities.Coordinate;
-import entities.Entity;
-import entities.Pit;
-import entities.Player;
-import entities.Wall;
-
 public class Game{ 								
 	private static final Entity NULL = null;
-// implements Runnable{
 	private int width, height;					//Width and height of the app window
-	private Player playerOne;					//Tracking the player entity
-	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
+	private Player player;					//Tracking the player entity
+//	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
+	private ArrayList<ArrayList<Coordinate>> map;
 	// Need to implement generic iterator
-	public Game(String title, int width, int height) {
+	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.entities = new ArrayList<>();
+		this.map = new ArrayList<ArrayList<Coordinate>>();
+		generateMap();
 	}
 	
-	public void newTurn() {							 //Called to run the next turn. Currently just update, will later contain render
-		// Checks for arrow collisions
-		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
-		for (Entity entity : entities) {
-			if (entity instanceof Arrow) {
-				Arrow arrow = (Arrow)entity;
-				int newX = arrow.returnX() + arrow.getDx();
-				int newY = arrow.returnY() + arrow.getDy();
-				Coordinate newPos = new Coordinate(newX, newY);
-				arrow.setPosition(newPos);
-				Entity onArrow = getEntityExcept(newPos, arrow);
-				if (onArrow instanceof Enemy){
-					toBeDeleted.add(onArrow);
-				}
-			}
-		}
-		for (Entity entity : toBeDeleted) {
-			entities.remove(entity);
-		}
-		update();
-	}
-	
-	private void update() {						//Updates the state of the game
 
+
+	
+	public void update() {						//Updates the state of the game
+		// Arrow collisions, bomb explosions, player inventory update
+		itemInteractions();
+		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
-		ArrayList<Entity> toBeRemoved = new ArrayList<>();
-
+		// Checks current state of the game after any interactions
+	
+		
 		int allTreasure = 1;
 		int allSwitch = 1;
 		int allEnemy = 1;
@@ -66,14 +43,15 @@ public class Game{
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
             
-				Entity enemy = (Enemy) entity;
-				if (playerOne.hasItem("InvincibilityPotion")) {
-					position = enemy.invincibilityMove(playerOne.getPosition(), generateGraph() );
+				Enemy enemy = (Enemy) entity;
+				if (player.hasItem("InvincibilityPotion")) {
+					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
 				} else {
-				    position = enemy.move(playerOne.getPosition(), generateGraph() );
+					System.out.println("hi\n\n\n");
+				    position = enemy.move(player.getPosition(), generateGraph() );
 				}
-				if ( getEntity(position) == null && !(playerOne.getPosition().equals(position)) ) {
-					enemy.setPosition(position);
+				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
+					moveEntity(enemy, position);
 				} 
 
 				allEnemy = 0;
@@ -100,63 +78,21 @@ public class Game{
 			
 			// Checks general win condition
 			if (entity instanceof Exit){
-				if(entity.getPosition().equals(playerOne.getPosition())) {
-					if (playerOne.isAlive()) {
+				if(entity.getPosition().equals(player.getPosition())) {
+					if (player.isAlive()) {
 						win = true;
 					}
 				}
 			}
 			
-			if (entity instanceof Bomb) {
-				Bomb bomb = (Bomb)entity;
-				if(bomb.isLit()) {
-					bomb.tickTock();
-				}
-				if (bomb.getTurnsLeft() == 0) { 
-					for (Coordinate affectedArea : bomb.affectedAreas()) {
-						if(bomb.affectedAreas().contains(playerOne.getPosition())) {		// can be refactored later by having player be part of entities
-							playerOne.setState(0);
-						}
-						Entity affectedEntity = getEntity(affectedArea);
-						if (affectedEntity != NULL) {
-							if(affectedEntity.interactWithBomb()) {
-								toBeRemoved.add(affectedEntity); // to workaround ConcurrentModificationException
-							}
-						}
-					}
-					toBeRemoved.add(entity);
-				}
-			}	
-		}
-//		if (toBeRemoved.contains(playerOne)) {
-//			playerOne.setState(0);   // if bomb explosion is on player
-//		}
-		entities.removeAll(toBeRemoved);
 
-		toBeRemoved = new ArrayList<>();
-		for (Entity entity: playerOne.getInventory()) {
-			if (entity instanceof InvincibilityPotion){
-				if(playerOne.hasItem(entity)) {
-					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
-					invincibilityPotion.reduceDurability();
-					if(invincibilityPotion.getDurability() == 0) {
-						toBeRemoved.add(invincibilityPotion);
-					}
-				}
-			}
 		}
-		playerOne.getInventory().removeAll(toBeRemoved);
 
-		
-		if(win && playerOne.isAlive()) {
+		if(win && player.isAlive()) {
 			System.out.println("You have won");
 		}
-
-		if (!playerOne.isAlive()) {
+		if (!player.isAlive()) {
 			System.out.println("Player is currently dead");
-		}
-		if(win && playerOne.isAlive()) {
-			System.out.println("You have won");
 		}
 		if(allTreasure == 1) {
 			System.out.println("All treasure has been collected");
@@ -167,168 +103,257 @@ public class Game{
 		if(allEnemy == 1) {
 			System.out.println("All enemies dead");
 		}
-
 		System.out.println("");
-		printGame();
 
 	}
 	
-
-	public void printGame() {
-        int i = 0;
-        int j = 0;
-		while (i <= this.getHeight()/32) {
-        	while (j <= this.getWidth()/32) {
-        		Coordinate curPos = new Coordinate(j*32, i*32);
-        		Entity entity = getEntity(curPos);
-        		if (curPos.equals(playerOne.getPosition())) {
-        			System.out.print("1");
-        		} else if(entity != null) {
-        			System.out.print((char)entity.getKeyCode());
-        		} else {
-        			System.out.print("-");
-        		}
-        		System.out.print(" ");
-        		j++;
-        	}
-        	System.out.println("");
-        	j = 0;
-        	i++;
-        }
+	public void moveEntity(Entity entity, Coordinate newPos) {
+		entity.setOldPosition(entity.getPosition());
+		Coordinate newMapTile = getMapCo(newPos);
+		Coordinate oldMapTile = getMapCo(entity);
+		oldMapTile.removeEntity(entity);
+		entity.setPosition(newMapTile);
+		newMapTile.addEntity(entity);
 	}
+	
+
+
+	
+
 	
 	/**
 	 * Moves the player
 	 */
 	public void movePlayer() {
-
-//		Coordinate curPos = playerOne.getPosition();
-//		int xPlayer = curPos.getxPosition();
-//		int yPlayer = curPos.getyPosition();
-//		int xMovement = playerInput.getDx();
-//		int yMovement = playerInput.getDy();
-//		Coordinate newPos = new Coordinate(xPlayer+xMovement, yPlayer+yMovement);
-		// OR
-		playerInput.getDx();
-		playerOne.setDx(playerInput.getDx());
-		playerOne.setDy(playerInput.getDy());
-
-		//just making null variables for now
-		Graph g = null;
-		Coordinate newPos = playerOne.move();
-
-		if(!isOutOfBounds(newPos)) {
-
-			//System.out.println("Moving player to position: X: " + newPos.getxPosition() + " Y: " + newPos.getyPosition());
-			playerOne.setOldPosition(playerOne.getPosition());
-			playerOne.setPosition(newPos);
-			Entity entity = getEntityExcept(newPos, new FloorSwitch(new Coordinate(1*32,2*32)));
-			//System.out.println(entity);
-			Entity boulderEntity = getEntity(playerOne.move());
-
-
-			if (entity!=NULL) {
-				System.out.println("CurPos has a: " + entity.getName());
-				if(entity.interactWithPlayer(playerOne)) {
-					// The above returns true if the entity is to be deleted afterwards
-					this.deleteEntity(entity);
-				}
-				
-				// BOULDER HARDCODE STUFF;
-				// This checks whether the entity has moved due to the interaction with Player, therefore has to be a boulder
-				if(isOutOfBounds(entity.getPosition())) {		
-					Boulder boulder = (Boulder) entity;
-					boulder.revert(playerOne);
-					System.out.println("Boulder cannot be moved here");
-				} else if (boulderEntity != NULL && (entity instanceof Boulder)) {
-					if (boulderEntity instanceof Pit) {
-						entities.remove(entity);
-						System.out.println("Boulder is Dead :)");
-					} else if (!(boulderEntity instanceof FloorSwitch)) {
-						// entity is boulder, boulderEntity is not Pit or FloorSwitch
-						// Revert
-						Boulder boulder = (Boulder) entity;
-						boulder.revert(playerOne);
-						System.out.println("Boulder cannot be moved here");
-					}
-				}
-				// BOULDER STUFF END
-				
-				
+		Coordinate newPlayerPos = player.getMove();
+		if(isOutOfBounds(newPlayerPos)) {
+			return;
+		}
+		ArrayList<Entity> entities = getEntities(newPlayerPos);
+		Entity interactable = null;
+		for (Entity curEntity : entities) {
+			// maybe add an canInteractWithPlayer?
+			if (curEntity instanceof FloorSwitch) {
+				continue;
+			} else {
+				interactable = curEntity;
 			}
+		}
+		moveEntity(player, newPlayerPos);
+		
+		if (interactable!=NULL) {
+			System.out.println("CurPos has a: " + interactable.getName());
+			Coordinate newInteractablePos = interactable.interactWithPlayer(player);
+			if(newInteractablePos == null) {
+				// The above returns null if the entity is to be deleted afterwards
+				deleteEntity(interactable);
+			} else {
+				if (isOutOfBounds(newInteractablePos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
+					moveEntity(player, player.getOldPosition());
+				} else {
+					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
+					if (atNewEntityPos == interactable) {
+						// entity hasnt moved after interaction
+						if (interactable instanceof Enemy){
+							// if we've interacted with the enemy 
+							// but enemy is still in same position (not dead)
+							// therefore, we are dead
+						} else if (interactable instanceof Pit) {
+						} else {
+							moveEntity(player, player.getOldPosition());
+						}
+					// BOULDER STUFF
+					} else if (atNewEntityPos == NULL) {
+						// boulder has moved to empty spot
+						moveEntity(interactable, newInteractablePos);
+					} else if (atNewEntityPos instanceof Pit) {
+						// boulder has moved onto pit
+						deleteEntity(interactable);
+					} else if (atNewEntityPos instanceof FloorSwitch) {
+						// boulder has moved onto floorswitch
+						moveEntity(interactable, newInteractablePos);
+					} else {
+						//System.out.println("Entity is" + interactable.getDesignerDescription());
+						moveEntity(interactable, interactable.getOldPosition());
+						moveEntity(player, player.getOldPosition());
+					}
+					// END BOULDER STUFF
+				}
+			}
+			
 		}
 		printPlayerCoordinates();
 	}
 	
-	public Entity getEntity(Coordinate newPos) {
+
+	/**
+	 *  Updates interactions with items (player inv + in dungeon)
+	 */
+	public void itemInteractions() {
+		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
 		for (Entity entity : entities) {
-			if(entity.getPosition().equals(newPos)) {
-				return entity;
+			if (entity instanceof Arrow) {
+				Arrow arrow = (Arrow)entity;
+				Coordinate newPos = arrow.move();
+				if (isOutOfBounds(newPos)) {
+					toBeDeleted.add(arrow);
+					break;
+				}
+				if (getFirstEntity(newPos) instanceof Enemy){
+					toBeDeleted.add(getFirstEntity(newPos));
+				}
+				moveEntity(arrow, newPos);
+			}
+			if (entity instanceof Bomb) {
+				Bomb bomb = (Bomb)entity;
+				if(bomb.isLit()) {
+					bomb.tickTock();
+				}
+				if (bomb.getTurnsLeft() == 0) { 
+					for (Coordinate affectedArea : bomb.affectedAreas()) {
+						if(bomb.affectedAreas().contains(player.getPosition())) {		// can be refactored later by having player be part of entities
+							player.setState(0);
+						}
+						Entity affectedEntity = getFirstEntity(affectedArea);
+						if (affectedEntity != NULL) {
+							if(affectedEntity.interactWithBomb()) {
+								toBeDeleted.add(affectedEntity); // to workaround ConcurrentModificationException
+							}
+						}
+					}
+					toBeDeleted.add(entity);
+				}
+			}	
+		}
+		
+		for (Entity entity : toBeDeleted) {
+			deleteEntity(entity);
+		}
+		
+		
+		toBeDeleted = new ArrayList<>();
+		for (Entity entity: player.getInventory()) {
+			if (entity instanceof InvincibilityPotion){
+				if(player.hasItem(entity)) {
+					InvincibilityPotion invincibilityPotion = (InvincibilityPotion) entity;
+					invincibilityPotion.reduceDurability();
+					if(invincibilityPotion.getDurability() == 0) {
+						toBeDeleted.add(invincibilityPotion);
+					}
+				}
 			}
 		}
-		return null;
+		// Refactor into deleteFromInventory(toBeRemoved)
+		player.getInventory().removeAll(toBeDeleted);
+
 	}
 	
-//	public Entity getEntitynofs(Coordinate newPos) {
-//		for (Entity entity : entities) {
-//			if(entity instanceof FloorSwitch) continue;
-//			if(entity.getPosition().equals(newPos)) {
-//				return entity;
-//			}
-//		}
-//		return NULL;
-//	}
+	//Done
+	public void generateMap() {
+		for( int i = 0; i <= width; i++ ) {
+			ArrayList<Coordinate> coords = new ArrayList<>();
+			for ( int j = 0; j <= height; j++ ) {
+				Coordinate newPos = new Coordinate(i,j);
+				coords.add(newPos);
+			}
+			map.add(coords);
+		}
+	}
 	
-	public Entity getEntityExcept(Coordinate newPos, Entity e) {
-		for (Entity entity : entities) {
-			if(e.getName().equals(entity.getName())) continue;
-			if(entity.getPosition().equals(newPos)) {
-				return entity;
+	public boolean addEntity(Entity entity) {
+		Coordinate position = entity.getPosition();
+		ArrayList<Entity> curEntities = getEntities(position);
+		if(curEntities.size() >= 2) {
+			return false;
+		} 
+		
+		if (curEntities.size() == 1) {
+			Entity curEntity = curEntities.get(0);
+			// can add boulder/floor switch on top of one another
+			// Arrow can be added on top of Player
+			if (!curEntity.canBePlacedOnTop(entity)) {
+				return false;
 			}
 		}
-		return NULL;
+
+		if(isOutOfBounds(position)) return false;
+		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getX() + ", " + position.getY());
+		getMapCo(entity).addEntity(entity);
+		entity.setPosition(getMapCo(entity));
+		entities.add(entity);
+		if (entity instanceof Player) {
+			player = (Player)entity;
+		}
+		return true;
+	}
+
+	public Entity getFirstEntity(Coordinate newPos) {
+		if (getEntities(newPos).size() > 0) {
+			return getEntities(newPos).get(0);
+		} else {
+			return null;
+		}
+
+	}
+	
+	public ArrayList<Entity> getEntities(Coordinate newPos) {
+		return getMapCo(newPos).getEntities();
+	}
+
+
+	public Entity getEntityExcept(Coordinate newPos, Entity e) {
+		ArrayList<Entity> curEntities = getMapCo(newPos).getEntities();
+		for (Entity entity : curEntities) {
+			if(!entity.equals(e)) {
+				return entity; // Just returning top of the entity list	
+			}
+			
+		}
+		return null;
 	}
 
 	/**
 	 * Initialises the game board
 	 */
-	public void init() {
-		Coordinate position = new Coordinate(32,32); // For test, this would be specified by user
-		createPlayer(position);						 //Create the player at the given Coordinate
-		generatePerimeter();						 //Create a series of walls around the perimeter
-		printGame();
-
-	}
+//	public void init() {
+//		Coordinate position = new Coordinate(1,1);   // For test, this would be specified by user
+//		createPlayer(position);						 //Create the player at the given Coordinate
+//		generatePerimeter();						 //Create a series of walls around the perimeter
+////		printGame();
+//	}
 	
-
 
 	/**
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
-		System.out.println(playerOne.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
+		System.out.println(player.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	
-	/**
-	 * 
-	 * @param position, the Coordinate to which the player should be placed
-	 */
-	public void createPlayer(Coordinate position) {
-		if(isOccupied(position)) return;
-		playerOne = new Player(position);
-	}
+	//done
+//	/**
+//	 * 
+//	 * @param position, the Coordinate to which the player should be placed
+//	 */
+//	public void createPlayer(Coordinate position) {
+//		if(isOccupied(position)) return;
+//		player = new Player(position);
+//		getMapCo(position).addEntity(player);
+//		entities.add(player);
+//	}
 
+	//done
 	/**
 	 * Create a perimeter of wall around the board
 	 */
 	public void generatePerimeter() {
 		int i,j;
 		//System.out.print(width + " " + height);
-		for(i = 0; i <= width; i += 32) {
-			for(j = 0; j <= height; j+= 32) {
+		for(i = 0; i <= width; i ++) {
+			for(j = 0; j <= height; j++) {
 				if(j == 0 || j == height || i == 0 || i == width) {
 					Coordinate currentPosition = new Coordinate(i,j);
-					entities.add(new Wall(currentPosition));
+					getMapCo(currentPosition).addEntity(new Wall(currentPosition));
 				}
 			}
 		}
@@ -338,46 +363,37 @@ public class Game{
 	 * @param position
 	 */
 	public boolean isOccupied(Coordinate position) {
-		if(!entities.isEmpty()) {
-			for(Entity entity: entities) {
-				if(entity.willCollide(position)) {
-					//System.out.println("Cannot be placed here");
-					return true;
-				}
+		for(Entity entity: entities) {
+			if(entity.willCollide(position)) {
+				//System.out.println("Cannot be placed here");
+				return true;
 			}
 		}
-//		
-//		if(!walls.isEmpty()) {
-//			for(Wall wall: walls) {
-//				if(wall.willCollide(position)) {
-//					System.out.println("Cannot be placed here");
-//					return true;
-//				}
-//			}
-//		}
+
 		return false;
 	}
 	
-	public boolean addEntity(Entity entity) {
-		Coordinate position = entity.getPosition();
-		if(isOccupied(position)) return false;
-		if(isOutOfBounds(position)) return false;
-		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getxPosition() + ", " + position.getyPosition());
-		entities.add(entity);
-		return true;
-	}
+	//done
+
 	
-	
+//	public void forceAddEntity(Entity entity) {
+//		Coordinate position = entity.getPosition();
+//		if (!isOccupied(position))
+//	}
+	//done
 	/**
 	 * 
 	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
 	 */
 	private void deleteEntity(Entity entity) {
+		getMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
-		if(entity.equals(playerOne)) {
-			playerOne = null;
+		if(entity.equals(player)) {
+			player = null;
 		}
 	}
+	
+	
 	/**
 	 * 
 	 * @param xBoundary the largest size of the wall on the x axis
@@ -390,32 +406,24 @@ public class Game{
 		int xBoundary = this.width;
 		int yBoundary = this.height;
 		//System.out.println("Xboundary: " + xBoundary +" Yboundary: " + yBoundary);
-		if(newPos.getxPosition() <= 0 || newPos.getxPosition() >= xBoundary ) {
+		if(newPos.getX() <= 0 || newPos.getX() >= xBoundary ) {
 			System.out.println("Out of bounds");
 			return true;
-		}else if( newPos.getyPosition() <= 0 || newPos.getyPosition() >= yBoundary) {
+		}else if( newPos.getY() <= 0 || newPos.getY() >= yBoundary) {
 			System.out.println("Out of bounds");
 			return true;
 		}
 		return false;
 	}
 
-	/**
-	 * 
-	 * @param position the Coordinate the entity is trying to occupy
-	 * @return true if the Coordinate has a Solid object, false otherwise
-	 */
-//	private boolean isSolid(Coordinate position) {
-//		if(walls.isEmpty()) return false;
-//		for (Wall wall: walls){
-//			if(wall.willCollide(position)) {
-//				System.out.println("Colliding with Wall");
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-	
+
+
+	public Coordinate getMapCo(Coordinate position) {
+		return map.get(position.getX()).get(position.getY());
+	}
+	public Coordinate getMapCo(Entity entity) {
+		return map.get(entity.getX()).get(entity.getY());
+	}
 	
 	public int getHeight() {
 		return this.height;
@@ -426,62 +434,58 @@ public class Game{
 	}
 	
 	public ArrayList<Entity> getPlayerInventory() {
-		return playerOne.getInventory();
+		return player.getInventory();
 	}
 	
 	/**
 	 * @return the playerOne
 	 */
-	public Player getPlayerOne() {
-		return playerOne;
+	public Player getPlayer() {
+		return player;
 	}
 
 
 	/**
 	 * @param playerOne the playerOne to set
 	 */
-	public void setPlayerOne(Player playerOne) {
-		this.playerOne = playerOne;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
-	
-	public void changeState(InputManagerPlayer playerInput) {
-		
-		// There are two game states: Player and Designer
-		// Each state only supports a certain subset of Key Inputs 
-		// Player and Designer both extend from Playable so they can both move
-	
-		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
-		//this.playerInput = playerInput;
-		//this.frame = playerInput.getFrame();
-		this.playerInput = playerInput;
-		playerInput.getFrame().addKeyListener(playerInput);
-	}
-
-	/**
-	 * @param playerInput the playerInput to set
-	 */
-	public void setPlayerInput(InputManagerPlayer playerInput) {
-		this.playerInput = playerInput;
-	}
+//	
+//	public void changeState(InputManagerPlayer playerInput) {
+//		
+//		// There are two game states: Player and Designer
+//		// Each state only supports a certain subset of Key Inputs 
+//		// Player and Designer both extend from Playable so they can both move
+//	
+//		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
+//		//this.playerInput = playerInput;
+//		//this.frame = playerInput.getFrame();
+//		this.playerInput = playerInput;
+//		playerInput.getFrame().addKeyListener(playerInput);
+//	}
+//
+//	/**
+//	 * @param playerInput the playerInput to set
+//	 */
+//	public void setPlayerInput(InputManagerPlayer playerInput) {
+//		this.playerInput = playerInput;
+//	}
 
 	public Graph generateGraph() {
 		int i,j;
 		Coordinate cur;
 		Graph g = new Graph(height,width);
-		for(i = 0; i <= width; i += 32) {
-			for(j = 0; j <= height; j+= 32) {
+		for(i = 1; i < width; i ++) {
+			for(j = 1; j < height; j++) {
 				cur = new Coordinate(i,j);
-				if(! isOccupied(cur)) {
+				if(! isOccupied(cur) || getFirstEntity(cur) instanceof Player) {
 					g.addCoordinate(cur);	
 				}
 			}
 		}
 		
 		return g;
-	}
-	
-	public ArrayList<Entity> testEntities() {
-		return this.entities;
 	}
 	
 	public ArrayList<Entity> getEntities() {
@@ -492,5 +496,73 @@ public class Game{
 	public boolean victory() {
 		return win;
 	}
+	
+	public ArrayList<Entity> getAllEntities() {
+		ArrayList<Entity> allDesignerObjects = new ArrayList<Entity>();
+		Coordinate defaultPos = new Coordinate(1, 1);
+		allDesignerObjects.add(new Key());
+		allDesignerObjects.add(new Hunter(defaultPos));
+		allDesignerObjects.add(new Arrow(defaultPos));
+		allDesignerObjects.add(new HoverPotion(defaultPos));
+		allDesignerObjects.add(new Treasure(defaultPos));
+		allDesignerObjects.add(new Sword(defaultPos));
+		allDesignerObjects.add(new Boulder(defaultPos));
+		allDesignerObjects.add(new Pit(defaultPos));
+		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
+		allDesignerObjects.add(new Wall(defaultPos));
+		allDesignerObjects.add(new FloorSwitch(defaultPos));
+		allDesignerObjects.add(new Exit(defaultPos));
+		allDesignerObjects.add(new Door());
+		allDesignerObjects.add(new Hound(defaultPos, new Hunter(defaultPos)));
+		allDesignerObjects.add(new Player(defaultPos));
+		return allDesignerObjects;
+	}
 
+	
+//	@Override
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//        int i = 0;
+//        int j = 0;
+//		while (i <= this.getHeight()) {
+//        	while (j <= this.getWidth()) {
+//        		Coordinate curPos = new Coordinate(j, i);
+//        		Entity entity = getEntity(curPos);
+//        		if(entity != null) {
+//        			sb.append(entity.getKeyCode().getName());
+//        		} else {
+//        			sb.append("-");
+//        		}
+//        		sb.append(" ");
+//        		j++;
+//        	}
+//        	sb.append("\n");
+//        	j = 0;
+//        	i++;
+//        }
+//		return sb.toString();
+//	}
+	
+//	public void printGame() {
+//  int i = 0;
+//  int j = 0;
+//	while (i <= this.getHeight()) {
+//  	while (j <= this.getWidth()) {
+//  		Coordinate curPos = new Coordinate(j, i);
+//  		Entity entity = getEntity(curPos);
+//  		if (curPos.equals(player.getPosition())) {
+//  			System.out.print("1");
+//  		} else if(entity != null) {
+//  			System.out.print(entity.getKeyCode().getName());
+//  		} else {
+//  			System.out.print("-");
+//  		}
+//  		System.out.print(" ");
+//  		j++;
+//  	}
+//  	System.out.println("");
+//  	j = 0;
+//  	i++;
+//  }
+//}
 }

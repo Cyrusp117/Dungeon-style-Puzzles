@@ -2,32 +2,34 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Key extends Entity {
 	private static int numOfKeys = 0;
 	private int keyId;
 	
 	public Key() {
-		this.keyCode = KeyEvent.VK_K;
+		this.keyCode = KeyCode.K;
 	}
 
 	public Key(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_K;
+		this.keyCode = KeyCode.K;
 		System.out.println(numOfKeys);
 		keyId = numOfKeys;
 		numOfKeys++;
 	}
 	
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		System.out.println("keyID is: "+ this.getKeyId());
 		if (!player.hasItem("Key")) {
 			player.pickUp(this);
-			return true;
+			return null;
 		} else {
 			System.out.println("Already have key");
 			player.setPosition(player.getOldPosition());
-			return false;
+			return position;
 		}
 
 	}

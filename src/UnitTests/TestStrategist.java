@@ -11,16 +11,16 @@ public class TestStrategist extends testSetup {
 
 	@Test
 	public void placeStrat() {
-		Coordinate stratPos = new Coordinate(3*32, 1*32);
+		Coordinate stratPos = new Coordinate(3, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
 		game.printGame();
-		assert(game.getEntity(stratPos) instanceof Strategist);
+		assert(game.getFirstEntity(stratPos) instanceof Strategist);
 	}
 
 	@Test
 	public void TestOneAway() {
-		Coordinate stratPos = new Coordinate(3*32, 1*32);
+		Coordinate stratPos = new Coordinate(3, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
 		game.printGame();
@@ -32,15 +32,15 @@ public class TestStrategist extends testSetup {
 	
 	@Test
 	public void TestVerticalChase() {
-		Coordinate stratPos = new Coordinate(2*32, 1*32);
+		Coordinate stratPos = new Coordinate(2, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
 		game.printGame();
 		move(DOWN, 1);
-		Coordinate expectedPos = new Coordinate(1*32, 1*32);
+		Coordinate expectedPos = new Coordinate(1, 1);
 		assert(strat.getPosition().equals(expectedPos));
 		move(DOWN, 6);
-		expectedPos = new Coordinate(1*32, 7*32);
+		expectedPos = new Coordinate(1, 7);
 		assert(strat.getPosition().equals(expectedPos));
 	}
 	
@@ -48,11 +48,11 @@ public class TestStrategist extends testSetup {
 	public void TestObstacleRecognition() {
 		Door.resetNumOfDoors();
 		Key.resetNumOfKeys();
-		Coordinate stratPos = new Coordinate(8*32, 4*32);
+		Coordinate stratPos = new Coordinate(8, 4);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
 
-		Coordinate position = new Coordinate(4*32, 1*32);
+		Coordinate position = new Coordinate(4, 1);
 		game.addEntity(new Boulder(position));
 		game.addEntity(new Pit(position.moveDown()));
 		position = position.moveDown();
@@ -73,9 +73,7 @@ public class TestStrategist extends testSetup {
 		Door door = new Door(position.moveDown());
 		game.addEntity(door);
 		position = position.moveLeft().moveDown();
-		game.addEntity(new Key(position));
-
-		
+		game.addEntity(new Key(position));		
 		game.printGame();
 		move(DOWN, 8);
 		assert(strat.getPosition().equals(stratPos));
@@ -85,10 +83,10 @@ public class TestStrategist extends testSetup {
 	
 	@Test
 	public void TestInvincibility() {
-		Coordinate stratPos = new Coordinate(5*32, 1*32);
+		Coordinate stratPos = new Coordinate(5, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
-		Coordinate ipPos = new Coordinate(3*32, 1*32);
+		Coordinate ipPos = new Coordinate(3, 1);
 		InvincibilityPotion ip = new InvincibilityPotion(ipPos);
 		game.addEntity(ip);
 		game.printGame();

@@ -4,6 +4,8 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCode;
+
 
 
 public class Bomb extends Entity {
@@ -18,19 +20,19 @@ public class Bomb extends Entity {
 	
 	public Bomb(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_U;
-		this.turnsLeft = 2;
+		this.keyCode = KeyCode.U;
+		this.turnsLeft = 3;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!active) {
 			player.pickUp(this);
-			return true;
+			return null;
 		}
 		//System.out.println("Num Of Bombs: "+ player.getNumOfBombs());
-		return false;
+		return position;
 	}
 	
 	public ArrayList<Coordinate> affectedAreas() {

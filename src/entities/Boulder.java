@@ -1,23 +1,26 @@
 package entities;
 
-import java.awt.event.KeyEvent;
+
+import javafx.scene.input.KeyCode;
+import ui.Game;
 
 public class Boulder extends Entity {
-	private Coordinate oldPos; 
+	private Coordinate oldPos;
 	public Boulder(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_B;
+		this.keyCode = KeyCode.B;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
-		int dx = player.getDx();
-		int dy = player.getDy();
-		int curX = position.getxPosition();
-		int curY = position.getyPosition();
-	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
+	public Coordinate interactWithPlayer(Player player) {
+
+//		int dx = player.getDx();
+//		int dy = player.getDy();
+//		int curX = position.getX();
+//		int curY = position.getY();
+//	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
 	    this.setOldPosition(this.position);
-	    this.setPosition(newPos);
-	    return false;
+//	    this.setPosition(newPos);
+	    return player.getMove();
 	}
 	
 	public boolean interactWithBomb() {
@@ -53,5 +56,30 @@ public class Boulder extends Entity {
 		return oldPos;
 	}
 
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof FloorSwitch) {	return true; }
+		return false;
+	}
+	
+	public boolean isValidInteraction(Entity entity) {
+		System.out.println(entity);
+		if (entity instanceof Pit) {
+			return true;
+		} else if (entity instanceof Player) {
+			return true;
+		} else if (entity == null) {
+			return true;
+		}
+		return super.isValidInteraction(entity);
+	}
+	
+	public Coordinate interact(Entity entity) {
+		if(entity instanceof Pit){
+			return null;
+		} else if (entity instanceof FloorSwitch) {
+			return entity.getPosition();
+		}
+		return position;
+	}
 	
 }

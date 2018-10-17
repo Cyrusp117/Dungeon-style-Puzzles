@@ -1,23 +1,27 @@
 package entities;
 
+import java.util.ArrayList;
 
 public class Coordinate {
 	private int xPosition;
 	private int yPosition;
-	public static final Coordinate UP = new Coordinate(0, -32);
-	public static final Coordinate LEFT = new Coordinate(-32, 0);
-	public static final Coordinate RIGHT = new Coordinate(32, 0);
-	public static final Coordinate DOWN = new Coordinate(0, 32);
+	private ArrayList<Entity> entities;
+	public static final Coordinate UP = new Coordinate(0, -1);
+	public static final Coordinate LEFT = new Coordinate(-1, 0);
+	public static final Coordinate RIGHT = new Coordinate(1, 0);
+	public static final Coordinate DOWN = new Coordinate(0, 1);
+	
 	
 	public Coordinate(int xPosition, int yPosition){
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
+		this.entities = new ArrayList<>();
 	}
 
 	/**
 	 * @return the xPosition
 	 */
-	public int getxPosition() {
+	public int getX() {
 		return xPosition;
 	}
 
@@ -31,7 +35,7 @@ public class Coordinate {
 	/**
 	 * @return the yPosition
 	 */
-	public int getyPosition() {
+	public int getY() {
 		return yPosition;
 	}
 
@@ -53,7 +57,7 @@ public class Coordinate {
 		if(!(obj instanceof Coordinate)) return false;
 		
 		Coordinate other = (Coordinate) obj;
-		if(xPosition == other.getxPosition() && yPosition == other.getyPosition()) {
+		if(xPosition == other.getX() && yPosition == other.getY()) {
 			return true;
 		}
 		return false;
@@ -65,12 +69,12 @@ public class Coordinate {
 	 * The X and the Y Coordinate respectively
 	 */
 	public String returnPosition() {
-		return "X Coordinate:" + getxPosition() + " Y Coordinate:" + getyPosition(); 
+		return "X Coordinate:" + getX() + " Y Coordinate:" + getY(); 
 	}
 	
 	public static Coordinate addCoordinates(Coordinate x, Coordinate y) {
-		int xSum = x.getxPosition() + y.getxPosition();
-		int ySum = y.getyPosition() + x.getyPosition();
+		int xSum = x.getX() + y.getX();
+		int ySum = y.getY() + x.getY();
 		return new Coordinate(xSum, ySum);
 	}
 	
@@ -90,6 +94,27 @@ public class Coordinate {
 		return addCoordinates(this, LEFT);
 	}
 	
+	public void addEntity(Entity entity) {
+		entities.add(entity);
+	}
+	
+	public void removeEntity(Entity entity) {
+		entities.remove(entity);
+	}
+
+	/**
+	 * @return the entities
+	 */
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	/**
+	 * @param entities the entities to set
+	 */
+	public void setEntities(ArrayList<Entity> entities) {
+		this.entities = entities;
+	}
 	
 	
 

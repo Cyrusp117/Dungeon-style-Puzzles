@@ -2,10 +2,12 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Treasure extends Entity {
 	public Treasure(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_T;
+		this.keyCode = KeyCode.T;
 		this.movable = false;
 	}
 	
@@ -13,9 +15,9 @@ public class Treasure extends Entity {
 		return position;
 	}
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

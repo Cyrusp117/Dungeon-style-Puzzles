@@ -17,12 +17,13 @@ import entities.HoverPotion;
 import entities.Key;
 import entities.Player;
 import entities.Sword;
-import ui.Application;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import ui.Game;
-import ui.InputManagerMenu;
-import ui.InputManagerPlayer;
+import ui.MainMenuController;
+import ui.Screen;
 
-public class PlayerTests {
+public class PlayerTests extends Application {
 
 	private Player player;
 	private int xBoundary;
@@ -35,19 +36,23 @@ public class PlayerTests {
 	public static void setUpBeforeClass() throws Exception {
 	}
 
+
+
+	
 	@Before
 	public void setUp() throws Exception {
-		Coordinate start = new Coordinate(32,32);
-		player = new Player(start);
-		xBoundary = 320;
-		yBoundary = 320;
-		Application app = new Application("Title", 32, 32);
-		game = new Game("Title", xBoundary, yBoundary);
-		KeyListener playerInput = new InputManagerPlayer(game, app);
-		app.getFrame().addKeyListener(playerInput);
-		game.init();
-		game.setPlayerInput((InputManagerPlayer)playerInput);
-		game.setPlayerOne(player);
+        
+//		Coordinate start = new Coordinate(1,1);
+//		player = new Player(start, game);
+//		xBoundary = 32;
+//		yBoundary = 32;
+//		Application app = new Application("Title", 32, 32);
+//		game = new Game("Title", xBoundary, yBoundary);
+//		KeyListener playerInput = new InputManagerPlayer(game, app);
+//		app.getFrame().addKeyListener(playerInput);
+//		game.init();
+//		game.setPlayerInput((InputManagerPlayer)playerInput);
+//		game.setPlayerOne(player);
 		this.robot = new Robot();
 	}
 
@@ -62,14 +67,14 @@ public class PlayerTests {
 		robot.delay(500);
 		//System.out.println("Button pressed");
 		//System.out.println(player.returnX()  + " " + player.returnY());
-		assertEquals(player.returnX(), 32);
-		assertEquals(player.returnY(), 64);
+		assertEquals(player.getX(), 1);
+		assertEquals(player.returnY(), 2);
 		//System.out.println(player.returnX()  + " " + player.returnY());
 	}
 
 	@Test
 	public void testPickUp() {
-		Coordinate itemPlace = new Coordinate(64,32);
+		Coordinate itemPlace = new Coordinate(2,1);
 		HoverPotion hPot = new HoverPotion(itemPlace);
 		game.addEntity(hPot);
 		player.pickUp(hPot);
@@ -78,7 +83,7 @@ public class PlayerTests {
 	
 	@Test
 	public void testHasItem() {
-		Coordinate itemPlace = new Coordinate(32,32);
+		Coordinate itemPlace = new Coordinate(1,1);
 		HoverPotion hPot = new HoverPotion(itemPlace);
 		assertFalse(player.hasItem(hPot));
 		player.getInventory().add(hPot);
@@ -95,7 +100,7 @@ public class PlayerTests {
 	
 	@Test
 	public void testHitUsingSword() {
-		Coordinate itemPlace = new Coordinate(32,32);
+		Coordinate itemPlace = new Coordinate(1,1);
 		Sword bigHugeBlade = new Sword(itemPlace);
 		player.getInventory().add(bigHugeBlade);
 		assertEquals(bigHugeBlade.getDurability(),5);
@@ -110,7 +115,7 @@ public class PlayerTests {
 	
 	@Test
 	public void testRemoveItem() {
-		Coordinate itemPlace = new Coordinate(32,32);
+		Coordinate itemPlace = new Coordinate(1,1);
 		Sword bigHugeBlade = new Sword(itemPlace);
 		player.getInventory().add(bigHugeBlade);
 		assertTrue(player.hasItem(bigHugeBlade));
@@ -121,7 +126,7 @@ public class PlayerTests {
 	@Test
 	public void testRemoveKey() {
 		Key.resetNumOfKeys();
-		Coordinate itemPlace = new Coordinate(32,32);
+		Coordinate itemPlace = new Coordinate(1,1);
 		Key bigKey = new Key(itemPlace);
 		player.getInventory().add(bigKey);
 		assertTrue(player.hasItem(bigKey));
@@ -132,7 +137,7 @@ public class PlayerTests {
 	
 	@Test
 	public void testSetBomb() {
-		Coordinate itemPlace = new Coordinate(32,32);
+		Coordinate itemPlace = new Coordinate(1,1);
 		Bomb bigBomb = new Bomb(itemPlace);
 		player.getInventory().add(bigBomb);
 		assertTrue(player.hasItem(bigBomb));

@@ -3,24 +3,27 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCode;
 
-public class Player extends Entity{
+
+public class Player extends Entity {
 	
-	private Coordinate oldPos; 
 	private static final int ALIVE = 1;
 	private static final int DEAD = 0;
 	private int dx; // Current x velocity
 	private int dy; // Current y velocity
 	private int state;
 	ArrayList<Entity> inventory;
+	//private Game game;
 	
 	public Player(Coordinate position){
 		super(position);
+		//this.game = game;
 		dx = 0;
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
-		keyCode = KeyEvent.VK_JAPANESE_HIRAGANA;
+		keyCode = KeyCode.DIGIT1;
 	}
 
 	/**
@@ -28,26 +31,26 @@ public class Player extends Entity{
 	 * @return the newPosition requested to be moved to by the player
 	 */
 
-	public Coordinate move(Coordinate co, Graph g) {
-		System.out.println("DX = " + dx + " DY = " + dy);
-		//System.out.println(position.getxPosition());
-	    int newX = position.getxPosition() + dx;
-	    int newY = position.getyPosition() + dy;
-	    Coordinate newPos = new Coordinate(newX, newY);
-	    return newPos;
-	    
-	}
+//	public Coordinate move(Coordinate co, Graph g) {
+//		System.out.println("DX = " + dx + " DY = " + dy);
+//		//System.out.println(position.getxPosition());
+//	    int newX = position.getxPosition() + dx;
+//	    int newY = position.getyPosition() + dy;
+//	    Coordinate newPos = new Coordinate(newX, newY);
+//	    return newPos;
+//	    
+//	}
 	
 	/**
 	 * 
 	 * @return the newPosition requested to be moved to by the player
 	 */
 
-	public Coordinate move() {
+	public Coordinate getMove() {
 		System.out.println("DX = " + dx + " DY = " + dy);
 		//System.out.println(position.getxPosition());
-	    int newX = position.getxPosition() + dx;
-	    int newY = position.getyPosition() + dy;
+	    int newX = position.getX() + dx;
+	    int newY = position.getY() + dy;
 	    Coordinate newPos = new Coordinate(newX, newY);
 	    return newPos;
 	 
@@ -81,20 +84,8 @@ public class Player extends Entity{
 	}
 	
 
-	/**
-	 * 
-	 * @param sets oldPos to position
-	 */
-	public void setOldPosition(Coordinate position) {
-		this.oldPos = position;
-	}
-	/**
-	 * 
-	 * @return previous position of Entity
-	 */
-	public Coordinate getOldPosition () {
-		return oldPos;
-	}
+
+
 	/**
 	 * 
 	 * @return Returns an arrayList representing the entities the player currently has
@@ -155,15 +146,15 @@ public class Player extends Entity{
 	/**
 	 * @return the X Coordinate of the player (int)
 	 */
-	public int returnX() {
-		return position.getxPosition();
+	public int getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * @return the Y Coordinate of the player (int)
 	 */
 	public int returnY() {
-		return position.getyPosition();
+		return position.getY();
 	}
 	
 	/**
@@ -307,6 +298,13 @@ public class Player extends Entity{
 	@Override
 	public boolean interactWithBomb() {
 		this.setState(0);
+		return false;
+	}
+	
+	@Override
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof Arrow) {	return true; }
+		if (entity instanceof Bomb) { return true; }
 		return false;
 	}
 	

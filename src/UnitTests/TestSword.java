@@ -14,13 +14,13 @@ import entities.Sword;
 
 public class TestSword extends testSetup {
 
-	Coordinate swordPos = new Coordinate(1*32, 2*32);
+	Coordinate swordPos = new Coordinate(1, 2);
 	@Test
 	public void placeSword() {
 		Sword sword = new Sword(swordPos);
 		game.addEntity(sword);
 		game.printGame();
-		assert(game.getEntity(swordPos) instanceof Sword);
+		assert(game.getFirstEntity(swordPos) instanceof Sword);
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public class TestSword extends testSetup {
 		ArrayList<Entity> entities = game.getEntities();
 		Sword sword = new Sword(swordPos);
 		game.addEntity(sword);
-		Coordinate enemyPos = new Coordinate(1*32, 3*32);
+		Coordinate enemyPos = new Coordinate(1, 3);
 		Hunter hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
 		// Testing if killing one hunter is successful nad reduces durability
@@ -51,16 +51,16 @@ public class TestSword extends testSetup {
 		// Successful
 		
 		// Testing if sowrd is broken when durability is 0
-		enemyPos = new Coordinate(1*32, 8*32);
+		enemyPos = new Coordinate(1, 8);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
-		enemyPos = new Coordinate(1*32, 4*32);
+		enemyPos = new Coordinate(1, 4);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
-		enemyPos = new Coordinate(1*32, 5*32);
+		enemyPos = new Coordinate(1, 5);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
-		enemyPos = new Coordinate(1*32, 6*32);
+		enemyPos = new Coordinate(1, 6);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
 
@@ -72,7 +72,7 @@ public class TestSword extends testSetup {
 		assert(!player.hasItem(sword));
 		
 		// Testing if Player dies with no sword (6th entity kills him)
-		enemyPos = new Coordinate(1*32, 7*32);
+		enemyPos = new Coordinate(1, 7);
 		hunter = new Hunter(enemyPos);
 		game.addEntity(hunter);
 		move(DOWN, 2);

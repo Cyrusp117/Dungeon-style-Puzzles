@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Door extends Entity {
 	private static int numOfDoors = 0;
 	private int DoorId;
@@ -10,40 +12,40 @@ public class Door extends Entity {
 	private int state;
 	
 	public Door() {
-		this.keyCode = KeyEvent.VK_D;
+		this.keyCode = KeyCode.D;
 	}
 	
 	public Door(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_D;
+		this.keyCode = KeyCode.D;
 		DoorId = numOfDoors;
 		numOfDoors++;
 		state = CLOSE;
 	}
 	
 	@Override
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(this.getState() == CLOSE) {
 			if(player.hasItem("Key")) {
 				if(player.hasKey(this.getDoorId())) {
 					System.out.println("You have the right key, open the door");
 					player.removeKey(this.getDoorId());
 					this.setState(OPEN);
-					return true;
+					return null;
 				}else {
-					player.setPosition(player.getOldPosition());
+					//player.setPosition(player.getOldPosition());
 					System.out.println("You don't have the right key");
 					System.out.println("DoorID: " + DoorId);
 				}
 			}else {
-				player.setPosition(player.getOldPosition());
+				//player.setPosition(player.getOldPosition());
 				System.out.println("You don't have key");
 			}
 		}else {
 			System.out.println("Go through the door");
 		}
 		
-		return false;
+		return position;
 	}
 	
 	

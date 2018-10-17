@@ -3,10 +3,12 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class HoverPotion extends Entity {
 	public HoverPotion(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_F;
+		this.keyCode = KeyCode.F;
 		this.movable = false;
 	}
 	
@@ -14,9 +16,9 @@ public class HoverPotion extends Entity {
 		return position;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

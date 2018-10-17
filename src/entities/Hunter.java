@@ -3,11 +3,13 @@
 package entities;
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Hunter extends Enemy {
 
 	public Hunter(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_H;
+		this.keyCode = KeyCode.H;
 		// TODO Auto-generated constructor stub
 	}
 

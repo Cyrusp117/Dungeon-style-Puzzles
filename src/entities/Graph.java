@@ -6,7 +6,7 @@ public class Graph {
 	private ArrayList<Coordinate> coordList;
 	private ArrayList<Edge> edgeList;
 	private int nV;
-	private int coordConst;
+	//private int coordConst;
 	private int height;
 	private int width;
 	
@@ -16,7 +16,7 @@ public class Graph {
 		this.coordList = new ArrayList<Coordinate>();
 		this.edgeList = new ArrayList<Edge>();
 		this.nV = 0;
-		this.coordConst = 32;
+		
 		this.height = height;
 		this.width = width;
 	}
@@ -44,10 +44,10 @@ public class Graph {
 	
 	public boolean isAdjacent(Coordinate a, Coordinate b) {
 		boolean check = false;
-		int ax = a.getxPosition()/coordConst;
-		int ay = a.getyPosition()/coordConst;
-		int bx = b.getxPosition()/coordConst;
-		int by = b.getyPosition()/coordConst;
+		int ax = a.getX();
+		int ay = a.getY();
+		int bx = b.getX();
+		int by = b.getY();
 		
 		if ((ax == bx) && (ay-1 == by || ay+1 == by)) {
 		    check = true;
@@ -124,10 +124,10 @@ public class Graph {
     public Coordinate moveAway(Coordinate player, Coordinate enemy) {
            	
         Coordinate point = enemy;
-        int ax = player.getxPosition()/coordConst;
-        int ay = player.getyPosition()/coordConst;
-        int bx = enemy.getxPosition()/coordConst;
-        int by = enemy.getyPosition()/coordConst;
+        int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
         
         int differenceX = ax - bx;
         int differenceY = ay -by;
@@ -138,8 +138,8 @@ public class Graph {
         	
         	for (Coordinate object: coordList) {
         		if (isAdjacent(enemy,object)) {
-        		    differenceX = object.getxPosition()/coordConst - ax;
-        		    differenceY = object.getyPosition()/coordConst - ay;
+        		    differenceX = object.getX() - ax;
+        		    differenceY = object.getY() - ay;
         		    totalDistance = Math.hypot(differenceX, differenceY);
         	
         	        if (totalDistance > curDistance) {
@@ -159,7 +159,7 @@ public class Graph {
         boolean check = false;  	
     
     	for (Coordinate object: coordList) {
-    	    if (x == object.getxPosition() && y == object.getyPosition()) {
+    	    if (x == object.getX() && y == object.getY()) {
     	    	check = true;
     	    	break;
     	    }
@@ -171,7 +171,7 @@ public class Graph {
     	Coordinate target = null;
     	
     	for (Coordinate object: coordList) {
-    	    if (x == object.getxPosition() && y == object.getyPosition()) {
+    	    if (x == object.getX() && y == object.getY()) {
     	    	target = object;
     	    	break;
     	    }
@@ -182,10 +182,10 @@ public class Graph {
     //not currently used
     public Coordinate between(Coordinate player, Coordinate enemy) {
     	Coordinate target = enemy;
-    	int ax = player.getxPosition()/coordConst;
-        int ay = player.getyPosition()/coordConst;
-        int bx = enemy.getxPosition()/coordConst;
-        int by = enemy.getyPosition()/coordConst;
+    	int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
         
         int midpointX = (ax + bx)/2;
         int midpointY = (ay + by)/2;
@@ -193,7 +193,7 @@ public class Graph {
     	double totalDistance;
     	
     	for (Coordinate object: coordList) {
-    	    totalDistance = Math.hypot(midpointX - object.getxPosition()/coordConst, midpointY - object.getyPosition()/coordConst);
+    	    totalDistance = Math.hypot(midpointX - object.getX(), midpointY - object.getY());
     	    if (curDistance == -1 || curDistance > totalDistance) {
     	    	curDistance = totalDistance;
     	    	target = object;
@@ -205,10 +205,12 @@ public class Graph {
     
     public Coordinate hound(Coordinate player , Coordinate enemy,Coordinate hound) {
     	Coordinate target = player;
-    	int ax = player.getxPosition()/coordConst;
-        int ay = player.getyPosition()/coordConst;
-        int bx = enemy.getxPosition()/coordConst;
-        int by = enemy.getyPosition()/coordConst;
+
+    	int ax = player.getX();
+        int ay = player.getY();
+        int bx = enemy.getX();
+        int by = enemy.getY();
+
         int array[] = {0,1,-1};
         int i;
      
@@ -231,60 +233,60 @@ public class Graph {
         } else { //player same y row as 
         	houndy = 0;
         }
+        int tempx = houndx;
+    	int tempy = houndy;
       //Test
 		//System.out.println(ax + " " +houndx + " " + ay + " " + houndy);
         boolean check = false;
         while (!check) {
-        	if (coordConst*(ax + houndx) == hound.getxPosition() && coordConst*(ay+houndy) == hound.getyPosition()) {
+        	// hound already in position
+        	if ((ax + houndx) == hound.getX() && (ay+houndy) == hound.getY()) {
         		//Test
         		//System.out.println(ax + houndx + " " + ay + houndy);
         		target = hound;
         		check = true;
       
         	} else {
-        		//Test
-        		//System.out.println(availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy)));
-        	   // if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy) )) {
-        		//    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy));
         		
-        		//    check = true;
-        	    //} else {
-        	    	//needs to accept cone of options
-        	    	//so given hound difference point, should have an increasing bound of options it
-        	    	//checks for 
+        		
+        		if (houndx == 0) {
+        	        for (i = 0; i < 3; i++) {
+        	            if (availablePoint(ax + houndx + array[i], ay+houndy)) {
+        	            	target = getPoint(ax + houndx + array[i],ay + houndy);
+        	            	check = true;
+        	            	break;
+        	            }
+        	        }
+        		} else if (houndy == 0 ) {
+        			for (i = 0; i < 3; i++) {
+        				if (availablePoint(ax + houndx,ay + houndy + array[i])) {
+        					target = getPoint(ax + houndx,ay + houndy + array[i]);
+        					check = true;
+        					break;
+        				}
+        			}
+        		
+        	    } else {
         	    	
-        	    	if (houndx == 0) {
-        	    		for (i = 0; i < 3; i++) {
-        	    			if (availablePoint(coordConst*(ax + houndx + + array[i]),coordConst*(ay+houndy) )) {
-        	        		    target = getPoint(coordConst*(ax + houndx + + array[i]),coordConst*(ay+houndy ));
-        	        		
-        	        		    check = true;
-        	        		    break;
-        	    			}
-        	    		}
+        	    	if (availablePoint(ax+houndx ,ay + houndy )) {
+        	    		target = getPoint(ax+houndx ,ay+houndy );
+        	    		check = true;
+        	    	} else if (availablePoint(ax + houndx -tempx,ay + houndy)) {
+        	    		target = getPoint(ax + houndx -tempx,ay+houndy);
+        	    		check = true;
         	    		
-        	    	} else if (houndy == 0) {
-        	    		for (i = 0; i < 3; i++) {
-        	    			if (availablePoint(coordConst*(ax + houndx),coordConst*(ay+houndy + array[i]) )) {
-        	        		    target = getPoint(coordConst*(ax + houndx),coordConst*(ay+houndy + array[i]));
-        	        		
-        	        		    check = true;
-        	        		    break;
-        	    			}
-        	    		}
-        	    		//check houndx + 1 and houndx -1 
-        	    		//else incriment
-        	    	} else {
-        	    		for (i = 1; i < 3; i++) {
-        	    			
-        	    		}
-        	    		//maybe consider point that shares x of target and y of player, or vise versa
-        	    		//should produce list of options needed
+        	    	} else if (availablePoint(ax+houndx,ay +houndy - tempy)) {
+        	    		target = getPoint(ax+houndx,ay +houndy - tempy);
+        	    		check = true;
         	    	}
-        		    houndx+=houndx;
-        		    houndy+=houndy;
-        		
-        	    //}
+        	    tempx = houndx;
+        	    tempy = houndy;
+                             	    	
+        	    	
+        	    }
+        		houndx+=houndx;
+       		    houndy+=houndy;
+
         	    if (Math.abs(ax + houndx) > width || Math.abs(by+houndy) > height) {
         		    check = true;
         		    System.out.println("here");

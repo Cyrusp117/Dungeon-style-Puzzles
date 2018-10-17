@@ -1,8 +1,13 @@
 package entities;
 
+import java.util.ArrayList;
+
+import javafx.scene.input.KeyCode;
+
 public abstract class Entity {
+	protected Coordinate oldPos; 
 	protected Coordinate position;
-	protected int keyCode;
+	protected KeyCode keyCode;
 	protected boolean movable;
 	public Entity(Coordinate position) {
 		this.position = position;
@@ -12,13 +17,13 @@ public abstract class Entity {
 		
 	}
 
-	public Coordinate move(Coordinate co, Graph g) {
-		return null;
-	}
+//	public Coordinate move(Coordinate co, Graph g) {
+//		return null;
+//	}
 
 
-	public boolean interactWithPlayer(Player player) {
-		return false;
+	public Coordinate interactWithPlayer(Player player) {
+		return position;
 	}
 	
 	public boolean interactWithBomb() {
@@ -61,16 +66,16 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 	 * 
 	 * @return the x coordinate of the entity (int)
 	 */
-	public int returnX() {
-		return position.getxPosition();
+	public int getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * 
 	 * @return the y coordinate of the entity (int)
 	 */
-	public int returnY() {
-		return position.getyPosition();
+	public int getY() {
+		return position.getY();
 	}
 
 	public boolean willCollide(Coordinate otherPos) {
@@ -78,13 +83,42 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		
 	}
 	
-	public int getKeyCode() {
+	public KeyCode getKeyCode() {
 		return this.keyCode;
 	}
 	
-	public void getDesignerDescription() {
-		System.out.println(this.getName() + " - " + (char)this.getKeyCode());
+	public String getDesignerDescription() {
+
+		return(this.getName() + " - " + getKeyCode().getName());
 
 	}
+
+	public boolean canBePlacedOnTop(Entity entity) {
+		return false;
+	}
 	
+	/**
+	 * 
+	 * @return previous position of Entity
+	 */
+	public Coordinate getOldPosition () {
+		return oldPos;
+	}
+
+	public boolean isValidInteraction(Entity atNewEntityPos) {
+		//if (atNewEntityPos.size() == 0) { return true; }
+		return false;
+	}
+
+	public Coordinate interact(Entity entity) {
+		return position;
+	}
+	
+	/**
+	 * 
+	 * @param sets oldPos to position
+	 */
+	public void setOldPosition(Coordinate position) {
+		this.oldPos = position;
+	}
 }

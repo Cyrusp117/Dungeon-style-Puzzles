@@ -24,7 +24,7 @@ public class Edge {
 	}
 	
 	public void printCoords() {
-		System.out.println("src: " + src.getxPosition() + " " + src.getyPosition() + " " + "dest: " + dest.getxPosition() + " " + dest.getyPosition());
+		System.out.println("src: " + src.getX() + " " + src.getY() + " " + "dest: " + dest.getX() + " " + dest.getY());
 	}
 
 

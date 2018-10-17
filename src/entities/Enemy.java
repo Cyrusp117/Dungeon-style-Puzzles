@@ -12,7 +12,7 @@ public abstract class Enemy extends Entity{
 	
 	public abstract Coordinate getTargetSpace(Coordinate co,Graph g);
 	
-	@Override
+	
 	public Coordinate move(Coordinate co,Graph g) {
 		Coordinate move = getTargetSpace(co,g);
 		g.addCoordinate(position); //need this?
@@ -34,15 +34,15 @@ public abstract class Enemy extends Entity{
 	}
 
 	//@Override
-	public int returnX() {
+	public int getX() {
 		// TODO Auto-generated method stub
-		return position.getxPosition();
+		return position.getX();
 	}
 
 	//@Override
 	public int returnY() {
 		// TODO Auto-generated method stub
-		return position.getyPosition();
+		return position.getY();
 	}
 
 	//@Override
@@ -57,16 +57,16 @@ public abstract class Enemy extends Entity{
 	}
 	
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(player.hasItem("Sword")) {
 			player.hitUsingSword();
-			return true;
+			return null;
 		} else if (player.hasItem("InvincibilityPotion")) {
-			return true;
+			return null;
 		} else {
 			player.setState(0);
 		}
-		return false;
+		return position;
 
 	}
 	
