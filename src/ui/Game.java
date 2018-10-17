@@ -18,6 +18,7 @@ public class Game{
 		this.entities = new ArrayList<>();
 		this.map = new ArrayList<ArrayList<Coordinate>>();
 		generateMap();
+		this.g = null;
 	}
 	
 
@@ -29,7 +30,13 @@ public class Game{
 		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
 		// Checks current state of the game after any interactions
-	
+	    if (g == null) {
+	    	g = generateGraph();
+	    	g.generateEdges();
+	    }
+	    //if (g.hasPoint(player.getPosition())) {
+	    //	g.removePoint(player.getPosition());
+	    //}
 		
 		int allTreasure = 1;
 		int allSwitch = 1;
@@ -43,13 +50,13 @@ public class Game{
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-            
+              
 				Enemy enemy = (Enemy) entity;
 				if (player.hasItem("InvincibilityPotion")) {
-					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
+					position = enemy.invincibilityMove(player.getPosition(), g);//generateGraph() );
 				} else {
 					System.out.println("hi\n\n\n");
-				    position = enemy.move(player.getPosition(), generateGraph() ); //where I generate graph before the move
+				    position = enemy.move(player.getPosition(), g);//generateGraph() ); //where I generate graph before the move
 				}
 				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(enemy, position);
@@ -228,7 +235,9 @@ public class Game{
 		}
 		
 		for (Entity entity : toBeDeleted) {
+			g.newPoint(entity.getPosition()); //testing this
 			deleteEntity(entity);
+			
 		}
 		
 		

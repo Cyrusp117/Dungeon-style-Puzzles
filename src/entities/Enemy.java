@@ -15,14 +15,17 @@ public abstract class Enemy extends Entity{
 	
 	public Coordinate move(Coordinate co,Graph g) {
 		Coordinate move = getTargetSpace(co,g);
-		g.addCoordinate(position); //need this?
-		g.generateEdges();
+		//g.addCoordinate(position); //need this?
+		//g.generateEdges();
+		g.newPoint(position);//new
+		//g.newPoint(co); //new
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else if (move != position){
 		    move = g.BFS(this.position, move,co);
 		}
-		
+		g.removePoint(move); //new
+		//g.removePoint(co); //new
 		return move;
 	}
 	

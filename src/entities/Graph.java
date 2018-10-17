@@ -6,7 +6,6 @@ public class Graph {
 	private ArrayList<Coordinate> coordList;
 	private ArrayList<Edge> edgeList;
 	private int nV;
-	//private int coordConst;
 	private int height;
 	private int width;
 	
@@ -40,6 +39,39 @@ public class Graph {
 			}
 		}
 		Collections.shuffle(this.coordList);
+	}
+	//want this to remove starting point and edges, add new points starting and edges
+	public void removePoint(Coordinate oldP) {
+		
+		for (Edge object: edgeList) {
+			if(object.getSrc() == oldP || object.getDest() == oldP) {
+				edgeList.remove(object);
+			}
+		}
+		coordList.remove(oldP);
+	
+	}
+	
+	public boolean hasPoint(Coordinate point) {
+		for (Coordinate object: coordList) {
+			if (object.equals(point)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void newPoint(Coordinate newP) {
+		coordList.add(newP);
+		for (Coordinate object: this.coordList) {
+			if (object.equals(newP))
+				continue;
+			if (isAdjacent(newP,object)) {
+				this.addEdge(new Edge(newP,object));
+			}
+		}
+		Collections.shuffle(coordList);
+		
 	}
 	
 	public boolean isAdjacent(Coordinate a, Coordinate b) {
