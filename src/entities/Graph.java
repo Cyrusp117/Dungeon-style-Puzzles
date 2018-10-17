@@ -39,7 +39,7 @@ public class Graph {
 				}
 			}
 		}
-		//Collections.shuffle(this.coordList);
+		Collections.shuffle(this.coordList);
 	}
 	
 	public boolean isAdjacent(Coordinate a, Coordinate b) {

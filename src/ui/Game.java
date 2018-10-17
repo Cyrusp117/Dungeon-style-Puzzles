@@ -10,6 +10,7 @@ public class Game{
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
+	private Graph g; //new in graph implementation
 	// Need to implement generic iterator
 	public Game(int width, int height) {
 		this.width = width;
@@ -48,7 +49,7 @@ public class Game{
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
 				} else {
 					System.out.println("hi\n\n\n");
-				    position = enemy.move(player.getPosition(), generateGraph() );
+				    position = enemy.move(player.getPosition(), generateGraph() ); //where I generate graph before the move
 				}
 				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(enemy, position);
@@ -513,7 +514,7 @@ public class Game{
 		allDesignerObjects.add(new FloorSwitch(defaultPos));
 		allDesignerObjects.add(new Exit(defaultPos));
 		allDesignerObjects.add(new Door());
-		allDesignerObjects.add(new Hound(defaultPos, new Hunter(defaultPos)));
+		allDesignerObjects.add(new Hound(defaultPos));
 		allDesignerObjects.add(new Player(defaultPos));
 		return allDesignerObjects;
 	}

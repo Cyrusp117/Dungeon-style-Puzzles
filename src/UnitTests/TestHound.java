@@ -15,9 +15,9 @@ public class TestHound extends testSetup {
 		Hunter hunter = new Hunter(hunterPos);
 		game.addEntity(hunter);
 		Coordinate houndPos = new Coordinate(1,3);
-		Hound hound = new Hound(houndPos,hunter);
+		Hound hound = new Hound(houndPos);
+		hound.setHunter(hunter );
 		game.addEntity(hound);
-		game.printGame();
 		assert(game.getFirstEntity(houndPos) instanceof Hound);
 	}
 
