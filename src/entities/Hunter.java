@@ -21,6 +21,9 @@ public class Hunter extends Enemy {
 		} else
 			target = co;
 		return target;
+		//if (!g.availablePoint(closestPickup.getX(), closestPickup.getY())) {
+		//	closestPickup = co;
+		//}
 		//System.out.println("Closest point " +closestPickup.getX() + " " + closestPickup.getY());
 		//return closestPickup;
 	}
