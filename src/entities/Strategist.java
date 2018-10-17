@@ -8,14 +8,15 @@ public class Strategist extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co, Graph g) {
-		Coordinate target;
-		if (g.isAdjacent(co, this.position)) {
-		    target = this.position;
-		} else
-			target = co;
-		return target;
-		
+	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closestPickup) {
+		//Coordinate target;
+		//if (g.isAdjacent(co, this.position)) {
+		//    target = this.position;
+		//} else
+		///	target = co;
+		//return target;
+		System.out.println(closestPickup.getX() + " " + closestPickup.getY());
+		return closestPickup;
 	}
 
 	@Override

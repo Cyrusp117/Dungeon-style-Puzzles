@@ -14,13 +14,15 @@ public class Hunter extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co,Graph g) {
+	public Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup) {
 		Coordinate target;
 		if (g.isAdjacent(co, this.position)) {
 		    target = this.position;
 		} else
 			target = co;
 		return target;
+		//System.out.println("Closest point " +closestPickup.getX() + " " + closestPickup.getY());
+		//return closestPickup;
 	}
 	
 

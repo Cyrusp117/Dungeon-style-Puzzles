@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import entities.Strategist;
 
 public class MapSelectController extends Controller {
 
@@ -62,7 +63,8 @@ public class MapSelectController extends Controller {
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));
-        game.addEntity(new Hunter(hunterPos));
+        game.addEntity(new Hunter(hunterPos)); //test replace with strategist
+        //game.addEntity(new Strategist(hunterPos));
         game.addEntity(new FloorSwitch(fsPos));
         game.addEntity(new Boulder(boulderPos));
         game.addEntity(new Arrow(arrowPos));

@@ -14,7 +14,7 @@ public class TestStrategist extends testSetup {
 		Coordinate stratPos = new Coordinate(3, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
-		game.printGame();
+		//game.printGame();
 		assert(game.getFirstEntity(stratPos) instanceof Strategist);
 	}
 
@@ -23,7 +23,7 @@ public class TestStrategist extends testSetup {
 		Coordinate stratPos = new Coordinate(3, 1);
 		Strategist strat = new Strategist(stratPos);
 		game.addEntity(strat);
-		game.printGame();
+		//game.printGame();
 		move(RIGHT, 1);
 		assert(player.isAlive());
 		// Because This enemy constantly moves toward the player, 

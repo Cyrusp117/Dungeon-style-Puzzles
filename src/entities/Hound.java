@@ -15,7 +15,7 @@ public class Hound extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co, Graph g) {
+	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closestPickup) {
 		Coordinate target = null;
 		if (hunter != null) {
 			target = g.hound(co,hunter.getPosition(),this.position);

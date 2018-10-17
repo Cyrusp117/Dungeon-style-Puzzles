@@ -10,18 +10,25 @@ public abstract class Enemy extends Entity{
 	    this.movable = true;
 	}
 	
-	public abstract Coordinate getTargetSpace(Coordinate co,Graph g);
+	public abstract Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup);
 	
 	
-	public Coordinate move(Coordinate co,Graph g) {
-		Coordinate move = getTargetSpace(co,g);
+	public Coordinate move(Coordinate co,Graph g,Coordinate closestPickup) {
+		Coordinate move = getTargetSpace(co,g,closestPickup);
 		g.addCoordinate(position); //need this?
 		g.generateEdges();
+		boolean check = false;
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else if (move != position){
-		    move = g.BFS(this.position, move,co);
-		}
+		    move = g.BFS(this.position, move,co); 
+		    check = true;
+		} 
+		//if attempt is made to move to spot near player but cannot, will attempt any move it can do player
+		//if (check && move == position) {
+		//	move = g.BFS(this.position, co, co);
+		//}
+		
 		
 		return move;
 	}

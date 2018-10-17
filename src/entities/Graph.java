@@ -6,7 +6,7 @@ public class Graph {
 	private ArrayList<Coordinate> coordList;
 	private ArrayList<Edge> edgeList;
 	private int nV;
-	//private int coordConst;
+	
 	private int height;
 	private int width;
 	
@@ -106,6 +106,57 @@ public class Graph {
 		}
 		
 		return cur;
+	}
+	
+	public int sizeBFS(Coordinate src, Coordinate dest) {
+		
+		int[] visited = new int[this.nV];
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		int srcIndex = coordList.indexOf(src);
+		int destIndex = coordList.indexOf(dest);
+		int vertex;
+		int w;
+		boolean found = false;
+		
+		for (int i = 0; i <nV; i++) {
+		    visited[i] = -1;	
+		}
+		visited[srcIndex] = -2;
+		queue.add(srcIndex);
+		
+		while (queue.size() != 0) {
+			vertex = queue.poll();
+			//System.out.println("vertex is " + vertex);
+			for (w = 0; w < nV; w++) {
+			    if (w == vertex)
+			    	continue;
+			    
+			    if (visited[w] == -1 && hasEdge(coordList.get(vertex),coordList.get(w))) {
+			    	visited[w] = vertex;
+			    	//if ( w != coordList.indexOf(player))
+			    	queue.add(w);
+			    	if (w == destIndex) {
+			    		found = true;
+			  
+			    		break;
+			    	}
+			    }
+			}
+			
+		}
+		int size = 0;
+		if (found) {
+			
+			for (int curValue = destIndex; curValue != srcIndex; curValue = visited[curValue]) {
+				
+				size ++;
+			}
+			
+		} else {
+			size = -1;
+		}
+		
+		return size;
 	}
 	
 	public boolean hasEdge(Coordinate a, Coordinate b) {

@@ -36,7 +36,8 @@ public class Game{
 		int allEnemy = 1;
 
 		Coordinate position;
-
+        Coordinate closestPickup;
+		
 		win = false;
 
 		for (Entity entity : entities) {
@@ -46,10 +47,11 @@ public class Game{
             
 				Enemy enemy = (Enemy) entity;
 				if (player.hasItem("InvincibilityPotion")) {
-					position = enemy.invincibilityMove(player.getPosition(), generateGraph() );
+					position = enemy.invincibilityMove(player.getPosition(), generateGraph());
 				} else {
+					closestPickup = closestPickup(enemy);
 					System.out.println("hi\n\n\n");
-				    position = enemy.move(player.getPosition(), generateGraph() ); //where I generate graph before the move
+				    position = enemy.move(player.getPosition(), generateGraph(),closestPickup ); //where I generate graph before the move
 				}
 				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(enemy, position);
@@ -518,6 +520,63 @@ public class Game{
 		allDesignerObjects.add(new Player(defaultPos));
 		return allDesignerObjects;
 	}
+	
+	private Coordinate closestPickup(Enemy enemy) {
+		Coordinate closest = null;
+		Entity ent = null;
+		int size = -1;
+		int tempSize;
+		Graph g;
+		Key key;
+		Door door;
+		boolean hasKey = false;
+		for (Entity object: entities) {
+			if (object instanceof Enemy || object instanceof Wall || object instanceof FloorSwitch || object instanceof Pit || object instanceof Player) {
+				continue;
+			}
+			if (object instanceof Key) {
+				if (player.hasItem("Key")) {
+					continue;
+				}
+				
+			}
+			if (object instanceof Door) {
+				for(Entity item: player.getInventory()) {
+					if(item instanceof Key) {
+						key = (Key)item;
+						door = (Door)object;
+						if ( door.getNumOfDoors() == key.getNumOfKeys()) {
+							hasKey = true;
+							break;
+						}
+					}
+				}
+				if (! hasKey) {
+					continue;
+				}
+				hasKey = false;
+			}
+			
+			g= generateGraph();
+			g.addCoordinate(object.getPosition());
+			g.addCoordinate(enemy.getPosition());
+			g.generateEdges();
+			tempSize = g.sizeBFS(player.getPosition(), object.getPosition());
+			if (tempSize < size || size == -1) {
+				ent = object;
+				size = tempSize;
+			}
+		}
+		
+		g= generateGraph();
+		g.addCoordinate(ent.getPosition());
+		g.addCoordinate(enemy.getPosition());
+		g.generateEdges();
+		closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
+		//test
+		System.out.println(ent.getName());
+		return closest;
+	}
 
 	
 //	@Override
@@ -545,21 +604,21 @@ public class Game{
 //	}
 	
 //	public void printGame() {
-//  int i = 0;
-//  int j = 0;
+ // int i = 0;
+ //int j = 0;
 //	while (i <= this.getHeight()) {
-//  	while (j <= this.getWidth()) {
-//  		Coordinate curPos = new Coordinate(j, i);
-//  		Entity entity = getEntity(curPos);
-//  		if (curPos.equals(player.getPosition())) {
-//  			System.out.print("1");
-//  		} else if(entity != null) {
-//  			System.out.print(entity.getKeyCode().getName());
-//  		} else {
-//  			System.out.print("-");
-//  		}
-//  		System.out.print(" ");
-//  		j++;
+ // 	while (j <= this.getWidth()) {
+  //		Coordinate curPos = new Coordinate(j, i);
+ // 		Entity entity = getEntity(curPos);
+ // 		if (curPos.equals(player.getPosition())) {
+ // 			System.out.print("1");
+ // 		} else if(entity != null) {
+ // 			System.out.print(entity.getKeyCode().getName());
+ // 		} else {
+ // 			System.out.print("-");
+ // 		}
+ // 		System.out.print(" ");
+ // 		j++;
 //  	}
 //  	System.out.println("");
 //  	j = 0;
