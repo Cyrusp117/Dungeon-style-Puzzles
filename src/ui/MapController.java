@@ -26,9 +26,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import sun.print.resources.serviceui;
 
 public class MapController extends Controller {
 	
@@ -208,6 +208,7 @@ public class MapController extends Controller {
 	}
 	
 	public void moveUp () {
+		play_move();
 		player.setDx(0);
 		player.setDy(-1);
 		game.update();
@@ -215,6 +216,7 @@ public class MapController extends Controller {
 		//map.setText(game.toString());
 	}
 	public void moveRight () {
+		play_move();
 		player.setDx(1);
 		player.setDy(0);
 		game.update();
@@ -223,6 +225,7 @@ public class MapController extends Controller {
 	}
 	
 	public void moveLeft () {
+		play_move();
 		player.setDx(-1);
 		player.setDy(0);
 		game.update();
@@ -230,10 +233,17 @@ public class MapController extends Controller {
 		//map.setText(game.toString());
 	}
 	public void moveDown () {
+		play_move();
 		player.setDx(0);
 		player.setDy(1);
 		game.update();
 		printGame();
 		//map.setText(game.toString());
+	}
+	
+	private void play_move() {
+		AudioClip note = new AudioClip(this.getClass().getResource("move.wav").toString());
+		//note.setCycleCount(3);
+		note.play();
 	}
 }

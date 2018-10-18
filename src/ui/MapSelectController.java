@@ -16,6 +16,7 @@ import entities.Sword;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import entities.Strategist;
 
@@ -40,6 +41,7 @@ public class MapSelectController extends Controller {
 	}
 
 	public void startMap1() {
+		play_note();
     	Game game = new Game(10, 10);
         System.out.println("First Preset Dungeon");
 		Coordinate playerPos = new Coordinate(1,1); 
@@ -81,6 +83,7 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void startCustomMap() {
+		play_note();
 		int customHeight = Integer.parseInt(height.getText());
 		int customWidth = Integer.parseInt(width.getText());
     	Game game = new Game(customHeight, customWidth);
@@ -91,6 +94,7 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void previousMenu() {
+		play_note();
 		Stage curStage = super.getS();
 		curStage.setUserData(null);
         Screen mainMenu = new Screen(curStage, "Main Menu", "view/mainmenu.fxml");
@@ -102,5 +106,11 @@ public class MapSelectController extends Controller {
         Screen map = new Screen(super.getS(), title, "view/map.fxml");
         MapController pc = new MapController(super.getS(), game);
         map.start(pc);
+	}
+	
+	private void play_note() {
+		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
+		//note.setCycleCount(3);
+		note.play();
 	}
 }
