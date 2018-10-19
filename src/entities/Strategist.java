@@ -1,4 +1,5 @@
 package entities;
+import java.util.ArrayList;
 
 public class Strategist extends Enemy {
 
@@ -8,7 +9,7 @@ public class Strategist extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closestPickup) {
+	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closestPickup,ArrayList<Entity> entities) {
 		if (!g.availablePoint(closestPickup.getX(), closestPickup.getY())) {
 			closestPickup = co;
 		}

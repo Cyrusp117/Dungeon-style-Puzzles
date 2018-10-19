@@ -4,6 +4,7 @@ package entities;
 import java.awt.event.KeyEvent;
 
 import javafx.scene.input.KeyCode;
+import java.util.ArrayList;
 
 public class Hunter extends Enemy {
 
@@ -14,7 +15,7 @@ public class Hunter extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup) {
+	public Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities) {
 		Coordinate target;
 		if (g.isAdjacent(co, this.position)) {
 		    target = this.position;

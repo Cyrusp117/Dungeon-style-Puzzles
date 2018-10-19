@@ -10,7 +10,7 @@ public class Game{
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
-	private Graph g; //new in graph implementation
+	//private Graph g; //new in graph implementation
 	// Need to implement generic iterator
 	public Game(int width, int height) {
 		this.width = width;
@@ -29,7 +29,6 @@ public class Game{
 		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
 		// Checks current state of the game after any interactions
-	
 		
 		int allTreasure = 1;
 		int allSwitch = 1;
@@ -37,7 +36,9 @@ public class Game{
 
 		Coordinate position;
         Coordinate closestPickup;
-		
+        
+		//need list of bone locations
+        //then hound will use this later and determine its target
 		win = false;
 
 		for (Entity entity : entities) {
@@ -49,9 +50,19 @@ public class Game{
 				if (player.hasItem("InvincibilityPotion")) {
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph());
 				} else {
+					
 					closestPickup = closestPickup(enemy);
-					System.out.println("hi\n\n\n");
-				    position = enemy.move(player.getPosition(), generateGraph(),closestPickup ); //where I generate graph before the move
+					//System.out.println("hi\n\n\n");
+				    position = enemy.move(player.getPosition(), generateGraph(),closestPickup,entities); //where I generate graph before the move
+				    
+				    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
+				    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
+				    	deleteEntity(getFirstEntity(position));
+				    	System.out.println("So we made it here");
+				    	TreasureGoblin goblin = (TreasureGoblin)entity;
+				    	System.out.println("Goblin has " +goblin.getTreasure().getName());
+				    	assert(getFirstEntity(position) == null);
+				    }
 				}
 				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 					moveEntity(enemy, position);
@@ -65,6 +76,12 @@ public class Game{
 			// Checks if all treasure has been picked up
 			if (entity instanceof Treasure){
 				allTreasure = 0;
+				//also check treasure goblin for this condition
+			} else if (entity instanceof TreasureGoblin) {
+				TreasureGoblin goblin = (TreasureGoblin)entity;
+				if(goblin.getTreasure() != null) {
+					allTreasure = 0;
+				}
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
@@ -207,6 +224,24 @@ public class Game{
 				}
 				moveEntity(arrow, newPos);
 			}
+			//bone stuff
+			if (entity instanceof Bone) {
+				Bone bone = (Bone)entity;
+				Coordinate newPos = bone.move();
+				if(isOutOfBounds(newPos)) {
+					break; //so if new spot out of bounds, dont move it
+				}
+				if (getFirstEntity(newPos) instanceof Pit || bone.getLifeTime() <= 0) {
+					toBeDeleted.add(bone);
+					break;
+				}
+				if (!isOccupied(newPos)) {
+					moveEntity(bone,newPos);
+				}
+				
+				
+			}
+			//bone stuff
 			if (entity instanceof Bomb) {
 				Bomb bomb = (Bomb)entity;
 				if(bomb.isLit()) {
@@ -267,6 +302,7 @@ public class Game{
 		Coordinate position = entity.getPosition();
 		ArrayList<Entity> curEntities = getEntities(position);
 		if(curEntities.size() >= 2) {
+			
 			return false;
 		} 
 		
@@ -275,6 +311,7 @@ public class Game{
 			// can add boulder/floor switch on top of one another
 			// Arrow can be added on top of Player
 			if (!curEntity.canBePlacedOnTop(entity)) {
+				System.out.println("Here1");
 				return false;
 			}
 		}
@@ -338,12 +375,12 @@ public class Game{
 //	 * 
 //	 * @param position, the Coordinate to which the player should be placed
 //	 */
-//	public void createPlayer(Coordinate position) {
-//		if(isOccupied(position)) return;
-//		player = new Player(position);
-//		getMapCo(position).addEntity(player);
-//		entities.add(player);
-//	}
+	public void createPlayer(Coordinate position) {
+		if(isOccupied(position)) return;
+		player = new Player(position);
+		getMapCo(position).addEntity(player);
+		entities.add(player);
+	}
 
 	//done
 	/**
@@ -521,6 +558,7 @@ public class Game{
 		return allDesignerObjects;
 	}
 	
+	//now that im giving list of entities to Enemies, I may have to make this a strategist function
 	private Coordinate closestPickup(Enemy enemy) {
 		Coordinate closest = null;
 		Entity ent = null;
@@ -567,14 +605,15 @@ public class Game{
 				size = tempSize;
 			}
 		}
-		
-		g= generateGraph();
-		g.addCoordinate(ent.getPosition());
-		g.addCoordinate(enemy.getPosition());
-		g.generateEdges();
-		closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
+		if (ent != null) {
+		    g= generateGraph();
+		    g.addCoordinate(ent.getPosition());
+		    g.addCoordinate(enemy.getPosition());
+		    g.generateEdges();
+		    closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
 		//test
-		System.out.println(ent.getName());
+		    System.out.println(ent.getName());
+		}
 		return closest;
 	}
 
@@ -603,26 +642,27 @@ public class Game{
 //		return sb.toString();
 //	}
 	
-//	public void printGame() {
- // int i = 0;
- //int j = 0;
-//	while (i <= this.getHeight()) {
- // 	while (j <= this.getWidth()) {
-  //		Coordinate curPos = new Coordinate(j, i);
- // 		Entity entity = getEntity(curPos);
- // 		if (curPos.equals(player.getPosition())) {
- // 			System.out.print("1");
- // 		} else if(entity != null) {
- // 			System.out.print(entity.getKeyCode().getName());
- // 		} else {
- // 			System.out.print("-");
- // 		}
- // 		System.out.print(" ");
- // 		j++;
-//  	}
-//  	System.out.println("");
-//  	j = 0;
-//  	i++;
-//  }
-//}
+	public void printGame() {
+    int i = 0;
+    int j = 0;
+	while (i <= this.getHeight()) {
+  	while (j <= this.getWidth()) {
+  		Coordinate curPos = new Coordinate(j, i);
+ 		Entity entity = getFirstEntity(curPos);
+ 		
+  		if (curPos.equals(player.getPosition())) {
+  			System.out.print("1");
+  		} else if(entity != null) {
+  			System.out.print(entity.getKeyCode().getName());
+  		} else {
+  			System.out.print("-");
+  		}
+  		System.out.print(" ");
+  		j++;
+ 	}
+ 	System.out.println("");
+  	j = 0;
+  	i++;
+  }
+}
 }

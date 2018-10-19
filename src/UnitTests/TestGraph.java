@@ -10,10 +10,34 @@ public class TestGraph {
 		
 		
 		public static void main(String[] args) {
-			Game game = new Game(11,11);
+			Game game = new Game(4,4);
+			game.addEntity(new Hunter(new Coordinate(2,2)));
+			
 			Graph g = game.generateGraph();
 			g.generateEdges();
+			Coordinate testPoint = new Coordinate(2,2);
+			g.addPointAndEdges(testPoint);
 			System.out.println("Vertexes: ");
+			System.out.println("x value | y value");
+			for (Coordinate object: g.getCoords()) {
+				System.out.println(object.getX() + " " + object.getY());
+			}
+			assert(g.getCoords().contains(testPoint));
+			
+			System.out.println("\n Edges: ");
+			for (Edge object: g.getEdges()) {
+				object.printCoords();
+			}
+			
+			g.removePointAndEdges(testPoint);
+			assert(!g.getCoords().contains(testPoint));
+			ArrayList<Edge> edges = g.getEdges();
+			
+			for (Edge edge: edges) {
+				assert(edge.getSrc() != testPoint);
+				assert(edge.getDest() != testPoint);
+			}
+			System.out.println("Vertexes: all good");
 			System.out.println("x value | y value");
 			for (Coordinate object: g.getCoords()) {
 				System.out.println(object.getX() + " " + object.getY());
@@ -25,48 +49,50 @@ public class TestGraph {
 			}
 			//game.addEntity(new Hunter(new Coordinate(32,32)));
 			//game.addEntity(new Hunter(new Coordinate(32,96)));
-			g = game.generateGraph();
-			g.generateEdges();
-			System.out.println("Vertexes: ");
-			System.out.println("x value | y value");
-			for (Coordinate object: g.getCoords()) {
-				System.out.println(object.getX() + " " + object.getY());
-			}
+			//g = game.generateGraph();
+			//g.generateEdges();
+			//System.out.println("Vertexes: ");
+			//System.out.println("x value | y value");
+			//for (Coordinate object: g.getCoords()) {
+			//	System.out.println(object.getX() + " " + object.getY());
+			//}
 			
-			System.out.println("\n Edges: ");
-			for (Edge object: g.getEdges()) {
-				object.printCoords();
-			}
+			//System.out.println("\n Edges: ");
+			//for (Edge object: g.getEdges()) {
+			//	object.printCoords();
+			//}
 			
-			Coordinate bfs = g.BFS(new Coordinate(1,2), new Coordinate(2,3),new Coordinate(4,8));
-			System.out.println("Bfs result : " + bfs.getX() + " " + bfs.getY());
+			//Coordinate bfs = g.BFS(new Coordinate(1,2), new Coordinate(2,3),new Coordinate(4,8));
+			//System.out.println("Bfs result : " + bfs.getX() + " " + bfs.getY());
 			
-			System.out.println("Vertexes: ");
-			System.out.println("x value | y value");
-			for (Coordinate object: g.getCoords()) {
-				System.out.println(object.getX() + " " + object.getY());
-			}
+			//System.out.println("Vertexes: ");
+			//System.out.println("x value | y value");
+			//for (Coordinate object: g.getCoords()) {
+			//	System.out.println(object.getX() + " " + object.getY());
+			//}
 			
-			Coordinate moveAway = g.moveAway(new Coordinate(3,2), new Coordinate(3,1));
-			System.out.println("moveAway result : " + moveAway.getX() + " " + moveAway.getY());
+			//Coordinate moveAway = g.moveAway(new Coordinate(3,2), new Coordinate(3,1));
+			//System.out.println("moveAway result : " + moveAway.getX() + " " + moveAway.getY());
 			
-			Coordinate between = g.between(new Coordinate(1,1), new Coordinate(1,2));
-			System.out.println("between result : " + between.getX() + " " + between.getY());
+		//	Coordinate between = g.between(new Coordinate(1,1), new Coordinate(1,2));
+		//	System.out.println("between result : " + between.getX() + " " + between.getY());
 			
-			Coordinate hound = g.hound(new Coordinate(10,7), new Coordinate(10,6),new Coordinate(6,7));
-			System.out.println("Hunter up 1: hound result : " + hound.getX() + " " + hound.getY());
+		//	Coordinate hound = g.hound(new Coordinate(10,7), new Coordinate(10,6),new Coordinate(6,7));
+		//	System.out.println("Hunter up 1: hound result : " + hound.getX() + " " + hound.getY());
 			
-			hound = g.hound(new Coordinate(10,7), new Coordinate(10,8),new Coordinate(6,7));
-			System.out.println("Hunter down 1: hound result : " + hound.getX() + " " + hound.getY());
+		//	hound = g.hound(new Coordinate(10,7), new Coordinate(10,8),new Coordinate(6,7));
+		//	System.out.println("Hunter down 1: hound result : " + hound.getX() + " " + hound.getY());
 			
-			hound = g.hound(new Coordinate(10,7), new Coordinate(11,7),new Coordinate(6,7));
-			System.out.println("Hunter right: hound result : " + hound.getX() + " " + hound.getY());
+		//	hound = g.hound(new Coordinate(10,7), new Coordinate(11,7),new Coordinate(6,7));
+		//	System.out.println("Hunter right: hound result : " + hound.getX() + " " + hound.getY());
 			
-			hound = g.hound(new Coordinate(10,7), new Coordinate(11,6),new Coordinate(6,7));
-			System.out.println("Hunter left: hound result : " + hound.getX() + " " + hound.getY());
+		//	hound = g.hound(new Coordinate(10,7), new Coordinate(11,6),new Coordinate(6,7));
+		//	System.out.println("Hunter left: hound result : " + hound.getX() + " " + hound.getY());
 			
-			hound = g.hound(new Coordinate(10,7), new Coordinate(11,8),new Coordinate(6,7));
-			System.out.println("Hunter bottom right:hound result : " + hound.getX() + " " + hound.getY());
+		//	hound = g.hound(new Coordinate(10,7), new Coordinate(11,8),new Coordinate(6,7));
+		//	System.out.println("Hunter bottom right:hound result : " + hound.getX() + " " + hound.getY());
+			
+			
 			
 			
 		}

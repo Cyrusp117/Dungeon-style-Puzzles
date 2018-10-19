@@ -1,5 +1,6 @@
 
 package entities;
+import java.util.ArrayList;
 
 public abstract class Enemy extends Entity{
 
@@ -10,19 +11,24 @@ public abstract class Enemy extends Entity{
 	    this.movable = true;
 	}
 	
-	public abstract Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup);
+	public abstract Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities);
 	
 	
-	public Coordinate move(Coordinate co,Graph g,Coordinate closestPickup) {
-		Coordinate move = getTargetSpace(co,g,closestPickup);
-		g.addCoordinate(position); //need this?
+	public Coordinate move(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities) {
+		g.addCoordinate(position); //doing this before hand solves not being able to use in targetSpace stuff
 		g.generateEdges();
-		boolean check = false;
+		Coordinate move = getTargetSpace(co,g,closestPickup, entities);
+		//g.addCoordinate(position); //need this?
+		//g.generateEdges();
+		//boolean check = false;
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else if (move != position){
+			//test 
+			System.out.println("Move coordinate is : (" +  move.getX() +"," + move.getY() + ")");
+			System.out.println("position coordinate is : (" +  position.getX() +"," + position.getY() + ")");
 		    move = g.BFS(this.position, move,co); 
-		    check = true;
+		    //check = true;
 		} 
 		//if attempt is made to move to spot near player but cannot, will attempt any move it can do player
 		//if (check && move == position) {

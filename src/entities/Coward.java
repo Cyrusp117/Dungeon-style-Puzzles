@@ -1,4 +1,5 @@
 package entities;
+import java.util.ArrayList;
 
 public class Coward extends Enemy {
 
@@ -8,7 +9,7 @@ public class Coward extends Enemy {
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closetPickup) {
+	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closetPickup,ArrayList<Entity> entities) {
 		int ax = co.getX()/32;
 		int ay = co.getY()/32;
 		int bx = this.position.getX()/32;

@@ -2,10 +2,12 @@ package ui;
 
 import java.util.ArrayList;
 
+
 import com.sun.javafx.collections.MappingChange.Map;
 
 import entities.Arrow;
 import entities.Bomb;
+import entities.Bone;
 import entities.Coordinate;
 import entities.Entity;
 import entities.Player;
@@ -161,7 +163,7 @@ public class MapController extends Controller {
 	    	System.out.println("\n");
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Arrow arrow = null;
-
+           
 
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Arrow) {
@@ -195,6 +197,27 @@ public class MapController extends Controller {
 			      DesignController dc = new DesignController(super.getS(), game);
 			      map1.start(dc);
 			}
+		} else if (key.equals(KeyCode.DIGIT3)) {
+	    	Bone bone = null;
+
+            //need to check if wall, because then no can do
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Bone) {
+	    			bone = (Bone)curItem;
+	    			bone.setPosition(game.getPlayer().getPosition());
+	    			bone.setDx(player.getDx()); 
+	    			bone.setDy(player.getDy());
+	    			game.addEntity(bone);
+	    			break;
+	    		}
+	    	}
+	    	if(bone!=null) {
+	    		System.out.println("Shooting bone");
+	    		player.removeItem(bone);
+	    		game.update();
+	    	} else {
+	    		System.out.println("No bones :(");
+	    	}
 		}
 		printGame();
 	}

@@ -16,12 +16,19 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import ui.MainMenuController;
 import ui.Screen;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 
 public abstract class testSetup extends Application {
 	protected static final KeyCode DOWN = KeyCode.S;
 	protected static final KeyCode UP = KeyCode.W;
 	protected static final KeyCode LEFT = KeyCode.A;
 	protected static final KeyCode RIGHT = KeyCode.D;
+	protected static final int a = 65;
+	protected static final int w = 87;
+	protected static final int d = 68;
+	protected static final int s = 83;
 	protected Robot robot;
 	protected Player player;
 	protected Game game;

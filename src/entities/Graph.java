@@ -22,7 +22,8 @@ public class Graph {
 	}
 	public void addCoordinate(Coordinate c) {
 		this.coordList.add(c);
-		 
+		
+		//System.out.println("normal way gives" + c.getX() + " " + c.getY());
 		this.nV++;
 	}
 	public void addEdge(Edge e) {
@@ -69,6 +70,7 @@ public class Graph {
 		int w;
 		boolean found = false;
 		
+		
 		for (int i = 0; i <nV; i++) {
 		    visited[i] = -1;	
 		}
@@ -109,13 +111,14 @@ public class Graph {
 	}
 	
 	public int sizeBFS(Coordinate src, Coordinate dest) {
-		
+
 		int[] visited = new int[this.nV];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		int srcIndex = coordList.indexOf(src);
 		int destIndex = coordList.indexOf(dest);
 		int vertex;
 		int w;
+		//System.out.println("Coordlist at 81 is" + coordList.get(81));
 		boolean found = false;
 		
 		for (int i = 0; i <nV; i++) {
@@ -133,7 +136,7 @@ public class Graph {
 			    
 			    if (visited[w] == -1 && hasEdge(coordList.get(vertex),coordList.get(w))) {
 			    	visited[w] = vertex;
-			    	//if ( w != coordList.indexOf(player))
+			    	
 			    	queue.add(w);
 			    	if (w == destIndex) {
 			    		found = true;
@@ -340,7 +343,7 @@ public class Graph {
 
         	    if (Math.abs(ax + houndx) > width || Math.abs(by+houndy) > height) {
         		    check = true;
-        		    System.out.println("here");
+        		    //System.out.println("here");
         		    target = player; //not sure about this
         	    }
         	}
@@ -359,7 +362,65 @@ public class Graph {
     	return this.edgeList;
     }
     
+    public double getDistance(Coordinate a , Coordinate b) {
+        int ax = a.getX();
+        int ay = a.getY();
+        int bx = b.getX();
+        int by = b.getY();
+        double distance = Math.sqrt((ax - bx)^2 + (ay - by)^2);
+        
+        
+        return distance;
+    }
     
-   
+    public void addPointAndEdges(Coordinate point) {
+        addCoordinate(point);
+       // System.out.println("function way gives" + point.getX() + " " + point.getY());
+        
+        for (Coordinate object: coordList) {
+        	if(object.equals(point))
+        		continue;
+        	if (isAdjacent(point,object)) {
+        		this.addEdge(new Edge(point,object));
+        		this.addEdge(new Edge(object,point));
+        	}
+        }
+    }
+    
+    public void removePointAndEdges(Coordinate point) {
+    	ArrayList<Edge> toBeDeleted = new ArrayList<Edge>();
+    	//System.out.println("function way removes" + point.getX() + " " + point.getY());
+         	
+        for( Edge edge: edgeList) {
+            if(edge.getSrc().equals(point) || edge.getDest().equals(point)) {
+                toBeDeleted.add(edge);
+         		    
+            }
+         		
+        }
+        for(Edge edge: toBeDeleted) {
+            edgeList.remove(edge);
+        }
+        this.nV--;
+    	 coordList.remove(point);
+    }
+    
+    public Coordinate randomCoordinate() {
+    	Random randomizer = new Random();
+    	Coordinate random = coordList.get(randomizer.nextInt(coordList.size()));
+        return random;
+    }
+    
+    public void printGraph() {
+    	for (Coordinate object: getCoords()) {
+			System.out.println(object.getX() + " " + object.getY());
+		}
+		
+		
+		System.out.println("\n Edges: ");
+		for (Edge object: getEdges()) {
+			object.printCoords();
+		}
+      }
     
 }

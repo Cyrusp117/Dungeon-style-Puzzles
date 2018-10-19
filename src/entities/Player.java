@@ -295,6 +295,17 @@ public class Player extends Entity {
 		return null;
 	}
 	
+	public Bone setBone() {
+		for(Entity e: this.getInventory()) {
+			if(e.getName().equals("Bone")) {
+				Bone bone = (Bone)e;
+				this.removeItem(bone);
+				return bone;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean interactWithBomb() {
 		this.setState(0);
@@ -305,6 +316,7 @@ public class Player extends Entity {
 	public boolean canBePlacedOnTop(Entity entity) {
 		if (entity instanceof Arrow) {	return true; }
 		if (entity instanceof Bomb) { return true; }
+		if (entity instanceof Bone) {	return true; }
 		return false;
 	}
 	
