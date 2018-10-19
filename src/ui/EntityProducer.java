@@ -10,8 +10,9 @@ public class EntityProducer {
 		this.factory = factory;
 	}
 	
-	public void addEntityToGame(Game game, Coordinate co, String entityName) {
+	public Entity addEntityToGame(Game game, Coordinate co, String entityName) {
 		Entity toAdd = factory.createEntity(entityName, co);
 		game.addEntity(toAdd);
+		return toAdd;
 	}
 }

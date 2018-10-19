@@ -61,17 +61,18 @@ public class EditorController extends Controller {
     	private String selectedEntity = null;
     	private EntityProducer producer;
     	private Game game;
+    	private EditorInvoker invoker;
     	
     	public EditorController(Stage s, Game game) {
     		super(s);
     		this.game = game;
-    		// TODO Auto-generated constructor stub
-    	}
+       	}
     	
     	//Lines 22 to 50 Taken from StackOverflow https://stackoverflow.com/questions/31095954
 	    public void initialize() {
 	    	EntityFactory factory = new EntityFactory();
 	    	producer = new EntityProducer(factory); // probably need to add a game to this
+	    	invoker = new EditorInvoker();
 	        int numCols = 20 ;
 	        int numRows = 20 ;
 
@@ -97,7 +98,6 @@ public class EditorController extends Controller {
 	        	node.setOnMouseClicked(e -> {
 	        		selectedEntity = node.getId();
 	        		descriptor.setText(selectedEntity);
-	        		
 	        	});
 	        }
 	    }
@@ -111,14 +111,25 @@ public class EditorController extends Controller {
 	        map.add(pane, colIndex, rowIndex);
 	    }
 
-	    
 	    public void insertEntity(int colIndex, int rowIndex) {
 	    	if(selectedEntity != null){
 	    		Coordinate requestedSpace = new Coordinate(colIndex, rowIndex);
-	    		producer.addEntityToGame(game, requestedSpace, selectedEntity);
+	    		//EntityProducer producer, Game game, Coordinate co, String entity
+	    		InsertEntityCommand toDo = new InsertEntityCommand(producer, game, requestedSpace, selectedEntity);
+	    		invoker.invoke(toDo);
 	    	}
 	    }
 	    
+	    public void deleteEntity(Entity entity) {
+	    	if(entity != null) {
+	    		DeleteEntityCommand toDo = new DeleteEntityCommand(game, entity);
+	    		invoker.invoke(toDo);
+	    	}
+	    }
+	    
+	    public void undo() {
+	    	invoker.undo();
+	    }
 //        pane.setOnMouseClicked(e -> {
 //            System.out.printf("Mouse entered cell [%d, %d]%n", colIndex, rowIndex);
 //        });

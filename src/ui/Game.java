@@ -352,7 +352,7 @@ public class Game{
 	 * 
 	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
 	 */
-	private void deleteEntity(Entity entity) {
+	public void deleteEntity(Entity entity) {
 		getMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
 		if(entity.equals(player)) {

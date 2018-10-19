@@ -77,7 +77,10 @@ public class MapSelectController extends Controller {
 	}
 	
 	public void startCustomMap() {
-		
+		Game game = new Game("Blank", 10, 10);
+		Screen blankMap1 = new Screen(super.getS(), "Blank", "view/editorScreen.fxml");
+		EditorController editor = new EditorController(super.getS(), game);
+		blankMap1.start(editor);
 	}
 	
 	public void previousMenu() {
