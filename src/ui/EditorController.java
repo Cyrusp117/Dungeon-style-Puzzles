@@ -58,6 +58,9 @@ public class EditorController extends Controller {
     	@FXML
     	private Pane Wall;
     	
+    	@FXML
+    	//private GridPane gridTest;
+    	
     	private String selectedEntity = null;
     	private EntityProducer producer;
     	private Game game;
@@ -73,19 +76,25 @@ public class EditorController extends Controller {
 	    	EntityFactory factory = new EntityFactory();
 	    	producer = new EntityProducer(factory); // probably need to add a game to this
 	    	invoker = new EditorInvoker();
-	        int numCols = 20 ;
-	        int numRows = 20 ;
+	        int numCols = 13 ;
+	        int numRows = 15 ;
 
 	        for (int i = 0 ; i < numCols ; i++) {
 	            ColumnConstraints colConstraints = new ColumnConstraints();
-	            colConstraints.setHgrow(Priority.SOMETIMES);
+	            colConstraints.setHgrow(Priority.NEVER);
+	            //colConstraints.setMaxWidth(32);
+	            //colConstraints.setMinWidth(32);
+	            map.getColumnConstraints().clear();
 	            map.getColumnConstraints().add(colConstraints);
+	            //gridTest.getColumnConstraints().add(colConstraints);
 	        }
 
 	        for (int i = 0 ; i < numRows ; i++) {
 	            RowConstraints rowConstraints = new RowConstraints();
 	            rowConstraints.setVgrow(Priority.SOMETIMES);
-	            map.getRowConstraints().add(rowConstraints);
+	            //rowConstraints.setMaxHeight(32);
+	            //rowConstraints.setMinHeight(32);
+	            map.getRowConstraints().add(rowConstraints);   
 	        }
 
 	        for (int i = 0 ; i < numCols ; i++) {
@@ -104,6 +113,9 @@ public class EditorController extends Controller {
 
 	    private void addPane(int colIndex, int rowIndex) {
 	        Pane pane = new Pane();
+	        pane.setMinSize(32, 32);
+	        pane.setMaxSize(32,32);
+	    
 	        pane.setOnMouseClicked(e -> {
 	        	insertEntity(colIndex, rowIndex);
 	            System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
