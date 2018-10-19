@@ -76,8 +76,8 @@ public class EditorController extends Controller {
 	    	EntityFactory factory = new EntityFactory();
 	    	producer = new EntityProducer(factory); // probably need to add a game to this
 	    	invoker = new EditorInvoker();
-	        int numCols = 13 ;
-	        int numRows = 15 ;
+	        int numCols = game.getWidth() ;
+	        int numRows = game.getHeight() ;
 
 	        for (int i = 0 ; i < numCols ; i++) {
 	            ColumnConstraints colConstraints = new ColumnConstraints();
@@ -91,9 +91,11 @@ public class EditorController extends Controller {
 
 	        for (int i = 0 ; i < numRows ; i++) {
 	            RowConstraints rowConstraints = new RowConstraints();
-	            rowConstraints.setVgrow(Priority.SOMETIMES);
+	            rowConstraints.setVgrow(Priority.NEVER);
+	            
 	            //rowConstraints.setMaxHeight(32);
 	            //rowConstraints.setMinHeight(32);
+	            map.getRowConstraints().clear();
 	            map.getRowConstraints().add(rowConstraints);   
 	        }
 
