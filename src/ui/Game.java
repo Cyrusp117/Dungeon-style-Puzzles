@@ -50,7 +50,6 @@ public class Game{
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-            
 				Enemy enemy = (Enemy) entity;
 				if (player.hasItem("InvincibilityPotion")) {
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph());
@@ -119,12 +118,10 @@ public class Game{
 					}
 				}
 			}
-			
-
 		}
-
-		if(win && player.isAlive()) {
-			System.out.println("You have won");
+		
+		if (allTreasure == 1 && allSwitch == 1 && allEnemy == 1) {
+			win = true;
 		}
 		if (!player.isAlive()) {
 			System.out.println("Player is currently dead");
@@ -661,5 +658,13 @@ public class Game{
 			}
 		}
 		return null;
+	}
+	
+	public boolean isPlayerAlive() {
+		return player.isAlive();
+	}
+	
+	public boolean hasPlayerWon() {
+		return win;
 	}
 }
