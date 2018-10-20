@@ -264,6 +264,10 @@ public class MapController extends Controller {
 		      Screen wonScreen = new Screen(super.getS(), "Winner", "view/won.fxml");
 		      WonController wc = new WonController(super.getS());
 		      wonScreen.start(wc);
+		} else if (!game.isPlayerAlive()) {
+		      Screen lossScreen = new Screen(super.getS(), "Dead", "view/loss.fxml");
+		      LossController wc = new LossController(super.getS());
+		      lossScreen.start(wc);
 		}
 	}
 	
