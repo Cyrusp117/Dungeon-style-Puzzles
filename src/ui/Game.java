@@ -85,6 +85,16 @@ public class Game{
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
+//			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
+//				FloorSwitch fs = (FloorSwitch)entity; 
+//				fs.deactivate();
+//				if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
+//					fs.activate();
+//				}
+//				if(!fs.getState()) {
+//					allSwitch = 0;
+//				}
+//			}
 			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 				FloorSwitch fs = (FloorSwitch)entity; 
 				fs.deactivate();
@@ -302,7 +312,6 @@ public class Game{
 		Coordinate position = entity.getPosition();
 		ArrayList<Entity> curEntities = getEntities(position);
 		if(curEntities.size() >= 2) {
-			
 			return false;
 		} 
 		
@@ -311,7 +320,6 @@ public class Game{
 			// can add boulder/floor switch on top of one another
 			// Arrow can be added on top of Player
 			if (!curEntity.canBePlacedOnTop(entity)) {
-				//System.out.println("Here1");
 				return false;
 			}
 		}
@@ -491,26 +499,7 @@ public class Game{
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-//	
-//	public void changeState(InputManagerPlayer playerInput) {
-//		
-//		// There are two game states: Player and Designer
-//		// Each state only supports a certain subset of Key Inputs 
-//		// Player and Designer both extend from Playable so they can both move
-//	
-//		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
-//		//this.playerInput = playerInput;
-//		//this.frame = playerInput.getFrame();
-//		this.playerInput = playerInput;
-//		playerInput.getFrame().addKeyListener(playerInput);
-//	}
-//
-//	/**
-//	 * @param playerInput the playerInput to set
-//	 */
-//	public void setPlayerInput(InputManagerPlayer playerInput) {
-//		this.playerInput = playerInput;
-//	}
+
 
 	public Graph generateGraph() {
 		int i,j;
@@ -649,6 +638,15 @@ public class Game{
     			return arrow;
     		}
     	}
+		return null;
+	}
+	
+	public Entity getEntity(Coordinate pos, Class reqClass) {
+		for (Entity curEntity : getEntities(pos)) {
+			if (curEntity.getClass() == reqClass) {
+				return curEntity;
+			}
+		}
 		return null;
 	}
 }

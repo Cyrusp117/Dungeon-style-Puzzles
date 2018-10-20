@@ -1,7 +1,5 @@
 package entities;
 
-import java.awt.event.KeyEvent;
-
 import javafx.scene.input.KeyCode;
 
 public class Key extends Entity {

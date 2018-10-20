@@ -180,34 +180,6 @@ public class Player extends Entity {
 		if(curSword.getDurability() == 0) {
 			inventory.remove(curSword);
 		}
-//		int r = 0;
-//		Entity remove = null;
-//		if(this.hasItem("Sword")) {
-//			for(Entity e: this.getInventory()) {
-//				if(e.getName().equals("Sword")) {
-//					Sword sword = (Sword) e; 
-//					sword.getDesignerDescription();
-//					if(sword.getHitTime() == 0) {
-//						remove = e;
-//						r = 1;
-//					}
-//				}
-//			}
-//		}
-//		//hit using sword
-//		if(r == 0 && this.hasItem("Sword")) {
-//			return true;
-//		//presss v but don't have sword
-//		}else if (r== 0 && !this.hasItem("Sword")){
-//			System.out.println("You don't have sword!");
-//			return false;
-//	    //hit using sword and remove the sword from inventory
-//		}else if(r == 1){
-//			System.out.println("Remove sword from inventory!");
-//			this.getInventory().remove(remove);
-//			return false;
-//		}
-//		return false;
 	}
 
 	public boolean hasItem(String item) {
@@ -284,27 +256,17 @@ public class Player extends Entity {
 		return null;
 	}
 	
-	public Arrow setArrow() {
-		for(Entity e: this.getInventory()) {
-			if(e.getName().equals("Arrow")) {
-				Arrow arrow = (Arrow)e;
-				this.removeItem(arrow);
-				return arrow;
-			}
-		}
-		return null;
-	}
 	
-	public Bone setBone() {
-		for(Entity e: this.getInventory()) {
-			if(e.getName().equals("Bone")) {
-				Bone bone = (Bone)e;
-				this.removeItem(bone);
-				return bone;
-			}
-		}
-		return null;
-	}
+//	public Bone setBone() {
+//		for(Entity e: this.getInventory()) {
+//			if(e.getName().equals("Bone")) {
+//				Bone bone = (Bone)e;
+//				this.removeItem(bone);
+//				return bone;
+//			}
+//		}
+//		return null;
+//	}
 	
 	@Override
 	public boolean interactWithBomb() {

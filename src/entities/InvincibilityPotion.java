@@ -1,6 +1,5 @@
 package entities;
 
-import java.awt.event.KeyEvent;
 
 import javafx.scene.input.KeyCode;
 
