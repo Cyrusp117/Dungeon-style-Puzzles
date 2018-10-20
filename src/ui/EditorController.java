@@ -66,10 +66,10 @@ public class EditorController extends Controller {
     	private Button deleteButton;
     	@FXML
     	private Button addButton;
-    	
+    	@FXML
+    	private Button testButton;
     	@FXML
     	private Label targetName;
-    	
     	@FXML
     	private GridPane imageMap;
     	//private GridPane gridTest;
@@ -131,6 +131,20 @@ public class EditorController extends Controller {
 	        	});
 	        }
 	        printGame();
+	        
+	        for( Node node: selector.getChildren()) {
+	        	if(node instanceof Pane) {
+	        		for(Node childNode: ((Pane) node).getChildren()) {
+	        			if(childNode instanceof ImageView) {
+	        				Image sprite = new Image("resources/" + node.getId()
+							+ ".png");
+	        				System.out.println("resources/" + node.getId()
+							+ ".png");
+	        				((ImageView) childNode).setImage(sprite);
+	        			}
+	        		}
+	        	}
+	        }
 	    }
 
 	    private void addPane(int colIndex, int rowIndex) {
@@ -208,10 +222,18 @@ public class EditorController extends Controller {
 				}
 			}
 	    }
+			public void testGame() {
+		        Screen test = new Screen(super.getS(), "Test", "view/test.fxml");
+		        TestController pc = new TestController(super.getS(), game);
+		        pc.getClass();
+		        test.start(pc);
+				
+			}
+	    }
 
 	    
 	    
 //        pane.setOnMouseClicked(e -> {
 //            System.out.printf("Mouse entered cell [%d, %d]%n", colIndex, rowIndex);
 //        });
-	}
+	

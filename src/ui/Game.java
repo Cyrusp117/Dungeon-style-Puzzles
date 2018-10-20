@@ -19,6 +19,13 @@ public class Game{
 		generateMap();
 	}
 	
+	//Copy constructor
+	public Game(Game otherGame) {
+		this.width = otherGame.width;
+		this.height = otherGame.height;
+		this.entities = otherGame.entities;
+		this.map = otherGame.map;
+	}
 	//Done
 	public void generateMap() {
 		for( int i = 0; i <= width; i++ ) {
