@@ -319,7 +319,7 @@ public class Game{
 			// can add boulder/floor switch on top of one another
 			// Arrow can be added on top of Player
 			if (!curEntity.canBePlacedOnTop(entity)) {
-				System.out.println("Here1");
+				//System.out.println("Here1");
 				return false;
 			}
 		}
@@ -630,52 +630,38 @@ public class Game{
 		return closest;
 	}
 
-	
-//	@Override
-//	public String toString() {
-//		StringBuilder sb = new StringBuilder();
-//        int i = 0;
-//        int j = 0;
-//		while (i <= this.getHeight()) {
-//        	while (j <= this.getWidth()) {
-//        		Coordinate curPos = new Coordinate(j, i);
-//        		Entity entity = getEntity(curPos);
-//        		if(entity != null) {
-//        			sb.append(entity.getKeyCode().getName());
-//        		} else {
-//        			sb.append("-");
-//        		}
-//        		sb.append(" ");
-//        		j++;
-//        	}
-//        	sb.append("\n");
-//        	j = 0;
-//        	i++;
-//        }
-//		return sb.toString();
-//	}
-	
 	public void printGame() {
-    int i = 0;
-    int j = 0;
-	while (i <= this.getHeight()) {
-  	while (j <= this.getWidth()) {
-  		Coordinate curPos = new Coordinate(j, i);
- 		Entity entity = getFirstEntity(curPos);
- 		
-  		if (curPos.equals(player.getPosition())) {
-  			System.out.print("1");
-  		} else if(entity != null) {
-  			System.out.print(entity.getKeyCode().getName());
-  		} else {
-  			System.out.print("-");
-  		}
-  		System.out.print(" ");
-  		j++;
- 	}
- 	System.out.println("");
-  	j = 0;
-  	i++;
-  }
-}
+	    int i = 0;
+	    int j = 0;
+		while (i <= this.getHeight()) {
+	  	while (j <= this.getWidth()) {
+	  		Coordinate curPos = new Coordinate(j, i);
+	 		Entity entity = getFirstEntity(curPos);
+	 		
+	  		if (curPos.equals(player.getPosition())) {
+	  			System.out.print("1");
+	  		} else if(entity != null) {
+	  			System.out.print(entity.getKeyCode().getName());
+	  		} else {
+	  			System.out.print("-");
+	  		}
+	  		System.out.print(" ");
+	  		j++;
+	 	}
+	 	System.out.println("");
+	  	j = 0;
+	  	i++;
+	  }
+	}
+	
+	public Arrow getPlayerArrow() {
+    	Arrow arrow = null;
+    	for (Entity curItem : getPlayerInventory()) {
+    		if (curItem instanceof Arrow) {
+    			arrow = (Arrow)curItem;
+    			return arrow;
+    		}
+    	}
+		return null;
+	}
 }

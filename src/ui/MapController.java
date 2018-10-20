@@ -161,27 +161,19 @@ public class MapController extends Controller {
 	    		System.out.print(curItem.getName() + " ");
 	    	}
 	    	System.out.println("\n");
-		} else if (key.equals(KeyCode.DIGIT2)) {
-	    	Arrow arrow = null;
-           
-
-	    	for (Entity curItem : game.getPlayerInventory()) {
-	    		if (curItem instanceof Arrow) {
-	    			arrow = (Arrow)curItem;
-	    			arrow.setPosition(game.getPlayer().getPosition());
-	    			arrow.setDy(-1); 
-	    			arrow.setDx(0);
-	    			game.addEntity(arrow);
-	    			break;
-	    		}
-	    	}
+		} else if (Arrow.checkKeyCode(key)) {
+	    	Arrow arrow = game.getPlayerArrow();
 	    	if(arrow!=null) {
-	    		System.out.println("Shooting upwards");
+	    		arrow.setDirection(key);
+	    		arrow.setPosition(player.getPosition());
+	    		//arrow.move();
 	    		player.removeItem(arrow);
+	    		game.addEntity(arrow);
 	    		game.update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
+
 		} else if (key.equals(KeyCode.V)) {
 	    	System.out.println("Checking for bomb");
 	    	if(player.hasItem("Bomb")) {
@@ -197,7 +189,7 @@ public class MapController extends Controller {
 			      DesignController dc = new DesignController(super.getS(), game);
 			      map1.start(dc);
 			}
-		} else if (key.equals(KeyCode.DIGIT3)) {
+		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Bone bone = null;
 
             //need to check if wall, because then no can do
