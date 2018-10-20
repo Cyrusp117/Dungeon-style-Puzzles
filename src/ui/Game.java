@@ -557,7 +557,7 @@ public class Game{
 		return allDesignerObjects;
 	}
 	
-	//now that im giving list of entities to Enemies, I may have to make this a strategist function
+	//now that im giving list of entities to Enemies
 	private Coordinate closestPickup(Enemy enemy) {
 		Coordinate closest = null;
 		Entity ent = null;
@@ -597,6 +597,9 @@ public class Game{
 			g= generateGraph();
 			g.addCoordinate(object.getPosition());
 			g.addCoordinate(enemy.getPosition());
+			if (!g.hasCoordinate(player.getPosition())) {
+				g.addCoordinate(player.getPosition());
+			}
 			g.generateEdges();
 			tempSize = g.sizeBFS(player.getPosition(), object.getPosition());
 			if (tempSize < size || size == -1) {
@@ -608,10 +611,13 @@ public class Game{
 		    g= generateGraph();
 		    g.addCoordinate(ent.getPosition());
 		    g.addCoordinate(enemy.getPosition());
+		    if (!g.hasCoordinate(player.getPosition())) {
+				g.addCoordinate(player.getPosition());
+			}
 		    g.generateEdges();
 		    closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
 		//test
-		    System.out.println(ent.getName());
+		    //System.out.println(ent.getName());
 		}
 		return closest;
 	}

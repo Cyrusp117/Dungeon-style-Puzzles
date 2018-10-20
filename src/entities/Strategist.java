@@ -21,5 +21,6 @@ public class Strategist extends Enemy {
 	public String getName() {
 		return "Strategist";
 	}
+	
 
 }
