@@ -2,6 +2,7 @@ package ui;
 
 import entities.Coordinate;
 import entities.Entity;
+import entities.Player;
 
 public class DeleteEntityCommand implements EditorCommand {
 	private Entity entity;
@@ -20,7 +21,11 @@ public class DeleteEntityCommand implements EditorCommand {
 
 	@Override
 	public void undo() {
+		if(entity.getName().equals("Player")) {
+			game.setPlayer((Player)entity);
+		}
 		game.addEntity(entity);
+		
 		// TODO Auto-generated method stub
 
 	}

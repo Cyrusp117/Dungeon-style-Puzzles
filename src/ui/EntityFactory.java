@@ -20,7 +20,7 @@ import entities.Treasure;
 import entities.Wall;
 
 public class EntityFactory {
-	private Entity concreteEntity;
+	private Entity concreteEntity = null;
 	
 	public Entity createEntity(String entityName, Coordinate co) {
 		if(entityName.equals("Arrow")) {

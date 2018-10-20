@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Game{ 								
 	private static final Entity NULL = null;
 	private int width, height;					//Width and height of the app window
-	private Player player;					//Tracking the player entity
+	private Player player = null;					//Tracking the player entity
 //	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
@@ -295,8 +295,11 @@ public class Game{
 	 */
 	public void createPlayer(Coordinate position) {
 		if(isOccupied(position)) return;
-		player = new Player(position);
-		getMapCo(position).addEntity(player);
+		if(player == null) {
+			player = new Player(position);
+		
+			getMapCo(position).addEntity(player);
+		}
 	}
 
 	//done
@@ -355,7 +358,8 @@ public class Game{
 	public void deleteEntity(Entity entity) {
 		getMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
-		if(entity.equals(player)) {
+		if(entity.getName().equals("Player")) {
+			System.out.println("done");
 			player = null;
 		}
 	}

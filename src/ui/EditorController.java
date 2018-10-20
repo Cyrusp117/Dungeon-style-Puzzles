@@ -3,8 +3,13 @@ import entities.Coordinate;
 import entities.Entity;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -57,14 +62,23 @@ public class EditorController extends Controller {
     	private Pane Treasure;
     	@FXML
     	private Pane Wall;
+    	@FXML
+    	private Button deleteButton;
+    	@FXML
+    	private Button addButton;
     	
     	@FXML
+    	private Label targetName;
+    	
+    	@FXML
+    	private GridPane imageMap;
     	//private GridPane gridTest;
     	
     	private String selectedEntity = null;
     	private EntityProducer producer;
     	private Game game;
     	private EditorInvoker invoker;
+    	private Entity deleteTarget = null;
     	
     	public EditorController(Stage s, Game game) {
     		super(s);
@@ -78,29 +92,34 @@ public class EditorController extends Controller {
 	    	invoker = new EditorInvoker();
 	        int numCols = game.getWidth() ;
 	        int numRows = game.getHeight() ;
+	        game.generatePerimeter();
 
-	        for (int i = 0 ; i < numCols ; i++) {
+	        for (int i = 0 ; i <= numCols ; i++) {
 	            ColumnConstraints colConstraints = new ColumnConstraints();
 	            colConstraints.setHgrow(Priority.NEVER);
 	            //colConstraints.setMaxWidth(32);
 	            //colConstraints.setMinWidth(32);
 	            map.getColumnConstraints().clear();
 	            map.getColumnConstraints().add(colConstraints);
+	            imageMap.getColumnConstraints().clear();
+	            imageMap.getColumnConstraints().add(colConstraints);
 	            //gridTest.getColumnConstraints().add(colConstraints);
 	        }
 
-	        for (int i = 0 ; i < numRows ; i++) {
+	        for (int i = 0 ; i <= numRows ; i++) {
 	            RowConstraints rowConstraints = new RowConstraints();
 	            rowConstraints.setVgrow(Priority.NEVER);
 	            
 	            //rowConstraints.setMaxHeight(32);
 	            //rowConstraints.setMinHeight(32);
 	            map.getRowConstraints().clear();
-	            map.getRowConstraints().add(rowConstraints);   
+	            map.getRowConstraints().add(rowConstraints);  
+	            imageMap.getRowConstraints().clear();
+	            imageMap.getRowConstraints().add(rowConstraints);
 	        }
 
-	        for (int i = 0 ; i < numCols ; i++) {
-	            for (int j = 0; j < numRows; j++) {
+	        for (int i = 0 ; i <= numCols ; i++) {
+	            for (int j = 0; j <= numRows; j++) {
 	                addPane(i, j);
 	            }
 	        }
@@ -111,15 +130,25 @@ public class EditorController extends Controller {
 	        		descriptor.setText(selectedEntity);
 	        	});
 	        }
+	        printGame();
 	    }
 
 	    private void addPane(int colIndex, int rowIndex) {
-	        Pane pane = new Pane();
-	        pane.setMinSize(32, 32);
+	        Pane pane = new Pane();    
+	        pane.setMinSize(32,32);
 	        pane.setMaxSize(32,32);
 	    
 	        pane.setOnMouseClicked(e -> {
 	        	insertEntity(colIndex, rowIndex);
+	        	Coordinate curTile = new Coordinate(colIndex, rowIndex);
+	        	deleteTarget = game.getEntity(curTile);
+	        	//System.out.println("NULL");
+	        	targetName.getId();
+	        	if(deleteTarget == null) {
+	        		targetName.setText("None");
+	        	}else {
+	        		targetName.setText(deleteTarget.getName());
+	        	}
 	            System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
 	        });
 	        map.add(pane, colIndex, rowIndex);
@@ -132,18 +161,56 @@ public class EditorController extends Controller {
 	    		InsertEntityCommand toDo = new InsertEntityCommand(producer, game, requestedSpace, selectedEntity);
 	    		invoker.invoke(toDo);
 	    	}
+	    	printGame();
 	    }
 	    
-	    public void deleteEntity(Entity entity) {
-	    	if(entity != null) {
-	    		DeleteEntityCommand toDo = new DeleteEntityCommand(game, entity);
+	    public void deleteEntity() {
+	    	if(deleteTarget != null) {
+	    		DeleteEntityCommand toDo = new DeleteEntityCommand(game, deleteTarget);
 	    		invoker.invoke(toDo);
 	    	}
+	    	printGame();
 	    }
 	    
 	    public void undo() {
 	    	invoker.undo();
+	    	printGame();
 	    }
+	    
+	    public void nullify() {
+	    	deleteTarget = null;
+	    	targetName.setText("None");
+	    	selectedEntity = null;
+	    	descriptor.setText("None");
+	    }
+	    
+	    public void printGame() {
+			imageMap.getChildren().clear();
+			for( int i = 0; i <= game.getWidth(); i++ ) {
+				for ( int j = 0; j <= game.getHeight(); j++ ) {
+					Coordinate newPos = new Coordinate(i,j);
+					Entity entity = game.getEntity(newPos);
+					Image image = new Image("resources/white.png");
+					if (entity != null) {
+						//System.out.println("Adding Entity: " + entity.getName());
+						image = new Image("resources/" + entity.getName()
+													+ ".png");
+					}
+					
+					ImageView iv = new ImageView(image);
+					iv.setFitHeight(32);
+					iv.setFitWidth(32);
+					iv.setNodeOrientation(NodeOrientation.INHERIT);
+//					GridPane.setFillWidth(iv, true);
+//					GridPane.setFillHeight(iv, true);
+					imageMap.add(iv, i, j);
+
+				}
+			}
+	    }
+
+	    
+	    
 //        pane.setOnMouseClicked(e -> {
 //            System.out.printf("Mouse entered cell [%d, %d]%n", colIndex, rowIndex);
 //        });

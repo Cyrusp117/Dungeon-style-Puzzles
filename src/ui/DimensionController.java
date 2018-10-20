@@ -16,30 +16,39 @@ public class DimensionController extends Controller {
 	@FXML
 	private Button confirm;
 	
+	private int gameWidth = 10;
+	private int gameHeight = 10;
 	public DimensionController(Stage s) {
 		super(s);
 	}	
 	
 	public void onConfirm() {
-		int gameWidth = 10;
-		int gameHeight = 10;
+		boolean errorFlag = false;
 		
 		try {
 			gameWidth = Integer.parseInt(width.getText());
 		}catch(NumberFormatException e) {
 			width.clear();
 			width.setPromptText("Invalid Input: Input must be an integer");
-			try {
-				gameHeight = Integer.parseInt(height.getText());
-			}catch(NumberFormatException f) {
-				height.clear();
-				height.setPromptText("Invalid Input: Input must be an integer");
-				return;
-			}
+			errorFlag = true;
+			System.out.println("error true");
+		}
+		
+		try {
+			gameHeight = Integer.parseInt(height.getText());
+		}catch(NumberFormatException e) {
+			height.clear();
+			height.setPromptText("Invalid Input: Input must be an integer");
+			errorFlag = true;
+			System.out.println("error true");
+		}
+		
+		System.out.println("error true");
+		if(errorFlag == true) {
 			return;
 		}
 		
-		
+		System.out.println("gameWidth: " + gameWidth + "gameHeight: " + gameHeight);
 		if( (gameWidth <= 22 && gameWidth > 0) && (gameHeight <= 15 && gameHeight > 0)) {
 			Game game = new Game("Blank", gameWidth , gameHeight);
 			Screen blankMap1 = new Screen(super.getS(), "Blank", "view/editorScreen.fxml");
