@@ -26,12 +26,6 @@ public class MapSelectController extends Controller {
 	private Button btn1;
 	@FXML 
 	private Button btn2;
-	@FXML 
-	private Button btn3;
-	@FXML
-	private TextField height;
-	@FXML
-	private TextField width;
 	
 	protected boolean designer;
 	public MapSelectController(Stage s) {
@@ -84,13 +78,16 @@ public class MapSelectController extends Controller {
 	
 	public void startCustomMap() {
 		play_note();
-		int customHeight = Integer.parseInt(height.getText());
-		int customWidth = Integer.parseInt(width.getText());
-    	Game game = new Game(customHeight, customWidth);
-		Coordinate playerPos = new Coordinate(1,1); 
-    	game.addEntity(new Player(playerPos));
-    	loadMapScreen(game, "Custom map");
-        System.out.println("Custom map");
+		//int customHeight = Integer.parseInt(height.getText());
+		//int customWidth = Integer.parseInt(width.getText());
+    	//Game game = new Game(customHeight, customWidth);
+		//Coordinate playerPos = new Coordinate(1,1); 
+    	//game.addEntity(new Player(playerPos));
+    	//loadMapScreen(game, "Custom map");
+        //System.out.println("Custom map");
+		Screen dimensionSelect = new Screen(super.getS(), "Blank", "view/DimensionScreen.fxml");
+		DimensionController dimension = new DimensionController(super.getS());
+		dimensionSelect.start(dimension);
 	}
 	
 	public void previousMenu() {

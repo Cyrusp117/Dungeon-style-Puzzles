@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Game{ 								
 	private static final Entity NULL = null;
 	private int width, height;					//Width and height of the app window
-	private Player player;					//Tracking the player entity
+	private Player player = null;					//Tracking the player entity
 //	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
@@ -20,8 +20,13 @@ public class Game{
 		generateMap();
 	}
 	
-
-
+	//Copy constructor
+	public Game(Game otherGame) {
+		this.width = otherGame.width;
+		this.height = otherGame.height;
+		this.entities = otherGame.entities;
+		this.map = otherGame.map;
+	}
 	
 	public void update() {						//Updates the state of the game
 		// Arrow collisions, bomb explosions, player inventory update
@@ -299,6 +304,9 @@ public class Game{
 	}
 	
 	public boolean addEntity(Entity entity) {
+		if(entity instanceof Player && player != null) {
+			return false;
+		}
 		Coordinate position = entity.getPosition();
 		ArrayList<Entity> curEntities = getEntities(position);
 		if(curEntities.size() >= 2) {
@@ -380,6 +388,10 @@ public class Game{
 		player = new Player(position);
 		getMapCo(position).addEntity(player);
 		entities.add(player);
+		if(player == null) {
+			player = new Player(position);
+			getMapCo(position).addEntity(player);
+		}
 	}
 
 	//done
@@ -425,10 +437,11 @@ public class Game{
 	 * 
 	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
 	 */
-	private void deleteEntity(Entity entity) {
+	public void deleteEntity(Entity entity) {
 		getMapCo(entity).removeEntity(entity);
 		entities.remove(entity);
-		if(entity.equals(player)) {
+		if(entity.getName().equals("Player")) {
+			System.out.println("done");
 			player = null;
 		}
 	}
