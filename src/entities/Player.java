@@ -14,11 +14,10 @@ public class Player extends Entity {
 	private int dy; // Current y velocity
 	private int state;
 	ArrayList<Entity> inventory;
-	//private Game game;
+
 	
 	public Player(Coordinate position){
 		super(position);
-		//this.game = game;
 		dx = 0;
 		dy = 0;
 		inventory = new ArrayList<Entity>();
@@ -34,8 +33,6 @@ public class Player extends Entity {
 	 */
 
 	public Coordinate getMove() {
-		System.out.println("DX = " + dx + " DY = " + dy);
-		//System.out.println(position.getxPosition());
 	    int newX = position.getX() + dx;
 	    int newY = position.getY() + dy;
 	    Coordinate newPos = new Coordinate(newX, newY);
@@ -57,7 +54,6 @@ public class Player extends Entity {
 	 */
 	public void pickUp(Entity entity) {
 		inventory.add(entity);
-		System.out.println("Picked up: " + entity.getName());
 	}
 	
 	/**

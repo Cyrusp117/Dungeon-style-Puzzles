@@ -113,7 +113,7 @@ public class MapController extends Controller {
 				}else {
 					path = "resources/theme2/";
 				}
-				//Image image = new Image(path + "white.png");
+
 				if (entity != null) {
 					Image image = new Image(path + entity.getName()
 												+ ".png");
@@ -156,7 +156,6 @@ public class MapController extends Controller {
 	    	if(arrow!=null) {
 	    		arrow.setDirection(key);
 	    		arrow.setPosition(player.getPosition());
-	    		//arrow.move();
 	    		player.removeItem(arrow);
 	    		game.addEntity(arrow);
 	    		update();

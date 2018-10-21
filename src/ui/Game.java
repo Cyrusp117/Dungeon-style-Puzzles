@@ -183,7 +183,6 @@ public class Game{
 				}
 			}
 		}
-		printPlayerCoordinates();
 	}
 	
 
@@ -315,7 +314,6 @@ public class Game{
 		}
 
 		if(isOutOfBounds(position)) return false;
-		System.out.println("adding entity: " + entity.getName() + " at Coordinates: " + position.getX() + ", " + position.getY());
 		getMapCo(entity).addEntity(entity);
 		entity.setPosition(getMapCo(entity));
 		entities.add(entity);
@@ -380,7 +378,6 @@ public class Game{
 	 */
 	public void generatePerimeter() {
 		int i,j;
-		//System.out.print(width + " " + height);
 		for(i = 0; i <= width; i ++) {
 			for(j = 0; j <= height; j++) {
 				if(j == 0 || j == height || i == 0 || i == width) {
