@@ -173,6 +173,7 @@ public class Game{
 				if (isOutOfBounds(newInteractablePos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
 					moveEntity(player, player.getOldPosition());
 				} else {
+					
 					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
 					if (atNewEntityPos == interactable) {
 						// Entity that player is interacting with
@@ -181,9 +182,8 @@ public class Game{
 							moveEntity(player, player.getOldPosition());
 						}
 
-					// An entity that player has interacted with has moved
 					} else {
-						// Interactable entity has moved
+						// An entity that player has interacted with has moved
 						if (atNewEntityPos == null) {
 							moveEntity(interactable, newInteractablePos);
 						} else {
