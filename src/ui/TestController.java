@@ -127,13 +127,12 @@ public class TestController extends Controller {
 	}
 	
 	/**
-	 * 
-	 * @param ke the KeyEvent that triggered by User
+	 * Does player actions depending on input KeyEvent 
+	 * @param ke - the KeyEvent that is triggered
 	 */
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
     	Player player = game.getPlayer();
-    	System.out.println(player == initialGame.getPlayer());
     	player.setDx(0);
     	player.setDy(0);
 		if (key.equals(KeyCode.W)) {
@@ -157,6 +156,7 @@ public class TestController extends Controller {
 	    	if(arrow!=null) {
 	    		arrow.setDirection(key);
 	    		arrow.setPosition(player.getPosition());
+	    		//arrow.move();
 	    		player.removeItem(arrow);
 	    		game.addEntity(arrow);
 	    		update();
@@ -174,6 +174,8 @@ public class TestController extends Controller {
 	    	}
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Bone bone = null;
+
+            //need to check if wall, because then no can do
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Bone) {
 	    			bone = (Bone)curItem;
@@ -184,9 +186,12 @@ public class TestController extends Controller {
 	    			break;
 	    		}
 	    	}
-	    	if (bone!=null) {
+	    	if(bone!=null) {
+	    		System.out.println("Shooting bone");
 	    		player.removeItem(bone);
 	    		update();
+	    	} else {
+	    		System.out.println("No bones :(");
 	    	}
 		}
 		printGame();
