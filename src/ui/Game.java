@@ -85,7 +85,7 @@ public class Game{
 		if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 			FloorSwitch fs = (FloorSwitch)entity; 
 			fs.deactivate();
-			if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+			if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
 				fs.activate();
 			}
 		}
