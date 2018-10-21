@@ -35,6 +35,10 @@ public class Bomb extends Entity {
 		return position;
 	}
 	
+	/**
+	 * 
+	 * @return ArrayList of Coordinates that bomb's explosion affects
+	 */
 	public ArrayList<Coordinate> affectedAreas() {
 		ArrayList<Coordinate> affectedAreas = new ArrayList<>();
 		affectedAreas.add(position.moveDown());
@@ -48,18 +52,32 @@ public class Bomb extends Entity {
 		return "Bomb_" + Integer.toString(getTurnsLeft());
 	}
 
+	/**
+	 * 
+	 * @return True if bomb is active
+	 */
 	public boolean isLit() {
 		return active;
 	}
 	
+	/**
+	 * Sets bomb to active state
+	 */
 	public void light() {
 		active = true;
 	}
 	
+	/**
+	 * 
+	 * @return Turns to explosion
+	 */
 	public int getTurnsLeft() {
 		return turnsLeft;
 	}
 	
+	/**
+	 * Reduce turns left to explosion
+	 */
 	public void tickTock() {
 		turnsLeft--;
 	}
