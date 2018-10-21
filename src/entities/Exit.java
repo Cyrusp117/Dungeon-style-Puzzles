@@ -16,4 +16,10 @@ public class Exit extends Entity {
 		return "Exit";
 	}
 	
+	@Override
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof Player) {return true;}
+		return false;
+	}
+	
 }

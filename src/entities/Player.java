@@ -278,7 +278,8 @@ public class Player extends Entity {
 	public boolean canBePlacedOnTop(Entity entity) {
 		if (entity instanceof Arrow) {	return true; }
 		if (entity instanceof Bomb) { return true; }
-		if (entity instanceof Bone) {	return true; }
+		if (entity instanceof Bone) { return true; }
+		if (entity instanceof Exit) { return true; }
 		return false;
 	}
 	

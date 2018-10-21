@@ -90,26 +90,26 @@ public class Game{
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
-//			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
-//				FloorSwitch fs = (FloorSwitch)entity; 
-//				fs.deactivate();
-//				if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
-//					fs.activate();
-//				}
-//				if(!fs.getState()) {
-//					allSwitch = 0;
-//				}
-//			}
 			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 				FloorSwitch fs = (FloorSwitch)entity; 
 				fs.deactivate();
-				if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+				if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
 					fs.activate();
 				}
 				if(!fs.getState()) {
 					allSwitch = 0;
 				}
 			}
+//			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
+//				FloorSwitch fs = (FloorSwitch)entity; 
+//				fs.deactivate();
+//				if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+//					fs.activate();
+//				}
+//				if(!fs.getState()) {
+//					allSwitch = 0;
+//				}
+//			}
 			
 			// Checks general win condition
 			if (entity instanceof Exit){
@@ -182,14 +182,8 @@ public class Game{
 					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
 					if (atNewEntityPos == interactable) {
 						// entity hasnt moved after interaction
-						if (interactable instanceof Enemy){
-							// if we've interacted with the enemy 
-							// but enemy is still in same position (not dead)
-							// therefore, we are dead
-						} else if (interactable instanceof Pit) {
-						} else {
-							moveEntity(player, player.getOldPosition());
-						}
+						moveEntity(player, player.getOldPosition());
+						//}
 					// BOULDER STUFF
 					} else if (atNewEntityPos == NULL) {
 						// boulder has moved to empty spot

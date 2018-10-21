@@ -26,7 +26,7 @@ public class Key extends Entity {
 			return null;
 		} else {
 			System.out.println("Already have key");
-			player.setPosition(player.getOldPosition());
+			//player.setPosition(player.getOldPosition());
 			return position;
 		}
 
