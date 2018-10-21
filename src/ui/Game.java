@@ -143,18 +143,9 @@ public class Game{
 			return;
 		}
 		ArrayList<Entity> entities = getEntities(newPlayerPos);
-		Entity interactable = null;
-		for (Entity curEntity : entities) {
-			// maybe add an canInteractWithPlayer?
-			if (curEntity instanceof FloorSwitch) {
-				continue;
-			} else {
-				interactable = curEntity;
-			}
-		}
+		ArrayList<Entity> entitiesClone = cloneEntities(entities); 
 		moveEntity(player, newPlayerPos);
-		
-		if (interactable!=NULL) {
+		for (Entity interactable : entitiesClone) {
 			System.out.println("CurPos has a: " + interactable.getName());
 			Coordinate newInteractablePos = interactable.interactWithPlayer(player);
 			if(newInteractablePos == null) {
@@ -164,38 +155,45 @@ public class Game{
 				if (isOutOfBounds(newInteractablePos)) {		// assuming that if thre are more than one entity at that location, no interaction can be had
 					moveEntity(player, player.getOldPosition());
 				} else {
+					
 					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
 					if (atNewEntityPos == interactable) {
-						// entity hasnt moved after interaction
-						if (interactable instanceof Pit) {
-						} else if (interactable instanceof Exit) {
-						} else {
+						// Entity that player is interacting with
+						// hasnt moved or been deleted or was out of bounds
+						if(!player.canBePlacedOnTop(atNewEntityPos)) {
 							moveEntity(player, player.getOldPosition());
 						}
-						//}
-					// BOULDER STUFF
-					} else if (atNewEntityPos == NULL) {
-						// boulder has moved to empty spot
-						moveEntity(interactable, newInteractablePos);
-					} else if (atNewEntityPos instanceof Pit) {
-						// boulder has moved onto pit
-						deleteEntity(interactable);
-					} else if (atNewEntityPos instanceof FloorSwitch) {
-						// boulder has moved onto floorswitch
-						moveEntity(interactable, newInteractablePos);
+
 					} else {
-						//System.out.println("Entity is" + interactable.getDesignerDescription());
-						moveEntity(interactable, interactable.getOldPosition());
-						moveEntity(player, player.getOldPosition());
+						// An entity that player has interacted with has moved
+						if (atNewEntityPos == null) {
+							moveEntity(interactable, newInteractablePos);
+						} else {
+							newInteractablePos = interactable.interact(atNewEntityPos);
+							if (newInteractablePos == null) {
+								deleteEntity(interactable); 
+							} else if (interactable.isValid()) {	
+								moveEntity(interactable, newInteractablePos);
+							} else {
+								moveEntity(interactable, interactable.getOldPosition());
+								moveEntity(player, player.getOldPosition());
+							}
+						}
 					}
-					// END BOULDER STUFF
 				}
 			}
-			
 		}
 		printPlayerCoordinates();
 	}
 	
+
+	private ArrayList<Entity> cloneEntities(ArrayList<Entity> entities) {
+		ArrayList<Entity> clone = new ArrayList<>();
+		for(Entity e:entities) {
+			clone.add(e);
+		}
+		return clone;
+	}
 
 	/**
 	 *  Updates interactions with items (player inv + in dungeon)

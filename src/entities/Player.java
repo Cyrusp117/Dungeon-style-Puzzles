@@ -305,6 +305,8 @@ public class Player extends Entity {
 		if (entity instanceof Bomb) { return true; }
 		if (entity instanceof Bone) { return true; }
 		if (entity instanceof Exit) { return true; }
+		if (entity instanceof Pit) { return true; }
+		if (entity instanceof FloorSwitch) { return true; }
 		return false;
 	}
 	

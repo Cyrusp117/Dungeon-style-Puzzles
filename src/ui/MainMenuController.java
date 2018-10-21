@@ -7,11 +7,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,15 +22,13 @@ public class MainMenuController extends Controller implements Initializable {
 	Media me;
 	@FXML 
 	private Button playerMode;
-	@FXML
-	private Button designMode;
 	
 	public MainMenuController(Stage s) {
 		super(s);
 	}
 	
 	/**
-	 * Move to Map selection screen
+	 * Move to Map selection screen when start button is pressed
 	 */
 	public void startGame() {
 		play_note();
@@ -53,7 +46,10 @@ public class MainMenuController extends Controller implements Initializable {
 		//note.setCycleCount(3);
 		note.play();
 	}
-
+	
+	/**
+	 * Sets up background audio music file
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		String path = new File("src/ui/background.mp3").getAbsolutePath();

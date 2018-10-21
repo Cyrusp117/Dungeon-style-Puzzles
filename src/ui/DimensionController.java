@@ -3,6 +3,7 @@ package ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 public class DimensionController extends Controller {
@@ -29,7 +30,7 @@ public class DimensionController extends Controller {
 	 */
 	public void onConfirm() {
 		boolean errorFlag = false;
-		
+		play_note();
 		// Parsing user input for valid input
 		try {
 			gameWidth = Integer.parseInt(width.getText());
@@ -70,5 +71,13 @@ public class DimensionController extends Controller {
 		} 
 	}
 	
+	/*
+	 * Play audio clip
+	 */
+	private void play_note() {
+		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
+		//note.setCycleCount(3);
+		note.play();
+	}
 	
 }

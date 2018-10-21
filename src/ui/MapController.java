@@ -78,6 +78,7 @@ public class MapController extends Controller {
 	 * @param width - width of the gridpane
 	 */
 	private void makeGridPane(int height, int width) {
+		imageMap.setStyle("-fx-background-image: url('https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQxsasGQIwQNwjek3F1nSwlfx60g6XpOggnxw5dyQrtCL_0x8IW')");
 		// TODO Auto-generated method stub
         for (int i = 0 ; i <= width ; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
@@ -111,16 +112,17 @@ public class MapController extends Controller {
 				}else {
 					path = "resources/theme2/";
 				}
-				Image image = new Image(path + "white.png");
+				//Image image = new Image(path + "white.png");
 				if (entity != null) {
-					image = new Image(path + entity.getName()
+					Image image = new Image(path + entity.getName()
 												+ ".png");
+					ImageView iv = new ImageView(image);
+					iv.setFitHeight(32);
+					iv.setFitWidth(32);
+					imageMap.add(iv, i, j);
 				}
 				
-				ImageView iv = new ImageView(image);
-				iv.setFitHeight(32);
-				iv.setFitWidth(32);
-				imageMap.add(iv, i, j);
+
 
 			}
 		}
