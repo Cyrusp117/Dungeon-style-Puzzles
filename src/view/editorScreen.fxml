@@ -189,7 +189,7 @@
       <Button fx:id="backBtn" layoutX="885.0" layoutY="527.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
       <Button fx:id="testButton" layoutX="784.0" layoutY="527.0" mnemonicParsing="false" onAction="#testGame" text="Test" />
       <Label layoutX="727.0" layoutY="460.0" text="Current Target: " />
-      <Label fx:id="targetName" layoutX="812.0" layoutY="460.0" text="None" />
+      <Label fx:id="targetName" layoutX="833.0" layoutY="460.0" text="None" />
       <Label layoutX="727.0" layoutY="560.0" text="Win Conditions:" />
       <AnchorPane fx:id="winConPanel" layoutX="734.0" layoutY="581.0" prefHeight="216.0" prefWidth="228.0">
          <children>
@@ -197,7 +197,7 @@
             <CheckBox fx:id="killCBox" layoutY="50.0" mnemonicParsing="false" onContextMenuRequested="#addKill" text="Kill all enemies" />
             <CheckBox fx:id="TreasureCBox" layoutY="25.0" mnemonicParsing="false" onContextMenuRequested="#addTreasure" text="Find all Treasure" />
             <Button fx:id="setHunterBtn" layoutX="-7.0" layoutY="73.0" mnemonicParsing="false" onAction="#assignHunter" text="Set Hunter" />
-            <Label fx:id="houndMarker" layoutX="76.0" layoutY="76.0" text="None Selected" />
+            <Label fx:id="houndMarker" layoutX="90.0" layoutY="77.0" text="None Selected" />
          </children>
       </AnchorPane>
    </children>
