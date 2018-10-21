@@ -122,7 +122,9 @@ public class EditorController extends Controller {
 	        setupRows(numRows);
 	        setupPanes(numCols, numRows);  
 	        setupSelector();
+			imageMap.setStyle("-fx-background-image: url('https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQxsasGQIwQNwjek3F1nSwlfx60g6XpOggnxw5dyQrtCL_0x8IW')");
 	        printGame();
+
 	    }
 
 		/**
@@ -294,16 +296,15 @@ public class EditorController extends Controller {
 					}else {
 						path = "resources/theme2/";
 					}
-					Image image = new Image(path + "white.png");
+					//Image image = new Image(path + "white.png");
 					if (entity != null) {
-						image = new Image(path + entity.getName()
+						Image image = new Image(path + entity.getName()
 													+ ".png");
+						ImageView iv = new ImageView(image);
+						iv.setFitHeight(32);
+						iv.setFitWidth(32);
+						imageMap.add(iv, i, j);
 					}
-					ImageView iv = new ImageView(image);
-					iv.setFitHeight(32);
-					iv.setFitWidth(32);
-					iv.setNodeOrientation(NodeOrientation.INHERIT);
-					imageMap.add(iv, i, j);
 
 				}
 			}
