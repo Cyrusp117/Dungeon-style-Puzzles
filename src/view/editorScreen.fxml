@@ -187,7 +187,6 @@
       <Button fx:id="deleteButton" layoutX="828.0" layoutY="489.0" mnemonicParsing="false" onAction="#deleteEntity" text="Delete" />
       <Button fx:id="addButton" layoutX="885.0" layoutY="489.0" mnemonicParsing="false" onAction="#nullify" text="Cursor" />
       <Button fx:id="backBtn" layoutX="885.0" layoutY="527.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
-      <Button layoutX="828.0" layoutY="527.0" mnemonicParsing="false" text="Create" />
       <Button fx:id="testButton" layoutX="784.0" layoutY="527.0" mnemonicParsing="false" onAction="#testGame" text="Test" />
       <Label layoutX="727.0" layoutY="460.0" text="Current Target: " />
       <Label fx:id="targetName" layoutX="812.0" layoutY="460.0" text="None" />
@@ -197,6 +196,8 @@
             <CheckBox fx:id="FloorCBox" mnemonicParsing="false" onContextMenuRequested="#addFloor" text="Activate FloorSwitches" />
             <CheckBox fx:id="killCBox" layoutY="50.0" mnemonicParsing="false" onContextMenuRequested="#addKill" text="Kill all enemies" />
             <CheckBox fx:id="TreasureCBox" layoutY="25.0" mnemonicParsing="false" onContextMenuRequested="#addTreasure" text="Find all Treasure" />
+            <Button fx:id="setHunterBtn" layoutX="-7.0" layoutY="73.0" mnemonicParsing="false" onAction="#assignHunter" text="Set Hunter" />
+            <Label fx:id="houndMarker" layoutX="76.0" layoutY="76.0" text="None Selected" />
          </children>
       </AnchorPane>
    </children>
