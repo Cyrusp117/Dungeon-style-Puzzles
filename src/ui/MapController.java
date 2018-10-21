@@ -107,6 +107,7 @@ public class MapController extends Controller {
 			for ( int j = 0; j <= game.getHeight(); j++ ) {
 				Coordinate newPos = new Coordinate(i,j);
 				Entity entity = game.getFirstEntity(newPos);
+				entity = rearrange(game.getEntities(newPos), entity);
 				if(game.getTheme().equals("theme1")) {
 					path = "resources/theme1/";
 				}else {
@@ -257,6 +258,16 @@ public class MapController extends Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param newPos Coordinate to rearrange the order of Entities
+	 */
+	public Entity rearrange(ArrayList<Entity> toSort, Entity entity) {
+		if(toSort.size() == 2) {
+			return toSort.get(1);
+		}
+		return entity;
+	}
 	
 	private void play_move() {
 		AudioClip note = new AudioClip(this.getClass().getResource("move.wav").toString());
