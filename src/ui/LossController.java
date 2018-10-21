@@ -13,9 +13,11 @@ public class LossController extends Controller {
 	
 	public LossController(Stage s) {
 		super(s);
-		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 * Returns to previous Menu screen
+	 */
 	public void previousMenu() {
         Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());

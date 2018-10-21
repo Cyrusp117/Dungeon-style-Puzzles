@@ -139,7 +139,6 @@ public class EditorController extends Controller {
 	        }
 
 	        //For every pane in the selector, add respective sprite
-	        printGame();
 	        String path;
 	        if(game.getTheme().equals("theme1")) {
 				path = "resources/theme1/";
@@ -215,13 +214,7 @@ public class EditorController extends Controller {
 	        	insertEntity(colIndex, rowIndex);
 	        	Coordinate curTile = new Coordinate(colIndex, rowIndex);
 	        	deleteTarget = game.getFirstEntity(curTile);
-	        	if(deleteTarget instanceof entities.Hunter && nextHunter == 1) {
-	        		houndToSet.setHunter((entities.Hunter)deleteTarget);
-	        		nextHunter = 0;
-	        		houndToSet = null;
-	        		houndMarker.setText("None Selected");
-	        	}
-	        	targetName.getId();
+	        	setHunter();
 	        	if(deleteTarget == null) {
 	        		targetName.setText("None");
 	        	}else {
@@ -230,6 +223,18 @@ public class EditorController extends Controller {
 	        });
 	        map.add(pane, colIndex, rowIndex);
 	    }
+
+		/**
+		 * Test if Hunter needs to be set
+		 */
+		public void setHunter() {
+			if(deleteTarget instanceof entities.Hunter && nextHunter == 1) {
+				houndToSet.setHunter((entities.Hunter)deleteTarget);
+				nextHunter = 0;
+				houndToSet = null;
+				houndMarker.setText("None Selected");
+			}
+		}
 
 		/**
 		 * 
@@ -307,7 +312,11 @@ public class EditorController extends Controller {
 	     * Test the current game, changes screen state
 	     */
 			public void testGame() {
-				constructWinCon();
+				int layers = constructWinCon();
+				if(layers == 0) {
+					descriptor.setText("Please Select a Win Condition Or include an Exit");
+					return;
+				}
 				game.setWinChecker(winCheck);
 		        Screen test = new Screen(super.getS(), "Test", "view/test.fxml");
 		        TestController pc = new TestController(super.getS(), game);
@@ -348,27 +357,32 @@ public class EditorController extends Controller {
 			/**
 			 * Adds ExitWin Decorator
 			 */
-			public void exitCheck() {
+			public int exitCheck(int layers) {
 				for(Entity entity: game.getEntities()) {
 					if(entity instanceof entities.Exit) {
 						winCheck = new ExitWin(new WinChecker());
-						return;
+						layers++;
+						return layers;
 					}
 				}
+				return layers;
 			}
 			
 			/**
 			 * Construct the winCondition based on selection
 			 */
-			public void constructWinCon() {
+			public int constructWinCon() {
+				int layers = 0;
 				for( Node node: winConPanel.getChildren()) {
 					if( node instanceof CheckBox) {
 						if ( ((CheckBox) node).isSelected() ) {
+							layers++;
 							node.getOnContextMenuRequested().handle(null);
 						} 
 					}
 				}
-				exitCheck();
+				layers = exitCheck(layers);
+				return layers;
 			}
 			
 			/**

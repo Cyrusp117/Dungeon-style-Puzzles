@@ -62,35 +62,21 @@ public class TestController extends Controller {
 		this.initialGame = new Game(game);
 	}
 	
+	/**
+	 * Set up Map
+	 */
 	public void initialize() {
 		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
 		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
-		//map.setText(game.toString());
-		//imageMap.setCenterShape(true);
-		//imageMap.setGridLinesVisible(true);
-
-//        for (int row = 0 ; row < game.getHeight() ; row++ ){
-//            RowConstraints rc = new RowConstraints();
-////          rc.setMaxHeight(32);
-////          rc.setPrefHeight(32);
-//            rc.setFillHeight(true);
-////          rc.setVgrow(Priority.ALWAYS);
-//            imageMap.getRowConstraints().add(rc);
-//        }
-//        for (int col = 0 ; col < game.getWidth(); col++ ) {
-//            ColumnConstraints cc = new ColumnConstraints();
-////          cc.setMaxWidth(32);
-////          cc.setPrefWidth(32);
-//            cc.setFillWidth(true);
-////          cc.setHgrow(Priority.ALWAYS);
-//            imageMap.getColumnConstraints().add(cc);
-//        }
-
 	}
 	
+	/**
+	 * 
+	 * @param height of the GridPane
+	 * @param width of the GridPane
+	 */
 	private void makeGridPane(int height, int width) {
-		// TODO Auto-generated method stub
 
 		for( int i = 0; i <= width; i++ ) {
 	        ColumnConstraints cc = new ColumnConstraints();
@@ -111,8 +97,9 @@ public class TestController extends Controller {
        }
 	}
 
-
-
+	/*
+	 * Print current game
+	 */
 	public void printGame() {
 		imageMap.getChildren().clear();
 		String path;
@@ -130,19 +117,18 @@ public class TestController extends Controller {
 					image = new Image(path + entity.getName()
 												+ ".png");
 				}
-				
 				ImageView iv = new ImageView(image);
 				iv.setFitHeight(32);
 				iv.setFitWidth(32);
-//				GridPane.setFillWidth(iv, true);
-//				GridPane.setFillHeight(iv, true);
 				imageMap.add(iv, i, j);
-
 			}
 		}
-
 	}
 	
+	/**
+	 * 
+	 * @param ke the KeyEvent that triggered by User
+	 */
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
     	Player player = game.getPlayer();
@@ -170,7 +156,6 @@ public class TestController extends Controller {
 	    	if(arrow!=null) {
 	    		arrow.setDirection(key);
 	    		arrow.setPosition(player.getPosition());
-	    		//arrow.move();
 	    		player.removeItem(arrow);
 	    		game.addEntity(arrow);
 	    		update();
@@ -186,17 +171,8 @@ public class TestController extends Controller {
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);
 	    	}
-//		} else if (key.equals(KeyCode.E)) {
-//			boolean designer = (boolean)super.getS().getUserData();
-//			if(designer) {
-//			      Screen map1 = new Screen(super.getS(), "Map", "view/design.fxml");
-//			      DesignController dc = new DesignController(super.getS(), game);
-//			      map1.start(dc);
-//			}
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Bone bone = null;
-
-            //need to check if wall, because then no can do
 	    	for (Entity curItem : game.getPlayerInventory()) {
 	    		if (curItem instanceof Bone) {
 	    			bone = (Bone)curItem;
@@ -207,12 +183,9 @@ public class TestController extends Controller {
 	    			break;
 	    		}
 	    	}
-	    	if(bone!=null) {
-	    		System.out.println("Shooting bone");
+	    	if (bone!=null) {
 	    		player.removeItem(bone);
 	    		update();
-	    	} else {
-	    		System.out.println("No bones :(");
 	    	}
 		}
 		printGame();
@@ -224,7 +197,6 @@ public class TestController extends Controller {
 		player.setDy(-1);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	public void moveRight () {
 		play_move();
@@ -232,7 +204,6 @@ public class TestController extends Controller {
 		player.setDy(0);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	
 	public void moveLeft () {
@@ -241,7 +212,6 @@ public class TestController extends Controller {
 		player.setDy(0);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	public void moveDown () {
 		play_move();
@@ -249,11 +219,11 @@ public class TestController extends Controller {
 		player.setDy(1);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 
-
-
+/**
+ * Update state of the game
+ */
 	private void update() {
 		game.update();
 		if (game.isPlayerAlive() && game.hasPlayerWon()) {
@@ -263,13 +233,18 @@ public class TestController extends Controller {
 		}
 	}
 	
+	/**
+	 * Sound clip plays when player moves
+	 */
 	private void play_move() {
 		AudioClip note = new AudioClip(this.getClass().getResource("move.wav").toString());
 		//note.setCycleCount(3);
 		note.play();
 	}
 	
-	//Change
+	/**
+	 * Return to editor
+	 */
 	public void previousMenu() {
         Screen editor = new Screen(super.getS(), "Editor", "view/editorScreen.fxml");
         EditorController ec = new EditorController(super.getS(), initialGame);

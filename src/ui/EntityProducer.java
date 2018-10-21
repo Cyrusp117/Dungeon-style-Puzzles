@@ -11,6 +11,13 @@ public class EntityProducer {
 		this.factory = factory;
 	}
 	
+	/**
+	 * 
+	 * @param game the Game to add the entity to
+	 * @param co the Coordinate to add the entity
+	 * @param entityName the name of the class of the Entity
+	 * @return
+	 */
 	public Entity addEntityToGame(Game game, Coordinate co, String entityName) {
 		boolean added = false;
 		Entity toAdd = factory.createEntity(entityName, co);

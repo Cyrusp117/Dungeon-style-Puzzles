@@ -21,18 +21,13 @@ public class InsertEntityCommand implements EditorCommand {
 	@Override
 	public void execute() {
 		concreteEntity = producer.addEntityToGame(game, co, entity);
-		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void undo() {
 		if(concreteEntity != null) {
 			game.deleteEntity(concreteEntity);
 		}
-		// TODO Auto-generated method stub
-
 	}
-
 }
