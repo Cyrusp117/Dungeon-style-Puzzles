@@ -18,8 +18,10 @@ public class DimensionController extends Controller {
 	
 	private int gameWidth = 10;
 	private int gameHeight = 10;
-	public DimensionController(Stage s) {
+	private String theme;
+	public DimensionController(Stage s,String theme) {
 		super(s);
+		this.theme = theme;
 	}	
 	
 	/**
@@ -52,6 +54,7 @@ public class DimensionController extends Controller {
 		// Limits game size
 		if( (gameWidth <= 22 && gameWidth > 0) && (gameHeight <= 15 && gameHeight > 0)) {
 			Game game = new Game(gameWidth , gameHeight);
+			game.setTheme(theme);
 			Screen blankMap1 = new Screen(super.getS(), "Blank", "view/editorScreen.fxml");
 			EditorController editor = new EditorController(super.getS(), game);
 			blankMap1.start(editor);

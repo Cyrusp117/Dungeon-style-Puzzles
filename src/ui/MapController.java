@@ -69,26 +69,7 @@ public class MapController extends Controller {
 		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
 		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
-		//map.setText(game.toString());
-		//imageMap.setCenterShape(true);
-		//imageMap.setGridLinesVisible(true);
 
-//        for (int row = 0 ; row < game.getHeight() ; row++ ){
-//            RowConstraints rc = new RowConstraints();
-////          rc.setMaxHeight(32);
-////          rc.setPrefHeight(32);
-//            rc.setFillHeight(true);
-////          rc.setVgrow(Priority.ALWAYS);
-//            imageMap.getRowConstraints().add(rc);
-//        }
-//        for (int col = 0 ; col < game.getWidth(); col++ ) {
-//            ColumnConstraints cc = new ColumnConstraints();
-////          cc.setMaxWidth(32);
-////          cc.setPrefWidth(32);
-//            cc.setFillWidth(true);
-////          cc.setHgrow(Priority.ALWAYS);
-//            imageMap.getColumnConstraints().add(cc);
-//        }
 
 	}
 	
@@ -97,40 +78,16 @@ public class MapController extends Controller {
         for (int i = 0 ; i <= width ; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
             colConstraints.setHgrow(Priority.NEVER);
-            //colConstraints.setMaxWidth(32);
-            //colConstraints.setMinWidth(32);
             imageMap.getColumnConstraints().clear();
             imageMap.getColumnConstraints().add(colConstraints);
-            //gridTest.getColumnConstraints().add(colConstraints);
         }
 
         for (int i = 0 ; i <= height ; i++) {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setVgrow(Priority.NEVER);
-            
-            //rowConstraints.setMaxHeight(32);
-            //rowConstraints.setMinHeight(32);
             imageMap.getRowConstraints().clear();
             imageMap.getRowConstraints().add(rowConstraints);
         }
-        
-//		for( int i = 0; i <= width; i++ ) {
-//	        ColumnConstraints cc = new ColumnConstraints();
-//	        cc.setPercentWidth(100.0 / width);
-//	        cc.setMaxWidth(32);
-//	        cc.setPrefWidth(32);
-//	        cc.setFillWidth(true);
-//	        imageMap.getColumnConstraints().add(cc);
-//		}
-//		
-//	   for (int i = 0; i <= height; i++) {
-//            RowConstraints rc = new RowConstraints();
-//            rc.setPercentHeight(100.0 / height);
-//	        rc.setMaxHeight(32);
-//	        rc.setPrefHeight(32);
-//	        rc.setFillHeight(true);
-//            imageMap.getRowConstraints().add(rc);         
-//       }
 	}
 
 
@@ -156,8 +113,6 @@ public class MapController extends Controller {
 				ImageView iv = new ImageView(image);
 				iv.setFitHeight(32);
 				iv.setFitWidth(32);
-//				GridPane.setFillWidth(iv, true);
-//				GridPane.setFillHeight(iv, true);
 				imageMap.add(iv, i, j);
 
 			}
@@ -207,14 +162,6 @@ public class MapController extends Controller {
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);
 	    	}
-		} 
-		else if (key.equals(KeyCode.E)) {
-//			boolean designer = (boolean)super.getS().getUserData();
-//			if(designer) {
-//			      Screen map1 = new Screen(super.getS(), "Map", "view/design.fxml");
-//			      DesignController dc = new DesignController(super.getS(), game);
-//			      map1.start(dc);
-//			}
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Bone bone = null;
 

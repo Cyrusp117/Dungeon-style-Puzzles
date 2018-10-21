@@ -28,7 +28,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import sun.print.resources.serviceui;
 
 public class TestController extends Controller {
 	
@@ -116,13 +115,19 @@ public class TestController extends Controller {
 
 	public void printGame() {
 		imageMap.getChildren().clear();
+		String path;
 		for( int i = 0; i <= game.getWidth(); i++ ) {
 			for ( int j = 0; j <= game.getHeight(); j++ ) {
 				Coordinate newPos = new Coordinate(i,j);
 				Entity entity = game.getFirstEntity(newPos);
-				Image image = new Image("resources/white.png");
+				if(game.getTheme().equals("theme1")) {
+					path = "resources/theme1/";
+				}else {
+					path = "resources/theme2/";
+				}
+				Image image = new Image(path + "white.png");
 				if (entity != null) {
-					image = new Image("resources/" + entity.getName()
+					image = new Image(path + entity.getName()
 												+ ".png");
 				}
 				

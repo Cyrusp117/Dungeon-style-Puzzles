@@ -137,12 +137,20 @@ public class EditorController extends Controller {
 	        		descriptor.setText(selectedEntity);
 	        	});
 	        }
+
 	        //For every pane in the selector, add respective sprite
+	        printGame();
+	        String path;
+	        if(game.getTheme().equals("theme1")) {
+				path = "resources/theme1/";
+			}else {
+				path = "resources/theme2/";
+			}
 	        for( Node node: selector.getChildren()) {
 	        	if(node instanceof Pane) {
 	        		for(Node childNode: ((Pane) node).getChildren()) {
 	        			if(childNode instanceof ImageView) {
-	        				Image sprite = new Image("resources/" + node.getId()
+	        				Image sprite = new Image(path + node.getId()
 							+ ".png");
 	        				((ImageView) childNode).setImage(sprite);
 	        			}
@@ -271,13 +279,19 @@ public class EditorController extends Controller {
 	     */
 	    public void printGame() {
 			imageMap.getChildren().clear();
+			String path;
 			for( int i = 0; i <= game.getWidth(); i++ ) {
 				for ( int j = 0; j <= game.getHeight(); j++ ) {
 					Coordinate newPos = new Coordinate(i,j);
 					Entity entity = game.getFirstEntity(newPos);
-					Image image = new Image("resources/white.png");
+					if(game.getTheme().equals("theme1")) {
+						path = "resources/theme1/";
+					}else {
+						path = "resources/theme2/";
+					}
+					Image image = new Image(path + "white.png");
 					if (entity != null) {
-						image = new Image("resources/" + entity.getName()
+						image = new Image(path + entity.getName()
 													+ ".png");
 					}
 					ImageView iv = new ImageView(image);
