@@ -10,7 +10,7 @@ public class Game{
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
-	//private Graph g; //new in graph implementation
+	
 	// Need to implement generic iterator
 	public Game(int width, int height) {
 		this.width = width;
@@ -57,15 +57,12 @@ public class Game{
 				} else {
 					
 					closestPickup = closestPickup(enemy);
-					//System.out.println("hi\n\n\n");
+					
 				    position = enemy.move(player.getPosition(), generateGraph(),closestPickup,entities); //where I generate graph before the move
 				    
 				    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
-				    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
+				    	
 				    	deleteEntity(getFirstEntity(position));
-				    	System.out.println("So we made it here");
-				    	TreasureGoblin goblin = (TreasureGoblin)entity;
-				    	System.out.println("Goblin has " +goblin.getTreasure().getName());
 				    	assert(getFirstEntity(position) == null);
 				    }
 				}

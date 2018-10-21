@@ -13,7 +13,7 @@ public class Strategist extends Enemy {
 		if (!g.availablePoint(closestPickup.getX(), closestPickup.getY())) {
 			closestPickup = co;
 		}
-		//System.out.println(closestPickup.getX() + " " + closestPickup.getY());
+		
 		return closestPickup;
 	}
 
