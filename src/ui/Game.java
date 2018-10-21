@@ -148,11 +148,6 @@ public class Game{
 		newMapTile.addEntity(entity);
 	}
 	
-
-
-	
-
-	
 	/**
 	 * Moves the player
 	 */
