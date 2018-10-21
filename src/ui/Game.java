@@ -6,7 +6,6 @@ public class Game{
 	private static final Entity NULL = null;
 	private int width, height;					//Width and height of the app window
 	private Player player = null;					//Tracking the player entity
-//	private InputManagerPlayer playerInput;	//KeyListener, takes in key inputs
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
@@ -32,6 +31,7 @@ public class Game{
 		for(Entity entity: otherGame.getEntities()) {
 			producer.addEntityToGame(this, entity.getPosition(), entity.getName());
 		}
+		this.theme = otherGame.theme;
 		this.winChecker = otherGame.winChecker;
 	}
 	
@@ -77,9 +77,9 @@ public class Game{
 	}
 
 	/**
-	 * @param allSwitch
-	 * @param entity
-	 * @return
+	 * 
+	 * @param entity to Check if Floor switch
+	 * 
 	 */
 	public void floorCheck(Entity entity) {
 		if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
@@ -92,9 +92,9 @@ public class Game{
 	}
 
 	/**
-	 * @param allEnemy
-	 * @param entity
-	 * @return
+	 * 
+	 * @param entity the Entity to check if Enemy
+	 * 
 	 */
 	public void enemyCheck(Entity entity) {
 		Coordinate position;
@@ -106,13 +106,8 @@ public class Game{
 			} else {
 				
 				closestPickup = closestPickup(enemy);
-				//System.out.println("hi\n\n\n");
 			    position = enemy.move(player.getPosition(), generateGraph(),closestPickup,entities); //where I generate graph before the move
-			    
 			    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
-			    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
-
-			    	//deleteEntity(getFirstEntity(position));
 			    	Treasure tres = (Treasure) getFirstEntity(position);
 			    	tres.setStatus();
 
