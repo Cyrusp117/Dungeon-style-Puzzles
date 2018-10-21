@@ -109,9 +109,6 @@ public class TestController extends Controller {
 				Coordinate newPos = new Coordinate(i,j);
 				Entity entity = game.getFirstEntity(newPos);
 				entity = rearrange(game.getEntities(newPos), entity);
-				for(Entity drag: game.getEntities(newPos)) {
-					System.out.println(drag.getName());
-				}
 				if(game.getTheme().equals("theme1")) {
 					path = "resources/theme1/";
 				}else {
