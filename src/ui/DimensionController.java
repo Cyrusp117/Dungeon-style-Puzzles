@@ -31,23 +31,18 @@ public class DimensionController extends Controller {
 			width.clear();
 			width.setPromptText("Invalid Input: Input must be an integer");
 			errorFlag = true;
-			System.out.println("error true");
 		}
-		
 		try {
 			gameHeight = Integer.parseInt(height.getText());
 		}catch(NumberFormatException e) {
 			height.clear();
 			height.setPromptText("Invalid Input: Input must be an integer");
 			errorFlag = true;
-			System.out.println("error true");
 		}
 		
-		System.out.println("error true");
-		if(errorFlag == true) {
+		if(errorFlag) {
 			return;
 		}
-		
 		System.out.println("gameWidth: " + gameWidth + "gameHeight: " + gameHeight);
 		if( (gameWidth <= 22 && gameWidth > 0) && (gameHeight <= 15 && gameHeight > 0)) {
 			Game game = new Game(gameWidth , gameHeight);
