@@ -12,14 +12,7 @@ public class Boulder extends Entity {
 	}
 	
 	public Coordinate interactWithPlayer(Player player) {
-
-//		int dx = player.getDx();
-//		int dy = player.getDy();
-//		int curX = position.getX();
-//		int curY = position.getY();
-//	    Coordinate newPos = new Coordinate(curX + dx, curY + dy);
 	    this.setOldPosition(this.position);
-//	    this.setPosition(newPos);
 	    return player.getMove();
 	}
 	
