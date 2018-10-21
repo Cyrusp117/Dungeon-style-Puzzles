@@ -122,7 +122,6 @@ public class EditorController extends Controller {
 	        setupRows(numRows);
 	        setupPanes(numCols, numRows);  
 	        setupSelector();
-			imageMap.setStyle("-fx-background-image: url('https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQxsasGQIwQNwjek3F1nSwlfx60g6XpOggnxw5dyQrtCL_0x8IW')");
 	        printGame();
 
 	    }
