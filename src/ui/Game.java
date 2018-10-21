@@ -26,6 +26,7 @@ public class Game{
 		this.height = otherGame.height;
 		this.entities = otherGame.entities;
 		this.map = otherGame.map;
+		this.player = otherGame.player;
 	}
 	
 	public void update() {						//Updates the state of the game
