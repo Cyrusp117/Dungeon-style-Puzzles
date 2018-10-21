@@ -61,17 +61,17 @@ public class Boulder extends Entity {
 		return false;
 	}
 	
-	public boolean isValidInteraction(Entity entity) {
-		System.out.println(entity);
-		if (entity instanceof Pit) {
-			return true;
-		} else if (entity instanceof Player) {
-			return true;
-		} else if (entity == null) {
-			return true;
-		}
-		return super.isValidInteraction(entity);
-	}
+//	public boolean isValidInteraction(Entity entity) {
+//		System.out.println(entity);
+//		if (entity instanceof Pit) {
+//			return true;
+//		} else if (entity instanceof Player) {
+//			return true;
+//		} else if (entity == null) {
+//			return true;
+//		}
+//		//return super.isValidInteraction(entity);
+//	}
 	
 	public Coordinate interact(Entity entity) {
 		if(entity instanceof Pit){

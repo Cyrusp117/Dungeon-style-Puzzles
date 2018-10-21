@@ -14,17 +14,57 @@ public class Arrow extends Entity {
 		this.keyCode = KeyCode.A;
 		this.arrowState = new ArrowStationary();
 	}
-	
+	/**
+	 * Player picks up arrow upon interaction
+	 */
 	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return new Coordinate of arrow after moving in its set direction
+	 * default is stationary, when it is placed on the game map
+	 */
+	public Coordinate move() {
+		return Coordinate.addCoordinates(arrowState.getDirection(), this.position);
+	}
+	
+	/**
+	 * 
+	 * @param digits 3-6 set the direction of the arrow so that
+	 * it moves at the start of every new game turn
+	 */
+	public void setDirection(KeyCode key) {
+		if (key.equals(KeyCode.DIGIT3)) {
+			arrowState = new ArrowUpwards();
+		} else if (key.equals(KeyCode.DIGIT4)) {
+			arrowState = new ArrowDownwards();
+		} else if (key.equals(KeyCode.DIGIT5)) {
+			arrowState = new ArrowLeft();
+		} else if (key.equals(KeyCode.DIGIT6)) {
+			arrowState = new ArrowRight();
+		}
+	}
+
+	/**
+	 * 
+	 * @param checks if the key code is used for arrow directions
+	 * @return true if the above is true
+	 */
+	public static boolean checkKeyCode(KeyCode key) {
+		if ( key.equals(KeyCode.DIGIT3) || key.equals(KeyCode.DIGIT4) || key.equals(KeyCode.DIGIT5) || key.equals(KeyCode.DIGIT6)) {
+			return true;
+		}
+		return false;
+	}
+
+	
+	
 	public String getName() {
 		return "Arrow";
 	}
-	
-
 
 	public int getDx() {
 		return dx;
@@ -42,28 +82,6 @@ public class Arrow extends Entity {
 		this.dy = dy;
 	}
 
-	public Coordinate move() {
-		return Coordinate.addCoordinates(arrowState.getDirection(), this.position);
-	}
-	
-	public void setDirection(KeyCode key) {
-		if (key.equals(KeyCode.DIGIT3)) {
-			arrowState = new ArrowUpwards();
-		} else if (key.equals(KeyCode.DIGIT4)) {
-			arrowState = new ArrowDownwards();
-		} else if (key.equals(KeyCode.DIGIT5)) {
-			arrowState = new ArrowLeft();
-		} else if (key.equals(KeyCode.DIGIT6)) {
-			arrowState = new ArrowRight();
-		}
-	}
-
-	public static boolean checkKeyCode(KeyCode key) {
-		if ( key.equals(KeyCode.DIGIT3) || key.equals(KeyCode.DIGIT4) || key.equals(KeyCode.DIGIT5) || key.equals(KeyCode.DIGIT6)) {
-			return true;
-		}
-		return false;
-	}
 
 
 	
