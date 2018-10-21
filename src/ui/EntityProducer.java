@@ -12,11 +12,12 @@ public class EntityProducer {
 	}
 	
 	public Entity addEntityToGame(Game game, Coordinate co, String entityName) {
+		boolean added = false;
 		Entity toAdd = factory.createEntity(entityName, co);
 		if(toAdd != null) {
-			game.addEntity(toAdd);
+			added = game.addEntity(toAdd);
 		}
-		if(toAdd instanceof Player) {
+		if(toAdd instanceof Player && added == true) {
 			System.out.println("added player");
 			game.setPlayer((Player)toAdd);
 		}

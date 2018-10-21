@@ -175,7 +175,7 @@
       <Button fx:id="undoButton" layoutX="775.0" layoutY="489.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
       <Button fx:id="deleteButton" layoutX="828.0" layoutY="489.0" mnemonicParsing="false" onAction="#deleteEntity" text="Delete" />
       <Button fx:id="addButton" layoutX="885.0" layoutY="489.0" mnemonicParsing="false" onAction="#nullify" text="Cursor" />
-      <Button layoutX="888.0" layoutY="579.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="backBtn" layoutX="890.0" layoutY="581.0" mnemonicParsing="false" onAction="#previousMenu" text="Back" />
       <Button layoutX="830.0" layoutY="581.0" mnemonicParsing="false" text="Create" />
       <Button fx:id="testButton" layoutX="780.0" layoutY="581.0" mnemonicParsing="false" onAction="#testGame" text="Test" />
       <Label layoutX="727.0" layoutY="460.0" text="Current Target: " />

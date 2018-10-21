@@ -375,6 +375,9 @@ public class Game{
 	 * print to the Console the Coordinates of the current player
 	 */
 	private void printPlayerCoordinates() {
+		if(player == null) {
+			return;
+		}
 		System.out.println(player.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	

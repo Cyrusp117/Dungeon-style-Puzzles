@@ -73,6 +73,8 @@ public class EditorController extends Controller {
     	@FXML
     	private GridPane imageMap;
     	//private GridPane gridTest;
+    	@FXML
+    	private Button bckButton;
     	
     	private String selectedEntity = null;
     	private EntityProducer producer;
@@ -228,6 +230,12 @@ public class EditorController extends Controller {
 		        pc.getClass();
 		        test.start(pc);
 				
+			}
+			
+			public void previousMenu() {
+		        Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
+		        MapSelectController msc = new MapSelectController(super.getS());
+		        mapSelect.start(msc);
 			}
 	    }
 
