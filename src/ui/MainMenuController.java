@@ -32,34 +32,27 @@ public class MainMenuController extends Controller implements Initializable {
 	
 	public MainMenuController(Stage s) {
 		super(s);
-		// TODO Auto-generated constructor stub
 	}
 	
-	
+	/**
+	 * Move to Map selection screen
+	 */
 	public void startGame() {
 		play_note();
 		Stage curStage = super.getS();
-		//curStage.setUserData(false);
         Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());
         mapSelect.start(msc);
 	}
 	
-//	public void designGame() {
-//		play_note();
-//		Stage curStage = super.getS();
-//		//curStage.setUserData(true);
-//        Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
-//        MapSelectController msc = new MapSelectController(super.getS());
-//        mapSelect.start(msc);
-//	}
-	
+	/*
+	 * Play audio clip
+	 */
 	private void play_note() {
 		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
 		//note.setCycleCount(3);
 		note.play();
 	}
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

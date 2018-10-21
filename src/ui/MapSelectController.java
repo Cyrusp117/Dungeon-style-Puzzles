@@ -37,11 +37,8 @@ public class MapSelectController extends Controller {
 	
 	private Game game = new Game(10, 10);
 	
-	//protected boolean designer;
 	public MapSelectController(Stage s) {
 		super(s);
-		//designer = (boolean)s.getUserData();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void selectTheme(ActionEvent event) {
@@ -56,6 +53,9 @@ public class MapSelectController extends Controller {
 		}
 	}
 
+	/**
+	 * Load preset map 1
+	 */
 	public void startMap1() {
 		play_note();
         System.out.println("First Preset Dungeon");
@@ -75,8 +75,6 @@ public class MapSelectController extends Controller {
         Coordinate Bomb2Pos = new Coordinate(8, 7);
         Coordinate IPpotPos = new Coordinate(5, 4);
 		game.generatePerimeter();		 //Create a series of walls around the perimeter
-		//if (!designer) {
-		//}
         game.addEntity(new Pit(pitPos));
         game.addEntity(new HoverPotion(hoverPos));
         game.addEntity(new Sword(swordPos));
@@ -103,20 +101,19 @@ public class MapSelectController extends Controller {
 
 	}
 	
+	/**
+	 * Launch editor screen
+	 */
 	public void startCustomMap() {
 		play_note();
-		//int customHeight = Integer.parseInt(height.getText());
-		//int customWidth = Integer.parseInt(width.getText());
-    	//Game game = new Game(customHeight, customWidth);
-		//Coordinate playerPos = new Coordinate(1,1); 
-    	//game.addEntity(new Player(playerPos));
-    	//loadMapScreen(game, "Custom map");
-        //System.out.println("Custom map");
 		Screen dimensionSelect = new Screen(super.getS(), "Blank", "view/DimensionScreen.fxml");
 		DimensionController dimension = new DimensionController(super.getS(),game.getTheme());
 		dimensionSelect.start(dimension);
 	}
 	
+	/**
+	 * return to main menu
+	 */
 	public void previousMenu() {
 		play_note();
 		Stage curStage = super.getS();
@@ -126,12 +123,20 @@ public class MapSelectController extends Controller {
         mainMenu.start(mmc);
 	}
 	
+	/**
+	 * 
+	 * @param game the Game to load
+	 * @param title the name of the Game
+	 */
 	public void loadMapScreen(Game game, String title) {
         Screen map = new Screen(super.getS(), title, "view/map.fxml");
         MapController pc = new MapController(super.getS(), game);
         map.start(pc);
 	}
 	
+	/*
+	 * Play specific note
+	 */
 	private void play_note() {
 		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
 		//note.setCycleCount(3);

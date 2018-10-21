@@ -11,9 +11,11 @@ public class WonController extends Controller {
 	
 	public WonController(Stage s) {
 		super(s);
-		// TODO Auto-generated constructor stub
 	}
 	
+	/*
+	 * Return to Map selection Screen
+	 */
 	public void previousMenu() {
         Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());

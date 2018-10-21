@@ -63,8 +63,9 @@ public class MapController extends Controller {
 		this.scene = s.getScene();
 	}
 	
-
-	
+	/**
+	 * Initialise the game setup
+	 */
 	public void initialize() {
 		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
@@ -213,7 +214,6 @@ public class MapController extends Controller {
 		player.setDy(-1);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	public void moveRight () {
 		play_move();
@@ -221,7 +221,6 @@ public class MapController extends Controller {
 		player.setDy(0);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	
 	public void moveLeft () {
@@ -230,7 +229,6 @@ public class MapController extends Controller {
 		player.setDy(0);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 	public void moveDown () {
 		play_move();
@@ -238,7 +236,6 @@ public class MapController extends Controller {
 		player.setDy(1);
 		update();
 		printGame();
-		//map.setText(game.toString());
 	}
 
 
