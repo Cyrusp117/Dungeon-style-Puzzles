@@ -73,7 +73,6 @@ public class EditorController extends Controller {
     	private Label targetName;
     	@FXML
     	private GridPane imageMap;
-    	//private GridPane gridTest;
     	@FXML
     	private Button bckButton;
     	@FXML
@@ -88,6 +87,10 @@ public class EditorController extends Controller {
     	private CheckBox TreasureCBox;
     	@FXML
     	private AnchorPane winConPanel;
+    	@FXML
+    	private Label houndMarker;
+    	@FXML
+    	private Button setHunterBtn;
     	
     	private String selectedEntity = null;
     	private EntityProducer producer;
@@ -95,6 +98,8 @@ public class EditorController extends Controller {
     	private EditorInvoker invoker;
     	private Entity deleteTarget = null;
     	private CheckWinCon winCheck;
+    	private int nextHunter = 0;
+    	private entities.Hound houndToSet = null;
     	
     	public EditorController(Stage s, Game game) {
     		super(s);
@@ -102,7 +107,7 @@ public class EditorController extends Controller {
     		this.winCheck = new WinChecker();
        	}
     	
-    	//Lines 22 to 50 Taken from StackOverflow https://stackoverflow.com/questions/31095954
+    	//Lines 104-137 adapted from StackOverflow https://stackoverflow.com/questions/31095954
 	    public void initialize() {
 	    	EntityFactory factory = new EntityFactory();
 	    	producer = new EntityProducer(factory); // probably need to add a game to this
@@ -114,13 +119,10 @@ public class EditorController extends Controller {
 	        for (int i = 0 ; i <= numCols ; i++) {
 	            ColumnConstraints colConstraints = new ColumnConstraints();
 	            colConstraints.setHgrow(Priority.NEVER);
-	            //colConstraints.setMaxWidth(32);
-	            //colConstraints.setMinWidth(32);
 	            map.getColumnConstraints().clear();
 	            map.getColumnConstraints().add(colConstraints);
 	            imageMap.getColumnConstraints().clear();
 	            imageMap.getColumnConstraints().add(colConstraints);
-	            //gridTest.getColumnConstraints().add(colConstraints);
 	        }
 
 	        for (int i = 0 ; i <= numRows ; i++) {
@@ -157,17 +159,20 @@ public class EditorController extends Controller {
 	        	}
 	        }
 	    }
-
 	    private void addPane(int colIndex, int rowIndex) {
 	        Pane pane = new Pane();    
 	        pane.setMinSize(32,32);
 	        pane.setMaxSize(32,32);
-	    
 	        pane.setOnMouseClicked(e -> {
 	        	insertEntity(colIndex, rowIndex);
 	        	Coordinate curTile = new Coordinate(colIndex, rowIndex);
 	        	deleteTarget = game.getFirstEntity(curTile);
-	        	//System.out.println("NULL");
+	        	if(deleteTarget instanceof entities.Hunter && nextHunter == 1) {
+	        		houndToSet.setHunter((entities.Hunter)deleteTarget);
+	        		nextHunter = 0;
+	        		houndToSet = null;
+	        		houndMarker.setText("None Selected");
+	        	}
 	        	targetName.getId();
 	        	if(deleteTarget == null) {
 	        		targetName.setText("None");
@@ -182,7 +187,6 @@ public class EditorController extends Controller {
 	    public void insertEntity(int colIndex, int rowIndex) {
 	    	if(selectedEntity != null){
 	    		Coordinate requestedSpace = new Coordinate(colIndex, rowIndex);
-	    		//EntityProducer producer, Game game, Coordinate co, String entity
 	    		InsertEntityCommand toDo = new InsertEntityCommand(producer, game, requestedSpace, selectedEntity);
 	    		invoker.invoke(toDo);
 	    	}
@@ -280,6 +284,15 @@ public class EditorController extends Controller {
 					}
 				}
 				exitCheck();
+			}
+			
+			public void assignHunter() {
+				if(deleteTarget == null) return;
+				if(deleteTarget instanceof entities.Hound) {
+					houndMarker.setText("Select Hunter");
+					nextHunter = 1;
+					houndToSet = (entities.Hound)deleteTarget;
+				}
 			}
 			
 	    }
