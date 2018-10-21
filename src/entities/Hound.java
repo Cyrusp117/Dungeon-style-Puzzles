@@ -54,11 +54,17 @@ public class Hound extends Enemy {
 		return target;
 	}
 	
-	
+	/**
+	 * 
+	 * @param hunter - the hunter the hound wants to follow
+	 */
 	public void setHunter (Hunter hunter) {
 		this.hunter = hunter;
 	}
 	
+	/**
+	 * @return "Hound"
+	 */
 	public String getName() {
 		return "Hound";
 	}

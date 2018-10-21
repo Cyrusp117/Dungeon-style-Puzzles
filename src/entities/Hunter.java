@@ -26,7 +26,9 @@ public class Hunter extends Enemy {
 	}
 	
 
-
+	/**
+	 * @return	"Hunter"
+	 */
 	@Override
 	public String getName() {
 		return "Hunter";

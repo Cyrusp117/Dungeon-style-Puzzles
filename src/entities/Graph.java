@@ -20,11 +20,19 @@ public class Graph {
 		this.height = height;
 		this.width = width;
 	}
+	
+	/**
+	 * @param c , the coordinate to be added	
+	 */
 	public void addCoordinate(Coordinate c) {
 		this.coordList.add(c);
 		
 		this.nV++;
 	}
+	
+	/**
+	 * @param e, the edge to be added	
+	 */
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
 	}
@@ -45,7 +53,8 @@ public class Graph {
 	}
 	
 	/**
-	 * returns a boolean result depending on whether the given coordinates are adjacent
+	 * @param a and b , coordinates to be tested 
+	 * @return a boolean result depending on whether the given coordinates are adjacent
 	 */
 	public boolean isAdjacent(Coordinate a, Coordinate b) {
 		boolean check = false;
@@ -64,7 +73,8 @@ public class Graph {
 		return check;
 	}
 	/**
-	 * returns the coordinate that is the first move in the shortest path from src to dest
+	 * @param src, the starting coordinate, dest, the destination coordinate, and player, the players current coordinate
+	 * @return the coordinate that is the first move in the shortest path from src to dest
 	 */
 	public Coordinate BFS(Coordinate src, Coordinate dest, Coordinate player) {
 		Coordinate cur = null;
@@ -116,7 +126,8 @@ public class Graph {
 		return cur;
 	}
 	/**
-	 * Returns the number of moves to get from src to dest
+	 * @param src, the starting coordinate, dest, the destination coordinate
+	 * @return size, the number of moves to get from src to dest
 	 */
 	public int sizeBFS(Coordinate src, Coordinate dest) {
         if (src.equals(dest)) {
@@ -173,7 +184,8 @@ public class Graph {
 	}
 	
 	/**
-	 * Checks whether edge exists between given coordinates
+	 * @param a and b, the coordinates to be tested
+	 * @return true if edge exists between a and b
 	 */
 	public boolean hasEdge(Coordinate a, Coordinate b) {
 		boolean check = false;
@@ -188,7 +200,8 @@ public class Graph {
 
  
 	/**
-	 * returns the coordinate that will move the enemy on the opposite direction to the player
+	 * @param player, the current coordinate of player, enemy, the current coordinate of enemy
+	 * @return the coordinate that will move the enemy on the opposite direction to the player
 	 */
     public Coordinate moveAway(Coordinate player, Coordinate enemy) {
            	
@@ -224,7 +237,8 @@ public class Graph {
 	
     }
     /**
-	 * checks whether the given x and y form an available point in the graph
+     * @param x,y, the 1st and 2nd coordinate values respectively
+	 * @return true if the given x and y form an available point in the graph
 	 */
     public boolean availablePoint(int x , int y) {
         boolean check = false;  	
@@ -239,7 +253,8 @@ public class Graph {
     }
     
     /**
-	 * returns the coordinate given by x and y
+     *  @param x,y, the 1st and 2nd coordinate values respectively
+	 *  @return the coordinate given by x and y
 	 */
     public Coordinate getPoint(int x,int y) {
     	Coordinate target = null;
@@ -254,7 +269,8 @@ public class Graph {
     }
     
     /**
-	 * returns the coordinate which is in between the player and enemy
+     * @param player, the current coordinate of player, enemy, the current coordinate of enemy
+	 * @return the coordinate which is in between the player and enemy
 	 */
     public Coordinate between(Coordinate player, Coordinate enemy) {
     	Coordinate target = enemy;
@@ -280,7 +296,8 @@ public class Graph {
     }
     
     /**
-	 * returns the coordinate which would put hound behind player relative to enemy
+     * @param player, the current coordinate of player, enemy, the current coordinate of enemy, hound the coordinate of hound
+	 * @return the coordinate which would put hound behind player relative to enemy
 	 */
     public Coordinate hound(Coordinate player , Coordinate enemy,Coordinate hound) {
     	Coordinate target = player;
@@ -377,20 +394,22 @@ public class Graph {
     	
     }
     /**
-	 * returns coordList
+     * 
+	 * @return coordList
 	 */
     public ArrayList<Coordinate> getCoords() {
     	return this.coordList;
     }
     
     /**
-	 * returns edgeList
+	 * @return edgeList
 	 */
     public ArrayList<Edge> getEdges() {
     	return this.edgeList;
     }
     /**
-	 * returns distance between two given coordinates
+     * @param a and b, the two coordinates to be used
+	 * @return distance between two given coordinates
 	 */
     public double getDistance(Coordinate a , Coordinate b) {
         int ax = a.getX();
@@ -404,7 +423,8 @@ public class Graph {
     }
     
     /**
-	 * adds a point and the edges connect to it to the graph
+     * @param point, the coordinate to be added and edges connected to
+	 * 
 	 */
     public void addPointAndEdges(Coordinate point) {
         addCoordinate(point);
@@ -421,7 +441,7 @@ public class Graph {
     }
     
     /**
-	 * Removes the edges connected to a point then removes the point
+	 * @param point, the coordinate remove the edges connected to it in edgeList, and then remove point from coordList
 	 */
     public void removePointAndEdges(Coordinate point) {
     	ArrayList<Edge> toBeDeleted = new ArrayList<Edge>();
@@ -442,7 +462,8 @@ public class Graph {
     }
     
     /**
-	 * Gives back a random coordinate in the list
+     * 
+	 * @return Gives back a random coordinate in the list
 	 */
     public Coordinate randomCoordinate() {
     	Random randomizer = new Random();
@@ -465,7 +486,8 @@ public class Graph {
 		}
       }
     /**
-	 * checks whether coordList has a specified coordinate
+     * @param, point to be tested
+	 * @return true whether coordList has point
 	 */
     public boolean hasCoordinate(Coordinate point) {
         return coordList.contains(point);
