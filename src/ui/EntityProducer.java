@@ -25,7 +25,6 @@ public class EntityProducer {
 			added = game.addEntity(toAdd);
 		}
 		if(toAdd instanceof Player && added == true) {
-			System.out.println("added player");
 			game.setPlayer((Player)toAdd);
 		}
 		
