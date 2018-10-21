@@ -85,10 +85,12 @@ public class EditorController extends Controller {
     	private Game game;
     	private EditorInvoker invoker;
     	private Entity deleteTarget = null;
+    	private CheckWinCon winCheck;
     	
     	public EditorController(Stage s, Game game) {
     		super(s);
     		this.game = game;
+    		this.winCheck = new WinChecker();
        	}
     	
     	//Lines 22 to 50 Taken from StackOverflow https://stackoverflow.com/questions/31095954
@@ -115,29 +117,23 @@ public class EditorController extends Controller {
 	        for (int i = 0 ; i <= numRows ; i++) {
 	            RowConstraints rowConstraints = new RowConstraints();
 	            rowConstraints.setVgrow(Priority.NEVER);
-	            
-	            //rowConstraints.setMaxHeight(32);
-	            //rowConstraints.setMinHeight(32);
 	            map.getRowConstraints().clear();
 	            map.getRowConstraints().add(rowConstraints);  
 	            imageMap.getRowConstraints().clear();
 	            imageMap.getRowConstraints().add(rowConstraints);
 	        }
-
 	        for (int i = 0 ; i <= numCols ; i++) {
 	            for (int j = 0; j <= numRows; j++) {
 	                addPane(i, j);
 	            }
 	        }
-	        
-	        for(Node node: selector.getChildren()) {
+	        for (Node node: selector.getChildren()) {
 	        	node.setOnMouseClicked(e -> {
 	        		selectedEntity = node.getId();
 	        		descriptor.setText(selectedEntity);
 	        	});
 	        }
 	        printGame();
-	        
 	        for( Node node: selector.getChildren()) {
 	        	if(node instanceof Pane) {
 	        		for(Node childNode: ((Pane) node).getChildren()) {
@@ -216,13 +212,10 @@ public class EditorController extends Controller {
 						image = new Image("resources/" + entity.getName()
 													+ ".png");
 					}
-					
 					ImageView iv = new ImageView(image);
 					iv.setFitHeight(32);
 					iv.setFitWidth(32);
 					iv.setNodeOrientation(NodeOrientation.INHERIT);
-//					GridPane.setFillWidth(iv, true);
-//					GridPane.setFillHeight(iv, true);
 					imageMap.add(iv, i, j);
 
 				}
@@ -241,6 +234,28 @@ public class EditorController extends Controller {
 		        MapSelectController msc = new MapSelectController(super.getS());
 		        mapSelect.start(msc);
 			}
+			
+			public void addTreasure() {
+				winCheck = new TreasureWin(winCheck);
+			}
+			
+			public void addFloor() {
+				winCheck = new FloorWin(winCheck);
+			}
+			
+			public void addKill() {
+				winCheck = new KillWin(winCheck);
+			}
+			
+			public void ExitCheck() {
+				for(Entity entity: game.getEntities()) {
+					if(entity instanceof entities.Exit) {
+						winCheck = new ExitWin(new WinChecker());
+						return;
+					}
+				}
+			}
+			
 	    }
 
 	    

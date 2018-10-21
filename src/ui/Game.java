@@ -10,6 +10,7 @@ public class Game{
 	private ArrayList<Entity> entities;//Array List of Entities, tracks all entities in the current game
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
+	private CheckWinCon winChecker;
 	//private Graph g; //new in graph implementation
 	// Need to implement generic iterator
 	public Game(int width, int height) {
@@ -18,6 +19,7 @@ public class Game{
 		this.entities = new ArrayList<>();
 		this.map = new ArrayList<ArrayList<Coordinate>>();
 		generateMap();
+		this.winChecker = new WinChecker();
 	}
 	
 	//Copy constructor
@@ -27,7 +29,9 @@ public class Game{
 		this.entities = otherGame.entities;
 		this.map = otherGame.map;
 		this.player = otherGame.player;
+		this.winChecker = otherGame.winChecker;
 	}
+	
 	
 	public void update() {						//Updates the state of the game
 		// Arrow collisions, bomb explosions, player inventory update
@@ -50,44 +54,9 @@ public class Game{
 		for (Entity entity : entities) {
 			
 			// Checks all killed win condition
-			if (entity instanceof Enemy) {
-				Enemy enemy = (Enemy) entity;
-				if (player.hasItem("InvincibilityPotion")) {
-					position = enemy.invincibilityMove(player.getPosition(), generateGraph());
-				} else {
-					
-					closestPickup = closestPickup(enemy);
-					//System.out.println("hi\n\n\n");
-				    position = enemy.move(player.getPosition(), generateGraph(),closestPickup,entities); //where I generate graph before the move
-				    
-				    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
-				    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
-				    	deleteEntity(getFirstEntity(position));
-				    	System.out.println("So we made it here");
-				    	TreasureGoblin goblin = (TreasureGoblin)entity;
-				    	System.out.println("Goblin has " +goblin.getTreasure().getName());
-				    	assert(getFirstEntity(position) == null);
-				    }
-				}
-				if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
-					moveEntity(enemy, position);
-				} 
-
-				allEnemy = 0;
-
-				
-			}
+			allEnemy = enemyCheck(allEnemy, entity);
 			
-			// Checks if all treasure has been picked up
-			if (entity instanceof Treasure){
-				allTreasure = 0;
-				//also check treasure goblin for this condition
-			} else if (entity instanceof TreasureGoblin) {
-				TreasureGoblin goblin = (TreasureGoblin)entity;
-				if(goblin.getTreasure() != null) {
-					allTreasure = 0;
-				}
-			}
+			allTreasure = treasureCheck(allTreasure, entity);
 			
 			// Checks if all floor switches are active (have a boulder on them)
 //			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
@@ -100,44 +69,118 @@ public class Game{
 //					allSwitch = 0;
 //				}
 //			}
-			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
-				FloorSwitch fs = (FloorSwitch)entity; 
-				fs.deactivate();
-				if(getEntityExcept(fs.getPosition(), fs) != NULL) {
-					fs.activate();
-				}
-				if(!fs.getState()) {
-					allSwitch = 0;
-				}
-			}
+			allSwitch = floorCheck(allSwitch, entity);
 			
 			// Checks general win condition
-			if (entity instanceof Exit){
-				if(entity.getPosition().equals(player.getPosition())) {
-					if (player.isAlive()) {
-						win = true;
-					}
-				}
-			}
+			exitCheck(entity);
 		}
 		
 		if (allTreasure == 1 && allSwitch == 1 && allEnemy == 1) {
 			win = true;
 		}
-		if (!player.isAlive()) {
-			System.out.println("Player is currently dead");
-		}
-		if(allTreasure == 1) {
-			System.out.println("All treasure has been collected");
-		}
-		if(allSwitch == 1) {
-			System.out.println("All Switches active");
-		}
-		if(allEnemy == 1) {
-			System.out.println("All enemies dead");
-		}
-		System.out.println("");
+//		if (!player.isAlive()) {
+//			System.out.println("Player is currently dead");
+//		}
+//		if(allTreasure == 1) {
+//			System.out.println("All treasure has been collected");
+//		}
+//		if(allSwitch == 1) {
+//			System.out.println("All Switches active");
+//		}
+//		if(allEnemy == 1) {
+//			System.out.println("All enemies dead");
+//		}
+//		System.out.println("");
 
+	}
+
+	/**
+	 * @param entity
+	 */
+	public void exitCheck(Entity entity) {
+		if (entity instanceof Exit){
+			if(entity.getPosition().equals(player.getPosition())) {
+				if (player.isAlive()) {
+					win = true;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param allSwitch
+	 * @param entity
+	 * @return
+	 */
+	public int floorCheck(int allSwitch, Entity entity) {
+		if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
+			FloorSwitch fs = (FloorSwitch)entity; 
+			fs.deactivate();
+			if(getEntityExcept(fs.getPosition(), fs) != NULL) {
+				fs.activate();
+			}
+			if(!fs.getState()) {
+				allSwitch = 0;
+			}
+		}
+		return allSwitch;
+	}
+
+	/**
+	 * @param allEnemy
+	 * @param entity
+	 * @return
+	 */
+	public int enemyCheck(int allEnemy, Entity entity) {
+		Coordinate position;
+		Coordinate closestPickup;
+		if (entity instanceof Enemy) {
+			Enemy enemy = (Enemy) entity;
+			if (player.hasItem("InvincibilityPotion")) {
+				position = enemy.invincibilityMove(player.getPosition(), generateGraph());
+			} else {
+				
+				closestPickup = closestPickup(enemy);
+				//System.out.println("hi\n\n\n");
+			    position = enemy.move(player.getPosition(), generateGraph(),closestPickup,entities); //where I generate graph before the move
+			    
+			    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
+			    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
+			    	deleteEntity(getFirstEntity(position));
+			    	System.out.println("So we made it here");
+			    	TreasureGoblin goblin = (TreasureGoblin)entity;
+			    	System.out.println("Goblin has " +goblin.getTreasure().getName());
+			    	assert(getFirstEntity(position) == null);
+			    }
+			}
+			if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
+				moveEntity(enemy, position);
+			} 
+
+			allEnemy = 0;
+
+			
+		}
+		return allEnemy;
+	}
+
+	/**
+	 * @param allTreasure
+	 * @param entity
+	 * @return
+	 */
+	public int treasureCheck(int allTreasure, Entity entity) {
+		// Checks if all treasure has been picked up
+		if (entity instanceof Treasure){
+			allTreasure = 0;
+			//also check treasure goblin for this condition
+		} else if (entity instanceof TreasureGoblin) {
+			TreasureGoblin goblin = (TreasureGoblin)entity;
+			if(goblin.getTreasure() != null) {
+				allTreasure = 0;
+			}
+		}
+		return allTreasure;
 	}
 	
 	public void moveEntity(Entity entity, Coordinate newPos) {
@@ -672,4 +715,21 @@ public class Game{
 	public boolean hasPlayerWon() {
 		return win;
 	}
+
+	/**
+	 * @return the winChecker
+	 */
+	public CheckWinCon getWinChecker() {
+		return winChecker;
+	}
+
+	/**
+	 * @param winChecker the winChecker to set
+	 */
+	public void setWinChecker(CheckWinCon winChecker) {
+		this.winChecker = winChecker;
+	}
+
+
+	
 }
