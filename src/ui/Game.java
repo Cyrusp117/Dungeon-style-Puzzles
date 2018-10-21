@@ -39,11 +39,6 @@ public class Game{
 		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
 		// Checks current state of the game after any interactions
-		
-		int allTreasure = 1;
-		int allSwitch = 1;
-		int allEnemy = 1;
-
 		Coordinate position;
         Coordinate closestPickup;
         
@@ -52,58 +47,12 @@ public class Game{
 		win = false;
 
 		for (Entity entity : entities) {
-			
-			// Checks all killed win condition
-			allEnemy = enemyCheck(allEnemy, entity);
-			
-			allTreasure = treasureCheck(allTreasure, entity);
-			
-			// Checks if all floor switches are active (have a boulder on them)
-//			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
-//				FloorSwitch fs = (FloorSwitch)entity; 
-//				fs.deactivate();
-//				if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
-//					fs.activate();
-//				}
-//				if(!fs.getState()) {
-//					allSwitch = 0;
-//				}
-//			}
-			allSwitch = floorCheck(allSwitch, entity);
-			
-			// Checks general win condition
-			exitCheck(entity);
+			enemyCheck(entity);
+			floorCheck(entity);
 		}
 		
-		if (allTreasure == 1 && allSwitch == 1 && allEnemy == 1) {
+		if (winChecker.checkWinCondition(this)) {
 			win = true;
-		}
-//		if (!player.isAlive()) {
-//			System.out.println("Player is currently dead");
-//		}
-//		if(allTreasure == 1) {
-//			System.out.println("All treasure has been collected");
-//		}
-//		if(allSwitch == 1) {
-//			System.out.println("All Switches active");
-//		}
-//		if(allEnemy == 1) {
-//			System.out.println("All enemies dead");
-//		}
-//		System.out.println("");
-
-	}
-
-	/**
-	 * @param entity
-	 */
-	public void exitCheck(Entity entity) {
-		if (entity instanceof Exit){
-			if(entity.getPosition().equals(player.getPosition())) {
-				if (player.isAlive()) {
-					win = true;
-				}
-			}
 		}
 	}
 
@@ -112,18 +61,14 @@ public class Game{
 	 * @param entity
 	 * @return
 	 */
-	public int floorCheck(int allSwitch, Entity entity) {
+	public void floorCheck(Entity entity) {
 		if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 			FloorSwitch fs = (FloorSwitch)entity; 
 			fs.deactivate();
 			if(getEntityExcept(fs.getPosition(), fs) != NULL) {
 				fs.activate();
 			}
-			if(!fs.getState()) {
-				allSwitch = 0;
-			}
 		}
-		return allSwitch;
 	}
 
 	/**
@@ -131,7 +76,7 @@ public class Game{
 	 * @param entity
 	 * @return
 	 */
-	public int enemyCheck(int allEnemy, Entity entity) {
+	public void enemyCheck(Entity entity) {
 		Coordinate position;
 		Coordinate closestPickup;
 		if (entity instanceof Enemy) {
@@ -155,13 +100,8 @@ public class Game{
 			}
 			if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
 				moveEntity(enemy, position);
-			} 
-
-			allEnemy = 0;
-
-			
+			} 			
 		}
-		return allEnemy;
 	}
 
 	/**
@@ -169,19 +109,19 @@ public class Game{
 	 * @param entity
 	 * @return
 	 */
-	public int treasureCheck(int allTreasure, Entity entity) {
-		// Checks if all treasure has been picked up
-		if (entity instanceof Treasure){
-			allTreasure = 0;
-			//also check treasure goblin for this condition
-		} else if (entity instanceof TreasureGoblin) {
-			TreasureGoblin goblin = (TreasureGoblin)entity;
-			if(goblin.getTreasure() != null) {
-				allTreasure = 0;
-			}
-		}
-		return allTreasure;
-	}
+//	public int treasureCheck(Entity entity) {
+//		// Checks if all treasure has been picked up
+//		if (entity instanceof Treasure){
+//			allTreasure = 0;
+//			//also check treasure goblin for this condition
+//		} else if (entity instanceof TreasureGoblin) {
+//			TreasureGoblin goblin = (TreasureGoblin)entity;
+//			if(goblin.getTreasure() != null) {
+//				allTreasure = 0;
+//			}
+//		}
+//		return allTreasure;
+//	}
 	
 	public void moveEntity(Entity entity, Coordinate newPos) {
 		entity.setOldPosition(entity.getPosition());

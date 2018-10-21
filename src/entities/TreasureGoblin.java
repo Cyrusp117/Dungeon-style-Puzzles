@@ -79,7 +79,7 @@ public class TreasureGoblin extends Enemy {
 	@Override
 	public String getName() {
 		
-		return "Treasure Goblin";
+		return "TreasureGoblin";
 	}
 	
 	public Treasure getTreasure() {

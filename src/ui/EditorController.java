@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -76,9 +77,17 @@ public class EditorController extends Controller {
     	@FXML
     	private Button bckButton;
     	@FXML
-    	private Pane Goblin;
+    	private Pane TreasureGoblin;
     	@FXML
     	private Pane Bone;
+    	@FXML
+    	private CheckBox FloorCBox;
+    	@FXML
+    	private CheckBox KillCBox;
+    	@FXML
+    	private CheckBox TreasureCBox;
+    	@FXML
+    	private AnchorPane winConPanel;
     	
     	private String selectedEntity = null;
     	private EntityProducer producer;
@@ -222,6 +231,8 @@ public class EditorController extends Controller {
 			}
 	    }
 			public void testGame() {
+				constructWinCon();
+				game.setWinChecker(winCheck);
 		        Screen test = new Screen(super.getS(), "Test", "view/test.fxml");
 		        TestController pc = new TestController(super.getS(), game);
 		        pc.getClass();
@@ -236,24 +247,39 @@ public class EditorController extends Controller {
 			}
 			
 			public void addTreasure() {
+				System.out.println("Treasure");
 				winCheck = new TreasureWin(winCheck);
 			}
 			
 			public void addFloor() {
+				System.out.println("Floor");
 				winCheck = new FloorWin(winCheck);
 			}
 			
 			public void addKill() {
+				System.out.println("Kill");
 				winCheck = new KillWin(winCheck);
 			}
 			
-			public void ExitCheck() {
+			public void exitCheck() {
 				for(Entity entity: game.getEntities()) {
 					if(entity instanceof entities.Exit) {
+						System.out.println("Exit");
 						winCheck = new ExitWin(new WinChecker());
 						return;
 					}
 				}
+			}
+			
+			public void constructWinCon() {
+				for( Node node: winConPanel.getChildren()) {
+					if( node instanceof CheckBox) {
+						if ( ((CheckBox) node).isSelected() ) {
+							node.getOnContextMenuRequested().handle(null);
+						} 
+					}
+				}
+				exitCheck();
 			}
 			
 	    }

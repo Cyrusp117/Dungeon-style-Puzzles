@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.Arrow;
 import entities.Bomb;
+import entities.Bone;
 import entities.Coordinate;
 import entities.Entity;
 import entities.Player;
@@ -24,6 +25,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import sun.print.resources.serviceui;
@@ -64,31 +66,56 @@ public class TestController extends Controller {
 
 	
 	public void initialize() {
+		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
 		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
 		//map.setText(game.toString());
 		//imageMap.setCenterShape(true);
 		//imageMap.setGridLinesVisible(true);
 
-        for (int row = 0 ; row < game.getHeight() ; row++ ){
-            RowConstraints rc = new RowConstraints();
-//            rc.setMaxHeight(32);
-//            rc.setPrefHeight(32);
-            rc.setFillHeight(true);
-            //rc.setVgrow(Priority.ALWAYS);
-            imageMap.getRowConstraints().add(rc);
-        }
-        for (int col = 0 ; col < game.getWidth(); col++ ) {
-            ColumnConstraints cc = new ColumnConstraints();
-//            cc.setMaxWidth(32);
-//            cc.setPrefWidth(32);
-            cc.setFillWidth(true);
-            //cc.setHgrow(Priority.ALWAYS);
-            imageMap.getColumnConstraints().add(cc);
-        }
+//        for (int row = 0 ; row < game.getHeight() ; row++ ){
+//            RowConstraints rc = new RowConstraints();
+////          rc.setMaxHeight(32);
+////          rc.setPrefHeight(32);
+//            rc.setFillHeight(true);
+////          rc.setVgrow(Priority.ALWAYS);
+//            imageMap.getRowConstraints().add(rc);
+//        }
+//        for (int col = 0 ; col < game.getWidth(); col++ ) {
+//            ColumnConstraints cc = new ColumnConstraints();
+////          cc.setMaxWidth(32);
+////          cc.setPrefWidth(32);
+//            cc.setFillWidth(true);
+////          cc.setHgrow(Priority.ALWAYS);
+//            imageMap.getColumnConstraints().add(cc);
+//        }
 
 	}
 	
+	private void makeGridPane(int height, int width) {
+		// TODO Auto-generated method stub
+
+		for( int i = 0; i <= width; i++ ) {
+	        ColumnConstraints cc = new ColumnConstraints();
+	        cc.setPercentWidth(100.0 / width);
+	        cc.setMaxWidth(32);
+	        cc.setPrefWidth(32);
+	        cc.setFillWidth(true);
+	        imageMap.getColumnConstraints().add(cc);
+		}
+		
+	   for (int i = 0; i <= height; i++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setPercentHeight(100.0 / height);
+	        rc.setMaxHeight(32);
+	        rc.setPrefHeight(32);
+	        rc.setFillHeight(true);
+            imageMap.getRowConstraints().add(rc);         
+       }
+	}
+
+
+
 	public void printGame() {
 		imageMap.getChildren().clear();
 		for( int i = 0; i <= game.getWidth(); i++ ) {
@@ -102,8 +129,8 @@ public class TestController extends Controller {
 				}
 				
 				ImageView iv = new ImageView(image);
-				iv.setFitHeight(30);
-				iv.setFitWidth(30);
+				iv.setFitHeight(32);
+				iv.setFitWidth(32);
 //				GridPane.setFillWidth(iv, true);
 //				GridPane.setFillHeight(iv, true);
 				imageMap.add(iv, i, j);
@@ -115,6 +142,9 @@ public class TestController extends Controller {
 	
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
+    	Player player = game.getPlayer();
+    	player.setDx(0);
+    	player.setDy(0);
 		if (key.equals(KeyCode.W)) {
 			moveUp();
 		} else if (key.equals(KeyCode.S)) {
@@ -131,29 +161,21 @@ public class TestController extends Controller {
 	    		System.out.print(curItem.getName() + " ");
 	    	}
 	    	System.out.println("\n");
-		} else if (key.equals(KeyCode.DIGIT2)) {
-	    	Arrow arrow = null;
-	    	Player player = game.getPlayer();
-	    	for (Entity curItem : game.getPlayerInventory()) {
-	    		if (curItem instanceof Arrow) {
-	    			arrow = (Arrow)curItem;
-	    			arrow.setPosition(game.getPlayer().getPosition());
-	    			arrow.setDy(-1); 
-	    			arrow.setDx(0);
-	    			game.addEntity(arrow);
-	    			break;
-	    		}
-	    	}
+		} else if (Arrow.checkKeyCode(key)) {
+	    	Arrow arrow = game.getPlayerArrow();
 	    	if(arrow!=null) {
-	    		System.out.println("Shooting upwards");
+	    		arrow.setDirection(key);
+	    		arrow.setPosition(player.getPosition());
+	    		//arrow.move();
 	    		player.removeItem(arrow);
-	    		game.update();
+	    		game.addEntity(arrow);
+	    		update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
+
 		} else if (key.equals(KeyCode.V)) {
 	    	System.out.println("Checking for bomb");
-	    	Player player = game.getPlayer();
 	    	if(player.hasItem("Bomb")) {
 	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();
@@ -167,10 +189,81 @@ public class TestController extends Controller {
 			      DesignController dc = new DesignController(super.getS(), game);
 			      map1.start(dc);
 			}
+		} else if (key.equals(KeyCode.DIGIT2)) {
+	    	Bone bone = null;
+
+            //need to check if wall, because then no can do
+	    	for (Entity curItem : game.getPlayerInventory()) {
+	    		if (curItem instanceof Bone) {
+	    			bone = (Bone)curItem;
+	    			bone.setPosition(game.getPlayer().getPosition());
+	    			bone.setDx(player.getDx()); 
+	    			bone.setDy(player.getDy());
+	    			game.addEntity(bone);
+	    			break;
+	    		}
+	    	}
+	    	if(bone!=null) {
+	    		System.out.println("Shooting bone");
+	    		player.removeItem(bone);
+	    		update();
+	    	} else {
+	    		System.out.println("No bones :(");
+	    	}
 		}
 		printGame();
 	}
+		
+	public void moveUp () {
+		play_move();
+		player.setDx(0);
+		player.setDy(-1);
+		update();
+		printGame();
+		//map.setText(game.toString());
+	}
+	public void moveRight () {
+		play_move();
+		player.setDx(1);
+		player.setDy(0);
+		update();
+		printGame();
+		//map.setText(game.toString());
+	}
 	
+	public void moveLeft () {
+		play_move();
+		player.setDx(-1);
+		player.setDy(0);
+		update();
+		printGame();
+		//map.setText(game.toString());
+	}
+	public void moveDown () {
+		play_move();
+		player.setDx(0);
+		player.setDy(1);
+		update();
+		printGame();
+		//map.setText(game.toString());
+	}
+
+
+
+	private void update() {
+		game.update();
+		if (game.isPlayerAlive() && game.hasPlayerWon()) {
+			previousMenu();
+		} else if (!game.isPlayerAlive()) {
+			previousMenu();
+		}
+	}
+	
+	private void play_move() {
+		AudioClip note = new AudioClip(this.getClass().getResource("move.wav").toString());
+		//note.setCycleCount(3);
+		note.play();
+	}
 	
 	//Change
 	public void previousMenu() {
@@ -178,34 +271,5 @@ public class TestController extends Controller {
         EditorController ec = new EditorController(super.getS(), initialGame);
         editor.start(ec);
 	}
-	
-	public void moveUp () {
-		player.setDx(0);
-		player.setDy(-1);
-		game.update();
-		printGame();
-		//map.setText(game.toString());
-	}
-	public void moveRight () {
-		player.setDx(1);
-		player.setDy(0);
-		game.update();
-		printGame();
-		//map.setText(game.toString());
-	}
-	
-	public void moveLeft () {
-		player.setDx(-1);
-		player.setDy(0);
-		game.update();
-		printGame();
-		//map.setText(game.toString());
-	}
-	public void moveDown () {
-		player.setDx(0);
-		player.setDy(1);
-		game.update();
-		printGame();
-		//map.setText(game.toString());
-	}
+
 }

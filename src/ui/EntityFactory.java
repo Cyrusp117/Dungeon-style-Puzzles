@@ -63,7 +63,7 @@ public class EntityFactory {
 			concreteEntity = new Treasure(co);
 		}else if(entityName.equals("Wall")) {
 			concreteEntity = new Wall(co);
-		}else if(entityName.equals("Goblin")) {
+		}else if(entityName.equals("TreasureGoblin")) {
 			concreteEntity = new TreasureGoblin(co);
 		}else if(entityName.equals("Bone")) {
 			concreteEntity = new Bone(co);
