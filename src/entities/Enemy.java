@@ -4,16 +4,21 @@ import java.util.ArrayList;
 
 public abstract class Enemy extends Entity{
 
-    //protected Coordinate position;
     
 	public Enemy (Coordinate position){
 		super(position);
-	    this.movable = true;
+	    this.movable = true;	
 	}
-	
+	/**
+	 * @param the position of player, a graph of the board, the closest item to the player that they can interact with, and the list of entities in the game
+	 * @return the desired move coordinate
+	 */
 	public abstract Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities);
 	
-	
+	/**
+	 * @param the position of player, a graph of the board, the closest item to the player that they can interact with, and the list of entities in the game
+	 * @return the final move coordinate for the enemy
+	 */
 	public Coordinate move(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities) {
 		g.addCoordinate(position); //doing this before hand solves not being able to use in targetSpace stuff
 		g.generateEdges();
@@ -32,27 +37,25 @@ public abstract class Enemy extends Entity{
 	}
 	
 
-	//@Override
+	
 	public Coordinate getPosition() {
-		// TODO Auto-generated method stub
+
 		return position;
 	}
-
-	//@Override
+	
 	public int getX() {
-		// TODO Auto-generated method stub
+	
 		return position.getX();
 	}
 
-	//@Override
+
 	public int returnY() {
-		// TODO Auto-generated method stub
+		
 		return position.getY();
 	}
 
-	//@Override
 	public boolean willCollide(Coordinate otherPos) {
-		// TODO Auto-generated method stub
+	
 		return position.equals(otherPos);
 	}
 	
@@ -61,7 +64,11 @@ public abstract class Enemy extends Entity{
 		return true;
 	}
 	
-	
+	/**
+	 * 
+	 * @param player - the player to interact with
+	 * @return	new position of this entity (null if destroyed)
+	 */
 	public Coordinate interactWithPlayer(Player player) {
 		if(player.hasItem("Sword")) {
 			player.hitUsingSword();

@@ -86,7 +86,10 @@ public class TreasureGoblin extends Enemy {
 		
 		return "TreasureGoblin";
 	}
-	
+	/**
+	 * 
+	 * @return this goblins treasure
+	 */
 	public Treasure getTreasure() {
 		return this.goblinTreasure;
 	}
