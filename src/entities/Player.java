@@ -246,7 +246,7 @@ public class Player extends Entity {
 	
 	public Bomb setBomb() {
 		for(Entity e: this.getInventory()) {
-			if(e.getName().equals("Bomb")) {
+			if(e.getClass() == Bomb.class) {
 				Bomb bomb = (Bomb)e;
 				bomb.light();
 				this.removeItem(e);
@@ -256,6 +256,14 @@ public class Player extends Entity {
 		return null;
 	}
 	
+	public boolean hasEntity(Class entityClass) {
+		for(Entity e: this.getInventory()) {
+			if (e.getClass() == entityClass) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 //	public Bone setBone() {
 //		for(Entity e: this.getInventory()) {

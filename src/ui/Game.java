@@ -182,7 +182,11 @@ public class Game{
 					Entity atNewEntityPos = getFirstEntity(newInteractablePos);
 					if (atNewEntityPos == interactable) {
 						// entity hasnt moved after interaction
-						moveEntity(player, player.getOldPosition());
+						if (interactable instanceof Pit) {
+							
+						} else {
+							moveEntity(player, player.getOldPosition());
+						}
 						//}
 					// BOULDER STUFF
 					} else if (atNewEntityPos == NULL) {
@@ -249,7 +253,7 @@ public class Game{
 				if(bomb.isLit()) {
 					bomb.tickTock();
 				}
-				if (bomb.getTurnsLeft() == 0) { 
+				if (bomb.getTurnsLeft() == -1) { 
 					for (Coordinate affectedArea : bomb.affectedAreas()) {
 						if(bomb.affectedAreas().contains(player.getPosition())) {		// can be refactored later by having player be part of entities
 							player.setState(0);

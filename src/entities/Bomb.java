@@ -21,7 +21,7 @@ public class Bomb extends Entity {
 	public Bomb(Coordinate position) {
 		super(position);
 		this.keyCode = KeyCode.U;
-		this.turnsLeft = 3;
+		this.turnsLeft = 4;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}
@@ -45,7 +45,7 @@ public class Bomb extends Entity {
 	}
 	
 	public String getName() {
-		return "Bomb";
+		return "bomb_" + Integer.toString(getTurnsLeft());
 	}
 
 	public boolean isLit() {
@@ -63,19 +63,5 @@ public class Bomb extends Entity {
 	public void tickTock() {
 		turnsLeft--;
 	}
-//	/**
-//	 * @return the numOfBombs
-//	 */
-//	public static int getNumOfBombs() {
-//		return numOfBombs;
-//	}
-//
-//	/**
-//	 * @return the bombId
-//	 */
-//	public int getBombId() {
-//		return BombId;
-//	}
-
 	
 }
