@@ -74,12 +74,19 @@ public class Boulder extends Entity {
 //	}
 	
 	public Coordinate interact(Entity entity) {
+		valid = true;
 		if(entity instanceof Pit){
 			return null;
 		} else if (entity instanceof FloorSwitch) {
 			return entity.getPosition();
+		} else {
+			valid = false;
 		}
 		return position;
+	}
+	
+	public boolean isValid() {
+		return valid;
 	}
 	
 }

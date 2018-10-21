@@ -9,6 +9,7 @@ public abstract class Entity {
 	protected Coordinate position;
 	protected KeyCode keyCode;
 	protected boolean movable;
+	protected boolean valid;
 	public Entity(Coordinate position) {
 		this.position = position;
 	}
@@ -124,15 +125,15 @@ public abstract class Entity {
 		return oldPos;
 	}
 
-//	public boolean isValidInteraction(Entity atNewEntityPos) {
-//		//if (atNewEntityPos.size() == 0) { return true; }
-//		return false;
-//	}
 
-
-//	public Coordinate interact(Entity entity) {
-//		return position;
-//	}
+	/**
+	 * 
+	 * @param entity - the entity to interact with
+	 * @return new position of this entity (null if destroyed)
+	 */
+	public Coordinate interact(Entity entity) {
+		return position;
+	}
 	
 	/**
 	 * 
@@ -140,5 +141,12 @@ public abstract class Entity {
 	 */
 	public void setOldPosition(Coordinate position) {
 		this.oldPos = position;
+	}
+	/**
+	 * @returns True if the last interaction was valid
+	 * 
+	 */
+	public boolean isValid() {
+		return true;
 	}
 }
