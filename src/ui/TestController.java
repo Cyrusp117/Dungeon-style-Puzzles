@@ -166,7 +166,7 @@ public class TestController extends Controller {
 
 		} else if (key.equals(KeyCode.V)) {
 	    	System.out.println("Checking for bomb");
-	    	if(player.hasItem("Bomb")) {
+	    	if(player.hasEntity(Bomb.class)) {
 	    		System.out.println("Light and drop the bomb");
 	    		Bomb placedBomb = player.setBomb();
 	    		placedBomb.setPosition(player.getPosition());
