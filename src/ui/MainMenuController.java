@@ -38,7 +38,6 @@ public class MainMenuController extends Controller implements Initializable {
 	
 	public void startGame() {
 		play_note();
-		
 		Stage curStage = super.getS();
 		//curStage.setUserData(false);
         Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");

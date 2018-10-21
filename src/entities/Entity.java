@@ -35,7 +35,7 @@ public abstract class Entity {
 	}
 
 	
-public Coordinate invincibilityMove(Coordinate co, Graph g) {
+	public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		
 		g.addCoordinate(this.position); //need this?
 		g.generateEdges();
@@ -129,9 +129,10 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 //		return false;
 //	}
 
-	public Coordinate interact(Entity entity) {
-		return position;
-	}
+
+//	public Coordinate interact(Entity entity) {
+//		return position;
+//	}
 	
 	/**
 	 * 
