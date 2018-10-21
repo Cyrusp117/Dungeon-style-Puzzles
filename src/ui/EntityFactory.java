@@ -29,7 +29,7 @@ public class EntityFactory {
 	public Entity createEntity(String entityName, Coordinate co) {
 		if(entityName.equals("Arrow")) {
 			concreteEntity = new Arrow(co);
-		}else if(entityName.equals("Bomb")) {
+		}else if(entityName.equals("Bomb_4")) {
 			concreteEntity = new Bomb(co);
 		}else if(entityName.equals("Boulder")) {
 			concreteEntity = new Boulder(co);
