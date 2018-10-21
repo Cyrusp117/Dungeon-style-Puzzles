@@ -139,7 +139,6 @@ public class EditorController extends Controller {
 	        }
 
 	        //For every pane in the selector, add respective sprite
-	        printGame();
 	        String path;
 	        if(game.getTheme().equals("theme1")) {
 				path = "resources/theme1/";
@@ -215,13 +214,7 @@ public class EditorController extends Controller {
 	        	insertEntity(colIndex, rowIndex);
 	        	Coordinate curTile = new Coordinate(colIndex, rowIndex);
 	        	deleteTarget = game.getFirstEntity(curTile);
-	        	if(deleteTarget instanceof entities.Hunter && nextHunter == 1) {
-	        		houndToSet.setHunter((entities.Hunter)deleteTarget);
-	        		nextHunter = 0;
-	        		houndToSet = null;
-	        		houndMarker.setText("None Selected");
-	        	}
-	        	targetName.getId();
+	        	setHunter();
 	        	if(deleteTarget == null) {
 	        		targetName.setText("None");
 	        	}else {
@@ -230,6 +223,18 @@ public class EditorController extends Controller {
 	        });
 	        map.add(pane, colIndex, rowIndex);
 	    }
+
+		/**
+		 * Test if Hunter needs to be set
+		 */
+		public void setHunter() {
+			if(deleteTarget instanceof entities.Hunter && nextHunter == 1) {
+				houndToSet.setHunter((entities.Hunter)deleteTarget);
+				nextHunter = 0;
+				houndToSet = null;
+				houndMarker.setText("None Selected");
+			}
+		}
 
 		/**
 		 * 
