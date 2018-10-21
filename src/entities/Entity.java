@@ -17,15 +17,19 @@ public abstract class Entity {
 		
 	}
 
-//	public Coordinate move(Coordinate co, Graph g) {
-//		return null;
-//	}
-
-
+	/**
+	 * 
+	 * @param player - the player to interact with
+	 * @return	new position of this entity (null if destroyed)
+	 */
 	public Coordinate interactWithPlayer(Player player) {
 		return position;
 	}
 	
+	/**
+	 * 
+	 * @return true if entity dies to a bomb explosion
+	 */
 	public boolean interactWithBomb() {
 		return false;
 	}
@@ -43,7 +47,11 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		return move;
 	}
 
-
+	/**
+	 * 
+	 * @return string containing the name (and state in the case of bomb)
+	 *  of the entity
+	 */
 	public abstract String getName();
 
 	/**
@@ -78,21 +86,32 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		return position.getY();
 	}
 
+	/**
+	 * 
+	 * @param otherPos
+	 * @return true if this entities position equals otherPos
+	 */
 	public boolean willCollide(Coordinate otherPos) {
 		return position.equals(otherPos);
 		
 	}
 	
-	public KeyCode getKeyCode() {
-		return this.keyCode;
-	}
+
+//	public KeyCode getKeyCode() {
+//		return this.keyCode;
+//	}
 	
-	public String getDesignerDescription() {
+//	public String getDesignerDescription() {
+//
+//		return(this.getName() + " - " + getKeyCode().getName());
+//
+//	}
 
-		return(this.getName() + " - " + getKeyCode().getName());
-
-	}
-
+	/**
+	 * 
+	 * @param entity
+	 * @return true if entity can be placed on top of this entity
+	 */
 	public boolean canBePlacedOnTop(Entity entity) {
 		return false;
 	}
@@ -105,10 +124,10 @@ public Coordinate invincibilityMove(Coordinate co, Graph g) {
 		return oldPos;
 	}
 
-	public boolean isValidInteraction(Entity atNewEntityPos) {
-		//if (atNewEntityPos.size() == 0) { return true; }
-		return false;
-	}
+//	public boolean isValidInteraction(Entity atNewEntityPos) {
+//		//if (atNewEntityPos.size() == 0) { return true; }
+//		return false;
+//	}
 
 	public Coordinate interact(Entity entity) {
 		return position;

@@ -36,7 +36,12 @@ public class Game{
 	}
 	
 	
-	
+	/**
+	 * This signals a new turn in the game and updates the model
+	 * by first updating interactions with items,
+	 * then moves the player
+	 * then checks win conditions
+	 */
 	public void update() {						//Updates the state of the game
 		// Arrow collisions, bomb explosions, player inventory update
 		itemInteractions();
@@ -594,29 +599,29 @@ public class Game{
 		return closest;
 	}
 
-	public void printGame() {
-	    int i = 0;
-	    int j = 0;
-		while (i <= this.getHeight()) {
-	  	while (j <= this.getWidth()) {
-	  		Coordinate curPos = new Coordinate(j, i);
-	 		Entity entity = getFirstEntity(curPos);
-	 		
-	  		if (curPos.equals(player.getPosition())) {
-	  			System.out.print("1");
-	  		} else if(entity != null) {
-	  			System.out.print(entity.getKeyCode().getName());
-	  		} else {
-	  			System.out.print("-");
-	  		}
-	  		System.out.print(" ");
-	  		j++;
-	 	}
-	 	System.out.println("");
-	  	j = 0;
-	  	i++;
-	  }
-	}
+//	public void printGame() {
+//	    int i = 0;
+//	    int j = 0;
+//		while (i <= this.getHeight()) {
+//	  	while (j <= this.getWidth()) {
+//	  		Coordinate curPos = new Coordinate(j, i);
+//	 		Entity entity = getFirstEntity(curPos);
+//	 		
+//	  		if (curPos.equals(player.getPosition())) {
+//	  			System.out.print("1");
+//	  		} else if(entity != null) {
+//	  			System.out.print(entity.getKeyCode().getName());
+//	  		} else {
+//	  			System.out.print("-");
+//	  		}
+//	  		System.out.print(" ");
+//	  		j++;
+//	 	}
+//	 	System.out.println("");
+//	  	j = 0;
+//	  	i++;
+//	  }
+//	}
 	
 	public Arrow getPlayerArrow() {
     	Arrow arrow = null;
