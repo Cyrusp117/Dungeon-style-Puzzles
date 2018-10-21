@@ -19,7 +19,6 @@ public class FloorWin extends WinDecorator {
 		if(checkWin.checkWinCondition(game) == false){
 			return false;
 		}else {
-			System.out.println("Checking");
 			for (Entity entity : game.getEntities()) {
 				if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 					FloorSwitch fs = (FloorSwitch)entity; 
