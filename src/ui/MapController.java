@@ -69,10 +69,13 @@ public class MapController extends Controller {
 		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
 		instructions.setText("Arrow Keys to move, 1 for Inventory, 2 to shoot arrow, Escape to exit");
-
-
 	}
 	
+	/**
+	 * Creates a gridpane which hold the images of the game
+	 * @param height - height of the gridpane
+	 * @param width - width of the gridpane
+	 */
 	private void makeGridPane(int height, int width) {
 		// TODO Auto-generated method stub
         for (int i = 0 ; i <= width ; i++) {
@@ -91,7 +94,10 @@ public class MapController extends Controller {
 	}
 
 
-
+	/**
+	 * Adds images to the gridpane, representing the entities
+	 * that are currently at that coordinate.
+	 */
 	public void printGame() {
 		imageMap.getChildren().clear();
 		String path;
@@ -120,6 +126,10 @@ public class MapController extends Controller {
 
 	}
 	
+	/**
+	 * Does player actions depending on input KeyEvent 
+	 * @param ke - the KeyEvent that is triggered
+	 */
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
     	Player player = game.getPlayer();
@@ -188,7 +198,9 @@ public class MapController extends Controller {
 	}
 	
 	
-	
+	/**
+	 * Goes to the previous menu
+	 */
 	public void previousMenu() {
         Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());
@@ -230,7 +242,9 @@ public class MapController extends Controller {
 	}
 
 
-
+	/**
+	 * Checks winstates and goes to a win/loss screen accordingly
+	 */
 	private void update() {
 		game.update();
 		if (game.isPlayerAlive() && game.hasPlayerWon()) {
@@ -243,6 +257,7 @@ public class MapController extends Controller {
 		      lossScreen.start(wc);
 		}
 	}
+	
 	
 	private void play_move() {
 		AudioClip note = new AudioClip(this.getClass().getResource("move.wav").toString());

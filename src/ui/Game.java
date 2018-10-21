@@ -553,30 +553,7 @@ public class Game{
 	}
 	
 	
-//	public boolean victory() {
-//		return win;
-//	}
-	
-//	public ArrayList<Entity> getAllEntities() {
-//		ArrayList<Entity> allDesignerObjects = new ArrayList<Entity>();
-//		Coordinate defaultPos = new Coordinate(1, 1);
-//		allDesignerObjects.add(new Key());
-//		allDesignerObjects.add(new Hunter(defaultPos));
-//		allDesignerObjects.add(new Arrow(defaultPos));
-//		allDesignerObjects.add(new HoverPotion(defaultPos));
-//		allDesignerObjects.add(new Treasure(defaultPos));
-//		allDesignerObjects.add(new Sword(defaultPos));
-//		allDesignerObjects.add(new Boulder(defaultPos));
-//		allDesignerObjects.add(new Pit(defaultPos));
-//		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
-//		allDesignerObjects.add(new Wall(defaultPos));
-//		allDesignerObjects.add(new FloorSwitch(defaultPos));
-//		allDesignerObjects.add(new Exit(defaultPos));
-//		allDesignerObjects.add(new Door());
-//		allDesignerObjects.add(new Hound(defaultPos));
-//		allDesignerObjects.add(new Player(defaultPos));
-//		return allDesignerObjects;
-//	}
+
 	
 	
 	private Coordinate closestPickup(Enemy enemy) {
@@ -642,29 +619,7 @@ public class Game{
 		return closest;
 	}
 
-//	public void printGame() {
-//	    int i = 0;
-//	    int j = 0;
-//		while (i <= this.getHeight()) {
-//	  	while (j <= this.getWidth()) {
-//	  		Coordinate curPos = new Coordinate(j, i);
-//	 		Entity entity = getFirstEntity(curPos);
-//	 		
-//	  		if (curPos.equals(player.getPosition())) {
-//	  			System.out.print("1");
-//	  		} else if(entity != null) {
-//	  			System.out.print(entity.getKeyCode().getName());
-//	  		} else {
-//	  			System.out.print("-");
-//	  		}
-//	  		System.out.print(" ");
-//	  		j++;
-//	 	}
-//	 	System.out.println("");
-//	  	j = 0;
-//	  	i++;
-//	  }
-//	}
+
 	
 	/**
 	 * 

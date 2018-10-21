@@ -26,20 +26,7 @@ public class Player extends Entity {
 		keyCode = KeyCode.DIGIT1;
 	}
 
-	/**
-	 * 
-	 * @return the newPosition requested to be moved to by the player
-	 */
 
-//	public Coordinate move(Coordinate co, Graph g) {
-//		System.out.println("DX = " + dx + " DY = " + dy);
-//		//System.out.println(position.getxPosition());
-//	    int newX = position.getxPosition() + dx;
-//	    int newY = position.getyPosition() + dy;
-//	    Coordinate newPos = new Coordinate(newX, newY);
-//	    return newPos;
-//	    
-//	}
 	
 	/**
 	 * 
@@ -308,26 +295,7 @@ public class Player extends Entity {
 		return false;
 	}
 	
-//	public Bone setBone() {
-//		for(Entity e: this.getInventory()) {
-//			if(e.getName().equals("Bone")) {
-//				Bone bone = (Bone)e;
-//				this.removeItem(bone);
-//				return bone;
-//			}
-//		}
-//		return null;
-//	}
-	
-//	/***
-//	 * Player's state is set to dead after bomb explosion hits player
-//	 */
-//	@Override
-//	public boolean interactWithBomb() {
-//		this.setState(0);
-//		return false;
-//	}
-//	
+
 	/**
 	 * @return True if entity can be placed on top of player
 	 */
