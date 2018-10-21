@@ -13,14 +13,14 @@ import entities.Treasure;
 
 public class TestHoverPotion extends testSetup {
 
-	Coordinate hpPos = new Coordinate(1*32, 4*32);
+	Coordinate hpPos = new Coordinate(1, 4);
 	@Test
 	public void placeTreasure() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		HoverPotion hp = new HoverPotion(hpPos);
 		game.addEntity(hp);
 		game.printGame();
-		assert(game.getEntity(hpPos) instanceof HoverPotion);
+		assert(game.getFirstEntity(hpPos) instanceof HoverPotion);
 	}
 	
 	@Test

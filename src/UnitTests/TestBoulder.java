@@ -12,14 +12,14 @@ import entities.Wall;
 
 public class TestBoulder extends testSetup {
 
-	Coordinate boulderPos = new Coordinate(2*32, 4*32);
+	Coordinate boulderPos = new Coordinate(2, 4);
 	@Test
 	public void placeBoulder() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Boulder boulder = new Boulder(boulderPos);
 		game.addEntity(boulder);
 		game.printGame();
-		assert(game.getEntity(boulderPos) instanceof Boulder);
+		assert(game.getFirstEntity(boulderPos) instanceof Boulder);
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class TestBoulder extends testSetup {
 		game.printGame();
 		move(RIGHT, 1);
 		move(DOWN, 3);
-		Coordinate newPos = new Coordinate(2*32, 5*32);
+		Coordinate newPos = new Coordinate(2, 5);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved down");
 		//robot.delay(1000);
@@ -37,7 +37,7 @@ public class TestBoulder extends testSetup {
 		move(LEFT, 1);
 		move(DOWN, 1);
 		move(RIGHT, 1);
-		newPos = new Coordinate(3*32, 5*32);
+		newPos = new Coordinate(3, 5);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved right");
 		//robot.delay(1000);
@@ -45,7 +45,7 @@ public class TestBoulder extends testSetup {
 		move(DOWN, 1);
 		move(RIGHT, 1);
 		move(UP, 1);
-		newPos = new Coordinate(3*32, 4*32);
+		newPos = new Coordinate(3, 4);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved up");
 		//robot.delay(1000);
@@ -53,7 +53,7 @@ public class TestBoulder extends testSetup {
 		move(RIGHT, 1);
 		move(UP, 1);
 		move(LEFT, 1);
-		newPos = new Coordinate(2*32, 4*32);
+		newPos = new Coordinate(2, 4);
 		assert(boulder.getPosition().equals(newPos));
 		System.out.println("Boulder has moved left");
 		//robot.delay(1000);
@@ -62,7 +62,7 @@ public class TestBoulder extends testSetup {
 	@Test
 	public void testPitInteraction() {
 		Boulder boulder = new Boulder(boulderPos);
-		Coordinate pitPos = new Coordinate(2*32, 5*32);
+		Coordinate pitPos = new Coordinate(2, 5);
 		Pit pit = new Pit(pitPos);
 		game.addEntity(boulder);
 		game.addEntity(pit);
@@ -77,15 +77,15 @@ public class TestBoulder extends testSetup {
 	
 	@Test
 	public void testCantPushTwo() {
-		boulderPos = new Coordinate(1*32, 4*32);
+		boulderPos = new Coordinate(1, 4);
 		Boulder boulder = new Boulder(boulderPos);
 		game.addEntity(boulder);
-		boulderPos = new Coordinate(1*32, 3*32);
+		boulderPos = new Coordinate(1, 3);
 		boulder = new Boulder(boulderPos);
 		game.addEntity(boulder);
 		move(DOWN, 1);
 		move(DOWN, 1);
-		Coordinate expectedPos = new Coordinate(1*32, 2*32);
+		Coordinate expectedPos = new Coordinate(1, 2);
 		assert(expectedPos.equals(player.getPosition()));
 	}
 }

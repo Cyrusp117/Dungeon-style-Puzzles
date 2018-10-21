@@ -3,26 +3,28 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Pit extends Entity{
 	public Pit(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_P;
+		this.keyCode = KeyCode.P;
 		this.movable = false;
 	}
 
 	public Coordinate move(Coordinate co, Graph g) {
 		return position;
 	}
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!player.hasItem("HoverPotion")) {
 			player.setState(0); // player is dead
 		}
-		return false;
+		return position;
 	}
 	
-	public boolean interactWithBoulder(Boulder boulder) {
+	public Coordinate interact(Boulder boulder) {
 		//delete boulder
-		return true;
+		return null;
 	}
 	
 	public String getName() {

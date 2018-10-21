@@ -3,16 +3,18 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCode;
 
-public class Player extends Entity{
+
+public class Player extends Entity {
 	
-	private Coordinate oldPos; 
 	private static final int ALIVE = 1;
 	private static final int DEAD = 0;
 	private int dx; // Current x velocity
 	private int dy; // Current y velocity
 	private int state;
 	ArrayList<Entity> inventory;
+
 	
 	public Player(Coordinate position){
 		super(position);
@@ -20,34 +22,19 @@ public class Player extends Entity{
 		dy = 0;
 		inventory = new ArrayList<Entity>();
 		state = ALIVE;
-		keyCode = KeyEvent.VK_JAPANESE_HIRAGANA;
+		keyCode = KeyCode.DIGIT1;
 	}
 
-	/**
-	 * 
-	 * @return the newPosition requested to be moved to by the player
-	 */
 
-	public Coordinate move(Coordinate co, Graph g) {
-		System.out.println("DX = " + dx + " DY = " + dy);
-		//System.out.println(position.getxPosition());
-	    int newX = position.getxPosition() + dx;
-	    int newY = position.getyPosition() + dy;
-	    Coordinate newPos = new Coordinate(newX, newY);
-	    return newPos;
-	    
-	}
 	
 	/**
 	 * 
 	 * @return the newPosition requested to be moved to by the player
 	 */
 
-	public Coordinate move() {
-		System.out.println("DX = " + dx + " DY = " + dy);
-		//System.out.println(position.getxPosition());
-	    int newX = position.getxPosition() + dx;
-	    int newY = position.getyPosition() + dy;
+	public Coordinate getMove() {
+	    int newX = position.getX() + dx;
+	    int newY = position.getY() + dy;
 	    Coordinate newPos = new Coordinate(newX, newY);
 	    return newPos;
 	 
@@ -67,34 +54,29 @@ public class Player extends Entity{
 	 */
 	public void pickUp(Entity entity) {
 		inventory.add(entity);
-		System.out.println("Picked up: " + entity.getName());
 	}
 	
-
+	/**
+	 * 
+	 * @return True if the player is alive
+	 */
 	public boolean isAlive () {
 		if(this.state == 1) return true;
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param state - if state = 1, the player is alive
+	 * state = 0, the player is dead
+	 */
 	public void setState(int state) {
 		this.state=state;
 	}
 	
 
-	/**
-	 * 
-	 * @param sets oldPos to position
-	 */
-	public void setOldPosition(Coordinate position) {
-		this.oldPos = position;
-	}
-	/**
-	 * 
-	 * @return previous position of Entity
-	 */
-	public Coordinate getOldPosition () {
-		return oldPos;
-	}
+
+
 	/**
 	 * 
 	 * @return Returns an arrayList representing the entities the player currently has
@@ -155,15 +137,15 @@ public class Player extends Entity{
 	/**
 	 * @return the X Coordinate of the player (int)
 	 */
-	public int returnX() {
-		return position.getxPosition();
+	public int getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * @return the Y Coordinate of the player (int)
 	 */
 	public int returnY() {
-		return position.getyPosition();
+		return position.getY();
 	}
 	
 	/**
@@ -175,6 +157,10 @@ public class Player extends Entity{
 		return position.returnPosition();
 	}
 	
+	/**
+	 * 
+	 * @return A Sword entity if player has one, else null
+	 */
 	public Sword getSword() {
 		for(Entity entity : inventory) {
 			if (entity instanceof Sword) return (Sword)entity;
@@ -182,43 +168,22 @@ public class Player extends Entity{
 		return null;
 	}
 	
-	
+	/**
+	 * Reduces the durability of the player's sword
+	 */
 	public void hitUsingSword() {
 		Sword curSword = getSword();
 		curSword.reduceDurability();
 		if(curSword.getDurability() == 0) {
 			inventory.remove(curSword);
 		}
-//		int r = 0;
-//		Entity remove = null;
-//		if(this.hasItem("Sword")) {
-//			for(Entity e: this.getInventory()) {
-//				if(e.getName().equals("Sword")) {
-//					Sword sword = (Sword) e; 
-//					sword.getDesignerDescription();
-//					if(sword.getHitTime() == 0) {
-//						remove = e;
-//						r = 1;
-//					}
-//				}
-//			}
-//		}
-//		//hit using sword
-//		if(r == 0 && this.hasItem("Sword")) {
-//			return true;
-//		//presss v but don't have sword
-//		}else if (r== 0 && !this.hasItem("Sword")){
-//			System.out.println("You don't have sword!");
-//			return false;
-//	    //hit using sword and remove the sword from inventory
-//		}else if(r == 1){
-//			System.out.println("Remove sword from inventory!");
-//			this.getInventory().remove(remove);
-//			return false;
-//		}
-//		return false;
 	}
-
+	
+	/**
+	 * 
+	 * @param item - String representing item's name
+	 * @return True if the player has such an item
+	 */
 	public boolean hasItem(String item) {
 		int has = 0;
 		for(Entity e: this.getInventory()) {
@@ -234,10 +199,19 @@ public class Player extends Entity{
 
 	}
 	
+	/**
+	 * 
+	 * @param o - The entity to be removed from player's inventory
+	 */
 	public void removeItem(Entity o) {
 		this.getInventory().remove(o);
 	}
 	
+	/**
+	 * 
+	 * @param KeyId - the key with KeyId will attempt to be removed
+	 * @return True if remove was successful, else false
+	 */
 	public boolean removeKey(int KeyId) {
 		int r = 0;
 		Key remove = null;
@@ -260,6 +234,12 @@ public class Player extends Entity{
 
 	}
 	
+	/**
+	 * 
+	 * @param DoorId
+	 * @return True if player has a key that can open door with
+	 * an id of DoorId 
+	 */
 	public boolean hasKey(int DoorId) {
 		int has = 0;
 		for(Entity e: this.getInventory()) {
@@ -280,10 +260,13 @@ public class Player extends Entity{
 	}
 	
 	
-	
+	/**
+	 * Activates the bomb and removes it from players inventory
+	 * @return The bomb that was activated
+	 */
 	public Bomb setBomb() {
 		for(Entity e: this.getInventory()) {
-			if(e.getName().equals("Bomb")) {
+			if(e.getClass() == Bomb.class) {
 				Bomb bomb = (Bomb)e;
 				bomb.light();
 				this.removeItem(e);
@@ -293,20 +276,33 @@ public class Player extends Entity{
 		return null;
 	}
 	
-	public Arrow setArrow() {
+	/**
+	 * 
+	 * @param entityClass
+	 * @return True if player's inventory has an entity of 
+	 * class entityClass
+	 */
+	public boolean hasEntity(Class entityClass) {
 		for(Entity e: this.getInventory()) {
-			if(e.getName().equals("Arrow")) {
-				Arrow arrow = (Arrow)e;
-				this.removeItem(arrow);
-				return arrow;
+			if (e.getClass() == entityClass) {
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 	
+
+	/**
+	 * @return True if entity can be placed on top of player
+	 */
 	@Override
-	public boolean interactWithBomb() {
-		this.setState(0);
+	public boolean canBePlacedOnTop(Entity entity) {
+		if (entity instanceof Arrow) { return true; }
+		if (entity instanceof Bomb) { return true; }
+		if (entity instanceof Bone) { return true; }
+		if (entity instanceof Exit) { return true; }
+		if (entity instanceof Pit) { return true; }
+		if (entity instanceof FloorSwitch) { return true; }
 		return false;
 	}
 	

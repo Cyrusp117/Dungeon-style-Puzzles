@@ -2,12 +2,14 @@ package entities;
 
 import java.awt.event.KeyEvent;
 
+import javafx.scene.input.KeyCode;
+
 public class Wall extends Entity {
 	//private BufferedImage sprite;
 	
 	public Wall (Coordinate position)  {
 		super(position);
-		this.keyCode = KeyEvent.VK_W;
+		this.keyCode = KeyCode.W;
 		this.movable = false;
 	}
 	public Coordinate move(Coordinate co, Graph g) {
@@ -22,10 +24,10 @@ public class Wall extends Entity {
 	}
 	
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.setPosition(player.getOldPosition());
 		System.out.println("There is a wall here... Moving back");
-		return false;
+		return position;
 
 	}
 

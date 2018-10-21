@@ -4,6 +4,8 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCode;
+
 
 
 public class Bomb extends Entity {
@@ -18,21 +20,25 @@ public class Bomb extends Entity {
 	
 	public Bomb(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_U;
-		this.turnsLeft = 2;
+		this.keyCode = KeyCode.U;
+		this.turnsLeft = 4;
 //		BombId = numOfBombs;
 //		numOfBombs++;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		if(!active) {
 			player.pickUp(this);
-			return true;
+			return null;
 		}
 		//System.out.println("Num Of Bombs: "+ player.getNumOfBombs());
-		return false;
+		return position;
 	}
 	
+	/**
+	 * 
+	 * @return ArrayList of Coordinates that bomb's explosion affects
+	 */
 	public ArrayList<Coordinate> affectedAreas() {
 		ArrayList<Coordinate> affectedAreas = new ArrayList<>();
 		affectedAreas.add(position.moveDown());
@@ -43,37 +49,37 @@ public class Bomb extends Entity {
 	}
 	
 	public String getName() {
-		return "Bomb";
+		return "Bomb_" + Integer.toString(getTurnsLeft());
 	}
 
+	/**
+	 * 
+	 * @return True if bomb is active
+	 */
 	public boolean isLit() {
 		return active;
 	}
 	
+	/**
+	 * Sets bomb to active state
+	 */
 	public void light() {
 		active = true;
 	}
 	
+	/**
+	 * 
+	 * @return Turns to explosion
+	 */
 	public int getTurnsLeft() {
 		return turnsLeft;
 	}
 	
+	/**
+	 * Reduce turns left to explosion
+	 */
 	public void tickTock() {
 		turnsLeft--;
 	}
-//	/**
-//	 * @return the numOfBombs
-//	 */
-//	public static int getNumOfBombs() {
-//		return numOfBombs;
-//	}
-//
-//	/**
-//	 * @return the bombId
-//	 */
-//	public int getBombId() {
-//		return BombId;
-//	}
-
 	
 }

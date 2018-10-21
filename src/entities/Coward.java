@@ -1,22 +1,22 @@
 package entities;
+import java.util.ArrayList;
 
 public class Coward extends Enemy {
 
 	public Coward(Coordinate position) {
 		super(position);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
-	public Coordinate getTargetSpace(Coordinate co, Graph g) {
-		int ax = co.getxPosition()/32;
-		int ay = co.getyPosition()/32;
-		int bx = this.position.getxPosition()/32;
-		int by = this.position.getyPosition()/32;
+	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closetPickup,ArrayList<Entity> entities) {
+		
 		Coordinate move;
-		if (Math.hypot(ax-bx,ay-by) > Math.sqrt(2)) { //Math.sqrt(2)
+		if (g.getDistance(co, position) > Math.sqrt(2)) { 
+			//System.out.println("get distance gives " + g.getDistance(co,position));
 			move = co;
 		} else {
+			System.out.println("Coward is running away");
 			move = g.moveAway(co,this.position);
 		
 			

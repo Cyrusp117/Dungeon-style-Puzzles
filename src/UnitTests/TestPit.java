@@ -8,14 +8,14 @@ import entities.Pit;
 
 public class TestPit extends testSetup {
 
-	Coordinate pitPos = new Coordinate(1*32, 4*32);
+	Coordinate pitPos = new Coordinate(1, 4);
 	@Test
 	public void placePit() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Pit pit = new Pit(pitPos);
 		game.addEntity(pit);
 		game.printGame();
-		assert(game.getEntity(pitPos) instanceof Pit);
+		assert(game.getFirstEntity(pitPos) instanceof Pit);
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ public class TestPit extends testSetup {
 	@Test
 	public void testPlayerWithPotion() {
 		Pit pit = new Pit(pitPos);
-		HoverPotion hp = new HoverPotion(new Coordinate(1*32, 3*32));
+		HoverPotion hp = new HoverPotion(new Coordinate(1, 3));
 		game.addEntity(hp);
 		game.addEntity(pit);
 		game.printGame();

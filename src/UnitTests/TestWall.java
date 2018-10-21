@@ -9,14 +9,14 @@ import entities.Wall;
 
 public class TestWall extends testSetup {
 
-	Coordinate wallPos = new Coordinate(1*32, 4*32);
+	Coordinate wallPos = new Coordinate(1, 4);
 	@Test
 	public void placeWall() {
-		//Coordinate wallPos = new Coordinate(1*32, 5*32);
+		//Coordinate wallPos = new Coordinate(1, 5);
 		Wall wall = new Wall(wallPos);
 		game.addEntity(wall);
 		game.printGame();
-		assert(game.getEntity(wallPos) instanceof Wall);
+		assert(game.getFirstEntity(wallPos) instanceof Wall);
 	}
 	
 	@Test
@@ -24,9 +24,9 @@ public class TestWall extends testSetup {
 		Wall wall = new Wall(wallPos);
 		game.addEntity(wall);
 		game.printGame();
-		assert(game.getEntity(wallPos) instanceof Wall);
+		assert(game.getFirstEntity(wallPos) instanceof Wall);
 		move(DOWN, 3);
-		Coordinate beforeWall = new Coordinate(1*32, 3*32);
+		Coordinate beforeWall = new Coordinate(1, 3);
 		assert(player.getPosition().equals(beforeWall));
 	}
 }

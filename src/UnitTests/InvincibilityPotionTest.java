@@ -9,14 +9,14 @@ import entities.Entity;
 import entities.InvincibilityPotion;
 
 public class InvincibilityPotionTest extends testSetup {
-	Coordinate ipPotPos = new Coordinate(1*32, 5*32);
+	Coordinate ipPotPos = new Coordinate(1, 5);
 	
 	@Test
 	public void placeInvincibilityPotionTest() {
 		InvincibilityPotion ipPot = new InvincibilityPotion(ipPotPos);
 		game.addEntity(ipPot);
 		game.printGame();
-		assert(game.getEntity(ipPotPos) instanceof InvincibilityPotion);
+		assert(game.getFirstEntity(ipPotPos) instanceof InvincibilityPotion);
 	}
 	
 	@Test
@@ -31,15 +31,15 @@ public class InvincibilityPotionTest extends testSetup {
 	
 	@Test
 	public void checkNumOfTurns() {
-		InvincibilityPotion ipPot = new InvincibilityPotion(new Coordinate(1*32, 3*32));
+		InvincibilityPotion ipPot = new InvincibilityPotion(new Coordinate(1, 3));
 		game.addEntity(ipPot);
 		game.printGame();
 		assert(!game.getPlayerInventory().contains(ipPot));
 		move(DOWN, 3);
 		assert(game.getPlayerInventory().contains(ipPot));
-		game.newTurn();
-		game.newTurn();
-		game.newTurn();
+		game.update();
+		game.update();
+		game.update();
 		assert(!game.getPlayerInventory().contains(ipPot));
 	}
 }

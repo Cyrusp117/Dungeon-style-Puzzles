@@ -1,12 +1,13 @@
 package entities;
 
-import java.awt.event.KeyEvent;
+
+import javafx.scene.input.KeyCode;
 
 public class InvincibilityPotion extends Entity {
 	int durability;
 	public InvincibilityPotion(Coordinate position) {
 		super(position);
-		this.keyCode = KeyEvent.VK_I;
+		this.keyCode = KeyCode.I;
 		this.durability = 2+1; // actual durability is two
 	}
 	
@@ -14,9 +15,9 @@ public class InvincibilityPotion extends Entity {
 		return position;
 	}
 	
-	public boolean interactWithPlayer(Player player) {
+	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
-		return true;
+		return null;
 	}
 	
 	public String getName() {

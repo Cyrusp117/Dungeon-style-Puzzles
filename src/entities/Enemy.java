@@ -1,53 +1,61 @@
 
 package entities;
+import java.util.ArrayList;
 
 public abstract class Enemy extends Entity{
 
-    //protected Coordinate position;
     
 	public Enemy (Coordinate position){
 		super(position);
-	    this.movable = true;
+	    this.movable = true;	
 	}
+	/**
+	 * @param the position of player, a graph of the board, the closest item to the player that they can interact with, and the list of entities in the game
+	 * @return the desired move coordinate
+	 */
+	public abstract Coordinate getTargetSpace(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities);
 	
-	public abstract Coordinate getTargetSpace(Coordinate co,Graph g);
-	
-	@Override
-	public Coordinate move(Coordinate co,Graph g) {
-		Coordinate move = getTargetSpace(co,g);
-		g.addCoordinate(position); //need this?
+	/**
+	 * @param the position of player, a graph of the board, the closest item to the player that they can interact with, and the list of entities in the game
+	 * @return the final move coordinate for the enemy
+	 */
+	public Coordinate move(Coordinate co,Graph g,Coordinate closestPickup, ArrayList<Entity> entities) {
+		g.addCoordinate(position); //doing this before hand solves not being able to use in targetSpace stuff
 		g.generateEdges();
+		Coordinate move = getTargetSpace(co,g,closestPickup, entities);
+		
 		if (move == co && g.isAdjacent(position, co)) {
 			move = position;
 		} else if (move != position){
-		    move = g.BFS(this.position, move,co);
-		}
+			
+		    move = g.BFS(this.position, move,co); 
+		  
+		} 
+		
 		
 		return move;
 	}
 	
 
-	//@Override
+	
 	public Coordinate getPosition() {
-		// TODO Auto-generated method stub
+
 		return position;
 	}
-
-	//@Override
-	public int returnX() {
-		// TODO Auto-generated method stub
-		return position.getxPosition();
+	
+	public int getX() {
+	
+		return position.getX();
 	}
 
-	//@Override
+
 	public int returnY() {
-		// TODO Auto-generated method stub
-		return position.getyPosition();
+		
+		return position.getY();
 	}
 
-	//@Override
 	public boolean willCollide(Coordinate otherPos) {
-		// TODO Auto-generated method stub
+	
 		return position.equals(otherPos);
 	}
 	
@@ -56,17 +64,21 @@ public abstract class Enemy extends Entity{
 		return true;
 	}
 	
-	
-	public boolean interactWithPlayer(Player player) {
+	/**
+	 * 
+	 * @param player - the player to interact with
+	 * @return	new position of this entity (null if destroyed)
+	 */
+	public Coordinate interactWithPlayer(Player player) {
 		if(player.hasItem("Sword")) {
 			player.hitUsingSword();
-			return true;
+			return null;
 		} else if (player.hasItem("InvincibilityPotion")) {
-			return true;
+			return null;
 		} else {
 			player.setState(0);
 		}
-		return false;
+		return position;
 
 	}
 	
