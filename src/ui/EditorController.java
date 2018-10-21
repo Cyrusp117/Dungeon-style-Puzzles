@@ -307,7 +307,11 @@ public class EditorController extends Controller {
 	     * Test the current game, changes screen state
 	     */
 			public void testGame() {
-				constructWinCon();
+				int layers = constructWinCon();
+				if(layers == 0) {
+					descriptor.setText("Please Select a Win Condition Or include an Exit");
+					return;
+				}
 				game.setWinChecker(winCheck);
 		        Screen test = new Screen(super.getS(), "Test", "view/test.fxml");
 		        TestController pc = new TestController(super.getS(), game);
@@ -348,27 +352,32 @@ public class EditorController extends Controller {
 			/**
 			 * Adds ExitWin Decorator
 			 */
-			public void exitCheck() {
+			public int exitCheck(int layers) {
 				for(Entity entity: game.getEntities()) {
 					if(entity instanceof entities.Exit) {
 						winCheck = new ExitWin(new WinChecker());
-						return;
+						layers++;
+						return layers;
 					}
 				}
+				return layers;
 			}
 			
 			/**
 			 * Construct the winCondition based on selection
 			 */
-			public void constructWinCon() {
+			public int constructWinCon() {
+				int layers = 0;
 				for( Node node: winConPanel.getChildren()) {
 					if( node instanceof CheckBox) {
 						if ( ((CheckBox) node).isSelected() ) {
+							layers++;
 							node.getOnContextMenuRequested().handle(null);
 						} 
 					}
 				}
-				exitCheck();
+				layers = exitCheck(layers);
+				return layers;
 			}
 			
 			/**
