@@ -77,6 +77,10 @@ public class Graph {
 	 * @return the coordinate that is the first move in the shortest path from src to dest
 	 */
 	public Coordinate BFS(Coordinate src, Coordinate dest, Coordinate player) {
+		//test
+		if (! coordList.contains(player)) {
+			addPointAndEdges(player);
+		}
 		Coordinate cur = null;
 		int[] visited = new int[this.nV];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
@@ -86,7 +90,6 @@ public class Graph {
 		int w;
 		boolean found = false;
 		
-		
 		for (int i = 0; i <nV; i++) {
 		    visited[i] = -1;	
 		}
@@ -95,7 +98,7 @@ public class Graph {
 		
 		while (queue.size() != 0) {
 			vertex = queue.poll();
-			//System.out.println("vertex is " + vertex);
+			
 			for (w = 0; w < nV; w++) {
 			    if (w == vertex)
 			    	continue;
