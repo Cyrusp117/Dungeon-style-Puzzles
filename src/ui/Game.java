@@ -39,8 +39,6 @@ public class Game{
 		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
 		// Checks current state of the game after any interactions
-		Coordinate position;
-        Coordinate closestPickup;
         
 		//need list of bone locations
         //then hound will use this later and determine its target
@@ -49,6 +47,18 @@ public class Game{
 		for (Entity entity : entities) {
 			enemyCheck(entity);
 			floorCheck(entity);
+		}
+		ArrayList<Treasure> tresList = new ArrayList<Treasure>();
+		for (Entity entity : entities) {
+			if(entity instanceof Treasure) {
+				Treasure tres = (Treasure) entity;
+				if(tres.getStatus()) {
+					tresList.add(tres);
+				}
+			}
+		}
+		for (Treasure object: tresList) {
+			deleteEntity(object);
 		}
 		
 		if (winChecker.checkWinCondition(this)) {
@@ -91,9 +101,9 @@ public class Game{
 			    
 			    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
 			    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
-			    	deleteEntity(getFirstEntity(position));
-			 
-			    	assert(getFirstEntity(position) == null);
+			    	//deleteEntity(getFirstEntity(position));
+			    	Treasure tres = (Treasure) getFirstEntity(position);
+			    	tres.setStatus();
 			    }
 			}
 			if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
@@ -530,7 +540,7 @@ public class Game{
 		return allDesignerObjects;
 	}
 	
-	//now that im giving list of entities to Enemies
+	
 	private Coordinate closestPickup(Enemy enemy) {
 		Coordinate closest = null;
 		Entity ent = null;
@@ -589,8 +599,7 @@ public class Game{
 			}
 		    g.generateEdges();
 		    closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
-		//test
-		    //System.out.println(ent.getName());
+		
 		}
 		return closest;
 	}
