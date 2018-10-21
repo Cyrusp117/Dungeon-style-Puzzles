@@ -50,7 +50,6 @@ public class Game{
 			
 			// Checks all killed win condition
 			if (entity instanceof Enemy) {
-            
 				Enemy enemy = (Enemy) entity;
 				if (player.hasItem("InvincibilityPotion")) {
 					position = enemy.invincibilityMove(player.getPosition(), generateGraph());
@@ -90,6 +89,16 @@ public class Game{
 			}
 			
 			// Checks if all floor switches are active (have a boulder on them)
+//			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
+//				FloorSwitch fs = (FloorSwitch)entity; 
+//				fs.deactivate();
+//				if(getEntity(fs.getPosition(), Boulder.class) != NULL) {
+//					fs.activate();
+//				}
+//				if(!fs.getState()) {
+//					allSwitch = 0;
+//				}
+//			}
 			if (entity instanceof FloorSwitch) {		// could be a lot neater if we had an array of FloorSwitch ?
 				FloorSwitch fs = (FloorSwitch)entity; 
 				fs.deactivate();
@@ -109,12 +118,10 @@ public class Game{
 					}
 				}
 			}
-			
-
 		}
-
-		if(win && player.isAlive()) {
-			System.out.println("You have won");
+		
+		if (allTreasure == 1 && allSwitch == 1 && allEnemy == 1) {
+			win = true;
 		}
 		if (!player.isAlive()) {
 			System.out.println("Player is currently dead");
@@ -310,7 +317,6 @@ public class Game{
 		Coordinate position = entity.getPosition();
 		ArrayList<Entity> curEntities = getEntities(position);
 		if(curEntities.size() >= 2) {
-			
 			return false;
 		} 
 		
@@ -319,7 +325,6 @@ public class Game{
 			// can add boulder/floor switch on top of one another
 			// Arrow can be added on top of Player
 			if (!curEntity.canBePlacedOnTop(entity)) {
-				//System.out.println("Here1");
 				return false;
 			}
 		}
@@ -507,26 +512,7 @@ public class Game{
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-//	
-//	public void changeState(InputManagerPlayer playerInput) {
-//		
-//		// There are two game states: Player and Designer
-//		// Each state only supports a certain subset of Key Inputs 
-//		// Player and Designer both extend from Playable so they can both move
-//	
-//		// Deletes all entities each time state changes (resetting atleast part of the game for now..)
-//		//this.playerInput = playerInput;
-//		//this.frame = playerInput.getFrame();
-//		this.playerInput = playerInput;
-//		playerInput.getFrame().addKeyListener(playerInput);
-//	}
-//
-//	/**
-//	 * @param playerInput the playerInput to set
-//	 */
-//	public void setPlayerInput(InputManagerPlayer playerInput) {
-//		this.playerInput = playerInput;
-//	}
+
 
 	public Graph generateGraph() {
 		int i,j;
@@ -574,7 +560,7 @@ public class Game{
 		return allDesignerObjects;
 	}
 	
-	//now that im giving list of entities to Enemies, I may have to make this a strategist function
+	//now that im giving list of entities to Enemies
 	private Coordinate closestPickup(Enemy enemy) {
 		Coordinate closest = null;
 		Entity ent = null;
@@ -614,6 +600,9 @@ public class Game{
 			g= generateGraph();
 			g.addCoordinate(object.getPosition());
 			g.addCoordinate(enemy.getPosition());
+			if (!g.hasCoordinate(player.getPosition())) {
+				g.addCoordinate(player.getPosition());
+			}
 			g.generateEdges();
 			tempSize = g.sizeBFS(player.getPosition(), object.getPosition());
 			if (tempSize < size || size == -1) {
@@ -625,10 +614,13 @@ public class Game{
 		    g= generateGraph();
 		    g.addCoordinate(ent.getPosition());
 		    g.addCoordinate(enemy.getPosition());
+		    if (!g.hasCoordinate(player.getPosition())) {
+				g.addCoordinate(player.getPosition());
+			}
 		    g.generateEdges();
 		    closest = g.BFS(player.getPosition(), ent.getPosition(), player.getPosition());
 		//test
-		    System.out.println(ent.getName());
+		    //System.out.println(ent.getName());
 		}
 		return closest;
 	}
@@ -666,5 +658,22 @@ public class Game{
     		}
     	}
 		return null;
+	}
+	
+	public Entity getEntity(Coordinate pos, Class reqClass) {
+		for (Entity curEntity : getEntities(pos)) {
+			if (curEntity.getClass() == reqClass) {
+				return curEntity;
+			}
+		}
+		return null;
+	}
+	
+	public boolean isPlayerAlive() {
+		return player.isAlive();
+	}
+	
+	public boolean hasPlayerWon() {
+		return win;
 	}
 }

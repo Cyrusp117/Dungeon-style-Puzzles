@@ -169,7 +169,7 @@ public class MapController extends Controller {
 	    		//arrow.move();
 	    		player.removeItem(arrow);
 	    		game.addEntity(arrow);
-	    		game.update();
+	    		update();
 	    	} else {
 	    		System.out.println("No arrows :(");
 	    	}
@@ -206,7 +206,7 @@ public class MapController extends Controller {
 	    	if(bone!=null) {
 	    		System.out.println("Shooting bone");
 	    		player.removeItem(bone);
-	    		game.update();
+	    		update();
 	    	} else {
 	    		System.out.println("No bones :(");
 	    	}
@@ -226,7 +226,7 @@ public class MapController extends Controller {
 		play_move();
 		player.setDx(0);
 		player.setDy(-1);
-		game.update();
+		update();
 		printGame();
 		//map.setText(game.toString());
 	}
@@ -234,7 +234,7 @@ public class MapController extends Controller {
 		play_move();
 		player.setDx(1);
 		player.setDy(0);
-		game.update();
+		update();
 		printGame();
 		//map.setText(game.toString());
 	}
@@ -243,7 +243,7 @@ public class MapController extends Controller {
 		play_move();
 		player.setDx(-1);
 		player.setDy(0);
-		game.update();
+		update();
 		printGame();
 		//map.setText(game.toString());
 	}
@@ -251,9 +251,24 @@ public class MapController extends Controller {
 		play_move();
 		player.setDx(0);
 		player.setDy(1);
-		game.update();
+		update();
 		printGame();
 		//map.setText(game.toString());
+	}
+
+
+
+	private void update() {
+		game.update();
+		if (game.isPlayerAlive() && game.hasPlayerWon()) {
+		      Screen wonScreen = new Screen(super.getS(), "Winner", "view/won.fxml");
+		      WonController wc = new WonController(super.getS());
+		      wonScreen.start(wc);
+		} else if (!game.isPlayerAlive()) {
+		      Screen lossScreen = new Screen(super.getS(), "Dead", "view/loss.fxml");
+		      LossController wc = new LossController(super.getS());
+		      lossScreen.start(wc);
+		}
 	}
 	
 	private void play_move() {

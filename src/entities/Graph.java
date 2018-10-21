@@ -111,7 +111,9 @@ public class Graph {
 	}
 	
 	public int sizeBFS(Coordinate src, Coordinate dest) {
-
+        if (src.equals(dest)) {
+        	return 0;
+        }
 		int[] visited = new int[this.nV];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		int srcIndex = coordList.indexOf(src);
@@ -422,5 +424,9 @@ public class Graph {
 			object.printCoords();
 		}
       }
+    
+    public boolean hasCoordinate(Coordinate point) {
+        return coordList.contains(point);
+    }
     
 }
