@@ -141,7 +141,11 @@ public class Game{
 //		}
 //		return allTreasure;
 //	}
-	
+	/**
+	 * 
+	 * @param entity - the entity to be moved
+	 * @param newPos - the position to be moved to
+	 */
 	public void moveEntity(Entity entity, Coordinate newPos) {
 		entity.setOldPosition(entity.getPosition());
 		Coordinate newMapTile = getMapCo(newPos);
@@ -152,7 +156,8 @@ public class Game{
 	}
 	
 	/**
-	 * Moves the player
+	 * Moves the player and does interactions with objects in 
+	 * player's new location
 	 */
 	public void movePlayer() {
 		Coordinate newPlayerPos = player.getMove();
@@ -216,6 +221,7 @@ public class Game{
 
 	/**
 	 *  Updates interactions with items (player inv + in dungeon)
+	 *  e.g. bombs getting closer to explosion, arrows, bones
 	 */
 	public void itemInteractions() {
 		ArrayList<Entity> toBeDeleted = new ArrayList<>(); 
@@ -294,7 +300,9 @@ public class Game{
 
 	}
 	
-	//Done
+	/**
+	 * Creates coordinates for the Game model
+	 */
 	public void generateMap() {
 		for( int i = 0; i <= width; i++ ) {
 			ArrayList<Coordinate> coords = new ArrayList<>();
@@ -306,6 +314,11 @@ public class Game{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param entity The entity to be added
+	 * @return True if successfully added entity
+	 */
 	public boolean addEntity(Entity entity) {
 		if(entity instanceof Player && player != null) {
 			return false;
@@ -336,6 +349,12 @@ public class Game{
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param newPos - The position to get the entity from
+	 * @return - Returns the first entity from the array of entities
+	 * at that location
+	 */
 	public Entity getFirstEntity(Coordinate newPos) {
 		if (getEntities(newPos).size() > 0) {
 			return getEntities(newPos).get(0);
@@ -345,6 +364,11 @@ public class Game{
 
 	}
 	
+	/**
+	 * 
+	 * @param newPos
+	 * @return The array of entities at newPos Coordinate
+	 */
 	public ArrayList<Entity> getEntities(Coordinate newPos) {
 		return getMapCo(newPos).getEntities();
 	}
@@ -361,15 +385,7 @@ public class Game{
 		return null;
 	}
 
-	/**
-	 * Initialises the game board
-	 */
-//	public void init() {
-//		Coordinate position = new Coordinate(1,1);   // For test, this would be specified by user
-//		createPlayer(position);						 //Create the player at the given Coordinate
-//		generatePerimeter();						 //Create a series of walls around the perimeter
-////		printGame();
-//	}
+
 	
 
 	/**
@@ -384,7 +400,7 @@ public class Game{
 	
 	//done
 	/**
-	 * Create a perimeter of wall around the board
+	 * Create a perimeter of walls around the board
 	 */
 	public void generatePerimeter() {
 		int i,j;
@@ -401,6 +417,7 @@ public class Game{
 	
 	/**
 	 * @param position
+	 * @return True if the position is occupied
 	 */
 	public boolean isOccupied(Coordinate position) {
 		for(Entity entity: entities) {
@@ -453,28 +470,49 @@ public class Game{
 	}
 
 
-
+	/**
+	 * 
+	 * @param position 
+	 * @return The map Coordinate equivalent of position
+	 */
 	public Coordinate getMapCo(Coordinate position) {
 		return map.get(position.getX()).get(position.getY());
 	}
+	/**
+	 * 
+	 * @param entity
+	 * @return The map coordinate equivalent of Entity's position
+	 */
 	public Coordinate getMapCo(Entity entity) {
 		return map.get(entity.getX()).get(entity.getY());
 	}
 	
+	/**
+	 * 
+	 * @return Height of the game
+	 */
 	public int getHeight() {
 		return this.height;
 	}
 	
+	/**
+	 * 
+	 * @return Width of the game
+	 */
 	public int getWidth() {
 		return this.width;
 	}
 	
+	/**
+	 * 
+	 * @return ArrayList of entities representing player inventory
+	 */
 	public ArrayList<Entity> getPlayerInventory() {
 		return player.getInventory();
 	}
 	
 	/**
-	 * @return the playerOne
+	 * @return the player
 	 */
 	public Player getPlayer() {
 		return player;
@@ -482,7 +520,7 @@ public class Game{
 
 
 	/**
-	 * @param playerOne the playerOne to set
+	 * @param playerOne - Sets the player of the game
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
@@ -505,35 +543,39 @@ public class Game{
 		return g;
 	}
 	
+	/**
+	 * 
+	 * @return List of all entities in the game's map
+	 */
 	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
 	
 	
-	public boolean victory() {
-		return win;
-	}
+//	public boolean victory() {
+//		return win;
+//	}
 	
-	public ArrayList<Entity> getAllEntities() {
-		ArrayList<Entity> allDesignerObjects = new ArrayList<Entity>();
-		Coordinate defaultPos = new Coordinate(1, 1);
-		allDesignerObjects.add(new Key());
-		allDesignerObjects.add(new Hunter(defaultPos));
-		allDesignerObjects.add(new Arrow(defaultPos));
-		allDesignerObjects.add(new HoverPotion(defaultPos));
-		allDesignerObjects.add(new Treasure(defaultPos));
-		allDesignerObjects.add(new Sword(defaultPos));
-		allDesignerObjects.add(new Boulder(defaultPos));
-		allDesignerObjects.add(new Pit(defaultPos));
-		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
-		allDesignerObjects.add(new Wall(defaultPos));
-		allDesignerObjects.add(new FloorSwitch(defaultPos));
-		allDesignerObjects.add(new Exit(defaultPos));
-		allDesignerObjects.add(new Door());
-		allDesignerObjects.add(new Hound(defaultPos));
-		allDesignerObjects.add(new Player(defaultPos));
-		return allDesignerObjects;
-	}
+//	public ArrayList<Entity> getAllEntities() {
+//		ArrayList<Entity> allDesignerObjects = new ArrayList<Entity>();
+//		Coordinate defaultPos = new Coordinate(1, 1);
+//		allDesignerObjects.add(new Key());
+//		allDesignerObjects.add(new Hunter(defaultPos));
+//		allDesignerObjects.add(new Arrow(defaultPos));
+//		allDesignerObjects.add(new HoverPotion(defaultPos));
+//		allDesignerObjects.add(new Treasure(defaultPos));
+//		allDesignerObjects.add(new Sword(defaultPos));
+//		allDesignerObjects.add(new Boulder(defaultPos));
+//		allDesignerObjects.add(new Pit(defaultPos));
+//		allDesignerObjects.add(new InvincibilityPotion(defaultPos));
+//		allDesignerObjects.add(new Wall(defaultPos));
+//		allDesignerObjects.add(new FloorSwitch(defaultPos));
+//		allDesignerObjects.add(new Exit(defaultPos));
+//		allDesignerObjects.add(new Door());
+//		allDesignerObjects.add(new Hound(defaultPos));
+//		allDesignerObjects.add(new Player(defaultPos));
+//		return allDesignerObjects;
+//	}
 	
 	
 	private Coordinate closestPickup(Enemy enemy) {
@@ -623,6 +665,10 @@ public class Game{
 //	  }
 //	}
 	
+	/**
+	 * 
+	 * @return An Arrow entity if the player has arrow, else null
+	 */
 	public Arrow getPlayerArrow() {
     	Arrow arrow = null;
     	for (Entity curItem : getPlayerInventory()) {
@@ -634,6 +680,12 @@ public class Game{
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param pos
+	 * @param reqClass
+	 * @return The entity with position pos and Class reqClass, else null
+	 */
 	public Entity getEntity(Coordinate pos, Class reqClass) {
 		for (Entity curEntity : getEntities(pos)) {
 			if (curEntity.getClass() == reqClass) {
@@ -658,10 +710,18 @@ public class Game{
 		this.theme = theme;
 	}
 
+	/**
+	 * 
+	 * @return True if player is alive
+	 */
 	public boolean isPlayerAlive() {
 		return player.isAlive();
 	}
 	
+	/**
+	 * 
+	 * @return True if player has won
+	 */
 	public boolean hasPlayerWon() {
 		return win;
 	}

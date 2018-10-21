@@ -15,7 +15,7 @@ public class Arrow extends Entity {
 		this.arrowState = new ArrowStationary();
 	}
 	/**
-	 * Player picks up arrow upon interaction
+	 * @param player Player picks up arrow upon interaction
 	 */
 	public Coordinate interactWithPlayer(Player player) {
 		player.pickUp(this);
@@ -33,7 +33,7 @@ public class Arrow extends Entity {
 	
 	/**
 	 * 
-	 * @param digits 3-6 set the direction of the arrow so that
+	 * @param key Digits 3-6 set the direction of the arrow so that
 	 * it moves at the start of every new game turn
 	 */
 	public void setDirection(KeyCode key) {
@@ -50,7 +50,7 @@ public class Arrow extends Entity {
 
 	/**
 	 * 
-	 * @param checks if the key code is used for arrow directions
+	 * @param key checks if the key code is used for arrow directions
 	 * @return true if the above is true
 	 */
 	public static boolean checkKeyCode(KeyCode key) {
