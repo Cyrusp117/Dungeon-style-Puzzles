@@ -26,6 +26,12 @@ import entities.Wall;
 public class EntityFactory {
 	private Entity concreteEntity = null;
 	
+	/**
+	 * 
+	 * @param entityName the name of the Entity to be created
+	 * @param co the coordinate of the Entity to be created
+	 * @return the created Entity
+	 */
 	public Entity createEntity(String entityName, Coordinate co) {
 		if(entityName.equals("Arrow")) {
 			concreteEntity = new Arrow(co);

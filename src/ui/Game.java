@@ -36,6 +36,7 @@ public class Game{
 	}
 	
 	
+	
 	public void update() {						//Updates the state of the game
 		// Arrow collisions, bomb explosions, player inventory update
 		itemInteractions();
@@ -366,22 +367,6 @@ public class Game{
 		System.out.println(player.returnPosition() + " (Bounds : " + this.getWidth() + " " + this.getHeight() + " )" + "\n");
 	}
 	
-	//done
-//	/**
-//	 * 
-//	 * @param position, the Coordinate to which the player should be placed
-//	 */
-	public void createPlayer(Coordinate position) {
-		if(isOccupied(position)) return;
-		player = new Player(position);
-		getMapCo(position).addEntity(player);
-		entities.add(player);
-		if(player == null) {
-			player = new Player(position);
-			getMapCo(position).addEntity(player);
-		}
-	}
-
 	//done
 	/**
 	 * Create a perimeter of wall around the board
