@@ -45,6 +45,7 @@ public class MainMenuController extends Controller implements Initializable {
 		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
 		//note.setCycleCount(3);
 		note.play();
+		mp.stop();
 	}
 	
 	/**

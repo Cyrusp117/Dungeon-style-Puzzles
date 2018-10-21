@@ -122,12 +122,8 @@ public class MapController extends Controller {
 					iv.setFitWidth(32);
 					imageMap.add(iv, i, j);
 				}
-				
-
-
-			}
+			}	
 		}
-
 	}
 	
 	/**

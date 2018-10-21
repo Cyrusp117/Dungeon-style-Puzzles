@@ -30,27 +30,17 @@ public class MapSelectController extends Controller {
 	private Button btn1;
 	@FXML 
 	private Button btn2;
+	@FXML 
+	private Button btn3;
 	@FXML
 	private RadioButton theme1;
 	@FXML
 	private RadioButton theme2;
 	
-	private Game game = new Game(10, 10);
+	private Game game;// = new Game(10, 10);
 	
 	public MapSelectController(Stage s) {
 		super(s);
-	}
-	
-	public void selectTheme(ActionEvent event) {
-		String themeName = "";
-		if(theme1.isSelected()) {
-			themeName = theme1.getText();
-			game.setTheme("theme1");
-		}
-		if(theme2.isSelected()) {
-			themeName = theme2.getText();
-			game.setTheme("theme2");
-		}
 	}
 
 	/**
@@ -58,6 +48,7 @@ public class MapSelectController extends Controller {
 	 */
 	public void startMap1() {
 		play_note();
+		game = new Game(10, 10);
         System.out.println("First Preset Dungeon");
 		Coordinate playerPos = new Coordinate(1,1); 
         Coordinate pitPos = new Coordinate(2, 2);
@@ -98,8 +89,28 @@ public class MapSelectController extends Controller {
     	wc = new FloorWin(wc);
     	game.setWinChecker(wc);
         loadMapScreen(game, "Preset #1");
-
 	}
+	
+	public void startMap2() {
+		play_note();
+		game = new Game(8, 9);
+        System.out.println("Second Preset Dungeon");
+		Coordinate playerPos = new Coordinate(1,1); 
+        Coordinate fsPos = new Coordinate(1, 8);
+        Coordinate boulderPos = new Coordinate(5, 5);
+
+		game.generatePerimeter();		 //Create a series of walls around the perimeter
+        //game.addEntity(new Strategist(hunterPos));
+        //game.addEntity(new TreasureGoblin(hunterPos));
+        game.addEntity(new FloorSwitch(fsPos));
+        game.addEntity(new Boulder(boulderPos));
+    	game.addEntity(new Player(playerPos));
+    	CheckWinCon wc = new WinChecker();
+    	wc = new FloorWin(wc);
+    	game.setWinChecker(wc);
+        loadMapScreen(game, "Preset #2");
+	}
+	
 	
 	/**
 	 * Launch editor screen
@@ -129,6 +140,12 @@ public class MapSelectController extends Controller {
 	 * @param title the name of the Game
 	 */
 	public void loadMapScreen(Game game, String title) {
+		if(theme1.isSelected()) {
+			game.setTheme("theme1");
+		}
+		if(theme2.isSelected()) {
+			game.setTheme("theme2");
+		}
         Screen map = new Screen(super.getS(), title, "view/map.fxml");
         MapController pc = new MapController(super.getS(), game);
         map.start(pc);

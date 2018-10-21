@@ -15,16 +15,10 @@ public class Main extends Application {
         Screen mainMenu = new Screen(primaryStage, "Main Menu", "view/mainmenu.fxml");
         MainMenuController mmc = new MainMenuController(primaryStage);
         mainMenu.start(mmc);
-//        play_background();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
     
-    private void play_background() {
-    	Media sound = new Media(new File("src/ui/background.mp3").toURI().toString());
-    	MediaPlayer mediaPlayer = new MediaPlayer(sound);
-    	mediaPlayer.play();
-	}
 }
