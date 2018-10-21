@@ -183,7 +183,7 @@ public class Game{
 					if (atNewEntityPos == interactable) {
 						// entity hasnt moved after interaction
 						if (interactable instanceof Pit) {
-							
+						} else if (interactable instanceof Exit) {
 						} else {
 							moveEntity(player, player.getOldPosition());
 						}

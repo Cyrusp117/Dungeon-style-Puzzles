@@ -94,24 +94,43 @@ public class MapController extends Controller {
 	
 	private void makeGridPane(int height, int width) {
 		// TODO Auto-generated method stub
+        for (int i = 0 ; i <= width ; i++) {
+            ColumnConstraints colConstraints = new ColumnConstraints();
+            colConstraints.setHgrow(Priority.NEVER);
+            //colConstraints.setMaxWidth(32);
+            //colConstraints.setMinWidth(32);
+            imageMap.getColumnConstraints().clear();
+            imageMap.getColumnConstraints().add(colConstraints);
+            //gridTest.getColumnConstraints().add(colConstraints);
+        }
 
-		for( int i = 0; i <= width; i++ ) {
-	        ColumnConstraints cc = new ColumnConstraints();
-	        cc.setPercentWidth(100.0 / width);
-	        cc.setMaxWidth(32);
-	        cc.setPrefWidth(32);
-	        cc.setFillWidth(true);
-	        imageMap.getColumnConstraints().add(cc);
-		}
-		
-	   for (int i = 0; i <= height; i++) {
-            RowConstraints rc = new RowConstraints();
-            rc.setPercentHeight(100.0 / height);
-	        rc.setMaxHeight(32);
-	        rc.setPrefHeight(32);
-	        rc.setFillHeight(true);
-            imageMap.getRowConstraints().add(rc);         
-       }
+        for (int i = 0 ; i <= height ; i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setVgrow(Priority.NEVER);
+            
+            //rowConstraints.setMaxHeight(32);
+            //rowConstraints.setMinHeight(32);
+            imageMap.getRowConstraints().clear();
+            imageMap.getRowConstraints().add(rowConstraints);
+        }
+        
+//		for( int i = 0; i <= width; i++ ) {
+//	        ColumnConstraints cc = new ColumnConstraints();
+//	        cc.setPercentWidth(100.0 / width);
+//	        cc.setMaxWidth(32);
+//	        cc.setPrefWidth(32);
+//	        cc.setFillWidth(true);
+//	        imageMap.getColumnConstraints().add(cc);
+//		}
+//		
+//	   for (int i = 0; i <= height; i++) {
+//            RowConstraints rc = new RowConstraints();
+//            rc.setPercentHeight(100.0 / height);
+//	        rc.setMaxHeight(32);
+//	        rc.setPrefHeight(32);
+//	        rc.setFillHeight(true);
+//            imageMap.getRowConstraints().add(rc);         
+//       }
 	}
 
 
