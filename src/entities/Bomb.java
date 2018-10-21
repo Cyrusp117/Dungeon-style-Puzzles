@@ -45,7 +45,7 @@ public class Bomb extends Entity {
 	}
 	
 	public String getName() {
-		return "bomb_" + Integer.toString(getTurnsLeft());
+		return "Bomb_" + Integer.toString(getTurnsLeft());
 	}
 
 	public boolean isLit() {

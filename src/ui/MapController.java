@@ -182,13 +182,14 @@ public class MapController extends Controller {
 	    		placedBomb.setPosition(player.getPosition());
 	    		game.addEntity(placedBomb);
 	    	}
-		} else if (key.equals(KeyCode.E)) {
-			boolean designer = (boolean)super.getS().getUserData();
-			if(designer) {
-			      Screen map1 = new Screen(super.getS(), "Map", "view/design.fxml");
-			      DesignController dc = new DesignController(super.getS(), game);
-			      map1.start(dc);
-			}
+		} 
+		else if (key.equals(KeyCode.E)) {
+//			boolean designer = (boolean)super.getS().getUserData();
+//			if(designer) {
+//			      Screen map1 = new Screen(super.getS(), "Map", "view/design.fxml");
+//			      DesignController dc = new DesignController(super.getS(), game);
+//			      map1.start(dc);
+//			}
 		} else if (key.equals(KeyCode.DIGIT2)) {
 	    	Bone bone = null;
 

@@ -29,10 +29,10 @@ public class MapSelectController extends Controller {
 	@FXML 
 	private Button btn2;
 	
-	protected boolean designer;
+	//protected boolean designer;
 	public MapSelectController(Stage s) {
 		super(s);
-		designer = (boolean)s.getUserData();
+		//designer = (boolean)s.getUserData();
 		// TODO Auto-generated constructor stub
 	}
 

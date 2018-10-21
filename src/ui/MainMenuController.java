@@ -40,20 +40,20 @@ public class MainMenuController extends Controller implements Initializable {
 		play_note();
 		
 		Stage curStage = super.getS();
-		curStage.setUserData(false);
+		//curStage.setUserData(false);
         Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
         MapSelectController msc = new MapSelectController(super.getS());
         mapSelect.start(msc);
 	}
 	
-	public void designGame() {
-		play_note();
-		Stage curStage = super.getS();
-		curStage.setUserData(true);
-        Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
-        MapSelectController msc = new MapSelectController(super.getS());
-        mapSelect.start(msc);
-	}
+//	public void designGame() {
+//		play_note();
+//		Stage curStage = super.getS();
+//		//curStage.setUserData(true);
+//        Screen mapSelect = new Screen(curStage, "Map Select", "view/MapSelect.fxml");
+//        MapSelectController msc = new MapSelectController(super.getS());
+//        mapSelect.start(msc);
+//	}
 	
 	private void play_note() {
 		AudioClip note = new AudioClip(this.getClass().getResource("start_game.wav").toString());
