@@ -42,7 +42,16 @@ public class MapSelectController extends Controller {
 	public MapSelectController(Stage s) {
 		super(s);
 	}
+	
+	public String getTheme() {
+		if(theme1.isSelected()) {
+			return "theme1";
+		} else {
+			return "theme2";
+		}
+	}
 
+	
 	/**
 	 * Load preset map 1
 	 */
@@ -142,7 +151,7 @@ public class MapSelectController extends Controller {
 	public void startCustomMap() {
 		play_note();
 		Screen dimensionSelect = new Screen(super.getS(), "Blank", "view/DimensionScreen.fxml");
-		DimensionController dimension = new DimensionController(super.getS(),game.getTheme());
+		DimensionController dimension = new DimensionController(super.getS(), getTheme());
 		dimensionSelect.start(dimension);
 	}
 	
@@ -164,12 +173,8 @@ public class MapSelectController extends Controller {
 	 * @param title the name of the Game
 	 */
 	public void loadMapScreen(Game game, String title) {
-		if(theme1.isSelected()) {
-			game.setTheme("theme1");
-		}
-		if(theme2.isSelected()) {
-			game.setTheme("theme2");
-		}
+		String theme = getTheme();
+		game.setTheme(theme);
         Screen map = new Screen(super.getS(), title, "view/map.fxml");
         MapController pc = new MapController(super.getS(), game);
         map.start(pc);
