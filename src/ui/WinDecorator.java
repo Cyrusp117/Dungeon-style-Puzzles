@@ -2,7 +2,7 @@ package ui;
 
 public abstract class WinDecorator implements CheckWinCon {
 
-	private CheckWinCon checkWin;
+	protected CheckWinCon checkWin;
 	public WinDecorator(CheckWinCon checkWin) {
 		this.checkWin = checkWin;
 		// TODO Auto-generated constructor stub

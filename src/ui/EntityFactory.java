@@ -2,6 +2,7 @@ package ui;
 
 import entities.Arrow;
 import entities.Bomb;
+import entities.Bone;
 import entities.Boulder;
 import entities.Coordinate;
 import entities.Coward;
@@ -19,6 +20,7 @@ import entities.Player;
 import entities.Strategist;
 import entities.Sword;
 import entities.Treasure;
+import entities.TreasureGoblin;
 import entities.Wall;
 
 public class EntityFactory {
@@ -61,6 +63,10 @@ public class EntityFactory {
 			concreteEntity = new Treasure(co);
 		}else if(entityName.equals("Wall")) {
 			concreteEntity = new Wall(co);
+		}else if(entityName.equals("TreasureGoblin")) {
+			concreteEntity = new TreasureGoblin(co);
+		}else if(entityName.equals("Bone")) {
+			concreteEntity = new Bone(co);
 		}
 		
 		return concreteEntity;
