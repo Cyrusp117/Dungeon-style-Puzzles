@@ -73,12 +73,20 @@ public class Player extends Entity {
 		System.out.println("Picked up: " + entity.getName());
 	}
 	
-
+	/**
+	 * 
+	 * @return True if the player is alive
+	 */
 	public boolean isAlive () {
 		if(this.state == 1) return true;
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param state - if state = 1, the player is alive
+	 * state = 0, the player is dead
+	 */
 	public void setState(int state) {
 		this.state=state;
 	}
@@ -166,6 +174,10 @@ public class Player extends Entity {
 		return position.returnPosition();
 	}
 	
+	/**
+	 * 
+	 * @return A Sword entity if player has one, else null
+	 */
 	public Sword getSword() {
 		for(Entity entity : inventory) {
 			if (entity instanceof Sword) return (Sword)entity;
@@ -173,7 +185,9 @@ public class Player extends Entity {
 		return null;
 	}
 	
-	
+	/**
+	 * Reduces the durability of the player's sword
+	 */
 	public void hitUsingSword() {
 		Sword curSword = getSword();
 		curSword.reduceDurability();
@@ -181,7 +195,12 @@ public class Player extends Entity {
 			inventory.remove(curSword);
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param item - String representing item's name
+	 * @return True if the player has such an item
+	 */
 	public boolean hasItem(String item) {
 		int has = 0;
 		for(Entity e: this.getInventory()) {
@@ -197,10 +216,19 @@ public class Player extends Entity {
 
 	}
 	
+	/**
+	 * 
+	 * @param o - The entity to be removed from player's inventory
+	 */
 	public void removeItem(Entity o) {
 		this.getInventory().remove(o);
 	}
 	
+	/**
+	 * 
+	 * @param KeyId - the key with KeyId will attempt to be removed
+	 * @return True if remove was successful, else false
+	 */
 	public boolean removeKey(int KeyId) {
 		int r = 0;
 		Key remove = null;
@@ -223,6 +251,12 @@ public class Player extends Entity {
 
 	}
 	
+	/**
+	 * 
+	 * @param DoorId
+	 * @return True if player has a key that can open door with
+	 * an id of DoorId 
+	 */
 	public boolean hasKey(int DoorId) {
 		int has = 0;
 		for(Entity e: this.getInventory()) {
@@ -243,7 +277,10 @@ public class Player extends Entity {
 	}
 	
 	
-	
+	/**
+	 * Activates the bomb and removes it from players inventory
+	 * @return The bomb that was activated
+	 */
 	public Bomb setBomb() {
 		for(Entity e: this.getInventory()) {
 			if(e.getClass() == Bomb.class) {
@@ -256,6 +293,12 @@ public class Player extends Entity {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param entityClass
+	 * @return True if player's inventory has an entity of 
+	 * class entityClass
+	 */
 	public boolean hasEntity(Class entityClass) {
 		for(Entity e: this.getInventory()) {
 			if (e.getClass() == entityClass) {
@@ -276,15 +319,21 @@ public class Player extends Entity {
 //		return null;
 //	}
 	
-	@Override
-	public boolean interactWithBomb() {
-		this.setState(0);
-		return false;
-	}
-	
+//	/***
+//	 * Player's state is set to dead after bomb explosion hits player
+//	 */
+//	@Override
+//	public boolean interactWithBomb() {
+//		this.setState(0);
+//		return false;
+//	}
+//	
+	/**
+	 * @return True if entity can be placed on top of player
+	 */
 	@Override
 	public boolean canBePlacedOnTop(Entity entity) {
-		if (entity instanceof Arrow) {	return true; }
+		if (entity instanceof Arrow) { return true; }
 		if (entity instanceof Bomb) { return true; }
 		if (entity instanceof Bone) { return true; }
 		if (entity instanceof Exit) { return true; }

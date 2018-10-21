@@ -47,16 +47,14 @@ public class Game{
 		itemInteractions();
 		// Moves player and interacts.. (or doesnt if invalid move)
 		movePlayer();
-		// Checks current state of the game after any interactions
-        
-		//need list of bone locations
-        //then hound will use this later and determine its target
-		win = false;
 
+		
+		// Extension stuff
 		for (Entity entity : entities) {
 			enemyCheck(entity);
 			floorCheck(entity);
 		}
+		
 		ArrayList<Treasure> tresList = new ArrayList<Treasure>();
 		for (Entity entity : entities) {
 			if(entity instanceof Treasure) {
@@ -69,7 +67,10 @@ public class Game{
 		for (Treasure object: tresList) {
 			deleteEntity(object);
 		}
+		// extension stuff end 
 		
+		// Checks current state of the game after any interactions
+		win = false;
 		if (winChecker.checkWinCondition(this)) {
 			win = true;
 		}

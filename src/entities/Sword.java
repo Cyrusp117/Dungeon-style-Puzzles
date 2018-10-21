@@ -25,10 +25,17 @@ public class Sword extends Entity {
 		return position;
 	}
 	
+	/**
+	 * 
+	 * @return The number of hits remaining on the sword
+	 */
 	public int getDurability() {
 		return durability;
 	}
 	
+	/**
+	 * Reduces the number of hits remaining on the sword
+	 */
 	public void reduceDurability() {
 		durability--;
 	}

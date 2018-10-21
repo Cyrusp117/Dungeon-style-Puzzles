@@ -19,7 +19,7 @@ public abstract class Entity {
 
 	/**
 	 * 
-	 * @param player - the player to interact with
+	 * @param player - the player that this entity interacts with
 	 * @return	new position of this entity (null if destroyed)
 	 */
 	public Coordinate interactWithPlayer(Player player) {
