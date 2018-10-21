@@ -108,21 +108,6 @@ public class MapSelectController extends Controller {
 		Coordinate playerPos = new Coordinate(1,1); 
     	game.addEntity(new Player(playerPos));
     	
-        Coordinate boulderPos = new Coordinate(5, 6);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(4, 6);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(3, 6);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(1, 6);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(3, 2);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(4, 3);
-        game.addEntity(new Boulder(boulderPos));
-        boulderPos = new Coordinate(4, 4);
-        game.addEntity(new Boulder(boulderPos));
-
     	
         Coordinate fsPos = new Coordinate(1, 2);
         game.addEntity(new FloorSwitch(fsPos));
@@ -138,6 +123,21 @@ public class MapSelectController extends Controller {
         game.addEntity(new FloorSwitch(fsPos));
     	fsPos = new Coordinate(6, 6);
         game.addEntity(new FloorSwitch(fsPos));
+        
+        Coordinate boulderPos = new Coordinate(5, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(1, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 2);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 3);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 4);
+        game.addEntity(new Boulder(boulderPos));
     	CheckWinCon wc = new WinChecker();
     	wc = new FloorWin(wc);
     	game.setWinChecker(wc);
