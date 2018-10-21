@@ -195,5 +195,6 @@
       <CheckBox layoutX="739.0" layoutY="577.0" mnemonicParsing="false" text="Kill all enemies" />
       <CheckBox layoutX="739.0" layoutY="594.0" mnemonicParsing="false" text="Find all Treasure" />
       <CheckBox layoutX="739.0" layoutY="613.0" mnemonicParsing="false" text="Find the Exit" />
+      <CheckBox layoutX="739.0" layoutY="634.0" mnemonicParsing="false" text="Activate FloorSwitches" />
    </children>
 </AnchorPane>
