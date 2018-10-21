@@ -108,12 +108,12 @@ public class TestController extends Controller {
 			for ( int j = 0; j <= game.getHeight(); j++ ) {
 				Coordinate newPos = new Coordinate(i,j);
 				Entity entity = game.getFirstEntity(newPos);
+				entity = rearrange(game.getEntities(newPos), entity);
 				if(game.getTheme().equals("theme1")) {
 					path = "resources/theme1/";
 				}else {
 					path = "resources/theme2/";
 				}
-				//Image image = new Image(path + "white.png");
 				if (entity != null) {
 					Image image = new Image(path + entity.getName()
 												+ ".png");
@@ -124,6 +124,17 @@ public class TestController extends Controller {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param newPos Coordinate to rearrange the order of Entities
+	 */
+	public Entity rearrange(ArrayList<Entity> toSort, Entity entity) {
+		if(toSort.size() == 2) {
+			return toSort.get(1);
+		}
+		return entity;
 	}
 	
 	/**
