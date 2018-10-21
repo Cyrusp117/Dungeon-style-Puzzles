@@ -95,16 +95,40 @@ public class MapSelectController extends Controller {
 		play_note();
 		game = new Game(8, 9);
         System.out.println("Second Preset Dungeon");
+		game.generatePerimeter();	
 		Coordinate playerPos = new Coordinate(1,1); 
-        Coordinate fsPos = new Coordinate(1, 8);
-        Coordinate boulderPos = new Coordinate(5, 5);
-
-		game.generatePerimeter();		 //Create a series of walls around the perimeter
-        //game.addEntity(new Strategist(hunterPos));
-        //game.addEntity(new TreasureGoblin(hunterPos));
-        game.addEntity(new FloorSwitch(fsPos));
-        game.addEntity(new Boulder(boulderPos));
     	game.addEntity(new Player(playerPos));
+    	
+        Coordinate boulderPos = new Coordinate(5, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(1, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 2);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 3);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 4);
+        game.addEntity(new Boulder(boulderPos));
+
+    	
+        Coordinate fsPos = new Coordinate(1, 2);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(1, 4);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(4, 5);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(4, 7);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(3, 6);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(5, 3);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(6, 6);
+        game.addEntity(new FloorSwitch(fsPos));
     	CheckWinCon wc = new WinChecker();
     	wc = new FloorWin(wc);
     	game.setWinChecker(wc);
