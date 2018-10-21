@@ -63,8 +63,6 @@ public class TestController extends Controller {
 		this.initialGame = new Game(game);
 	}
 	
-
-	
 	public void initialize() {
 		makeGridPane(game.getHeight(), game.getWidth()); // makes it more readable even though possible code smell?
 		printGame();
@@ -143,6 +141,7 @@ public class TestController extends Controller {
 	public void keyPressed(KeyEvent ke) {
 		KeyCode key = ke.getCode();
     	Player player = game.getPlayer();
+    	System.out.println(player == initialGame.getPlayer());
     	player.setDx(0);
     	player.setDy(0);
 		if (key.equals(KeyCode.W)) {

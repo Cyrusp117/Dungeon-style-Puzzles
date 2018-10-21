@@ -11,6 +11,7 @@ public class Game{
 	private boolean win = false;
 	private ArrayList<ArrayList<Coordinate>> map;
 	private CheckWinCon winChecker;
+	private String theme;
 	//private Graph g; //new in graph implementation
 	// Need to implement generic iterator
 	public Game(int width, int height) {
@@ -18,6 +19,7 @@ public class Game{
 		this.height = height;
 		this.entities = new ArrayList<>();
 		this.map = new ArrayList<ArrayList<Coordinate>>();
+		this.theme = "theme1";
 		generateMap();
 		this.winChecker = new WinChecker();
 	}
@@ -28,6 +30,7 @@ public class Game{
 		this.height = otherGame.height;
 		this.entities = otherGame.entities;
 		this.map = otherGame.map;
+		this.theme = "theme2";
 		this.player = otherGame.player;
 		this.winChecker = otherGame.winChecker;
 	}
@@ -101,9 +104,11 @@ public class Game{
 			    
 			    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
 			    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
+
 			    	//deleteEntity(getFirstEntity(position));
 			    	Treasure tres = (Treasure) getFirstEntity(position);
 			    	tres.setStatus();
+
 			    }
 			}
 			if ( getFirstEntity(position) == null && !(player.getPosition().equals(position)) ) {
@@ -648,6 +653,21 @@ public class Game{
 		return null;
 	}
 	
+	
+	/**
+	 * @return the theme
+	 */
+	public String getTheme() {
+		return theme;
+	}
+
+	/**
+	 * @param theme the theme to set
+	 */
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
 	public boolean isPlayerAlive() {
 		return player.isAlive();
 	}
