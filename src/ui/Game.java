@@ -92,9 +92,7 @@ public class Game{
 			    if (getFirstEntity(position) instanceof Treasure && entity instanceof TreasureGoblin) { //test if there will be overlap of treasure and goblin
 			    	//entities.remove(getFirstEntity(position)); //remove the treasure from list of entities as goblin now has it
 			    	deleteEntity(getFirstEntity(position));
-			    	System.out.println("So we made it here");
-			    	TreasureGoblin goblin = (TreasureGoblin)entity;
-			    	System.out.println("Goblin has " +goblin.getTreasure().getName());
+			 
 			    	assert(getFirstEntity(position) == null);
 			    }
 			}
