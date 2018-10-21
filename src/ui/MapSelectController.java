@@ -75,6 +75,11 @@ public class MapSelectController extends Controller {
         game.addEntity(new Bomb(Bomb2Pos));
         game.addEntity(new InvincibilityPotion(IPpotPos));
     	game.addEntity(new Player(playerPos));
+    	CheckWinCon wc = new WinChecker();
+    	wc = new KillWin(wc);
+    	wc = new TreasureWin(wc);
+    	wc = new FloorWin(wc);
+    	game.setWinChecker(wc);
         loadMapScreen(game, "Preset #1");
 
 	}

@@ -397,7 +397,7 @@ public class Graph {
         int ay = a.getY();
         int bx = b.getX();
         int by = b.getY();
-        double distance = Math.sqrt((ax - bx)^2 + (ay - by)^2);
+        double distance = Math.sqrt((ax - bx)*(ax-bx) + (ay - by)*(ay-by));
         
         
         return distance;

@@ -12,10 +12,11 @@ public class Coward extends Enemy {
 	public Coordinate getTargetSpace(Coordinate co, Graph g,Coordinate closetPickup,ArrayList<Entity> entities) {
 		
 		Coordinate move;
-		
 		if (g.getDistance(co, position) > Math.sqrt(2)) { 
+			//System.out.println("get distance gives " + g.getDistance(co,position));
 			move = co;
 		} else {
+			System.out.println("Coward is running away");
 			move = g.moveAway(co,this.position);
 		
 			

@@ -33,6 +33,9 @@ public class TreasureGoblin extends Enemy {
 		    	for (Entity object: entities) {
 					if (object instanceof Treasure) {
 						Treasure tres = (Treasure) object;
+						if (tres.getStatus())
+							continue;
+						
 						g.addPointAndEdges(tres.getPosition());
 						//g.printGraph();
 						//System.out.println("looking for treasure"); //test
@@ -53,10 +56,12 @@ public class TreasureGoblin extends Enemy {
 				    	target = g.moveAway(co, position);
 				    	
 				    } else if (g.isAdjacent(position, closest.getPosition())) {
-						System.out.print("We also end up inside the required function");
+						//System.out.print("We also end up inside the required function");
+				    	
 						target = closest.getPosition();
 						g.addPointAndEdges(closest.getPosition());
 						this.keyCode = KeyCode.L;
+						
 						goblinTreasure = closest; //not sure what do do about goblin taking the treasure
 						 
 					} else {
