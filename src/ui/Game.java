@@ -26,12 +26,12 @@ public class Game{
 	
 	//Copy constructor
 	public Game(Game otherGame) {
-		this(otherGame.width, otherGame.height);
-		EntityFactory factory = new EntityFactory();
-		EntityProducer producer = new EntityProducer(factory);
-		for(Entity entity: otherGame.getEntities()) {
-			producer.addEntityToGame(this, entity.getPosition(), entity.getName());
-		}
+		this.width = otherGame.width;
+		this.height = otherGame.height;
+		this.entities = otherGame.entities;
+		this.map = otherGame.map;
+		this.theme = "theme2";
+		this.player = otherGame.player;
 		this.winChecker = otherGame.winChecker;
 	}
 	

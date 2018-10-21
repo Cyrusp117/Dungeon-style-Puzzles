@@ -13,8 +13,10 @@ import entities.Key;
 import entities.Pit;
 import entities.Player;
 import entities.Sword;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -28,6 +30,12 @@ public class MapSelectController extends Controller {
 	private Button btn1;
 	@FXML 
 	private Button btn2;
+	@FXML
+	private RadioButton theme1;
+	@FXML
+	private RadioButton theme2;
+	
+	private Game game = new Game(10, 10);
 	
 	//protected boolean designer;
 	public MapSelectController(Stage s) {
@@ -35,10 +43,21 @@ public class MapSelectController extends Controller {
 		//designer = (boolean)s.getUserData();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void selectTheme(ActionEvent event) {
+		String themeName = "";
+		if(theme1.isSelected()) {
+			themeName = theme1.getText();
+			game.setTheme("theme1");
+		}
+		if(theme2.isSelected()) {
+			themeName = theme2.getText();
+			game.setTheme("theme2");
+		}
+	}
 
 	public void startMap1() {
 		play_note();
-    	Game game = new Game(10, 10);
         System.out.println("First Preset Dungeon");
 		Coordinate playerPos = new Coordinate(1,1); 
         Coordinate pitPos = new Coordinate(2, 2);
@@ -94,7 +113,7 @@ public class MapSelectController extends Controller {
     	//loadMapScreen(game, "Custom map");
         //System.out.println("Custom map");
 		Screen dimensionSelect = new Screen(super.getS(), "Blank", "view/DimensionScreen.fxml");
-		DimensionController dimension = new DimensionController(super.getS());
+		DimensionController dimension = new DimensionController(super.getS(),game.getTheme());
 		dimensionSelect.start(dimension);
 	}
 	
