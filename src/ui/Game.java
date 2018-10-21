@@ -101,6 +101,7 @@ public class Game{
 		Coordinate closestPickup;
 		if (entity instanceof Enemy) {
 			Enemy enemy = (Enemy) entity;
+			// Checks for invinicibilityPotion interaction
 			if (player.hasItem("InvincibilityPotion")) {
 				position = enemy.invincibilityMove(player.getPosition(), generateGraph());
 			} else {
@@ -118,25 +119,6 @@ public class Game{
 			} 			
 		}
 	}
-
-	/**
-	 * @param allTreasure
-	 * @param entity
-	 * @return
-	 */
-//	public int treasureCheck(Entity entity) {
-//		// Checks if all treasure has been picked up
-//		if (entity instanceof Treasure){
-//			allTreasure = 0;
-//			//also check treasure goblin for this condition
-//		} else if (entity instanceof TreasureGoblin) {
-//			TreasureGoblin goblin = (TreasureGoblin)entity;
-//			if(goblin.getTreasure() != null) {
-//				allTreasure = 0;
-//			}
-//		}
-//		return allTreasure;
-//	}
 	/**
 	 * 
 	 * @param entity - the entity to be moved
