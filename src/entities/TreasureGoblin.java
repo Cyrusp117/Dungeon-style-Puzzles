@@ -65,7 +65,7 @@ public class TreasureGoblin extends Enemy {
 					}
 				} else {
 					//search for other entities with treasure and take it, if none exist, just hide
-					//will impliment if have time
+					//will implement if have time
 					target = co;
 				}
 		    	
