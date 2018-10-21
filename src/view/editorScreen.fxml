@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -164,20 +163,12 @@
                   </Pane>
                   <Pane fx:id="Goblin" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="-1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/Goblin.jpg" />
-                           </image>
-                        </ImageView>
+                        <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="-1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
                   <Pane fx:id="Bone" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <children>
-                        <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="-1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/Bone.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="-1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
                </children>

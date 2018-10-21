@@ -75,6 +75,10 @@ public class EditorController extends Controller {
     	//private GridPane gridTest;
     	@FXML
     	private Button bckButton;
+    	@FXML
+    	private Pane Goblin;
+    	@FXML
+    	private Pane Bone;
     	
     	private String selectedEntity = null;
     	private EntityProducer producer;
@@ -138,9 +142,9 @@ public class EditorController extends Controller {
 	        	if(node instanceof Pane) {
 	        		for(Node childNode: ((Pane) node).getChildren()) {
 	        			if(childNode instanceof ImageView) {
-	        				Image sprite = new Image("resources/" + node.getId()
-							+ ".png");
 	        				System.out.println("resources/" + node.getId()
+							+ ".png");
+	        				Image sprite = new Image("resources/" + node.getId()
 							+ ".png");
 	        				((ImageView) childNode).setImage(sprite);
 	        			}
