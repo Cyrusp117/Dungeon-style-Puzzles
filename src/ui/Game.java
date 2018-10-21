@@ -431,11 +431,6 @@ public class Game{
 	//done
 
 	
-//	public void forceAddEntity(Entity entity) {
-//		Coordinate position = entity.getPosition();
-//		if (!isOccupied(position))
-//	}
-	//done
 	/**
 	 * 
 	 * @param entity, the Entity to be deleted. If the Entity is the player remove track of the player.
