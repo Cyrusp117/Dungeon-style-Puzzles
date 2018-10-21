@@ -42,7 +42,16 @@ public class MapSelectController extends Controller {
 	public MapSelectController(Stage s) {
 		super(s);
 	}
+	
+	public String getTheme() {
+		if(theme1.isSelected()) {
+			return "theme1";
+		} else {
+			return "theme2";
+		}
+	}
 
+	
 	/**
 	 * Load preset map 1
 	 */
@@ -95,16 +104,40 @@ public class MapSelectController extends Controller {
 		play_note();
 		game = new Game(8, 9);
         System.out.println("Second Preset Dungeon");
+		game.generatePerimeter();	
 		Coordinate playerPos = new Coordinate(1,1); 
-        Coordinate fsPos = new Coordinate(1, 8);
-        Coordinate boulderPos = new Coordinate(5, 5);
-
-		game.generatePerimeter();		 //Create a series of walls around the perimeter
-        //game.addEntity(new Strategist(hunterPos));
-        //game.addEntity(new TreasureGoblin(hunterPos));
-        game.addEntity(new FloorSwitch(fsPos));
-        game.addEntity(new Boulder(boulderPos));
     	game.addEntity(new Player(playerPos));
+    	
+        Coordinate boulderPos = new Coordinate(5, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(1, 6);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(3, 2);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 3);
+        game.addEntity(new Boulder(boulderPos));
+        boulderPos = new Coordinate(4, 4);
+        game.addEntity(new Boulder(boulderPos));
+
+    	
+        Coordinate fsPos = new Coordinate(1, 2);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(1, 4);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(4, 5);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(4, 7);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(3, 6);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(5, 3);
+        game.addEntity(new FloorSwitch(fsPos));
+    	fsPos = new Coordinate(6, 6);
+        game.addEntity(new FloorSwitch(fsPos));
     	CheckWinCon wc = new WinChecker();
     	wc = new FloorWin(wc);
     	game.setWinChecker(wc);
@@ -118,7 +151,7 @@ public class MapSelectController extends Controller {
 	public void startCustomMap() {
 		play_note();
 		Screen dimensionSelect = new Screen(super.getS(), "Blank", "view/DimensionScreen.fxml");
-		DimensionController dimension = new DimensionController(super.getS(),game.getTheme());
+		DimensionController dimension = new DimensionController(super.getS(), getTheme());
 		dimensionSelect.start(dimension);
 	}
 	
@@ -140,12 +173,8 @@ public class MapSelectController extends Controller {
 	 * @param title the name of the Game
 	 */
 	public void loadMapScreen(Game game, String title) {
-		if(theme1.isSelected()) {
-			game.setTheme("theme1");
-		}
-		if(theme2.isSelected()) {
-			game.setTheme("theme2");
-		}
+		String theme = getTheme();
+		game.setTheme(theme);
         Screen map = new Screen(super.getS(), title, "view/map.fxml");
         MapController pc = new MapController(super.getS(), game);
         map.start(pc);
