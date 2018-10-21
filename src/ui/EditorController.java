@@ -135,7 +135,7 @@ public class EditorController extends Controller {
 	        for (Node node: selector.getChildren()) {
 	        	node.setOnMouseClicked(e -> {
 	        		selectedEntity = node.getId();
-	        		descriptor.setText(selectedEntity);
+	        		descriptor.setText(selectedEntity + "\n" + description(selectedEntity));
 	        	});
 	        }
 
@@ -397,6 +397,77 @@ public class EditorController extends Controller {
 				}
 			}
 			
+			public String description(String name) {
+				if(name.equals("Player")) {
+					return "The player can be moved either up, down, left,"+"\n"
+							+ " or right into adjacent squares,"+"\n"
+							+ " as long as another entity does not stop them (e.g. a wall).";
+				}else if(name.equals("Wall")) {
+					return "Blocks the movement of the player, enemies, boulders and arrows.";
+				}else if(name.equals("Exit")) {
+					return "If the player goes through an exit the puzzle is complete.";
+				}else if(name.equals("Treasure")) {
+					return "Can be collected by the player.";
+				}else if(name.equals("Door")) {
+					return "Exists in conjunction with a single key that can open it." +"\n"
+							+ " If the player holds the key, they can open the door by moving through it. " +"\n"
+							+ "After opening it remains open. ";
+				}else if(name.equals("Key")) {
+					return "Can be picked up by the player when they move into the containing square."+"\n"
+							+ " The player can carry only one key at a time,"+"\n"
+							+ " and only one door has a lock that fits the key." +"\n"
+							+ " The key disappears once it is used to open its corresponding door.";
+				}else if(name.equals("Boulder")) {
+					return "Acts like a wall in most cases. "+"\n"
+							+ "The only differences are that it can be pushed by the player"+"\n"
+							+ " into adjacent squares and can be destroyed by a bomb."+"\n"
+							+ " The player is only strong enough to push one boulder at a time.";
+				}else if(name.equals("FloorSwitch")) {
+					return "Switches behave like empty squares so other entities can appear on top of them. "+"\n"
+							+ "When a boulder is pushed onto a floor switch, it is triggered."+"\n"
+							+ " Pushing a boulder off the floor switch untriggers it.";
+				}else if(name.equals("Bomb_4")) {
+					return "The bomb is picked up by the player when they move into the square containing it.";
+				}else if(name.equals("Pit")) {
+					return "If the player falls into a pit they die. Boulders pushed into a pit disappear.";
+				}else if(name.equals("Hunter")) {
+					return "This enemy constantly moves toward the player, stopping if it cannot move any closer."+"\n"
+							+ " Like all enemies, the player dies upon collision with them.";
+				}else if(name.equals("Strategist")) {
+					return "An enemy that moves towards a square the player is likely to move to next.";
+				}else if(name.equals("Hound")) {
+					return "An enemy that assists the hunter by positioning "
+							+ "itself such that the player is between it and the hunter.";
+				}else if(name.equals("Coward")) {
+					return "An enemy that behaves like the hunter when far away from the player,"+"\n"
+							+ " but runs away when it gets close. Like all enemies, the player dies upon collision with them.";
+				}else if(name.equals("Sword")) {
+					return "This can be picked up the player and used to kill enemies. "+"\n"
+							+ "Only one sword can be carried at once. "+"\n"
+							+ "Each sword is only capable of 5 hits and disappears after that. "+"\n"
+							+ "One hit of the sword is sufficient to destroy any enemy.";
+				}else if(name.equals("Arrow")) {
+					return "Can be collected by the player and at will either left, right, up or down."+"\n"
+							+ " Enemies are destroyed if they are hit with an arrow."+"\n"
+							+ " Arrows are destroyed upon collision with anything."+"\n"
+							+ " There is no limit to how many arrows the player can carry.";
+				}else if(name.equals("InvincibilityPotion")) {
+					return "If the player picks this up they become invincible to all bombs and enemies."+"\n"
+							+ " Colliding with an enemy should result in their immediate destruction."+"\n"
+							+ "Because of this, all enemies will run away from the player when they are invincible. "+"\n"
+							+ "The effect of the potion only lasts a limited time.";
+				}else if(name.equals("HoverPotion")) {
+					return "Gives the player the ability to hover and fly over pits."+"\n"
+							+ " This potion lasts until either the player is destroyed or the dungeon is complete.";
+				}else if(name.equals("TreasureGoblin")) {
+					return "Steals treasure, if no treasure is available will attack the Player."+"\n"
+							+ " Drops Treasure on death";
+				}else if(name.equals("Bone")) {
+					return "Bone distracts the Hound, Can be picked up and thrown";
+				}
+			
+				return " ";
+			}
 	    }
 
 	
