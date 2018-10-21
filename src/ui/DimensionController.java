@@ -24,9 +24,13 @@ public class DimensionController extends Controller {
 		this.theme = theme;
 	}	
 	
+	/**
+	 * Action which occurs on confirm Button pressed
+	 */
 	public void onConfirm() {
 		boolean errorFlag = false;
 		
+		// Parsing user input for valid input
 		try {
 			gameWidth = Integer.parseInt(width.getText());
 		}catch(NumberFormatException e) {
@@ -34,6 +38,8 @@ public class DimensionController extends Controller {
 			width.setPromptText("Invalid Input: Input must be an integer");
 			errorFlag = true;
 		}
+		
+		// Parsing user input for valid input
 		try {
 			gameHeight = Integer.parseInt(height.getText());
 		}catch(NumberFormatException e) {
@@ -41,11 +47,11 @@ public class DimensionController extends Controller {
 			height.setPromptText("Invalid Input: Input must be an integer");
 			errorFlag = true;
 		}
-		
+		// If error found, cease action
 		if(errorFlag) {
 			return;
 		}
-		System.out.println("gameWidth: " + gameWidth + "gameHeight: " + gameHeight);
+		// Limits game size
 		if( (gameWidth <= 22 && gameWidth > 0) && (gameHeight <= 15 && gameHeight > 0)) {
 			Game game = new Game(gameWidth , gameHeight);
 			game.setTheme(theme);

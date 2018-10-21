@@ -107,6 +107,9 @@ public class EditorController extends Controller {
     		this.winCheck = new WinChecker();
        	}
     	
+    	/**
+    	 * Function executed upon start
+    	 */
     	//Lines 104-137 adapted from StackOverflow https://stackoverflow.com/questions/31095954
 	    public void initialize() {
 	    	EntityFactory factory = new EntityFactory();
@@ -115,35 +118,27 @@ public class EditorController extends Controller {
 	        int numCols = game.getWidth() ;
 	        int numRows = game.getHeight() ;
 	        game.generatePerimeter();
+	        setupColumns(numCols);
+	        setupRows(numRows);
+	        setupPanes(numCols, numRows);  
+	        setupSelector();
+	        printGame();
+	    }
 
-	        for (int i = 0 ; i <= numCols ; i++) {
-	            ColumnConstraints colConstraints = new ColumnConstraints();
-	            colConstraints.setHgrow(Priority.NEVER);
-	            map.getColumnConstraints().clear();
-	            map.getColumnConstraints().add(colConstraints);
-	            imageMap.getColumnConstraints().clear();
-	            imageMap.getColumnConstraints().add(colConstraints);
-	        }
-
-	        for (int i = 0 ; i <= numRows ; i++) {
-	            RowConstraints rowConstraints = new RowConstraints();
-	            rowConstraints.setVgrow(Priority.NEVER);
-	            map.getRowConstraints().clear();
-	            map.getRowConstraints().add(rowConstraints);  
-	            imageMap.getRowConstraints().clear();
-	            imageMap.getRowConstraints().add(rowConstraints);
-	        }
-	        for (int i = 0 ; i <= numCols ; i++) {
-	            for (int j = 0; j <= numRows; j++) {
-	                addPane(i, j);
-	            }
-	        }
+		/**
+		 * // Instantiating Selector pictures and functionality
+		 */
+		public void setupSelector() {
+			
+			// For every pane in the selector, add click registration
 	        for (Node node: selector.getChildren()) {
 	        	node.setOnMouseClicked(e -> {
 	        		selectedEntity = node.getId();
 	        		descriptor.setText(selectedEntity);
 	        	});
 	        }
+
+	        //For every pane in the selector, add respective sprite
 	        printGame();
 	        String path;
 	        if(game.getTheme().equals("theme1")) {
@@ -155,8 +150,6 @@ public class EditorController extends Controller {
 	        	if(node instanceof Pane) {
 	        		for(Node childNode: ((Pane) node).getChildren()) {
 	        			if(childNode instanceof ImageView) {
-	        				System.out.println(path + node.getId()
-							+ ".png");
 	        				Image sprite = new Image(path + node.getId()
 							+ ".png");
 	        				((ImageView) childNode).setImage(sprite);
@@ -164,7 +157,56 @@ public class EditorController extends Controller {
 	        		}
 	        	}
 	        }
-	    }
+		}
+
+		/**
+		 * @param numCols is number of columns in the GridPane
+		 * @param numRows is number of rows in the GridPane
+		 */
+		public void setupPanes(int numCols, int numRows) {
+			// Adding a FXML Pane to each cell in the GridPane map
+	        for (int i = 0 ; i <= numCols ; i++) {
+	            for (int j = 0; j <= numRows; j++) {
+	                addPane(i, j);
+	            }
+	        }
+		}
+
+		/**
+		 * @param numRows is the number of rows in the GridPane
+		 */
+		public void setupRows(int numRows) {
+			//Setting Row constraints of GridPane map
+	        for (int i = 0 ; i <= numRows ; i++) {
+	            RowConstraints rowConstraints = new RowConstraints();
+	            rowConstraints.setVgrow(Priority.NEVER);
+	            map.getRowConstraints().clear();
+	            map.getRowConstraints().add(rowConstraints);  
+	            imageMap.getRowConstraints().clear();
+	            imageMap.getRowConstraints().add(rowConstraints);
+	        }
+		}
+
+		/**
+		 * @param numCols is the number of columns in the GridPane
+		 */
+		public void setupColumns(int numCols) {
+			//Setting Column constraints of GridPane map
+	        for (int i = 0 ; i <= numCols ; i++) {
+	            ColumnConstraints colConstraints = new ColumnConstraints();
+	            colConstraints.setHgrow(Priority.NEVER);
+	            map.getColumnConstraints().clear();
+	            map.getColumnConstraints().add(colConstraints);
+	            imageMap.getColumnConstraints().clear();
+	            imageMap.getColumnConstraints().add(colConstraints);
+	        }
+		}
+		
+		/**
+		 * 
+		 * @param colIndex specified cell in the GridPane
+		 * @param rowIndex specified cell in the GridPane
+		 */
 	    private void addPane(int colIndex, int rowIndex) {
 	        Pane pane = new Pane();    
 	        pane.setMinSize(32,32);
@@ -185,11 +227,15 @@ public class EditorController extends Controller {
 	        	}else {
 	        		targetName.setText(deleteTarget.getName());
 	        	}
-	            System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
 	        });
 	        map.add(pane, colIndex, rowIndex);
 	    }
 
+		/**
+		 * 
+		 * @param colIndex specified cell in the GridPane
+		 * @param rowIndex specified cell in the GridPane
+		 */
 	    public void insertEntity(int colIndex, int rowIndex) {
 	    	if(selectedEntity != null){
 	    		Coordinate requestedSpace = new Coordinate(colIndex, rowIndex);
@@ -199,6 +245,9 @@ public class EditorController extends Controller {
 	    	printGame();
 	    }
 	    
+	    /**
+	     * Delete currently selected entity
+	     */
 	    public void deleteEntity() {
 	    	if(deleteTarget != null) {
 	    		DeleteEntityCommand toDo = new DeleteEntityCommand(game, deleteTarget);
@@ -207,11 +256,17 @@ public class EditorController extends Controller {
 	    	printGame();
 	    }
 	    
+	    /**
+	     * undo last action
+	     */
 	    public void undo() {
 	    	invoker.undo();
 	    	printGame();
 	    }
 	    
+	    /*
+	     * Nullify selection and target
+	     */
 	    public void nullify() {
 	    	deleteTarget = null;
 	    	targetName.setText("None");
@@ -219,6 +274,9 @@ public class EditorController extends Controller {
 	    	descriptor.setText("None");
 	    }
 	    
+	    /**
+	     * Print out current game state
+	     */
 	    public void printGame() {
 			imageMap.getChildren().clear();
 			String path;
@@ -233,7 +291,6 @@ public class EditorController extends Controller {
 					}
 					Image image = new Image(path + "white.png");
 					if (entity != null) {
-						//System.out.println("Adding Entity: " + entity.getName());
 						image = new Image(path + entity.getName()
 													+ ".png");
 					}
@@ -246,6 +303,9 @@ public class EditorController extends Controller {
 				}
 			}
 	    }
+	    /**
+	     * Test the current game, changes screen state
+	     */
 			public void testGame() {
 				constructWinCon();
 				game.setWinChecker(winCheck);
@@ -256,37 +316,50 @@ public class EditorController extends Controller {
 				
 			}
 			
+			/**
+			 * Return to menu
+			 */
 			public void previousMenu() {
 		        Screen mapSelect = new Screen(super.getS(), "Map Select", "view/MapSelect.fxml");
 		        MapSelectController msc = new MapSelectController(super.getS());
 		        mapSelect.start(msc);
 			}
 			
+			/**
+			 * Adds TreasureWin Decorator
+			 */
 			public void addTreasure() {
-				System.out.println("Treasure");
 				winCheck = new TreasureWin(winCheck);
 			}
 			
+			/**
+			 * Adds FloorWin Decorator
+			 */
 			public void addFloor() {
-				System.out.println("Floor");
 				winCheck = new FloorWin(winCheck);
 			}
 			
+			/**
+			 * Adds KillWin Decorator
+			 */
 			public void addKill() {
-				System.out.println("Kill");
 				winCheck = new KillWin(winCheck);
 			}
-			
+			/**
+			 * Adds ExitWin Decorator
+			 */
 			public void exitCheck() {
 				for(Entity entity: game.getEntities()) {
 					if(entity instanceof entities.Exit) {
-						System.out.println("Exit");
 						winCheck = new ExitWin(new WinChecker());
 						return;
 					}
 				}
 			}
 			
+			/**
+			 * Construct the winCondition based on selection
+			 */
 			public void constructWinCon() {
 				for( Node node: winConPanel.getChildren()) {
 					if( node instanceof CheckBox) {
@@ -298,6 +371,9 @@ public class EditorController extends Controller {
 				exitCheck();
 			}
 			
+			/**
+			 * Enables assignment of hunter to currently selected Hound
+			 */
 			public void assignHunter() {
 				if(deleteTarget == null) return;
 				if(deleteTarget instanceof entities.Hound) {
@@ -309,9 +385,4 @@ public class EditorController extends Controller {
 			
 	    }
 
-	    
-	    
-//        pane.setOnMouseClicked(e -> {
-//            System.out.printf("Mouse entered cell [%d, %d]%n", colIndex, rowIndex);
-//        });
 	

@@ -12,22 +12,21 @@ public class DeleteEntityCommand implements EditorCommand {
 		this.entity = entity;
 		this.game = game;
 	}
+	
 	@Override
 	public void execute() {
 		game.deleteEntity(entity);
-		// TODO Auto-generated method stub
-
 	}
 
+	/**
+	 * Undo the previous action
+	 */
 	@Override
 	public void undo() {
 		if(entity.getName().equals("Player")) {
 			game.setPlayer((Player)entity);
 		}
 		game.addEntity(entity);
-		
-		// TODO Auto-generated method stub
-
 	}
 
 }
